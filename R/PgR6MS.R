@@ -20,7 +20,8 @@ PgR6MS <- R6Class('PgR6MS',
 
                     initialize = function(cluster_list,
                                           prefix = 'group',
-                                          sequences){
+                                          sequences,
+                                          sep = '___'){
 
                       super$initialize(cluster_list = cluster_list,
                                        prefix = prefix)
@@ -53,13 +54,31 @@ PgR6MS <- R6Class('PgR6MS',
                         warning('Not all gene names in sequences are present in cluster_list. Moving on.')
                       }
 
-                      private$p_sequences <- lapply(sequences, function(x){
-                        list2env(as.list(x), hash = TRUE)
+                      #set new names to make them hashable in a single env
+                      sequences <- lapply(seq_along(sequences), function(i){
+                        nnam <- paste(names(sequences[i]),
+                                      names(sequences[[i]]),
+                                      sep =  sep)
+                        setNames(sequences[[i]], nnam)
                       })
+
+                      sequences <- unlist(sequences)
+
+                      private$p_sequences <- list2env(sequences, hash = TRUE)
                     }
 
                     # Methods for sequences
                   ),
 
-                  active = list()
+                  active = list(
+
+                    sequences = function(){
+                      lapply(pan$clusters, function(x){
+                        sapply(seq_along(x), function(y){
+                          # nn <- names(x[y])
+                          private$p_sequences[[na]]
+                        })
+                      })
+                    }
+                  )
 )
