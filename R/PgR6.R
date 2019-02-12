@@ -162,7 +162,9 @@ PgR6 <- R6Class('PgR6',
                   core_clusters = function(){
                     ln <- length(self$organisms)
                     co <- round(private$p_level * ln / 100)
-                    wh <- which(colSums(self$pan_matrix) >= co)
+                    pm <- self$pan_matrix
+                    pm[which(pm>1L, arr.ind = TRUE)] <- 1L
+                    wh <- which(colSums(pm) >= co)
                     dimnames(self$pan_matrix)[[2]][wh]
                   },
 
@@ -182,7 +184,7 @@ PgR6 <- R6Class('PgR6',
 
 ## S3 Subset Methods for some active bindings
 
-
+# Method for subseting the $clusters field as if were $pan_matrix.
 `[.ClusterList` <- function(x, i, j){
 
   Narg <- nargs()
