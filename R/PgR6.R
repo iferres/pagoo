@@ -29,7 +29,8 @@ PgR6 <- R6Class('PgR6',
                 public = list(
 
                   initialize = function(cluster_list,
-                                        prefix = 'group'){
+                                        prefix = 'group',
+                                        sep = '__'){
 
                     # Check cluster_list input #
                     # 1. Is list. length > 0?
@@ -46,6 +47,14 @@ PgR6 <- R6Class('PgR6',
                     hasOrgNames <- sapply(cluster_list, function(x) all(length(names(x))) )
                     if (!all(hasOrgNames))
                       stop('you must provide organism names for all genes')
+                    # 4. Modify gene names
+                    cluster_list <- lapply(cluster_list, function(x){
+                      nn <- names(x)
+                      ng <- paste(nn, sep, x, sep = '')
+                      names(ng) <- nn
+                      ng
+                    })
+
 
                     # Create panmatrix #
                     # 1. Which organisms are?
