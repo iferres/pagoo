@@ -61,10 +61,10 @@ PgR6MS <- R6Class('PgR6MS',
                       # Check if gene names in clusters match gene names in
                       # sequences. Stop if not.
                       genesOK <- all(sapply(self$organisms, function(x){
-                        all(namesInClusters[[x]]%in%names(sequences[[x]]))
+                        all(namesInClusters[[x]] %in% names(sequences[[x]]))
                       }))
                       genesOK2 <- all(sapply(self$organisms, function(x){
-                        all(names(sequences[[x]]%in%namesInClusters[[x]]))
+                        all(names(sequences[[x]] %in% namesInClusters[[x]]))
                       }))
                       if (!genesOK){
                         stop('gene names in sequences are not contained in gene names in cluster_list')
@@ -73,8 +73,10 @@ PgR6MS <- R6Class('PgR6MS',
                       }
 
                       # Create private env and populate it with sequences.
-                      sequences <- unlist(sequences)
-                      private$p_sequences <- list2env(sequences, hash = TRUE)
+                      names(sequences) <- NULL
+                      sequences <- unlist(sequences, use.names = TRUE)
+                      private$p_sequences <- list2env(as.list(sequences),
+                                                      hash = TRUE)
                     }
 
                     # Methods for sequences
@@ -83,12 +85,14 @@ PgR6MS <- R6Class('PgR6MS',
                   active = list(
 
                     sequences = function(){
-                      lapply(pan$clusters, function(x){
-                        sapply(seq_along(x), function(y){
-                          # nn <- names(x[y])
-                          private$p_sequences[[na]]
-                        })
+                      sqs <- lapply(self$clusters, function(x){
+                        vapply(x, function(y){
+                          private$p_sequences[[y]]
+                        }, FUN.VALUE = NA_character_)
                       })
+                      class(sqs) <- 'SequenceList'
+                      sqs
+
                     }
                   )
 )
