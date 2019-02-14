@@ -15,10 +15,12 @@ PgR6M <- R6Class('PgR6M',
                  public = list(
 
                    initialize = function(cluster_list,
-                                         prefix = 'group'){
+                                         prefix = 'group',
+                                         sep = '__'){
 
                      super$initialize(cluster_list = cluster_list,
-                                      prefix = prefix)
+                                      prefix = prefix,
+                                      sep = sep)
 
                    },
 
