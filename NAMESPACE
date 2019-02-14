@@ -2,6 +2,7 @@
 
 export(PgR6)
 export(PgR6M)
+export(PgR6MS)
 importFrom(R6,R6Class)
 importFrom(ggplot2,aes)
 importFrom(ggplot2,element_blank)
