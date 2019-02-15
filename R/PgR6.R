@@ -157,6 +157,7 @@ PgR6 <- R6Class('PgR6',
                       onlyPublic[!is.na(onlyPublic)]
                     })
                     class(rr) <- 'ClusterList'
+                    attr(rr, 'organisms') <- self$organisms
                     rr
                   },
 
@@ -197,7 +198,7 @@ PgR6 <- R6Class('PgR6',
 `[.ClusterList` <- function(x, i, j){
 
   Narg <- nargs()
-  orgs <- unique(unlist(sapply(pan$clusters, names), use.names = F))
+  orgs <- attr(x, 'organisms')
 
   #simple subset, single arg
   if(Narg<3){
