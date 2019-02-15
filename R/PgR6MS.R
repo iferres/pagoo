@@ -86,13 +86,53 @@ PgR6MS <- R6Class('PgR6MS',
 
                     sequences = function(){
                       sqs <- lapply(self$clusters, function(x){
-                        vapply(x, function(y){
-                          private$p_sequences[[y]]
+                        vp <- vapply(x, function(y){
+                          rr <- private$p_sequences[[y]]
                         }, FUN.VALUE = NA_character_)
+                        names(vp) <- x
+                        vp
                       })
                       class(sqs) <- 'SequenceList'
+                      attr(sqs, 'organisms') <- self$organisms
+                      attr(sqs, 'separator') <- private$p_sep
                       sqs
-
                     }
                   )
 )
+
+
+
+# Subset method, matrix-like.
+`[.SequenceList` <- function(x, i, j){
+
+  Narg <- nargs()
+  orgs <- attr(x, 'organisms')
+  sep <- attr(x, 'separator')
+
+  # simple subset
+  if (Narg<3){
+    if (missing(i)) {return(x)} else {rr <- unclass(x)[i]}
+  }
+
+  #double arg
+  #Take all orgs, subset clusters
+  if (missing(i)){
+    rr <- unclass(x)[j]
+  }
+
+  pattern <- paste0('^',orgs, sep)
+  #Take all clusters, subset orgs
+  if (missing(j)){
+    if (is.character(i)){
+      i <- which(orgs%in%i)
+    }
+    sorgs <- orgs[i]
+    rr <- lapply(x, function(y){
+      ss <- y[which(names(y)%in%sorgs)]
+      ss[!is.na(ss)]
+    })
+  }
+
+
+
+}
