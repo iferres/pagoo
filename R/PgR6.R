@@ -22,7 +22,8 @@ PgR6 <- R6Class('PgR6',
                   p_panmatrix = NULL,
                   p_organisms = NULL,
                   p_dropped = NULL,
-                  p_level = NULL
+                  p_level = NULL,
+                  p_sep = NULL
                 ),
 
                 # Public functions #
@@ -54,7 +55,7 @@ PgR6 <- R6Class('PgR6',
                       names(ng) <- nn
                       ng
                     })
-
+                    private$p_sep <- sep
 
                     # Create panmatrix #
                     # 1. Which organisms are?
@@ -158,6 +159,7 @@ PgR6 <- R6Class('PgR6',
                     })
                     class(rr) <- 'ClusterList'
                     attr(rr, 'organisms') <- self$organisms
+                    attr(rr, 'separator') <- private$p_sep
                     rr
                   },
 
