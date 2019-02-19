@@ -8,6 +8,7 @@
 #                                              .Names = c("gene1", "gene2"))),
 #                        .Names = c("org1", "org2", "org3"))
 
+#' @importFrom Biostrings
 #' @export
 PgR6MS <- R6Class('PgR6MS',
 
@@ -75,8 +76,11 @@ PgR6MS <- R6Class('PgR6MS',
                       # Create private env and populate it with sequences.
                       names(sequences) <- NULL
                       sequences <- unlist(sequences, use.names = TRUE)
-                      private$p_sequences <- list2env(as.list(sequences),
-                                                      hash = TRUE)
+                      private$p_sequences <- BStringSet(sequences, use.names = TRUE)
+                      ptt <- paste0(sep, '\\w+$')
+                      mcols(private$p_sequences)$organisms <- sub(ptt, '', names(private$p_sequences))
+                      # private$p_sequences <- list2env(as.list(sequences),
+                      #                                 hash = TRUE)
                     }
 
                     # Methods for sequences
@@ -85,13 +89,15 @@ PgR6MS <- R6Class('PgR6MS',
                   active = list(
 
                     sequences = function(){
-                      sqs <- lapply(self$clusters, function(x){
-                        vp <- vapply(x, function(y){
-                          rr <- private$p_sequences[[y]]
-                        }, FUN.VALUE = NA_character_)
-                        names(vp) <- x
-                        vp
-                      })
+                      sqs <- lapply(self$clusters, function(x) private$p_sequences[x])
+
+                      # sqs <- lapply(self$clusters, function(x){
+                      #   vp <- vapply(x, function(y){
+                      #     rr <- private$p_sequences[[y]]
+                      #   }, FUN.VALUE = NA_character_)
+                      #   names(vp) <- x
+                      #   vp
+                      # })
                       class(sqs) <- 'SequenceList'
                       attr(sqs, 'organisms') <- self$organisms
                       attr(sqs, 'separator') <- private$p_sep
