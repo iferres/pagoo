@@ -8,7 +8,7 @@
 #                                              .Names = c("gene1", "gene2"))),
 #                        .Names = c("org1", "org2", "org3"))
 
-#' @importFrom Biostrings
+#' @importFrom Biostrings BStringSet
 #' @export
 PgR6MS <- R6Class('PgR6MS',
 
