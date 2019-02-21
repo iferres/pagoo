@@ -29,12 +29,12 @@ PgR6 <- R6Class('PgR6',
                 # Private fields #
                 private = list(
                   version = NULL,
-                  p_dt = NULL,
-                  p_panmatrix = NULL,
-                  p_organisms = NULL,
-                  p_dropped = NULL,
-                  p_level = NULL,
-                  p_sep = NULL
+                  .dt = NULL,
+                  .panmatrix = NULL,
+                  .organisms = NULL,
+                  .dropped = NULL,
+                  .level = NULL,
+                  .sep = NULL
                 ),
 
                 # Public functions #
@@ -95,7 +95,7 @@ PgR6 <- R6Class('PgR6',
                     #   names(ng) <- nn
                     #   ng
                     # })
-                    # private$p_sep <- sep
+                    # private$.sep <- sep
                     #################################
 
                     # Create panmatrix #
@@ -121,12 +121,13 @@ PgR6 <- R6Class('PgR6',
 
                     # Populate private$ #
                     private$version <- packageVersion('pgr6')
-                    # private$p_clusters <- list2env(cluster_list, hash = TRUE)
-                    private$p_dt <- cluster_df
-                    # private$p_organisms <- organisms
-                    private$p_organisms <- unique(cluster_df[, org])
-                    private$p_panmatrix <- panmatrix
-                    private$p_level <- 95 #default
+                    # private$.clusters <- list2env(cluster_list, hash = TRUE)
+                    private$.dt <- cluster_df
+                    # private$.organisms <- organisms
+                    names(orgs) <- seq_along(orgs)
+                    private$.organisms <- orgs
+                    private$.panmatrix <- panmatrix
+                    private$.level <- 95 #default
                   },
 
                   # # Print method #
@@ -140,9 +141,9 @@ PgR6 <- R6Class('PgR6',
                   # Basic Subset Methods #
                   # Drop organisms from dataset
                   drop = function(x){
-                    orgs <- private$p_organisms
+                    orgs <- private$.organisms
                     if (is.numeric(x)){
-                      vec <- c(private$p_dropped, orgs[x])
+                      vec <- c(private$.dropped, orgs[x])
                       un <- vec[unique(names(vec))]
                       dp <- un[!is.na(un)]
                     }else if (is.character(x)){
@@ -152,19 +153,19 @@ PgR6 <- R6Class('PgR6',
                     }else{
                       stop('x must be numeric or character')
                     }
-                    if (length(dp)) private$p_dropped <- dp else private$p_dropped <- NULL
+                    if (length(dp)) private$.dropped <- dp else private$.dropped <- NULL
                     invisible(self)
                   },
 
                   # Recover from trash previously dropped organisms
                   recover = function(x){
-                    orgs <- private$p_organisms
+                    orgs <- private$.organisms
                     if (is.numeric(x)){
-                      dp <- private$p_dropped[!names(private$p_dropped)%in%x]
+                      dp <- private$.dropped[!names(private$.dropped)%in%x]
                     } else if (is.character(x)){
-                      dp <- private$p_dropped[!private$p_dropped%in%x]
+                      dp <- private$.dropped[!private$.dropped%in%x]
                     }
-                    if (length(dp)) private$p_dropped <- dp else private$p_dropped <- NULL
+                    if (length(dp)) private$.dropped <- dp else private$.dropped <- NULL
                     invisible(self)
                   }#,
 
@@ -182,9 +183,9 @@ PgR6 <- R6Class('PgR6',
                 # Active binding variables #
                 active = list(
                   pan_matrix = function(){
-                    pdp <- private$p_dropped
+                    pdp <- private$.dropped
                     if (length(pdp)){
-                      pm2 <- private$p_panmatrix[ -as.integer(names(pdp)), , drop = FALSE]
+                      pm2 <- private$.panmatrix[ -as.integer(names(pdp)), , drop = FALSE]
                       cs0 <- colSums(pm2)==0
                       if (any(cs0)){
                         pm2[, -which(cs0), drop = FALSE]
@@ -192,13 +193,13 @@ PgR6 <- R6Class('PgR6',
                         pm2
                       }
                     }else{
-                      private$p_panmatrix
+                      private$.panmatrix
                     }
                   },
 
                   organisms = function(){
                     nms <- dimnames(self$pan_matrix)[[1]]
-                    pnms <- dimnames(private$p_panmatrix)[[1]]
+                    pnms <- dimnames(private$.panmatrix)[[1]]
                     idx <- which(pnms%in%nms)
                     names(nms) <- idx
                     nms
@@ -208,13 +209,13 @@ PgR6 <- R6Class('PgR6',
                   #   ogs <- dimnames(self$pan_matrix)[[2]]
                   #   names(ogs) <- ogs
                   #   rr <- lapply(ogs, function(x){
-                  #     sset <- private$p_clusters[[x]]#[self$organisms]
+                  #     sset <- private$.clusters[[x]]#[self$organisms]
                   #     onlyPublic <- sset[names(sset)%in%self$organisms]
                   #     onlyPublic[!is.na(onlyPublic)]
                   #   })
                   #   class(rr) <- 'ClusterList'
                   #   attr(rr, 'organisms') <- self$organisms
-                  #   attr(rr, 'separator') <- private$p_sep
+                  #   attr(rr, 'separator') <- private$.sep
                   #   rr
                   # },
 
@@ -223,26 +224,26 @@ PgR6 <- R6Class('PgR6',
                     dn <- dimnames(self$pan_matrix)
                     ogs <- dn[[2]]
                     orgs <- dn[[1]]
-                    rr <- split(private$p_dt[group%in%ogs & org%in%orgs, ],
+                    rr <- split(private$.dt[group%in%ogs & org%in%orgs, ],
                                 by = 'group', keep.by = F)
                     # class(rr) <- 'ClusterList'
                     # attr(rr, 'organisms') <- self$organisms
-                    # attr(rr, 'separator') <- private$p_sep
+                    # attr(rr, 'separator') <- private$.sep
                     # attr(rr, 'pgr6env') <- parent.frame()
                     rr
                   },
 
                   core_level = function(value){
-                    if (missing(value)) return(private$p_level)
+                    if (missing(value)) return(private$.level)
                     if (value>100) stop("can't set 'core_level' > 100%.")
                     if (value<85) warning("setting 'core_level' under 85%")
-                    private$p_level <- value
-                    private$p_level
+                    private$.level <- value
+                    private$.level
                   },
 
                   core_clusters = function(){
                     ln <- length(self$organisms)
-                    co <- round(private$p_level * ln / 100)
+                    co <- round(private$.level * ln / 100)
                     pm <- self$pan_matrix
                     pm[which(pm>1L, arr.ind = TRUE)] <- 1L
                     wh <- which(colSums(pm) >= co)
@@ -255,35 +256,34 @@ PgR6 <- R6Class('PgR6',
                   },
 
                   dropped = function(){
-                    private$p_dropped
+                    private$.dropped
                   }
 
                 )
 )
 
 
-#' @import data.table
+# #' @importFrom data.table `[.data.table`
 PgR6_subset <- R6::R6Class('PgR6_subset',
 
                            private = list(.x = NULL,
                                           .i = NULL,
                                           .j = NULL,
-                                          .simple = FALSE,
-                                          .Nargs = NULL
+                                          .simple = NULL
                                           ),
 
 
                            public = list(
-                             initialize = function(x, i, j){
+                             initialize = function(x, i, j, .simple){
 
-                               private$.Nargs <- nargs()
+                               private$.simple <- .simple
+
                                nnclu <- names(x$clusters)
                                names(nnclu) <- seq_along(nnclu)
                                nnorg <- x$organisms
 
                                # Simple subset
-                               if(private$.Nargs<3){
-                                 private$.simple <- TRUE
+                               if(.simple){
                                  j <- i
                                  private$.i <- nnorg
                                  if (is.numeric(j)){
@@ -320,21 +320,20 @@ PgR6_subset <- R6::R6Class('PgR6_subset',
                                    }
                                  }
 
-                               }
-
-                               ## Subset cluster and orgs
-                               if (!missing(i) & !missing(j)){
-                                 if (is.numeric(i)){
-                                   private$.i <- nnorg[i]
-                                 }else{
-                                   wh <- which(nnorg%in%i)
-                                   private$.i <- nnorg[wh]
-                                 }
-                                 if (is.numeric(j)){
-                                   private$.j <- nnclu[j]
-                                 }else{
-                                   wh <- which(nnclu%in%j)
-                                   private$.j <- nnclu[wh]
+                                 ## Subset cluster and orgs
+                                 if (!missing(i) & !missing(j)){
+                                   if (is.numeric(i)){
+                                     private$.i <- nnorg[i]
+                                   }else{
+                                     wh <- which(nnorg%in%i)
+                                     private$.i <- nnorg[wh]
+                                   }
+                                   if (is.numeric(j)){
+                                     private$.j <- nnclu[j]
+                                   }else{
+                                     wh <- which(nnclu%in%j)
+                                     private$.j <- nnclu[wh]
+                                   }
                                  }
                                }
 
@@ -348,7 +347,11 @@ PgR6_subset <- R6::R6Class('PgR6_subset',
                              pan_matrix = function(){
                                ii <- as.integer(names(private$.i))
                                jj <- as.integer(names(private$.j))
-                               private$.x$pan_matrix[ii, jj, drop=FALSE]
+                               private$
+                                 .x$
+                                 .__enclos_env__$
+                                 private$
+                                 .panmatrix[ii, jj, drop=FALSE]
                              },
 
                              organisms = function(){
@@ -360,7 +363,7 @@ PgR6_subset <- R6::R6Class('PgR6_subset',
                                  .x$
                                  .__enclos_env__$
                                  private$
-                                 p_dt[group%in%jj & org%in%ii, org, ]
+                                 .dt[group%in%jj & org%in%ii, org, ]
                                un <- unique(as.character(fr))
                                private$.x$organisms[private$.x$organisms %in% un]
 
@@ -374,7 +377,7 @@ PgR6_subset <- R6::R6Class('PgR6_subset',
                                        .x$
                                        .__enclos_env__$
                                        private$
-                                       p_dt[group%in%jj & org%in%ii,,],
+                                       .dt[group%in%jj & org%in%ii,,],
                                      by='group',
                                      keep.by=F,
                                      drop = TRUE)
@@ -382,13 +385,17 @@ PgR6_subset <- R6::R6Class('PgR6_subset',
 
                            ),
 
-                           cloneable = FALSE
+                           cloneable = FALSE, class = FALSE, portable = FALSE
 
 )
 
 ## S3 Subset Methods for some active bindings
+#' @export
 `[.PgR6` <- function(self, i, j){
-  rr <- PgR6_subset$new(x = self, i, j)
+  Nargs <- nargs()
+  mj <- missing(j)
+  isSimple <- (Nargs + !(mj))<3
+  rr <- PgR6_subset$new(x = self, i, j, .simple = isSimple)
   invisible(rr)
 }
 

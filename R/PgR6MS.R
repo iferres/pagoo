@@ -15,7 +15,7 @@ PgR6MS <- R6Class('PgR6MS',
                   inherit = PgR6M,
 
                   private = list(
-                    p_sequences = NULL
+                    .sequences = NULL
                   ),
 
                   public = list(
@@ -76,69 +76,74 @@ PgR6MS <- R6Class('PgR6MS',
                       # Create private env and populate it with sequences.
                       names(sequences) <- NULL
                       sequences <- unlist(sequences, use.names = TRUE)
-                      private$p_sequences <- BStringSet(sequences, use.names = TRUE)
+                      private$.sequences <- BStringSet(sequences, use.names = TRUE)
                       ptt <- paste0(sep, '\\w+$')
-                      mcols(private$p_sequences)$organisms <- sub(ptt, '', names(private$p_sequences))
-                      # private$p_sequences <- list2env(as.list(sequences),
+                      mcols(private$.sequences)$organisms <- sub(ptt, '', names(private$.sequences))
+                      # private$.sequences <- list2env(as.list(sequences),
                       #                                 hash = TRUE)
                     }
 
                     # Methods for sequences
+                    # getCoreSeqs = function(max_per_org = 1, fill = TRUE){
+                    #
+                    #
+                    # }
+
                   ),
 
                   active = list(
 
                     sequences = function(){
-                      sqs <- lapply(self$clusters, function(x) private$p_sequences[x])
+                      sqs <- lapply(self$clusters, function(x) private$.sequences[x])
 
                       # sqs <- lapply(self$clusters, function(x){
                       #   vp <- vapply(x, function(y){
-                      #     rr <- private$p_sequences[[y]]
+                      #     rr <- private$.sequences[[y]]
                       #   }, FUN.VALUE = NA_character_)
                       #   names(vp) <- x
                       #   vp
                       # })
-                      class(sqs) <- 'SequenceList'
-                      attr(sqs, 'organisms') <- self$organisms
-                      attr(sqs, 'separator') <- private$p_sep
-                      sqs
+                      # class(sqs) <- 'SequenceList'
+                      # attr(sqs, 'organisms') <- self$organisms
+                      # attr(sqs, 'separator') <- private$.sep
+                      # sqs
                     }
                   )
 )
 
 
 
-# Subset method, matrix-like.
-`[.SequenceList` <- function(x, i, j){
-
-  Narg <- nargs()
-  orgs <- attr(x, 'organisms')
-  sep <- attr(x, 'separator')
-
-  # simple subset
-  if (Narg<3){
-    if (missing(i)) {return(x)} else {rr <- unclass(x)[i]}
-  }
-
-  #double arg
-  #Take all orgs, subset clusters
-  if (missing(i)){
-    rr <- unclass(x)[j]
-  }
-
-  pattern <- paste0('^',orgs, sep)
-  #Take all clusters, subset orgs
-  if (missing(j)){
-    if (is.character(i)){
-      i <- which(orgs%in%i)
-    }
-    sorgs <- orgs[i]
-    rr <- lapply(x, function(y){
-      ss <- y[which(names(y)%in%sorgs)]
-      ss[!is.na(ss)]
-    })
-  }
-
-
-
-}
+# # Subset method, matrix-like.
+# `[.SequenceList` <- function(x, i, j){
+#
+#   Narg <- nargs()
+#   orgs <- attr(x, 'organisms')
+#   sep <- attr(x, 'separator')
+#
+#   # simple subset
+#   if (Narg<3){
+#     if (missing(i)) {return(x)} else {rr <- unclass(x)[i]}
+#   }
+#
+#   #double arg
+#   #Take all orgs, subset clusters
+#   if (missing(i)){
+#     rr <- unclass(x)[j]
+#   }
+#
+#   pattern <- paste0('^',orgs, sep)
+#   #Take all clusters, subset orgs
+#   if (missing(j)){
+#     if (is.character(i)){
+#       i <- which(orgs%in%i)
+#     }
+#     sorgs <- orgs[i]
+#     rr <- lapply(x, function(y){
+#       ss <- y[which(names(y)%in%sorgs)]
+#       ss[!is.na(ss)]
+#     })
+#   }
+#
+#
+#
+# }
