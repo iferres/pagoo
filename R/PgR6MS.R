@@ -84,57 +84,57 @@ PgR6MS <- R6Class('PgR6MS',
                         warning('Missing gid: some sequence names do not match to any gid. Continuing anyway..\n', immediate. = TRUE)
                       }
 
-                      # Expect a named list (names = organisms names), with a
-                      # named vector of strings. Names of strings are gene
-                      # names. Applies separator prior to check.
-                      nmsq <- names(sequences)
-                      if (!all(self$organisms %in% nmsq))
-                        stop('organism names in cluster_list do not match names of sequences.')
-
-                      # Rename genes applying separator. This is to later make
-                      # them hashable.
-                      sequences <- lapply(seq_along(sequences), function(i){
-                        sq <- sequences[i]
-                        norg <- names(sq)
-                        sqv <- sq[[1]]
-                        names(sqv) <- paste(norg, sep, names(sqv), sep = '')
-                        sqv
-                      })
-                      names(sequences) <- nmsq
-
-                      # Extract for each organism the gene names in each
-                      # cluster.
-                      namesInClusters <- lapply(self$organisms, function(x){
-                        unlist(sapply(self$clusters, function(y){
-                         rr <- y[which(names(y)==x)]
-                         rr[!is.na(rr)]
-                        }), use.names = FALSE)
-                      })
-                      names(namesInClusters) <- self$organisms
-
-
-                      # Check if gene names in clusters match gene names in
-                      # sequences. Stop if not.
-                      genesOK <- all(sapply(self$organisms, function(x){
-                        all(namesInClusters[[x]] %in% names(sequences[[x]]))
-                      }))
-                      genesOK2 <- all(sapply(self$organisms, function(x){
-                        all(names(sequences[[x]] %in% namesInClusters[[x]]))
-                      }))
-                      if (!genesOK){
-                        stop('gene names in sequences are not contained in gene names in cluster_list')
-                      }else if (!genesOK2) {
-                        warning('Not all gene names in sequences are present in cluster_list. Moving on.')
-                      }
-
-                      # Create private env and populate it with sequences.
-                      names(sequences) <- NULL
-                      sequences <- unlist(sequences, use.names = TRUE)
-                      private$.sequences <- BStringSet(sequences, use.names = TRUE)
-                      ptt <- paste0(sep, '\\w+$')
-                      mcols(private$.sequences)$organisms <- sub(ptt, '', names(private$.sequences))
-                      # private$.sequences <- list2env(as.list(sequences),
-                      #                                 hash = TRUE)
+                      # # Expect a named list (names = organisms names), with a
+                      # # named vector of strings. Names of strings are gene
+                      # # names. Applies separator prior to check.
+                      # nmsq <- names(sequences)
+                      # if (!all(self$organisms %in% nmsq))
+                      #   stop('organism names in cluster_list do not match names of sequences.')
+                      #
+                      # # Rename genes applying separator. This is to later make
+                      # # them hashable.
+                      # sequences <- lapply(seq_along(sequences), function(i){
+                      #   sq <- sequences[i]
+                      #   norg <- names(sq)
+                      #   sqv <- sq[[1]]
+                      #   names(sqv) <- paste(norg, sep, names(sqv), sep = '')
+                      #   sqv
+                      # })
+                      # names(sequences) <- nmsq
+                      #
+                      # # Extract for each organism the gene names in each
+                      # # cluster.
+                      # namesInClusters <- lapply(self$organisms, function(x){
+                      #   unlist(sapply(self$clusters, function(y){
+                      #    rr <- y[which(names(y)==x)]
+                      #    rr[!is.na(rr)]
+                      #   }), use.names = FALSE)
+                      # })
+                      # names(namesInClusters) <- self$organisms
+                      #
+                      #
+                      # # Check if gene names in clusters match gene names in
+                      # # sequences. Stop if not.
+                      # genesOK <- all(sapply(self$organisms, function(x){
+                      #   all(namesInClusters[[x]] %in% names(sequences[[x]]))
+                      # }))
+                      # genesOK2 <- all(sapply(self$organisms, function(x){
+                      #   all(names(sequences[[x]] %in% namesInClusters[[x]]))
+                      # }))
+                      # if (!genesOK){
+                      #   stop('gene names in sequences are not contained in gene names in cluster_list')
+                      # }else if (!genesOK2) {
+                      #   warning('Not all gene names in sequences are present in cluster_list. Moving on.')
+                      # }
+                      #
+                      # # Create private env and populate it with sequences.
+                      # names(sequences) <- NULL
+                      # sequences <- unlist(sequences, use.names = TRUE)
+                      # private$.sequences <- BStringSet(sequences, use.names = TRUE)
+                      # ptt <- paste0(sep, '\\w+$')
+                      # mcols(private$.sequences)$organisms <- sub(ptt, '', names(private$.sequences))
+                      # # private$.sequences <- list2env(as.list(sequences),
+                      # #                                 hash = TRUE)
                     }
 
                     # Methods for sequences
