@@ -76,6 +76,14 @@ PgR6MS <- R6Class('PgR6MS',
                         stop('Unrecognized sequences format')
                       }
 
+                      if (!all(private$.dt[, gid]%in%gids)){
+                        stop('Missing sequences: some gid do not match any sequence name.')
+                      }
+
+                      if (any(!gids%in%private$.dt[, gid])){
+                        warning('Missing gid: some sequence names do not match to any gid. Continuing anyway..\n', immediate. = TRUE)
+                      }
+
                       # Expect a named list (names = organisms names), with a
                       # named vector of strings. Names of strings are gene
                       # names. Applies separator prior to check.
