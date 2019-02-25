@@ -8,7 +8,15 @@
 #                                              .Names = c("gene1", "gene2"))),
 #                        .Names = c("org1", "org2", "org3"))
 
-#' @importFrom Biostrings BStringSet
+##' Expect 1) a named list of named character vector Names of list is names of
+##' organisms, names of character vector are gene names; 2) a named list of
+##' BStringSet objects (same requirements as (1), but with BStringSet names as
+##' gene names); 3) a BStringSetList (same requirements as (3) but
+##' BStringSetList names are organisms names).
+##'
+##'
+
+#' @importFrom Biostrings BStringSet DNAStringSet
 #' @export
 PgR6MS <- R6Class('PgR6MS',
 
@@ -20,16 +28,54 @@ PgR6MS <- R6Class('PgR6MS',
 
                   public = list(
 
-                    initialize = function(cluster_list,
+                    initialize = function(cluster_df,
                                           prefix = 'group',
-                                          sequences,
-                                          sep = '__'){
+                                          sep = '__',
+                                          sequences){
 
-                      super$initialize(cluster_list = cluster_list,
+                      super$initialize(cluster_df = cluster_df,
                                        prefix = prefix,
                                        sep = sep)
 
                       # Check input sequences
+                      if (class(sequences)%in%c('list',
+                                                'BStringSetList',
+                                                'DNAStringSetList')){
+
+                        norgs <- length(sequences)
+                        orgNames <- names(sequences)
+
+                        if (length(orgNames)==0){
+                          stop('Unnamed list.')
+                        }
+
+                        clss <- unique(sapply(sequences, class))
+                        genNames <- lapply(sequences, names)
+
+                        if (clss%in%c('character',
+                                      'BStringSet',
+                                      'DNAStringSet')){
+
+                          if (length(genNames)==0){
+                            stop('Unnamed sequences.')
+                          }
+
+                          gids <- mapply(paste,
+                                         orgNames, genNames,
+                                         MoreArgs = list(sep = sep))
+                          gids <- unlist(gids, use.names = FALSE)
+                          sqs <- unlist(sequences, use.names = FALSE)
+                          names(sqs) <- gids
+                          private$.sequences <- DNAStringSet(sqs)
+
+                        }else{
+                          stop('Unrecognized sequences format.')
+                        }
+
+                      }else{
+                        stop('Unrecognized sequences format')
+                      }
+
                       # Expect a named list (names = organisms names), with a
                       # named vector of strings. Names of strings are gene
                       # names. Applies separator prior to check.
