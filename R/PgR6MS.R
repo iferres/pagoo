@@ -17,6 +17,7 @@
 ##'
 
 #' @importFrom Biostrings BStringSet DNAStringSet
+#' @importFrom S4Vectors split
 #' @export
 PgR6MS <- R6Class('PgR6MS',
 
@@ -76,13 +77,28 @@ PgR6MS <- R6Class('PgR6MS',
                         stop('Unrecognized sequences format')
                       }
 
-                      if (!all(private$.dt[, gid]%in%gids)){
+                      dtgid <- private$.dt[, gid]
+
+                      if (!all(dtgid%in%gids)){
                         stop('Missing sequences: some gid do not match any sequence name.')
                       }
 
-                      if (any(!gids%in%private$.dt[, gid])){
+                      if (any(!gids%in%dtgid)){
                         warning('Missing gid: some sequence names do not match to any gid. Continuing anyway..\n', immediate. = TRUE)
                       }
+
+                      # Add metadata to sequences
+                      spl <- strsplit(gids, sep)
+                      mcols(private$.sequences)$org <- vapply(spl, '[', 1,
+                                                              FUN.VALUE = NA_character_)
+                      mcols(private$.sequences)$group <- vapply(gids,
+                                                                function(x){
+                                                                  wh <- which(dtgid==x)
+                                                                  if (length(wh))
+                                                                    as.character(dt$group[wh])
+                                                                  else
+                                                                    NA_character_
+                                                                }, FUN.VALUE = NA_character_)
 
                       # # Expect a named list (names = organisms names), with a
                       # # named vector of strings. Names of strings are gene
@@ -148,19 +164,13 @@ PgR6MS <- R6Class('PgR6MS',
                   active = list(
 
                     sequences = function(){
-                      sqs <- lapply(self$clusters, function(x) private$.sequences[x])
-
-                      # sqs <- lapply(self$clusters, function(x){
-                      #   vp <- vapply(x, function(y){
-                      #     rr <- private$.sequences[[y]]
-                      #   }, FUN.VALUE = NA_character_)
-                      #   names(vp) <- x
-                      #   vp
-                      # })
-                      # class(sqs) <- 'SequenceList'
-                      # attr(sqs, 'organisms') <- self$organisms
-                      # attr(sqs, 'separator') <- private$.sep
-                      # sqs
+                      dn <- dimnames(self$pan_matrix)
+                      ogs <- dn[[2]]
+                      orgs <- dn[[1]]
+                      sqs <- private$.sequences
+                      sset <- which(mcols(sqs)$group %in% ogs &
+                                      mcols(sqs)$org %in% orgs)
+                      split(sqs[sset], mcols(sqs[sset])$group)
                     }
                   )
 )
