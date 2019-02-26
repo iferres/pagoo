@@ -62,6 +62,8 @@ PgR6 <- R6Class('PgR6',
 
                     # 4. Create gid
                     cluster_df[, gid := paste(org, gene, sep = sep)]
+                    if (any(duplicated(cluster_df[, gid])))
+                      stop('Duplicated gene names in cluster_df.')
 
                     # 5. Column order, just for format
                     setcolorder(cluster_df, c('group','gid', 'org', 'gene'))
