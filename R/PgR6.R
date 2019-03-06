@@ -280,7 +280,7 @@ PgR6_subset <- R6::R6Class('PgR6_subset',
 
                                private$.simple <- .simple
 
-                               nnclu <- names(x$clusters)
+                               nnclu <- dimnames(x$pan_matrix)[[2]]
                                names(nnclu) <- seq_along(nnclu)
                                nnorg <- x$organisms
 
