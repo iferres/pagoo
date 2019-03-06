@@ -39,6 +39,7 @@ active_subset <- list(
           drop = TRUE)
   },
 
+  #' @importFrom S4Vectors split
   sequences = function(){
     jj <- private$.j
     ii <- private$.i
