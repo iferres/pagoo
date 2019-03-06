@@ -16,6 +16,7 @@
 ##'
 ##'
 
+#' @importFrom GenomicRanges mcols mcols<-
 #' @importFrom Biostrings BStringSet DNAStringSet
 #' @importFrom S4Vectors split
 #' @export
@@ -95,7 +96,7 @@ PgR6MS <- R6Class('PgR6MS',
                                                                 function(x){
                                                                   wh <- which(dtgid==x)
                                                                   if (length(wh))
-                                                                    as.character(dt$group[wh])
+                                                                    as.character(private$.dt$group[wh])
                                                                   else
                                                                     NA_character_
                                                                 }, FUN.VALUE = NA_character_)
