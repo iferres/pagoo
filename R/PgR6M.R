@@ -57,7 +57,9 @@ PgR6M <- R6Class('PgR6M',
 
                    #Plot Methods
                    gg_barplot = function(){
-                     dd <- as.data.frame(table(colSums(self$pan_matrix)))
+                     pm <- self$pan_matrix
+                     pm[which(pm > 0, arr.ind = TRUE)] <- 1L
+                     dd <- as.data.frame(table(colSums(pm)))
                      ggplot(dd, aes(x=Var1, y=Freq)) +
                        geom_bar(stat='identity') +
                        ylab('Number of genes') +
