@@ -130,6 +130,7 @@ PgR6 <- R6Class('PgR6',
                     private$.organisms <- orgs
                     private$.panmatrix <- panmatrix
                     private$.level <- 95 #default
+                    private$.sep <- sep
                   },
 
                   # # Print method #
