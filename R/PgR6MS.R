@@ -155,10 +155,29 @@ PgR6MS <- R6Class('PgR6MS',
                     }
 
                     # Methods for sequences
-                    # getCoreSeqs = function(max_per_org = 1, fill = TRUE){
-                    #
-                    #
-                    # }
+                    getCoreSeqs = function(max_per_org = 1, fill = TRUE){
+                      ccl <- self$core_clusters
+                      orgs <- self$organisms
+                      sqs <- private$.sequences
+                      mcls <- mcols(sqs)
+                      whcore <- which(mcls$group %in% ccl)
+                      sqs <- sqs[whcore]
+                      mcls <- mcols(sqs)
+                      if (!(is.na(max_per_org) | is.null(max_per_org))){
+                        wma <- which(self$pan_matrix[, ccl] > max_per_org, arr.ind = T)
+                        #if length...
+                        ccl[wma[, 2]]
+                      }
+
+                      # spl <- split(sqs[whcore], mcls$group[whcore])
+                      # nro <- elementNROWS(spl)
+                      if (fill){
+                        tofill <- which(nro<length(orgs))
+                        if (length(tofill)){
+
+                        }
+                      }
+                    }
 
                   ),
 
