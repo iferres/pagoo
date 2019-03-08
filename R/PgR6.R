@@ -130,6 +130,7 @@ PgR6 <- R6Class('PgR6',
                     private$.organisms <- orgs
                     private$.panmatrix <- panmatrix
                     private$.level <- 95 #default
+                    private$.sep <- sep
                   },
 
                   # # Print method #
@@ -344,49 +345,6 @@ PgR6_subset <- R6::R6Class('PgR6_subset',
                              }
                            ),
 
-                           active = list(
-
-                             pan_matrix = function(){
-                               ii <- as.integer(names(private$.i))
-                               jj <- as.integer(names(private$.j))
-                               private$
-                                 .x$
-                                 .__enclos_env__$
-                                 private$
-                                 .panmatrix[ii, jj, drop=FALSE]
-                             },
-
-                             organisms = function(){
-                               # rn <- rownames(self$pan_matrix)
-                               # private$.x$organisms[private$.x$organisms %in% rn]
-                               ii <- private$.i
-                               jj <- private$.j
-                               fr <- private$
-                                 .x$
-                                 .__enclos_env__$
-                                 private$
-                                 .dt[group%in%jj & org%in%ii, org, ]
-                               un <- unique(as.character(fr))
-                               private$.x$organisms[private$.x$organisms %in% un]
-
-                             },
-
-                             clusters = function(){
-
-                               jj <- private$.j
-                               ii <- private$.i
-                               split(private$
-                                       .x$
-                                       .__enclos_env__$
-                                       private$
-                                       .dt[group%in%jj & org%in%ii,,],
-                                     by='group',
-                                     keep.by=F,
-                                     drop = TRUE)
-                             }
-
-                           ),
-
                            cloneable = FALSE, class = FALSE, portable = FALSE
 
 )
@@ -397,6 +355,11 @@ PgR6_subset <- R6::R6Class('PgR6_subset',
   Nargs <- nargs()
   mj <- missing(j)
   isSimple <- (Nargs + !(mj))<3
+  asst <- names(active_subset)
+  cl_abind <- which(sapply(names(self), bindingIsActive, env = self))
+  avail <- which(names(cl_abind) %in% asst)
+  addm <- names(cl_abind)[avail]
+  lapply(addm, function(x) PgR6_subset$set('active', x, active_subset[[x]], overwrite = TRUE))
   rr <- PgR6_subset$new(x = self, i, j, .simple = isSimple)
   invisible(rr)
 }
