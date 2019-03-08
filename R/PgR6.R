@@ -360,6 +360,7 @@ PgR6_subset <- R6::R6Class('PgR6_subset',
   avail <- which(names(cl_abind) %in% asst)
   addm <- names(cl_abind)[avail]
   lapply(addm, function(x) PgR6_subset$set('active', x, active_subset[[x]], overwrite = TRUE))
+  on.exit(lapply(addm, function(x) PgR6_subset$set('active', x, NULL, overwrite = TRUE)))
   rr <- PgR6_subset$new(x = self, i, j, .simple = isSimple)
   invisible(rr)
 }

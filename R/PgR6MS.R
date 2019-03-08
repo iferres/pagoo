@@ -152,10 +152,18 @@ PgR6MS <- R6Class('PgR6MS',
                       # mcols(private$.sequences)$organisms <- sub(ptt, '', names(private$.sequences))
                       # # private$.sequences <- list2env(as.list(sequences),
                       # #                                 hash = TRUE)
-                    }
+                    },
 
                     # Methods for sequences
-                    getCoreSeqs = function(max_per_org = 1, fill = TRUE){
+                    #' @importFrom S4Vectors mcols
+                    #' @importFrom BiocGenerics table
+                    get_core_seqs = function(max_per_org = 1, fill = TRUE){
+
+                      if (!class(max_per_org)%in%c('logical', 'NULL', 'numeric', 'integer'))
+                        stop('"max_per_org" is not numeric, NULL, or NA')
+                      if (!is.logical(fill))
+                        stop('"fill" is not logical')
+
                       ccl <- self$core_clusters
                       orgs <- self$organisms
                       sqs <- private$.sequences
@@ -163,20 +171,46 @@ PgR6MS <- R6Class('PgR6MS',
                       whcore <- which(mcls$group %in% ccl)
                       sqs <- sqs[whcore]
                       mcls <- mcols(sqs)
+
                       if (!(is.na(max_per_org) | is.null(max_per_org))){
                         wma <- which(self$pan_matrix[, ccl] > max_per_org, arr.ind = T)
-                        #if length...
-                        ccl[wma[, 2]]
-                      }
-
-                      # spl <- split(sqs[whcore], mcls$group[whcore])
-                      # nro <- elementNROWS(spl)
-                      if (fill){
-                        tofill <- which(nro<length(orgs))
-                        if (length(tofill)){
-
+                        if (dim(wma)[1]){
+                          ogs2fix <- ccl[wma[, 2]]
+                          orgs2fix <- rownames(wma)
+                          remrw <- apply(cbind(ogs2fix, orgs2fix), 1, function(x){
+                            wh <- which(mcls$group==x[1] & mcls$org==x[2])
+                            wh[seq_len(max_per_org)]
+                          })
+                          torm <- unlist(remrw)
+                          if (length(torm)){
+                            sqs <- sqs[-torm]
+                            mcls <- mcols(sqs)
+                          }
                         }
                       }
+
+                      # Fill '0' cells with empthy DNAStringSet
+                      # spl <- split(sqs, mcls$group)
+                      # nro <- elementNROWS(spl)
+                      if (fill){
+                        tbl <- table(mcls)
+                        tofll <- which(tbl==0, arr.ind = TRUE)
+                        if (dim(tofll)[1]){
+                          sqs <- append(sqs, DNAStringSet(rep('', dim(tofll)[1])))
+                          mcls <- mcols(sqs)
+                          mfill <- which(is.na(mcls$org))
+                          mcols(sqs)$org[mfill] <- rownames(tofll)
+                          mcols(sqs)$group[mfill] <- ccl[tofll[, 2]]
+                          mcls <- mcols(sqs)
+                        }
+                      }
+
+                      ## Order ! ! !
+                      sqs <- sqs[order(mcls$org)]
+                      mcls <- mcols(sqs)
+
+                      # Return
+                      split(sqs, mcls$group)
                     }
 
                   ),
