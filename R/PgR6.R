@@ -253,6 +253,37 @@ PgR6 <- R6Class('PgR6',
                     dimnames(self$pan_matrix)[[2]][wh]
                   },
 
+                  cloud_clusters = function(){
+                    pm <- self$pan_matrix
+                    pm[which(pm>1L, arr.ind = TRUE)] <- 1L
+                    dups <- duplicated(pm, MARGIN = 1)
+                    wdups <- which(dups)
+                    if (length(wdups)){
+                      pm <- pm[-wdups, ]
+                    }
+                    dimnames(pm)[[2]][which(colSums(pm) == 1L)]
+                  },
+
+                  shell_clusters = function(){
+                    dn <- dimnames(self$pan_matrix)[[2]]
+                    dn[which(!dn %in% c(self$core_clusters, self$cloud_clusters))]
+                  },
+
+                  summary_stats = function(){
+                    total <- dim(self$pan_matrix)[2]
+                    core <- length(self$core_clusters)
+                    cloud <- length(self$cloud_clusters)
+                    shell <- total - core - cloud
+                    data.frame(Category = c('Total',
+                                            'Core',
+                                            'Shell',
+                                            'Cloud'),
+                               Number = c(total,
+                                          core,
+                                          shell,
+                                          cloud))
+                  },
+
                   random_seed = function(){
                     if(!exists('.Random.seed')) set.seed(NULL)
                     .Random.seed
