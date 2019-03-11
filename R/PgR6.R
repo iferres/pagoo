@@ -253,6 +253,37 @@ PgR6 <- R6Class('PgR6',
                     dimnames(self$pan_matrix)[[2]][wh]
                   },
 
+                  cloud_clusters = function(){
+                    pm <- self$pan_matrix
+                    pm[which(pm>1L, arr.ind = TRUE)] <- 1L
+                    dups <- duplicated(pm, MARGIN = 1)
+                    wdups <- which(dups)
+                    if (length(wdups)){
+                      pm <- pm[-wdups, ]
+                    }
+                    dimnames(pm)[[2]][which(colSums(pm) == 1L)]
+                  },
+
+                  shell_clusters = function(){
+                    dn <- dimnames(self$pan_matrix)[[2]]
+                    dn[which(!dn %in% c(self$core_clusters, self$cloud_clusters))]
+                  },
+
+                  summary_stats = function(){
+                    total <- dim(self$pan_matrix)[2]
+                    core <- length(self$core_clusters)
+                    cloud <- length(self$cloud_clusters)
+                    shell <- total - core - cloud
+                    data.frame(Category = c('Total',
+                                            'Core',
+                                            'Shell',
+                                            'Cloud'),
+                               Number = c(total,
+                                          core,
+                                          shell,
+                                          cloud))
+                  },
+
                   random_seed = function(){
                     if(!exists('.Random.seed')) set.seed(NULL)
                     .Random.seed
@@ -360,7 +391,7 @@ PgR6_subset <- R6::R6Class('PgR6_subset',
   avail <- which(names(cl_abind) %in% asst)
   addm <- names(cl_abind)[avail]
   lapply(addm, function(x) PgR6_subset$set('active', x, active_subset[[x]], overwrite = TRUE))
-  on.exit(lapply(addm, function(x) PgR6_subset$set('active', x, NULL, overwrite = TRUE)))
+  # on.exit(lapply(addm, function(x) PgR6_subset$set('active', x, NULL, overwrite = TRUE)))
   rr <- PgR6_subset$new(x = self, i, j, .simple = isSimple)
   invisible(rr)
 }

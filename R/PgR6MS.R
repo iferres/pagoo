@@ -179,7 +179,7 @@ PgR6MS <- R6Class('PgR6MS',
                           orgs2fix <- rownames(wma)
                           remrw <- apply(cbind(ogs2fix, orgs2fix), 1, function(x){
                             wh <- which(mcls$group==x[1] & mcls$org==x[2])
-                            wh[seq_len(max_per_org)]
+                            wh[-seq_len(max_per_org)]
                           })
                           torm <- unlist(remrw)
                           if (length(torm)){
