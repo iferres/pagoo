@@ -5,8 +5,9 @@
 #' @description PgR6 with Methods.
 #' @importFrom R6 R6Class
 #' @importFrom micropan distJaccard distManhattan heaps fluidity binomixEstimate
-#' @importFrom ggplot2 ggplot aes geom_bar geom_raster geom_tile theme element_blank scale_fill_grey xlab ylab
+#' @importFrom ggplot2 ggplot aes geom_bar geom_raster geom_tile theme element_blank scale_fill_grey xlab ylab coord_polar
 #' @importFrom reshape2 melt
+#' @importFrom ggdendro ggdendrogram
 #' @export
 PgR6M <- R6Class('PgR6M',
 
@@ -92,6 +93,29 @@ PgR6M <- R6Class('PgR6M',
                      me <- melt(m)
                      ggplot(me, aes(Var1, Var2, fill=value)) +
                        geom_tile()
+                   },
+
+                   gg_pie = function(){
+                     st <- self$summary_stats
+                     st <- st[-1, ]
+                     st$Category <- factor(st$Category,
+                                           levels = c("Cloud", "Shell", "Core"))
+                     ggplot(st, aes(x='', y=Number, fill=Category)) +
+                       geom_bar(width = 1, stat = "identity") +
+                       coord_polar("y", start=0)
+                   },
+
+                   gg_dendro = function(dist_method = 'Jaccard',
+                                        hclust_method = 'complete',
+                                        ...){
+                     dist_method <- match.arg(dist_method, c('Jaccard', 'Manhattan'))
+                     if (dist_method == 'Jaccard'){
+                       dd <- self$dist_jaccard()
+                     }else{
+                       dd <- self$dist_manhattan(...)
+                     }
+                     hc <- hclust(dd, method = hclust_method)
+                     ggdendrogram(hc, ...)
                    }
 
 
