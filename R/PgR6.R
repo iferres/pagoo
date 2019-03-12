@@ -511,7 +511,7 @@ PgR6_subset <- R6::R6Class('PgR6_subset',
                              }
                            ),
 
-                           cloneable = FALSE, class = FALSE, portable = FALSE
+                           cloneable = FALSE, class = FALSE, portable = TRUE
 
 )
 
