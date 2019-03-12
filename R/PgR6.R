@@ -20,7 +20,16 @@
 
 #' @name PgR6
 #' @title PgR6 basic class
-#' @description A basic \code{pgr6} class constructor.
+#' @description A basic \code{PgR6} class constructor. It contains basic fields
+#' and subset functions to handle a pangenome.
+#' @param cluster_df A \code{data.frame} or \code{data.table} cointaining at
+#' least the following 3 columns: \code{"gene"}, with gene name; \code{"org"},
+#' organism name; and \code{"group"} with the name of the cluster it belongs
+#' to.
+#' @param sep A separator for creating a \code{"gid"} (gene id) column. By
+#' default is "__" (two underscores). \code{gid} are created by pasting the
+#' organism name to the gene name, in order to have unique gene identifiers.
+#'
 #' @importFrom R6 R6Class
 #' @importFrom data.table as.data.table setcolorder dcast
 #' @export
