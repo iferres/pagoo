@@ -22,13 +22,140 @@
 #' @title PgR6 basic class
 #' @description A basic \code{PgR6} class constructor. It contains basic fields
 #' and subset functions to handle a pangenome.
-#' @param cluster_df A \code{data.frame} or \code{data.table} cointaining at
-#' least the following 3 columns: \code{"gene"}, with gene name; \code{"org"},
-#' organism name; and \code{"group"} with the name of the cluster it belongs
-#' to.
-#' @param sep A separator for creating a \code{"gid"} (gene id) column. By
-#' default is "__" (two underscores). \code{gid} are created by pasting the
-#' organism name to the gene name, in order to have unique gene identifiers.
+#' @section Class Constructor:
+#' \describe{
+#'     \item{\code{new(cluster_df, sep = "__")}}{
+#'         \itemize{
+#'             \item{Create a \code{PgR6} object.}
+#'             \item{\bold{Args:}}{
+#'                 \itemize{
+#'                     \item{\bold{\code{cluster_df}}: A \code{data.frame} or \code{data.table} containing at least the
+#'                     following columns: \code{gene} (gene name), \code{org} (organism name to which the gene belongs to),
+#'                     and \code{group} (group of orthologous to which the gene belongs to). More columns are allowed but
+#'                     this basic class do not contain any methods to handle them.
+#'                  }
+#'                     \item{\bold{\code{sep}}: A separator. By default is '__'(two underscores). It will be used to
+#'                     create a unique \code{gid} (gene identifier) for each gene. \code{gid}s are created by pasting
+#'                     \code{org} to \code{gene}, separated by \code{sep}.
+#'                  }
+#'                 }
+#'             }
+#'             \item{\bold{Returns:}}{
+#'                 \itemize{
+#'                     \item{An R6 object of class PgR6. It contains basic fields and methods for
+#'                     analyzing a pangenome.}
+#'                 }
+#'             }
+#'         }
+#'     }
+#' }
+#'
+#'
+#' @section Public Methods:
+#' \describe{
+#'     \item{\code{drop(x)}}{
+#'         \itemize{
+#'             \item{Drop an organism from the dataset. This method allows to hide an organism
+#'             from the real dataset, ignoring it in downstream analyses. All the fields and
+#'             methods will behave as it doesn't exist. For instance, if you decide to drop
+#'             organism 1, the \code{$pan_matrix} field (see below) would not show it when
+#'             called.}
+#'             \item{\bold{Args:}}{
+#'                 \itemize{
+#'                     \item{\bold{\code{x}}: \code{character} or \code{numeric}. The name of the
+#'                     organism wanted to be dropped, or its numeric id as returned in
+#'                     \code{$organism} field (see below).
+#'                  }
+#'                 }
+#'             }
+#'             \item{\bold{Returns:}}{
+#'                 \itemize{
+#'                     \item{\code{self} invisibly, but with \code{x} dropped. It isn't necessary
+#'                     to assign the function call to a new object, nor to re-write it as R6 objects
+#'                     are mutable.}
+#'                 }
+#'             }
+#'         }
+#'     }
+#'     \item{\code{recover(x)}}{
+#'         \itemize{
+#'             \item{Recover a previously \code{$drop()}ped organism (see above). All fields
+#'             and methods will start to behave considering this organism again.}
+#'             \item{\bold{Args:}}{
+#'                 \itemize{
+#'                     \item{\bold{\code{x}}: \code{character} or \code{numeric}. The name of the
+#'                     organism wanted to be recover, or its numeric id as returned in
+#'                     \code{$dropped} field (see below).
+#'                  }
+#'                 }
+#'             }
+#'             \item{\bold{Returns:}}{
+#'                 \itemize{
+#'                     \item{\code{self} invisibly, but with \code{x} recovered. It isn't necessary
+#'                     to assign the function call to a new object, nor to re-write it as R6 objects
+#'                     are mutable.}
+#'                 }
+#'             }
+#'         }
+#'     }
+#' }
+#'
+#'
+#' @section Public Fields:
+#' \describe{
+#'     \item{\bold{\code{pan_matrix}}}{: The panmatrix. Rows are organisms, and
+#'     columns are groups of orthologous. Cells indicates the presence (>=1) or
+#'     absence (0) of a given gene, in a given organism. Cells can have values
+#'     greater than 1 if contain in-paralogs.}
+#'     \item{\bold{\code{organisms}}}{: A \code{character} vector with available
+#'     organism names, and organism number identifier as \code{names()}. (Dropped
+#'     organisms will not be displayed in this field, see \code{$dropped} below).}
+#'     \item{\bold{\code{clusters}}}{: A named \code{list} of clusters. Clusters are
+#'     shown as \code{data.table} objects containing 3 columns: \code{gid}, \code{org},
+#'     and \code{gene}, as explained before.}
+#'     \item{\bold{\code{core_level}}}{: The percentage of organisms a gene must be in
+#'     to be considered as part of the coregenome. \code{core_level = 95} by default.
+#'     Can't be set above 100, and below 85 raises a warning.}
+#'     \item{\bold{\code{core_clusters}}}{: A \code{character} vector with core
+#'     cluster names, as defined by \code{$core_level}.}
+#'     \item{\bold{\code{cloud_clusters}}}{: A \code{character} vector with
+#'     cloud clusters. These are defined as those clusters which contain a single
+#'     gene (singletons), plus those which have more than one but its organisms are
+#'     probably clonal due to identical general gene content. Colloquially defined as
+#'     strain-specific genes.}
+#'     \item{\bold{\code{shell_clusters}}}{: A \code{character} vector with shell
+#'     clusters. These are defined as those clusters than don't belong nethier to the
+#'     core genome, nor to cloud genome. Colloquially defined as genes that are
+#'     present in some but not all strains, and that aren't strain-specific.}
+#'     \item{\bold{\code{summary_stats}}}{: A \code{data.frame} with information about
+#'     the number of core, shell, and cloud clusters, as well as the total number of
+#'     clusters.}
+#'     \item{\bold{\code{random_seed}}}{: The last \code{.Random.seed}. Used for
+#'     reproducibility purposes only.}
+#'     \item{\bold{\code{dropped}}}{: A \code{character} vector with dropped organism
+#'     names, and organism number identifier as \code{names()}}
+#' }
+#'
+#'
+#' @section Special Methods:
+#' \describe{
+#'     \item{\code{clone(deep = FALSE)}}{
+#'         \itemize{
+#'             \item{Method for copying an object. See \href{https://adv-r.hadley.nz/r6.html#r6-semantics}{emph{Advanced R}} for the intricacies of R6 reference semantics.}
+#'             \item{\bold{Args:}}{
+#'                 \itemize{
+#'                     \item{\bold{\code{deep}}: logical. Whether to recursively clone nested R6 objects.
+#'                  }
+#'                 }
+#'             }
+#'             \item{\bold{Returns:}}{
+#'                 \itemize{
+#'                     \item{Cloned object of this class.}
+#'                 }
+#'             }
+#'         }
+#'     }
+#' }
 #'
 #' @importFrom R6 R6Class
 #' @importFrom data.table as.data.table setcolorder dcast
