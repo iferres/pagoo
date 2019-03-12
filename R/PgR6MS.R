@@ -31,12 +31,10 @@ PgR6MS <- R6Class('PgR6MS',
                   public = list(
 
                     initialize = function(cluster_df,
-                                          prefix = 'group',
                                           sep = '__',
                                           sequences){
 
                       super$initialize(cluster_df = cluster_df,
-                                       prefix = prefix,
                                        sep = sep)
 
                       # Check input sequences

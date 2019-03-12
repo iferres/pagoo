@@ -50,7 +50,6 @@ PgR6 <- R6Class('PgR6',
                 public = list(
 
                   initialize = function(cluster_df,
-                                        prefix = 'group',
                                         sep = '__'){
 
                     # Check cluster_df input
