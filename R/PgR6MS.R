@@ -1,4 +1,4 @@
-#PgR6MS
+# PgR6MS
 
 # sequences <- structure(list(org1 = structure(c("jwnxoarfiq", "wajpcygeox", "xvgfkqacpb", "rewbxafzdj"),
 #                                              .Names = c("gene1", "gene2", "gene3", "gene4")),
@@ -7,25 +7,19 @@
 #                             org3 = structure(c("ixwflohqzs", "fuivpjtehs"),
 #                                              .Names = c("gene1", "gene2"))),
 #                        .Names = c("org1", "org2", "org3"))
-
-##' Expect 1) a named list of named character vector Names of list is names of
-##' organisms, names of character vector are gene names; 2) a named list of
-##' BStringSet objects (same requirements as (1), but with BStringSet names as
-##' gene names); 3) a BStringSetList (same requirements as (3) but
-##' BStringSetList names are organisms names).
-##'
-##'
-
-
-
+# Expect 1) a named list of named character vector Names of list is names of
+# organisms, names of character vector are gene names; 2) a named list of
+# BStringSet objects (same requirements as (1), but with BStringSet names as
+# gene names); 3) a BStringSetList (same requirements as (3) but
+# BStringSetList names are organisms names).
+#
+#
 
 #' @name PgR6MS
+#' @title PgR6 class with Methods and Sequences.
 #' @description PgR6 with Methods and Sequences.
-#'
-#' #'  Inherits: \code{\link[pagoo]{PgR6M}}
-#'
-#'
-#'  @section Class Constructor:
+#'  Inherits: \code{\link[pagoo]{PgR6M}}
+#' @section Class Constructor:
 #' \describe{
 #'     \item{\code{new(cluster_df, sep = "__", sequences)}}{
 #'         \itemize{
@@ -50,7 +44,7 @@
 #' }
 #'
 #'
-#'  @section Public Methods:
+#' @section Public Methods:
 #' \describe{
 #'     \item{\code{drop(x)}}{
 #'         \itemize{
@@ -300,7 +294,7 @@
 #' }
 #'
 #'
-#'  @section Public Fields:
+#' @section Public Fields:
 #' \describe{
 #'      \item{\bold{\code{pan_matrix}}}{: The panmatrix. Rows are organisms, and
 #'     columns are groups of orthologous. Cells indicates the presence (>=1) or
@@ -333,11 +327,13 @@
 #'     reproducibility purposes only.}
 #'     \item{\bold{\code{dropped}}}{: A \code{character} vector with dropped organism
 #'     names, and organism number identifier as \code{names()}}
-#'     \item{\bold{\code{sequences}}}{: ~~DESCRIBE THIS FIELD~~}
+#'     \item{\bold{\code{sequences}}}{: A \code{DNAStringSetList}. Each entry represents
+#'     a pangenome cluster, and can be accessed via the \code{'[['} operator, as it were
+#'     a list. See \code{\link[Biostrings]{XStringSetList}}.}
 #' }
 #'
 #'
-#'  @section Special Methods:
+#' @section Special Methods:
 #' \describe{
 #'     \item{\code{clone(deep = FALSE)}}{
 #'         \itemize{
