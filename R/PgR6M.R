@@ -345,6 +345,31 @@ PgR6M <- R6Class('PgR6M',
                    },
 
                    #Analyses Methods
+
+                   rarefact = function(what = 'pangenome', n.perm = 10){
+                     what <- match.arg(what, c('pangenome', 'coregenome'))
+                     pm <- self$pan_matrix
+                     pm[which(pm>1L, arr.ind = TRUE)] <- 1L
+                     norgs <- length(self$organisms)
+                     rmat <- matrix(0L, nrow = norgs, ncol = n.perm)
+                     if (what=='pangenome'){
+                       for (i in seq_len(n.perm)){
+                         cm <- apply(pm[sample(norgs), ], 2, cumsum)
+                         rmat[, i] <- rowSums(cm > 0)
+                       }
+                     }else{
+                       sq <- seq_len(norgs)
+                       for (i in seq_len(n.perm)){
+                         cm <- apply(pm[sample(norgs), ], 2, cumsum)
+                         cr <- apply(cm, 2, `==`, sq)
+                         rmat[, i] <- rowSums(cr)
+                       }
+                     }
+                     rownames(rmat) <- seq_len(norgs)
+                     colnames(rmat) <- paste0('permut_', seq_len(n.perm))
+                     rmat
+                   }
+
                    dist_jaccard = function(){
                      distJaccard(self$pan_matrix)
                    },
