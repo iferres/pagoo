@@ -1,4 +1,4 @@
-active_subset <- list(
+.active_subset <- list(
 
   pan_matrix = function(){
     ii <- as.integer(names(private$.i))
