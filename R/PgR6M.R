@@ -368,7 +368,7 @@ PgR6M <- R6Class('PgR6M',
                      rownames(rmat) <- seq_len(norgs)
                      colnames(rmat) <- paste0('permut_', seq_len(n.perm))
                      rmat
-                   }
+                   },
 
                    dist_jaccard = function(){
                      distJaccard(self$pan_matrix)
