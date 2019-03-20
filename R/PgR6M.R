@@ -382,8 +382,23 @@ PgR6M <- R6Class('PgR6M',
                    },
 
                    heaps = function(n.perm=100){
-                     #micropan::heaps()
-                     heaps(self$pan_matrix ,n.perm = n.perm)
+                     # #micropan::heaps()
+                     # heaps(self$pan_matrix ,n.perm = n.perm)
+                     rr <- self$rarefact(n.perm = n.perm)
+                     rm <- melt(rr)
+                     # Power law linearization:
+                     # y = K * x ^ delta ==> log(y) = log(K) + delta * log(x)
+                     fitHeaps <- lm(log(rm$value) ~ log(rm$Var1))
+                     logK <- summary(fitHeaps)$coef[1]
+                     delta <- summary(fitHeaps)$coef[2]
+                     K <- exp(logK)
+                     alpha <- 1-delta
+                     ret <- list(formula=NULL,
+                                 params=NULL)
+                     ret$formula <- function(x) K * x ^ delta
+                     ret$params <- c(K = K, delta = delta)
+                     attr(ret, 'alpha') <- alpha
+                     ret
                    },
 
                    fluidity = function(n.sim = 10){
