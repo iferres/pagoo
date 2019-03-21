@@ -381,11 +381,13 @@ PgR6M <- R6Class('PgR6M',
                                    weights = weights)
                    },
 
-                   heaps = function(n.perm=100){
+                   power_law_fit = function(raref, ...){
                      # #micropan::heaps()
                      # heaps(self$pan_matrix ,n.perm = n.perm)
-                     rr <- self$rarefact(n.perm = n.perm)
-                     rm <- melt(rr)
+                     if (missing(raref)){
+                       raref <- self$rarefact(...)
+                     }
+                     rm <- melt(raref)
                      # Power law linearization:
                      # y = K * x ^ delta ==> log(y) = log(K) + delta * log(x)
                      fitHeaps <- lm(log(rm$value) ~ log(rm$Var1))
@@ -398,6 +400,26 @@ PgR6M <- R6Class('PgR6M',
                      ret$formula <- function(x) K * x ^ delta
                      ret$params <- c(K = K, delta = delta)
                      attr(ret, 'alpha') <- alpha
+                     ret
+                   },
+
+                   exp_decay_fit = function(raref, pcounts = 10, ...){
+                     # Exponential decay linearization:
+                     # y = A * exp(K * t) + C ==> y - C = K*t + log(A)
+                     # C == core size
+                     if (missing(raref)){
+                       raref <- self$rarefact(what = 'core', ...)
+                     }
+                     rm <- melt(raref)
+                     C <- min(rm$value)
+                     fitExp <- lm(log(value - C + pcounts) ~ Var1, data= rm)
+                     A <- exp(summary(fitExp)$coef[1])
+                     B <- summary(fitExp)$coef[2]
+                     ret <- list(formula=NULL,
+                                 params=NULL)
+                     ret$formula <- function(x) A * exp(B * x) + C
+                     ret$params <- c(A = A, B = B, C = C)
+                     attr(ret, 'pseudo_counts') <- pcounts
                      ret
                    },
 
@@ -462,6 +484,51 @@ PgR6M <- R6Class('PgR6M',
                      ggplot(st, aes(x='', y=Number, fill=Category)) +
                        geom_bar(width = 1, stat = "identity") +
                        coord_polar("y", start=0)
+                   },
+
+                   gg_curves = function(what = c('pangenome', 'coregenome'),
+                                        ...){
+                     what <- match.arg(what, c('pangenome', 'coregenome'), several.ok = TRUE)
+                     names(what) <- what
+                     lrar <- lapply(what, function(x) self$rarefact(what = x))
+                     lfun <- lapply(what, function(x){
+                       if (x == 'pangenome'){
+                         self$power_law_fit(raref = lrar[[x]])#$formula
+                       }else{
+                         self$exp_decay_fit(raref = lrar[[x]])#$formula
+                       }
+                     })
+                     lrarm <- lapply(lrar, melt)
+                     ll <- lapply(what, function(x) {
+                       olst <- list(data = NULL, formula = NULL)
+                       lrarm[[x]]$category <- x
+                       lrarm[[x]]
+                      })
+
+                     df <- Reduce(rbind, ll)
+
+                     # eq <- lapply(lfun, function(x){
+                     #    exp <- paste0('y == ', format(x$formula)[2])
+                     #    params <- x$params
+                     #    for (i in seq_along(params)){
+                     #      exp <- sub(names(params)[i],
+                     #                 format(params[i], digits = 3),
+                     #                 exp,
+                     #                 fixed = TRUE)
+                     #    }
+                     #    exp
+                     # })
+
+                     #plot
+                     g <- ggplot(df, aes(x=factor(Var1), y=value, colour=category)) +
+                       xlab('Number of genomes') + ylab('Number of clusters')
+                     for (i in seq_along(what)){
+                       g <- g +
+                         stat_function(data = df[which(df$category == what[i]), ],
+                                       fun = lfun[[what[i]]]$formula) # +
+                         # annotate('text', x = 3, y=4000, label=eq[[what[i]]], parse=T)
+                     }
+                     g
                    },
 
                    gg_dendro = function(dist_method = 'Jaccard',
