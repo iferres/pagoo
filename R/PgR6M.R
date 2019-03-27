@@ -370,6 +370,7 @@ PgR6M <- R6Class('PgR6M',
                    },
 
                    dist_jaccard = function(){
+                     #micropan::distJaccard()
                      distJaccard(self$pan_matrix)
                    },
 
