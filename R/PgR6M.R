@@ -373,13 +373,6 @@ PgR6M <- R6Class('PgR6M',
                      distJaccard(self$pan_matrix)
                    },
 
-                   dist_manhattan = function(scale = 0,
-                                             weights = rep(1, dim(self$pan_matrix)[2])){
-                     distManhattan(self$pan_matrix,
-                                   scale = scale,
-                                   weights = weights)
-                   },
-
                    power_law_fit = function(raref, ...){
                      # #micropan::heaps()
                      # heaps(self$pan_matrix ,n.perm = n.perm)
