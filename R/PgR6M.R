@@ -416,6 +416,7 @@ PgR6M <- R6Class('PgR6M',
                    },
 
                    fluidity = function(n.sim = 10){
+                     #micropan::fluidity()
                      fluidity(self$pan_matrix, n.sim = n.sim)
                    },
 
