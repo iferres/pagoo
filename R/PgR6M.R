@@ -328,7 +328,6 @@
 #' @importFrom micropan distJaccard distManhattan heaps fluidity binomixEstimate
 #' @importFrom ggplot2 ggplot aes geom_bar geom_raster geom_tile theme element_blank scale_fill_grey xlab ylab coord_polar
 #' @importFrom reshape2 melt
-#' @importFrom ggdendro ggdendrogram
 #' @export
 PgR6M <- R6Class('PgR6M',
 
@@ -529,19 +528,6 @@ PgR6M <- R6Class('PgR6M',
                          # annotate('text', x = 3, y=4000, label=eq[[what[i]]], parse=T)
                      }
                      g
-                   },
-
-                   gg_dendro = function(dist_method = 'Jaccard',
-                                        hclust_method = 'complete',
-                                        ...){
-                     dist_method <- match.arg(dist_method, c('Jaccard', 'Manhattan'))
-                     if (dist_method == 'Jaccard'){
-                       dd <- self$dist_jaccard()
-                     }else{
-                       dd <- self$dist_manhattan(...)
-                     }
-                     hc <- hclust(dd, method = hclust_method)
-                     ggdendrogram(hc, ...)
                    }
 
 
