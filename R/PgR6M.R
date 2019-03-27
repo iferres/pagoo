@@ -457,12 +457,24 @@ PgR6M <- R6Class('PgR6M',
                        scale_fill_grey(start = .2, end = .9)
                    },
 
-                   gg_dist = function(dist = 'Jaccard', ...){
-                     dist <- match.arg(dist, c('Jaccard', 'Manhattan'))
-                     if (dist == 'Jaccard'){
+                   gg_dist = function(dist){
+                     if (missing(dist)){
                        m <- as.matrix(self$dist_jaccard())
                      }else{
-                       m <- as.matrix(self$dist_manhattan(...))
+                       cls <- class(dist)
+                       if (cls=='character'){
+                         dist <- match.arg(dist, c('euclidean',
+                                                   'maximum',
+                                                   'manhattan',
+                                                   'canberra',
+                                                   'binary',
+                                                   'minkowski'))
+                         m <- as.matrix(dist(self$pan_matrix, method = dist))
+                       }else if (cls=='function'){
+                         m <- as.matrix(dist(self$pan_matrix))
+                       }else{
+                         stop('Invalid dist argument.')
+                       }
                      }
                      me <- melt(m)
                      ggplot(me, aes(Var1, Var2, fill=value)) +
