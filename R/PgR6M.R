@@ -325,7 +325,7 @@
 #'
 #'
 #' @importFrom R6 R6Class
-#' @importFrom micropan distJaccard distManhattan heaps fluidity binomixEstimate
+#' @importFrom micropan distJaccard fluidity binomixEstimate
 #' @importFrom ggplot2 ggplot aes geom_bar geom_raster geom_tile theme element_blank scale_fill_grey xlab ylab coord_polar
 #' @importFrom reshape2 melt
 #' @export
