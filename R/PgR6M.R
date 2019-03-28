@@ -491,25 +491,8 @@ PgR6M <- R6Class('PgR6M',
                        scale_fill_grey(start = .2, end = .9)
                    },
 
-                   gg_dist = function(dist){
-                     if (missing(dist)){
-                       m <- as.matrix(self$dist_jaccard())
-                     }else{
-                       cls <- class(dist)
-                       if (cls=='character'){
-                         dist <- match.arg(dist, c('euclidean',
-                                                   'maximum',
-                                                   'manhattan',
-                                                   'canberra',
-                                                   'binary',
-                                                   'minkowski'))
-                         m <- as.matrix(dist(self$pan_matrix, method = dist))
-                       }else if (cls=='function'){
-                         m <- as.matrix(dist(self$pan_matrix))
-                       }else{
-                         stop('Invalid dist argument.')
-                       }
-                     }
+                   gg_dist = function(method = 'bray', ...){
+                     m <- as.matrix(self$dist(method = method, ...))
                      me <- melt(m)
                      ggplot(me, aes(Var1, Var2, fill=value)) +
                        geom_tile()
@@ -543,20 +526,7 @@ PgR6M <- R6Class('PgR6M',
                        lrarm[[x]]$category <- x
                        lrarm[[x]]
                       })
-
                      df <- Reduce(rbind, ll)
-
-                     # eq <- lapply(lfun, function(x){
-                     #    exp <- paste0('y == ', format(x$formula)[2])
-                     #    params <- x$params
-                     #    for (i in seq_along(params)){
-                     #      exp <- sub(names(params)[i],
-                     #                 format(params[i], digits = 3),
-                     #                 exp,
-                     #                 fixed = TRUE)
-                     #    }
-                     #    exp
-                     # })
 
                      #plot
                      g <- ggplot(df, aes(x=factor(Var1), y=value, colour=category)) +
@@ -564,8 +534,7 @@ PgR6M <- R6Class('PgR6M',
                      for (i in seq_along(what)){
                        g <- g +
                          stat_function(data = df[which(df$category == what[i]), ],
-                                       fun = lfun[[what[i]]]$formula) # +
-                         # annotate('text', x = 3, y=4000, label=eq[[what[i]]], parse=T)
+                                       fun = lfun[[what[i]]]$formula)
                      }
                      g
                    }
