@@ -377,22 +377,11 @@ PgR6M <- R6Class('PgR6M',
                                    na.rm = FALSE,
                                    ...){
 
-                     method <- match.arg(method, c("manhattan",
-                                                   "euclidean",
-                                                   "canberra",
-                                                   "bray",
-                                                   "kulczynski",
-                                                   "jaccard",
-                                                   "gower",
-                                                   "altGower",
-                                                   "morisita",
-                                                   "horn",
-                                                   "mountford",
-                                                   "raup" ,
-                                                   "binomial",
-                                                   "chao",
-                                                   "cao",
-                                                   "mahalanobis"))
+                     METHODS <- c("manhattan","euclidean","canberra","bray",
+                                  "kulczynski","jaccard","gower","altGower",
+                                  "morisita","horn","mountford","raup",
+                                  "binomial","chao","cao","mahalanobis")
+                     method <- match.arg(method, METHODS)
 
                      if (method == 'jaccard' & binary = FALSE){
                        warning('It is recommended to set binary = TRUE when running dist(method = "jaccard")')
@@ -457,6 +446,7 @@ PgR6M <- R6Class('PgR6M',
                    binomix_estimate = function(K.range = 3:5,
                                                core.detect.prob = 1,
                                                verbose = TRUE){
+                     # micropan::binomxEstimate()
                      binomixEstimate(pan.matrix = self$pan_matrix,
                                      K.range = K.range,
                                      core.detect.prob = core.detect.prob,
@@ -530,7 +520,8 @@ PgR6M <- R6Class('PgR6M',
 
                      #plot
                      g <- ggplot(df, aes(x=factor(Var1), y=value, colour=category)) +
-                       xlab('Number of genomes') + ylab('Number of clusters')
+                       xlab('Number of genomes') +
+                       ylab('Number of clusters')
                      for (i in seq_along(what)){
                        g <- g +
                          stat_function(data = df[which(df$category == what[i]), ],
