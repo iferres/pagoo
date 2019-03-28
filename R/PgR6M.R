@@ -328,6 +328,7 @@
 #' @importFrom micropan distJaccard fluidity binomixEstimate
 #' @importFrom ggplot2 ggplot aes geom_bar geom_raster geom_tile theme element_blank scale_fill_grey xlab ylab coord_polar
 #' @importFrom reshape2 melt
+#' @importFrom vegan vegdist
 #' @export
 PgR6M <- R6Class('PgR6M',
 
@@ -369,9 +370,41 @@ PgR6M <- R6Class('PgR6M',
                      rmat
                    },
 
-                   dist_jaccard = function(){
-                     #micropan::distJaccard()
-                     distJaccard(self$pan_matrix)
+                   dist = function(method = 'bray',
+                                   binary = FALSE,
+                                   diag = FALSE,
+                                   upper = FALSE,
+                                   na.rm = FALSE,
+                                   ...){
+
+                     method <- match.arg(method, c("manhattan",
+                                                   "euclidean",
+                                                   "canberra",
+                                                   "bray",
+                                                   "kulczynski",
+                                                   "jaccard",
+                                                   "gower",
+                                                   "altGower",
+                                                   "morisita",
+                                                   "horn",
+                                                   "mountford",
+                                                   "raup" ,
+                                                   "binomial",
+                                                   "chao",
+                                                   "cao",
+                                                   "mahalanobis"))
+
+                     if (method == 'jaccard' & binary = FALSE){
+                       warning('It is recommended to set binary = TRUE when running dist(method = "jaccard")')
+                     }
+
+                     #vegan::vegdist()
+                     vegan::vegdist(self$pan_matrix,
+                                    method = method,
+                                    diag = diag,
+                                    upper = upper,
+                                    na.rm = na.rm,
+                                    ...)
                    },
 
                    power_law_fit = function(raref, ...){
