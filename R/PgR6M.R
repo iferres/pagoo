@@ -82,41 +82,55 @@
 #'             }
 #'         }
 #'     }
-#'     \item{\code{dist_jaccard()}}{
+#'     \item{\code{rarefact()}}{
 #'         \itemize{
-#'             \item{Computes Jaccard's distance between all pairs of genomes. See
-#'             \code{\link[micropan]{distJaccard}} for details, this is just a wrapper
-#'             function.}
-#'             \item{\bold{Returns:}}{
-#'                 \itemize{
-#'                     \item{A \code{dist} object (see \link[stats]{dist}) containing all pairwise
-#'                     Jaccard distances between genomes.}
-#'                 }
-#'             }
-#'         }
-#'     }
-#'     \item{\code{dist_manhattan(scale = 0, weights = rep(1, dim(self$pan_matrix)[2]))}}{
-#'         \itemize{
-#'             \item{Computes the (weighted) Manhattan distances beween all pairs of genomes.
-#'             See \code{\link[micropan]{distManhattan}} for details. }
+#'             \item{Rarefact pangenome or corgenome. Compute the number of genes which belong to
+#'             the pangenome or to the coregenome, for a number of random permutations of
+#'             increasingly bigger sample of genomes.}
 #'             \item{\bold{Args:}}{
 #'                 \itemize{
-#'                     \item{\bold{\code{scale}}: An optional scale to control how copy numbers should
-#'                     affect the distances.
-#'                  }
-#'                     \item{\bold{\code{weights}}: Vector of optional weights of gene clusters.
-#'                  }
+#'                     \item{\bold{\code{}}} #######################
+#'
 #'                 }
 #'             }
 #'             \item{\bold{Returns:}}{
 #'                 \itemize{
-#'                     \item{A \code{dist} object (see \link[stats]{dist}) containing all pairwise Manhattan
-#'                     distances between genomes.}
+#'                     \item{A \code{matrix}, rows are the number of genomes added, columns are
+#'                     permutations, and the cell number is the number of genes in ethier category.
+#'                     }
 #'                 }
 #'             }
 #'         }
 #'     }
-#'     \item{\code{heaps(n.perm = 100)}}{
+#'     \item{\code{dist()}}{
+#'         \itemize{
+#'             \item{Compute distance between all pairs of genomes. The default dist method is
+#'             \code{"bray"} (Bray-Curtis distance). Annother used distance method is \code{"jaccard"},
+#'             but you should set \code{binary = FALSE} (see below) to obtain a meaningful result.
+#'             See \code{\link[vegan]{vegdist}} for details, this is just a wrapper function.
+#'             }
+#'             \item{\bold{Args:}}{
+#'                 \itemize{
+#'                     \item{\bold{\code{method}}: The distance method to use. See \link[vegan]{vegdist}
+#'                     for available methods, and details for each one.
+#'                     }
+#'                     \item{\bold{\code{binary}}: Transform abundance matrix into a presence/absence
+#'                     matrix before computing distance.}
+#'                     \item{\bold{\code{diag}}: Compute diagonals.}
+#'                     \item{\bold{\code{upper}}: Return only the upper diagonal.}
+#'                     \item{\bold{\code{na.rm}}: Pairwise deletion of missing observations when
+#'                     computing dissimilarities.}
+#'                     \item{\bold{\code{...}}: Other parameters. See \link[vegan]{vegdist} for details.}
+#'                 }
+#'             }
+#'             \item{\bold{Returns:}}{
+#'                 \itemize{
+#'                     \item{A \code{dist} object containing all pairwise dissimilarities between genomes.}
+#'                 }
+#'             }
+#'         }
+#'     }
+#'     \item{\code{power_law_fit(raref, ...)}}{
 #'         \itemize{
 #'             \item{Estimating if a pan-genome is open or closed based on a Heaps law model.
 #'             See \code{\link[micropan]{heaps}} for more details.}
