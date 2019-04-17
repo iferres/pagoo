@@ -217,9 +217,7 @@ PgR6 <- R6Class('PgR6',
                     DF$org <- factor(DF$org, levels = orgs)
                     # DF[, org := factor(org, levels = orgs)]
 
-                    # Create organism filed. Add metadata (if provided)
-                    # # organisms
-                    # orgs_list <- seq_along(orgs)
+                    # Create organism field. Add metadata (if provided)
                     names(orgs) <- seq_along(orgs)
                     orgs_DF <- DataFrame(org=orgs, row.names = seq_along(orgs))
                     if (!missing(org_meta)){
@@ -234,12 +232,7 @@ PgR6 <- R6Class('PgR6',
                       }else{
                         warning('"org_meta" should contain an "org" column. Ignoring this parameter.')
                       }
-
-                      # Create clusters field
-
-
                     }
-
 
                     # Create panmatrix #
                     panmatrix <- dcast(as.data.frame(DF),
@@ -319,12 +312,14 @@ PgR6 <- R6Class('PgR6',
                     }
                   },
 
-                  organisms = function(){
-                    nms <- dimnames(self$pan_matrix)[[1]]
-                    pnms <- dimnames(private$.panmatrix)[[1]]
-                    idx <- which(pnms%in%nms)
-                    names(nms) <- idx
-                    nms
+                  organisms = function(value){
+                    drp <- private$.dropped
+                    if (length(drp)>0){
+                      idx <- as.integer(names(drp))
+                      orgs[-idx, , drop=FALSE]
+                    }else{
+                      orgs
+                    }
                   },
 
                   clusters = function(){
@@ -348,7 +343,7 @@ PgR6 <- R6Class('PgR6',
                   },
 
                   core_clusters = function(){
-                    ln <- length(self$organisms)
+                    ln <- length(self$organisms[, 1, drop=TRUE])
                     co <- round(private$.level * ln / 100)
                     pm <- self$pan_matrix
                     pm[which(pm>1L, arr.ind = TRUE)] <- 1L
