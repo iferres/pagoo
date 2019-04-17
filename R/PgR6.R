@@ -9,7 +9,7 @@
 #                      structure(c("gene4", "gene2"),
 #                                .Names = c("org1","org2")))
 
-# cluster_df <- structure(list(group = c("group1", "group1", "group1", "group2",
+# DF <- structure(list(group = c("group1", "group1", "group1", "group2",
 #                                        "group2", "group2", "group3", "group3"),
 #                              org = c("org1", "org2", "org3", "org1",
 #                                      "org1", "org3", "org1", "org2"),
@@ -24,12 +24,12 @@
 #' and subset functions to handle a pangenome.
 #' @section Class Constructor:
 #' \describe{
-#'     \item{\code{new(cluster_df, sep = "__")}}{
+#'     \item{\code{new(DF, sep = "__")}}{
 #'         \itemize{
 #'             \item{Create a \code{PgR6} object.}
 #'             \item{\bold{Args:}}{
 #'                 \itemize{
-#'                     \item{\bold{\code{cluster_df}}: A \code{data.frame} or \code{data.table} containing at least the
+#'                     \item{\bold{\code{DF}}: A \code{data.frame} or \code{data.table} containing at least the
 #'                     following columns: \code{gene} (gene name), \code{org} (organism name to which the gene belongs to),
 #'                     and \code{group} (group of orthologous to which the gene belongs to). More columns are allowed but
 #'                     this basic class do not contain any methods to handle them.
@@ -158,14 +158,16 @@
 #' }
 #'
 #' @importFrom R6 R6Class
-#' @importFrom data.table as.data.table setcolorder dcast
+#' @import S4Vectors
+#' @importFrom reshape2 dcast
+# #' @importFrom data.table as.data.table setcolorder dcast
 #' @export
 PgR6 <- R6Class('PgR6',
 
                 # Private fields #
                 private = list(
                   version = NULL,
-                  .dt = NULL,
+                  .DF = NULL,
                   .panmatrix = NULL,
                   .organisms = NULL,
                   .dropped = NULL,
@@ -176,67 +178,71 @@ PgR6 <- R6Class('PgR6',
                 # Public functions #
                 public = list(
 
-                  initialize = function(cluster_df,
+                  initialize = function(DF,
+                                        org_meta,
+                                        group_meta,
                                         sep = '__'){
 
-                    # Check cluster_df input
-                    # 1. Is data.frame or data.table?
-                    cl <- class(cluster_df)
-                    if (! cl %in% c('data.frame', 'data.table'))
-                      stop('"cluster_df" is not a data.frame nor a data.table.')
+                    # Check DF input
+                    # 1. Is data.frame or DataFrame?
+                    cl <- class(DF)
+                    if (! cl %in% c('data.frame', 'DataFrame'))
+                      stop('"DF" is not a data.frame.')
 
                     # 2. Are colnames correct?
-                    dn <- dimnames(cluster_df)[[2]]
+                    dn <- dimnames(DF)[[2]]
                     if (!all(c('group', 'org', 'gene') %in% dn))
                       stop('colnames must have "group", "org", and "gene".')
 
-                    # 3. To data.table if not yet.
+                    # 3. To DataFrame if not yet.
                     if(cl[1]=='data.frame'){
-                      cluster_df <- as.data.table(cluster_df)
+                      DF <- DataFrame(DF)
                     }
 
                     # 4. Create gid
-                    cluster_df[, gid := paste(org, gene, sep = sep)]
-                    if (any(duplicated(cluster_df[, gid])))
-                      stop('Duplicated gene names in cluster_df.')
+                    DF$gid <- paste(DF$org, DF$gene, sep = sep)
+                    if (any(duplicated(DF$gid)))
+                      stop('Duplicated gene names in DF.')
 
                     # 5. Column order, just for format
-                    setcolorder(cluster_df, c('group','gid', 'org', 'gene'))
+                    dn <- dimnames(DF)[[2]]
+                    req <- c('group', 'org', 'gene', 'gid')
+                    extra <- dn[which(!dn%in%req)]
+                    DF <- DF[, c(req, extra)]
 
                     # # 6. Change class
-                    cluster_df[, group := factor(group)]
-                    orgs <- unique(cluster_df$org)
-                    cluster_df[, org := factor(org, levels = orgs)]
+                    DF$group <- factor(DF$group)
+                    # DF[, group := factor(group)]
+                    orgs <- levels(DF$org)
+                    DF$org <- factor(DF$org, levels = orgs)
+                    # DF[, org := factor(org, levels = orgs)]
 
-                    ############# OLD ###############
+                    # Create organism filed. Add metadata (if provided)
+                    # # organisms
+                    # orgs_list <- seq_along(orgs)
+                    names(orgs) <- seq_along(orgs)
+                    orgs_DF <- DataFrame(org=orgs, row.names = seq_along(orgs))
+                    if (!missing(org_meta)){
+                      if (!class(org_meta)%in%c('data.frame', 'DataFrame'))
+                        stop('"org_meta" should be a data.frame.')
+                      if('org'%in%colnames(org_meta)){
+                        ma <- match(org_meta$org, orgs_DF$org)
+                        if (any(is.na(ma))) stop('org_meta$org do not match with DF$org')
+                        org_meta <- org_meta[ma, ]
+                        oc <- which(colnames(org_meta)=='org')
+                        orgs <- cbind(orgs_DF, DataFrame(org_meta[, -oc, drop=F]))
+                      }else{
+                        warning('"org_meta" should contain an "org" column. Ignoring this parameter.')
+                      }
 
-                    # # Check cluster_list input #
-                    # # 1. Is list. length > 0?
-                    # ln_cluster_list <- length(cluster_list)
-                    # if (any(c(!is.list(cluster_list), ln_cluster_list<=1)))
-                    #   stop('please, check input. Must provide a list of length > 1')
-                    # # 2. Check cluster_list names. Create if !exist.
-                    # if (!length(names(cluster_list))){
-                    #   nch <- nchar(ln_cluster_list)
-                    #   np <- paste0('%0', nch, 'd')
-                    #   names(cluster_list) <- paste0(prefix, sprintf(np, 1:ln_cluster_list))
-                    # }
-                    # # 3. Check if organism names are given.
-                    # hasOrgNames <- sapply(cluster_list, function(x) all(length(names(x))) )
-                    # if (!all(hasOrgNames))
-                    #   stop('you must provide organism names for all genes')
-                    # # 4. Modify gene names
-                    # cluster_list <- lapply(cluster_list, function(x){
-                    #   nn <- names(x)
-                    #   ng <- paste(nn, sep, x, sep = '')
-                    #   names(ng) <- nn
-                    #   ng
-                    # })
-                    # private$.sep <- sep
-                    #################################
+                      # Create clusters field
+
+
+                    }
+
 
                     # Create panmatrix #
-                    panmatrix <- dcast(cluster_df,
+                    panmatrix <- dcast(as.data.frame(DF),
                                        org~group,
                                        value.var = 'gene',
                                        fun.aggregate = length)
@@ -245,23 +251,9 @@ PgR6 <- R6Class('PgR6',
                     panmatrix <- as.matrix(panmatrix)
                     rownames(panmatrix) <- rn
 
-
-                    ############# OLD ###############
-                    # # 1. Which organisms are?
-                    # organisms <- unique(unlist(lapply(cluster_list, names)))
-                    # names(organisms) <- 1:length(organisms)
-                    # # 2. Compute panmatrix
-                    # panmatrix <- sapply(cluster_list, function(x){
-                    #   table(factor(names(x), levels = organisms))
-                    # }, simplify = TRUE)
-                    ################################
-
                     # Populate private$ #
                     private$version <- packageVersion('pgr6')
-                    # private$.clusters <- list2env(cluster_list, hash = TRUE)
-                    private$.dt <- cluster_df
-                    # private$.organisms <- organisms
-                    names(orgs) <- seq_along(orgs)
+                    private$.DF <- DF
                     private$.organisms <- orgs
                     private$.panmatrix <- panmatrix
                     private$.level <- 95 #default
@@ -279,7 +271,7 @@ PgR6 <- R6Class('PgR6',
                   # Basic Subset Methods #
                   # Drop organisms from dataset
                   drop = function(x){
-                    orgs <- private$.organisms
+                    orgs <- private$.organisms[, 1, drop=TRUE]
                     if (is.numeric(x)){
                       vec <- c(private$.dropped, orgs[x])
                       un <- vec[unique(names(vec))]
@@ -297,7 +289,7 @@ PgR6 <- R6Class('PgR6',
 
                   # Recover from trash previously dropped organisms
                   recover = function(x){
-                    orgs <- private$.organisms
+                    orgs <- private$.organisms[, 1, drop=TRUE]
                     if (is.numeric(x)){
                       dp <- private$.dropped[!names(private$.dropped)%in%x]
                     } else if (is.character(x)){
@@ -307,14 +299,6 @@ PgR6 <- R6Class('PgR6',
                     invisible(self)
                   }#,
 
-                  # # Get clusters by name
-                  # get = function(x){
-                  #   aa <- lapply(x, function(y){
-                  #     self$clusters[[y]]
-                  #   })
-                  #   names(aa) <- x
-                  #   aa
-                  # }
 
                 ),
 
@@ -343,31 +327,15 @@ PgR6 <- R6Class('PgR6',
                     nms
                   },
 
-                  # clusters = function(){
-                  #   ogs <- dimnames(self$pan_matrix)[[2]]
-                  #   names(ogs) <- ogs
-                  #   rr <- lapply(ogs, function(x){
-                  #     sset <- private$.clusters[[x]]#[self$organisms]
-                  #     onlyPublic <- sset[names(sset)%in%self$organisms]
-                  #     onlyPublic[!is.na(onlyPublic)]
-                  #   })
-                  #   class(rr) <- 'ClusterList'
-                  #   attr(rr, 'organisms') <- self$organisms
-                  #   attr(rr, 'separator') <- private$.sep
-                  #   rr
-                  # },
-
                   clusters = function(){
 
                     dn <- dimnames(self$pan_matrix)
                     ogs <- dn[[2]]
                     orgs <- dn[[1]]
-                    rr <- split(private$.dt[group%in%ogs & org%in%orgs, ],
-                                by = 'group', keep.by = F)
-                    # class(rr) <- 'ClusterList'
-                    # attr(rr, 'organisms') <- self$organisms
-                    # attr(rr, 'separator') <- private$.sep
-                    # attr(rr, 'pgr6env') <- parent.frame()
+                    df <- private$.DF
+                    act <- which(df$group%in%ogs & df$org%in%orgs)
+                    df <- df[act, ]
+                    rr <- split(df[, -c(1,2,3)], f = df$group , drop = TRUE)
                     rr
                   },
 
