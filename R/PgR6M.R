@@ -397,7 +397,7 @@ PgR6M <- R6Class('PgR6M',
                                   "binomial","chao","cao","mahalanobis")
                      method <- match.arg(method, METHODS)
 
-                     if (method == 'jaccard' & binary = FALSE){
+                     if (method == 'jaccard' & binary == FALSE){
                        warning('It is recommended to set binary = TRUE when running dist(method = "jaccard")')
                      }
 
