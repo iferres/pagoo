@@ -158,7 +158,7 @@
 #' }
 #'
 #' @importFrom R6 R6Class
-#' @import S4Vectors
+#' @import S4Vectors DataFrame
 #' @importFrom reshape2 dcast
 # #' @importFrom data.table as.data.table setcolorder dcast
 #' @export
@@ -170,6 +170,7 @@ PgR6 <- R6Class('PgR6',
                   .DF = NULL,
                   .panmatrix = NULL,
                   .organisms = NULL,
+                  .groups = NULL,
                   .dropped = NULL,
                   .level = NULL,
                   .sep = NULL
@@ -228,9 +229,25 @@ PgR6 <- R6Class('PgR6',
                         if (any(is.na(ma))) stop('org_meta$org do not match with DF$org')
                         org_meta <- org_meta[ma, ]
                         oc <- which(colnames(org_meta)=='org')
-                        orgs <- cbind(orgs_DF, DataFrame(org_meta[, -oc, drop=F]))
+                        orgs_DF <- cbind(orgs_DF, DataFrame(org_meta[, -oc, drop=F]))
                       }else{
                         warning('"org_meta" should contain an "org" column. Ignoring this parameter.')
+                      }
+                    }
+
+                    #create group field. Add metadata (if provided)
+                    group_DF <- DataFrame(group=levels(DF$group))
+                    if (!missing(group_meta)){
+                      if (!class(group_meta)%in%c('data.frame', 'DataFrame'))
+                        stop('"group_meta" should be a data.frame')
+                      if ('group'%in%colnames(group_meta)){
+                        ma <- match(group_meta$group, group_DF$group)
+                        if (any(is.na(ma))) stop('grop_meta$group do not match with DF$group')
+                        group_meta <- group_meta[ma, ]
+                        oc <- which(colnames(group_meta)=='group')
+                        group_DF <- cbind(group_DF, DataFrame(group_meta[, -oc, drop = F]))
+                      }else{
+                        warning('"group_meta" should contain a "group" column. Ignoring this parameter.')
                       }
                     }
 
@@ -247,7 +264,8 @@ PgR6 <- R6Class('PgR6',
                     # Populate private$ #
                     private$version <- packageVersion('pgr6')
                     private$.DF <- DF
-                    private$.organisms <- orgs
+                    private$.organisms <- orgs_DF
+                    private$.groups <- group_DF
                     private$.panmatrix <- panmatrix
                     private$.level <- 95 #default
                     private$.sep <- sep
@@ -264,7 +282,7 @@ PgR6 <- R6Class('PgR6',
                   # Basic Subset Methods #
                   # Drop organisms from dataset
                   drop = function(x){
-                    orgs <- private$.organisms[, 1, drop=TRUE]
+                    orgs <- private$.organisms[['org']]
                     if (is.numeric(x)){
                       vec <- c(private$.dropped, orgs[x])
                       un <- vec[unique(names(vec))]
@@ -282,7 +300,7 @@ PgR6 <- R6Class('PgR6',
 
                   # Recover from trash previously dropped organisms
                   recover = function(x){
-                    orgs <- private$.organisms[, 1, drop=TRUE]
+                    orgs <- private$.organisms[['org']]
                     if (is.numeric(x)){
                       dp <- private$.dropped[!names(private$.dropped)%in%x]
                     } else if (is.character(x)){
@@ -312,26 +330,34 @@ PgR6 <- R6Class('PgR6',
                     }
                   },
 
-                  organisms = function(value){
+                  organisms = function(){
+                    orgs <- private$.organisms
                     drp <- private$.dropped
                     if (length(drp)>0){
                       idx <- as.integer(names(drp))
-                      orgs[-idx, , drop=FALSE]
+                      orgs[-idx, ]
                     }else{
                       orgs
                     }
                   },
 
-                  clusters = function(){
-
+                  genes = function(){
                     dn <- dimnames(self$pan_matrix)
                     ogs <- dn[[2]]
                     orgs <- dn[[1]]
                     df <- private$.DF
                     act <- which(df$group%in%ogs & df$org%in%orgs)
                     df <- df[act, ]
-                    rr <- split(df[, -c(1,2,3)], f = df$group , drop = TRUE)
-                    rr
+                    split(df[, -c(1,2,3)], f = df$group, drop = TRUE)
+                  },
+
+                  clusters = function(){
+                    dn <- dimnames(self$pan_matrix)
+                    ogs <- dn[[2]]
+                    df <- private$.groups
+                    act <- which(df$group%in%ogs)
+                    df <- df[act, ]
+                    df
                   },
 
                   core_level = function(value){
@@ -342,13 +368,46 @@ PgR6 <- R6Class('PgR6',
                     private$.level
                   },
 
+                  core_genes = function(){
+                    ln <- length(self$organisms[['org']])
+                    co <- round(private$.level * ln / 100)
+                    pm <- self$pan_matrix
+                    orgs <- dimnames(pm)[[1]]
+                    ogs <- dimnames(pm)[[2]]
+                    pm[which(pm>1L, arr.ind = TRUE)] <- 1L
+                    ogs <- ogs[which(colSums(pm) >= co)]
+                    df <- private$.DF
+                    act <- which(df$group%in%ogs & df$org%in%orgs)
+                    df <- df[act, ]
+                    split(df[, -c(1,2,3)], f = df$group, drop = TRUE)
+
+                  },
+
                   core_clusters = function(){
-                    ln <- length(self$organisms[, 1, drop=TRUE])
+                    ln <- length(self$organisms[['org']])
                     co <- round(private$.level * ln / 100)
                     pm <- self$pan_matrix
                     pm[which(pm>1L, arr.ind = TRUE)] <- 1L
                     wh <- which(colSums(pm) >= co)
-                    dimnames(self$pan_matrix)[[2]][wh]
+                    self$clusters[wh, ]
+                    # dimnames(self$pan_matrix)[[2]][wh]
+                  },
+
+                  cloud_genes = function(){
+                    pm <- self$pan_matrix
+                    orgs <- dimnames(pm)[[1]]
+                    pm[which(pm>1L, arr.ind = TRUE)] <- 1L
+                    dups <- duplicated(pm, MARGIN = 1)
+                    wdups <- which(dups)
+                    if (length(wdups)){
+                      pm <- pm[-wdups, ]
+                    }
+                    ogs <- dimnames(pm)[[2]]
+                    ogs <- ogs[which(colSums(pm) == 1L)]
+                    df <- private$.DF
+                    act <- which(df$group%in%ogs & df$org%in%orgs)
+                    df <- df[act, ]
+                    split(df[, -c(1,2,3)], f = df$group, drop = TRUE)
                   },
 
                   cloud_clusters = function(){
@@ -359,18 +418,35 @@ PgR6 <- R6Class('PgR6',
                     if (length(wdups)){
                       pm <- pm[-wdups, ]
                     }
-                    dimnames(pm)[[2]][which(colSums(pm) == 1L)]
+                    wh <- which(colSums(pm) == 1L)
+                    self$clusters[wh, ]
+                  },
+
+                  shell_genes = function(){
+                    df <- private$.DF
+                    dn <- dimnames(self$pan_matrix)
+                    orgs <- dn[[1]]
+                    ogs <- dn[[2]]
+                    core <- self$core_clusters$group
+                    cloud <- self$cloud_clusters$group
+                    shell <- ogs[which(!ogs %in% c(core,cloud))]
+                    act <- which(df$group%in%shell & df$org%in%orgs)
+                    df <- df[act, ]
+                    split(df[, -c(1,2,3)], f = df$group, drop = TRUE)
                   },
 
                   shell_clusters = function(){
-                    dn <- dimnames(self$pan_matrix)[[2]]
-                    dn[which(!dn %in% c(self$core_clusters, self$cloud_clusters))]
+                    ogs <- dimnames(self$pan_matrix)[[2]]
+                    core <- self$core_clusters$group
+                    cloud <- self$cloud_clusters$group
+                    wh <- which(!ogs %in% c(core,cloud))
+                    self$clusters[wh, ]
                   },
 
                   summary_stats = function(){
                     total <- dim(self$pan_matrix)[2]
-                    core <- length(self$core_clusters)
-                    cloud <- length(self$cloud_clusters)
+                    core <- dim(self$core_clusters)[1]
+                    cloud <- dim(self$cloud_clusters)[1]
                     shell <- total - core - cloud
                     data.frame(Category = c('Total',
                                             'Core',
