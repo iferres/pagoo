@@ -8,12 +8,12 @@
 #'
 #' @section Class Constructor:
 #' \describe{
-#'     \item{\code{new(cluster_df, sep = "__")}}{
+#'     \item{\code{new(DF, sep = "__")}}{
 #'         \itemize{
 #'             \item{Create a \code{PgR6} object.}
 #'             \item{\bold{Args:}}{
 #'                 \itemize{
-#'                     \item{\bold{\code{cluster_df}}: A \code{data.frame} or \code{data.table} containing at least the
+#'                     \item{\bold{\code{DF}}: A \code{data.frame} or \code{data.table} containing at least the
 #'                     following columns: \code{gene} (gene name), \code{org} (organism name to which the gene belongs to),
 #'                     and \code{group} (group of orthologous to which the gene belongs to). More columns are allowed but
 #'                     this basic class do not contain any methods to handle them.
@@ -350,10 +350,14 @@ PgR6M <- R6Class('PgR6M',
 
                  public = list(
 
-                   initialize = function(cluster_df,
+                   initialize = function(DF,
+                                         org_meta,
+                                         group_meta,
                                          sep = '__'){
 
-                     super$initialize(cluster_df = cluster_df,
+                     super$initialize(DF = DF,
+                                      org_meta,
+                                      group_meta,
                                       sep = sep)
 
                    },
@@ -364,7 +368,7 @@ PgR6M <- R6Class('PgR6M',
                      what <- match.arg(what, c('pangenome', 'coregenome'))
                      pm <- self$pan_matrix
                      pm[which(pm>1L, arr.ind = TRUE)] <- 1L
-                     norgs <- length(self$organisms)
+                     norgs <- dim(self$organisms)[1]
                      rmat <- matrix(0L, nrow = norgs, ncol = n.perm)
                      if (what=='pangenome'){
                        for (i in seq_len(n.perm)){
@@ -397,7 +401,7 @@ PgR6M <- R6Class('PgR6M',
                                   "binomial","chao","cao","mahalanobis")
                      method <- match.arg(method, METHODS)
 
-                     if (method == 'jaccard' & binary = FALSE){
+                     if (method == 'jaccard' & binary == FALSE){
                        warning('It is recommended to set binary = TRUE when running dist(method = "jaccard")')
                      }
 
