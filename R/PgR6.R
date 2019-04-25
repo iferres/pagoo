@@ -29,15 +29,21 @@
 #'             \item{Create a \code{PgR6} object.}
 #'             \item{\bold{Args:}}{
 #'                 \itemize{
-#'                     \item{\bold{\code{DF}}: A \code{data.frame} or \code{data.table} containing at least the
+#'                     \item{\bold{\code{DF}}: A \code{data.frame} or \code{\link[S4Vectors]{DataFrame}} containing at least the
 #'                     following columns: \code{gene} (gene name), \code{org} (organism name to which the gene belongs to),
-#'                     and \code{group} (group of orthologous to which the gene belongs to). More columns are allowed but
-#'                     this basic class do not contain any methods to handle them.
+#'                     and \code{group} (group of orthologous to which the gene belongs to). More columns can be added as metadata
+#'                     for each gene.
 #'                  }
-#'                     \item{\bold{\code{org_meta}}:
+#'                     \item{\bold{\code{org_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors]{DataFrame}}
+#'                     containging additional metadata for organisms. This \code{data.frame} must have a column named "org" with
+#'                     valid organisms names (that is, they should match with those provided in \code{DF}, column \code{org}), and
+#'                     additional columns will be used as metadata. Each row should correspond to each organism.
 #'
 #'                  }
-#'                     \item{\bold{\code{group_meta}}:
+#'                     \item{\bold{\code{group_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors]{DataFrame}}
+#'                     containging additional metadata for clusters. This \code{data.frame} must have a column named "group" with
+#'                     valid organisms names (that is, they should match with those provided in \code{DF}, column \code{group}), and
+#'                     additional columns will be used as metadata. Each row should correspond to each cluster.
 #'
 #'                  }
 #'                     \item{\bold{\code{sep}}: A separator. By default is '__'(two underscores). It will be used to
@@ -144,9 +150,9 @@
 #'     present in some but not all strains, and that aren't strain-specific.}
 #'     \item{\bold{\code{shell_genes}}}{: Like \code{genes}, but only showing shell genes,
 #'     as defined above.}
-#'     \item{\bold{\code{summary_stats}}}{: A \code{data.frame} with information about
-#'     the number of core, shell, and cloud clusters, as well as the total number of
-#'     clusters.}
+#'     \item{\bold{\code{summary_stats}}}{: A \code{\link[S4Vectors]{DataFrame}} with
+#'     information about the number of core, shell, and cloud clusters, as well as the
+#'     total number of clusters.}
 #'     \item{\bold{\code{random_seed}}}{: The last \code{.Random.seed}. Used for
 #'     reproducibility purposes only.}
 #'     \item{\bold{\code{dropped}}}{: A \code{character} vector with dropped organism
