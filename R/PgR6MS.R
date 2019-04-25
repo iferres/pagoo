@@ -452,7 +452,7 @@ PgR6MS <- R6Class('PgR6MS',
                     # Methods for sequences
                     #' @importFrom S4Vectors mcols
                     #' @importFrom BiocGenerics table
-                    get_core_seqs = function(max_per_org = 1, fill = TRUE){
+                    core_seqs_4_phylo = function(max_per_org = 1, fill = TRUE){
 
                       if (!class(max_per_org)%in%c('logical', 'NULL', 'numeric', 'integer'))
                         stop('"max_per_org" is not numeric, NULL, or NA')
@@ -520,7 +520,36 @@ PgR6MS <- R6Class('PgR6MS',
                       sset <- which(mcols(sqs)$group %in% ogs &
                                       mcols(sqs)$org %in% orgs)
                       split(sqs[sset], mcols(sqs[sset])$group)
+                    },
+
+                    core_sequences = function(){
+                      orgs <- self$organisms$org
+                      ogs <- self$core_clusters$group
+                      sqs <- private$.sequences
+                      sset <- which(mcols(sqs)$group %in% ogs &
+                                      mcols(sqs)$org %in% orgs)
+                      split(sqs[sset], mcols(sqs[sset])$group)
+
+                    },
+
+                    cloud_sequences = function(){
+                      orgs <- self$organisms$org
+                      ogs <- self$cloud_clusters$group
+                      sqs <- private$.sequences
+                      sset <- which(mcols(sqs)$group %in% ogs &
+                                      mcols(sqs)$org %in% orgs)
+                      split(sqs[sset], mcols(sqs[sset])$group)
+                    },
+
+                    shell_sequences = function(){
+                      orgs <- self$organisms$org
+                      ogs <- self$shell_clusters$group
+                      sqs <- private$.sequences
+                      sset <- which(mcols(sqs)$group %in% ogs &
+                                      mcols(sqs)$org %in% orgs)
+                      split(sqs[sset], mcols(sqs[sset])$group)
                     }
+
                   )
 )
 
