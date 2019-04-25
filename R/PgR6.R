@@ -465,7 +465,7 @@ PgR6 <- R6Class('PgR6',
                     core <- dim(self$core_clusters)[1]
                     cloud <- dim(self$cloud_clusters)[1]
                     shell <- total - core - cloud
-                    data.frame(Category = c('Total',
+                    DataFrame(Category = c('Total',
                                             'Core',
                                             'Shell',
                                             'Cloud'),
