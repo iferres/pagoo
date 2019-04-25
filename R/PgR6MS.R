@@ -406,9 +406,16 @@ PgR6MS <- R6Class('PgR6MS',
                                          orgNames, genNames,
                                          MoreArgs = list(sep = sep))
                           gids <- unlist(gids, use.names = FALSE)
-                          sqs <- unlist(sequences, use.names = FALSE)
-                          names(sqs) <- gids
-                          private$.sequences <- DNAStringSet(sqs)
+                          if (clss=='character'){
+                            sqs <- unlist(sequences, use.names = FALSE)
+                            sqs <- DNAStringSet(sqs)
+                            names(sqs) <- gids
+                          }else{
+                            sqs <- DNAStringSetList(sqs)
+                            sqs <- unlist(sqs, use.names = FALSE)
+                            names(sqs) <- gids
+                          }
+                          private$.sequences <- sqs
 
                         }else{
                           stop('Unrecognized sequences format.')
@@ -418,13 +425,13 @@ PgR6MS <- R6Class('PgR6MS',
                         stop('Unrecognized sequences format')
                       }
 
-                      dtgid <- private$.dt[, gid]
+                      dfgid <- private$.DF[, 'gid']
 
-                      if (!all(dtgid%in%gids)){
+                      if (!all(dfgid%in%gids)){
                         stop('Missing sequences: some gid do not match any sequence name.')
                       }
 
-                      if (any(!gids%in%dtgid)){
+                      if (any(!gids%in%dfgid)){
                         warning('Missing gid: some sequence names do not match to any gid. Continuing anyway..\n', immediate. = TRUE)
                       }
 
@@ -434,9 +441,9 @@ PgR6MS <- R6Class('PgR6MS',
                                                               FUN.VALUE = NA_character_)
                       mcols(private$.sequences)$group <- vapply(gids,
                                                                 function(x){
-                                                                  wh <- which(dtgid==x)
+                                                                  wh <- which(dfgid==x)
                                                                   if (length(wh))
-                                                                    as.character(private$.dt$group[wh])
+                                                                    as.character(private$.DF$group[wh])
                                                                   else
                                                                     NA_character_
                                                                 }, FUN.VALUE = NA_character_)
@@ -452,8 +459,8 @@ PgR6MS <- R6Class('PgR6MS',
                       if (!is.logical(fill))
                         stop('"fill" is not logical')
 
-                      ccl <- self$core_clusters
-                      orgs <- self$organisms
+                      ccl <- self$core_clusters$group
+                      orgs <- self$organisms$org
                       sqs <- private$.sequences
                       mcls <- mcols(sqs)
                       whcore <- which(mcls$group %in% ccl)
