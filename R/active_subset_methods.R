@@ -1,4 +1,4 @@
-active_subset <- list(
+.active_subset <- list(
 
   pan_matrix = function(){
     ii <- as.integer(names(private$.i))
@@ -11,32 +11,32 @@ active_subset <- list(
   },
 
   organisms = function(){
-    # rn <- rownames(self$pan_matrix)
-    # private$.x$organisms[private$.x$organisms %in% rn]
     ii <- private$.i
     jj <- private$.j
-    fr <- private$
-      .x$
-      .__enclos_env__$
-      private$
-      .dt[group%in%jj & org%in%ii, org, ]
-    un <- unique(as.character(fr))
-    private$.x$organisms[private$.x$organisms %in% un]
+    df <- private$.x$.__enclos_env__$private$.DF
+    orgs <- private$.x$organisms
+    wh <- which(df$org%in%ii & df$group%in%jj)
+    un <- df[wh, 'org', drop = TRUE]
+    orgs[orgs$org %in% un, ]
+  },
 
+  genes = function(){
+    jj <- private$.j
+    ii <- private$.i
+    df <- private$.x$.__enclos_env_$.DF
+    wh <- which(df$org%in%ii & df$group%in%jj)
+    df <- df[wh, ]
+    split(df, df$group)
   },
 
   clusters = function(){
-
     jj <- private$.j
     ii <- private$.i
-    split(private$
-            .x$
-            .__enclos_env__$
-            private$
-            .dt[group%in%jj & org%in%ii,,],
-          by='group',
-          keep.by=F,
-          drop = TRUE)
+    df <- private$.x$.__enclos_env_$.DF
+    clu <- private$.x$clusters
+    wh <- which(df$org%in%ii & df$group%in%jj)
+    un <- df[wh, 'group', drop = TRUE]
+    clu[clu$group %in% un, ]
   },
 
   #' @importFrom S4Vectors split
