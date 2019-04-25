@@ -414,7 +414,7 @@ PgR6M <- R6Class('PgR6M',
                                     ...)
                    },
 
-                   power_law_fit = function(raref, ...){
+                   pg_power_law_fit = function(raref, ...){
                      # #micropan::heaps()
                      # heaps(self$pan_matrix ,n.perm = n.perm)
                      if (missing(raref)){
@@ -436,7 +436,7 @@ PgR6M <- R6Class('PgR6M',
                      ret
                    },
 
-                   exp_decay_fit = function(raref, pcounts = 10, ...){
+                   cg_exp_decay_fit = function(raref, pcounts = 10, ...){
                      # Exponential decay linearization:
                      # y = A * exp(K * t) + C ==> y - C = K*t + log(A)
                      # C == core size
@@ -523,9 +523,9 @@ PgR6M <- R6Class('PgR6M',
                      lrar <- lapply(what, function(x) self$rarefact(what = x))
                      lfun <- lapply(what, function(x){
                        if (x == 'pangenome'){
-                         self$power_law_fit(raref = lrar[[x]])#$formula
+                         self$pg_power_law_fit(raref = lrar[[x]])#$formula
                        }else{
-                         self$exp_decay_fit(raref = lrar[[x]])#$formula
+                         self$cg_exp_decay_fit(raref = lrar[[x]])#$formula
                        }
                      })
                      lrarm <- lapply(lrar, melt)
