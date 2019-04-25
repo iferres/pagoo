@@ -24,7 +24,7 @@
 #' and subset functions to handle a pangenome.
 #' @section Class Constructor:
 #' \describe{
-#'     \item{\code{new(DF, sep = "__")}}{
+#'     \item{\code{new(DF, org_meta, group_meta, sep = "__")}}{
 #'         \itemize{
 #'             \item{Create a \code{PgR6} object.}
 #'             \item{\bold{Args:}}{
@@ -33,6 +33,12 @@
 #'                     following columns: \code{gene} (gene name), \code{org} (organism name to which the gene belongs to),
 #'                     and \code{group} (group of orthologous to which the gene belongs to). More columns are allowed but
 #'                     this basic class do not contain any methods to handle them.
+#'                  }
+#'                     \item{\bold{\code{org_meta}}:
+#'
+#'                  }
+#'                     \item{\bold{\code{group_meta}}:
+#'
 #'                  }
 #'                     \item{\bold{\code{sep}}: A separator. By default is '__'(two underscores). It will be used to
 #'                     create a unique \code{gid} (gene identifier) for each gene. \code{gid}s are created by pasting
@@ -107,26 +113,37 @@
 #'     columns are groups of orthologous. Cells indicates the presence (>=1) or
 #'     absence (0) of a given gene, in a given organism. Cells can have values
 #'     greater than 1 if contain in-paralogs.}
-#'     \item{\bold{\code{organisms}}}{: A \code{character} vector with available
-#'     organism names, and organism number identifier as \code{names()}. (Dropped
-#'     organisms will not be displayed in this field, see \code{$dropped} below).}
-#'     \item{\bold{\code{clusters}}}{: A named \code{list} of clusters. Clusters are
-#'     shown as \code{data.table} objects containing 3 columns: \code{gid}, \code{org},
-#'     and \code{gene}, as explained before.}
+#'     \item{\bold{\code{organisms}}}{: A \code{\link[S4Vectors]{DataFrame}} with available
+#'     organism names, and organism number identifier as \code{rownames()}. (Dropped
+#'     organisms will not be displayed in this field, see \code{$dropped} below).
+#'     Additional metadata will be shown if provided, as additional columns.}
+#'     \item{\bold{\code{clusters}}}{: A \code{\link[S4Vectors]{DataFrame}} with the groups
+#'     of orthologous (clusters). Additional metadata will be shown as additional columns,
+#'     if provided before. Each row corresponds to each cluster.
+#'     \item{\bold{\code{genes}}}{: A \code{\link[S4Vectors]{SplitDataFrameList}} object with
+#'     one entry per cluster. Each element contains a \code{\link[S4Vectors]{DataFrame}}
+#'     with gene ids (\code{<gid>}) and additional metadata, if provided. \code{gid} are
+#'     created by \code{paste}ing organism and gene names, so duplication in gene names
+#'     are avoided.}
 #'     \item{\bold{\code{core_level}}}{: The percentage of organisms a gene must be in
 #'     to be considered as part of the coregenome. \code{core_level = 95} by default.
 #'     Can't be set above 100, and below 85 raises a warning.}
-#'     \item{\bold{\code{core_clusters}}}{: A \code{character} vector with core
-#'     cluster names, as defined by \code{$core_level}.}
-#'     \item{\bold{\code{cloud_clusters}}}{: A \code{character} vector with
-#'     cloud clusters. These are defined as those clusters which contain a single
+#'     \item{\bold{\code{core_clusters}}}{: Like \code{$clusters}, but only showing core
+#'     clusters.}
+#'     \item{\bold{\code{core_genes}}}{: Like \code{genes}, but only showing core genes.}
+#'     \item{\bold{\code{cloud_clusters}}}{: Like \code{$clusters}, but only showing cloud
+#'     clusters. These are defined as those clusters which contain a single
 #'     gene (singletons), plus those which have more than one but its organisms are
 #'     probably clonal due to identical general gene content. Colloquially defined as
 #'     strain-specific genes.}
-#'     \item{\bold{\code{shell_clusters}}}{: A \code{character} vector with shell
+#'     \item{\bold{\code{cloud_genes}}}{: Like \code{genes}, but only showing cloud genes,
+#'     as defined above.}
+#'     \item{\bold{\code{shell_clusters}}}{: Like \code{$clusters}, but only showing shell
 #'     clusters. These are defined as those clusters than don't belong nethier to the
 #'     core genome, nor to cloud genome. Colloquially defined as genes that are
 #'     present in some but not all strains, and that aren't strain-specific.}
+#'     \item{\bold{\code{shell_genes}}}{: Like \code{genes}, but only showing shell genes,
+#'     as defined above.}
 #'     \item{\bold{\code{summary_stats}}}{: A \code{data.frame} with information about
 #'     the number of core, shell, and cloud clusters, as well as the total number of
 #'     clusters.}
