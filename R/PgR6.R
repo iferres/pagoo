@@ -134,22 +134,21 @@
 #'     \item{\bold{\code{core_level}}}{: The percentage of organisms a gene must be in
 #'     to be considered as part of the coregenome. \code{core_level = 95} by default.
 #'     Can't be set above 100, and below 85 raises a warning.}
+#'     \item{\bold{\code{core_genes}}}{: Like \code{genes}, but only showing core genes.}
 #'     \item{\bold{\code{core_clusters}}}{: Like \code{$clusters}, but only showing core
 #'     clusters.}
-#'     \item{\bold{\code{core_genes}}}{: Like \code{genes}, but only showing core genes.}
+#'     \item{\bold{\code{cloud_genes}}}{: Like \code{genes}, but only showing cloud genes.
+#'     These are defined as those clusters which contain a single gene (singletons), plus
+#'     those which have more than one but its organisms are probably clonal due to identical
+#'     general gene content. Colloquially defined as strain-specific genes.}
 #'     \item{\bold{\code{cloud_clusters}}}{: Like \code{$clusters}, but only showing cloud
-#'     clusters. These are defined as those clusters which contain a single
-#'     gene (singletons), plus those which have more than one but its organisms are
-#'     probably clonal due to identical general gene content. Colloquially defined as
-#'     strain-specific genes.}
-#'     \item{\bold{\code{cloud_genes}}}{: Like \code{genes}, but only showing cloud genes,
-#'     as defined above.}
+#'     clusters as defined above.}
+#'     \item{\bold{\code{shell_genes}}}{: Like \code{genes}, but only showing shell genes.
+#'     These are defined as those clusters than don't belong nethier to the core genome,
+#'     nor to cloud genome. Colloquially defined as genes that are present in some but not
+#'     all strains, and that aren't strain-specific.}
 #'     \item{\bold{\code{shell_clusters}}}{: Like \code{$clusters}, but only showing shell
-#'     clusters. These are defined as those clusters than don't belong nethier to the
-#'     core genome, nor to cloud genome. Colloquially defined as genes that are
-#'     present in some but not all strains, and that aren't strain-specific.}
-#'     \item{\bold{\code{shell_genes}}}{: Like \code{genes}, but only showing shell genes,
-#'     as defined above.}
+#'     clusters, as defined above.}
 #'     \item{\bold{\code{summary_stats}}}{: A \code{\link[S4Vectors]{DataFrame}} with
 #'     information about the number of core, shell, and cloud clusters, as well as the
 #'     total number of clusters.}
