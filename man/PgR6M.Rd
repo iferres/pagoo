@@ -15,15 +15,27 @@ Inherits: \code{\link[pagoo]{PgR6}}
 \section{Class Constructor}{
 
 \describe{
-    \item{\code{new(cluster_df, sep = "__")}}{
+    \item{\code{new(DF, org_meta, group_meta, sep = "__")}}{
         \itemize{
-            \item{Create a \code{PgR6} object.}
+            \item{Create a \code{PgR6M} object.}
             \item{\bold{Args:}}{
                 \itemize{
-                    \item{\bold{\code{cluster_df}}: A \code{data.frame} or \code{data.table} containing at least the
+                    \item{\bold{\code{DF}}: A \code{data.frame} or \code{\link[S4Vectors]{DataFrame}} containing at least the
                     following columns: \code{gene} (gene name), \code{org} (organism name to which the gene belongs to),
-                    and \code{group} (group of orthologous to which the gene belongs to). More columns are allowed but
-                    this basic class do not contain any methods to handle them.
+                    and \code{group} (group of orthologous to which the gene belongs to). More columns can be added as metadata
+                    for each gene.
+                 }
+                    \item{\bold{\code{org_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors]{DataFrame}}
+                    containging additional metadata for organisms. This \code{data.frame} must have a column named "org" with
+                    valid organisms names (that is, they should match with those provided in \code{DF}, column \code{org}), and
+                    additional columns will be used as metadata. Each row should correspond to each organism.
+
+                 }
+                    \item{\bold{\code{group_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors]{DataFrame}}
+                    containging additional metadata for clusters. This \code{data.frame} must have a column named "group" with
+                    valid organisms names (that is, they should match with those provided in \code{DF}, column \code{group}), and
+                    additional columns will be used as metadata. Each row should correspond to each cluster.
+
                  }
                     \item{\bold{\code{sep}}: A separator. By default is '__'(two underscores). It will be used to
                     create a unique \code{gid} (gene identifier) for each gene. \code{gid}s are created by pasting
@@ -33,8 +45,8 @@ Inherits: \code{\link[pagoo]{PgR6}}
             }
             \item{\bold{Returns:}}{
                 \itemize{
-                    \item{An R6 object of class PgR6. It contains basic fields and methods for
-                    analyzing a pangenome.}
+                    \item{An R6 object of class PgR6M. It contains basic fields and methods for analyzing a pangenome. It also
+                    contains additional statistical methods for analize it, and methods to make basic exploratory plots.}
                 }
             }
         }
@@ -90,55 +102,92 @@ Inherits: \code{\link[pagoo]{PgR6}}
             }
         }
     }
-    \item{\code{dist_jaccard()}}{
+    \item{\code{rarefact()}}{
         \itemize{
-            \item{Computes Jaccard's distance between all pairs of genomes. See
-            \code{\link[micropan]{distJaccard}} for details, this is just a wrapper
-            function.}
+            \item{Rarefact pangenome or corgenome. Compute the number of genes which belong to
+            the pangenome or to the coregenome, for a number of random permutations of
+            increasingly bigger sample of genomes.}
+            \item{\bold{Args:}}{
+                \itemize{
+                    \item{\bold{\code{what}}: One of \code{"pangenome"} or \code{"coregenome"}.}
+                    \item{\bold{\code{n.perm}}: The number of permutations to compute}
+                }
+             }
             \item{\bold{Returns:}}{
                 \itemize{
-                    \item{A \code{dist} object (see \link[stats]{dist}) containing all pairwise
-                    Jaccard distances between genomes.}
+                    \item{A \code{matrix}, rows are the number of genomes added, columns are
+                    permutations, and the cell number is the number of genes in ethier category.
+                    }
                 }
             }
         }
     }
-    \item{\code{dist_manhattan(scale = 0, weights = rep(1, dim(self$pan_matrix)[2]))}}{
+    \item{\code{dist(method = 'bray', binary = FALSE, diag = FALSE, upper = FALSE, na.rm = FALSE, ...)}}{
         \itemize{
-            \item{Computes the (weighted) Manhattan distances beween all pairs of genomes.
-            See \code{\link[micropan]{distManhattan}} for details. }
+            \item{Compute distance between all pairs of genomes. The default dist method is
+            \code{"bray"} (Bray-Curtis distance). Annother used distance method is \code{"jaccard"},
+            but you should set \code{binary = FALSE} (see below) to obtain a meaningful result.
+            See \code{\link[vegan]{vegdist}} for details, this is just a wrapper function.
+            }
             \item{\bold{Args:}}{
                 \itemize{
-                    \item{\bold{\code{scale}}: An optional scale to control how copy numbers should
-                    affect the distances.
-                 }
-                    \item{\bold{\code{weights}}: Vector of optional weights of gene clusters.
-                 }
+                    \item{\bold{\code{method}}: The distance method to use. See \link[vegan]{vegdist}
+                    for available methods, and details for each one.
+                    }
+                    \item{\bold{\code{binary}}: Transform abundance matrix into a presence/absence
+                    matrix before computing distance.}
+                    \item{\bold{\code{diag}}: Compute diagonals.}
+                    \item{\bold{\code{upper}}: Return only the upper diagonal.}
+                    \item{\bold{\code{na.rm}}: Pairwise deletion of missing observations when
+                    computing dissimilarities.}
+                    \item{\bold{\code{...}}: Other parameters. See \link[vegan]{vegdist} for details.}
                 }
             }
             \item{\bold{Returns:}}{
                 \itemize{
-                    \item{A \code{dist} object (see \link[stats]{dist}) containing all pairwise Manhattan
-                    distances between genomes.}
+                    \item{A \code{dist} object containing all pairwise dissimilarities between genomes.}
                 }
             }
         }
     }
-    \item{\code{heaps(n.perm = 100)}}{
+    \item{\code{pg_power_law_fit(raref, ...)}}{
         \itemize{
-            \item{Estimating if a pan-genome is open or closed based on a Heaps law model.
-            See \code{\link[micropan]{heaps}} for more details.}
+            \item{Fits a power law curve for the pangenome rarefaction simulation.}
             \item{\bold{Args:}}{
                 \itemize{
-                    \item{\bold{\code{n.perm}}: The number of random permutations of genome
-                    ordering.
+                    \item{\bold{\code{raref}}: (Optional) A rarefaction matrix, as returned by \code{rarefact()}.
+                    }
+                    \item{\bold{\code{...}}: Further arguments to be passed to \code{rarefact()}. If \code{raref}
+                    is missing, it will be computed with default arguments, or with the ones provided here.
+                    }
                  }
-                }
+
             }
             \item{\bold{Returns:}}{
                 \itemize{
-                    \item{A vector of two estimated parameters: The Intercept and the decay
-                    parameter alpha. If alpha<1.0 the pan-genome is open, if alpha>1.0 it is closed.}
+                    \item{A \code{list} of two elements: \code{$formula} with a fitted function, and \code{$params}
+                    with fitted intercept and decay parameters. An attribute \code{"alpha"} is also returned (If
+                    \code{alpha>1}, then the pangenome is closed, otherwise is open.)
+                    }
+                }
+            }
+        }
+    }
+    \item{\code{cg_exp_decay_fit(raref, pcounts = 10, ...)}}{
+        \itemize{
+            \item{Fits an exponential decay curve for the coregenome rarefaction simulation.}
+            \item{\bold{Args:}}{
+                \itemize{
+                    \item{\bold{\code{raref}}: (Optional) A rarefaction matrix, as returned by \code{rarefact()}.
+                    }
+                    \item{\bold{\code{pcounts}}: An integer of pseudo-counts. This is used to better fit the function
+                    at small numbers, as the linearization method requires to substract a constant C, which is the
+                    coregenome size, from \code{y}. As \code{y} becomes closer to the coregenome size, this operation
+                    tends to 0, and its logarithm goes crazy. By default \code{pcounts=10}.
+                    }
+                    \item{\bold{\code{...}}: Further arguments to be passed to \code{rarefact()}. If \code{raref}
+                    is missing, it will be computed with default arguments, or with the ones provided here.
+                    }
                 }
             }
         }
@@ -248,29 +297,16 @@ Inherits: \code{\link[pagoo]{PgR6}}
             }
         }
     }
-    \item{\code{gg_dendro(dist_method = "Jaccard", hclust_method = "complete", ...)}}{
+    \item{\code{gg_curves()}}{
         \itemize{
-            \item{Plot a dendrogram showing the clustering between organisms.}
-            \item{\bold{Args:}}{
-                \itemize{
-                    \item{\bold{\code{dist_method}}: The \code{dist} method to use. Default:
-                    \code{"Jaccard"}.
-                 }
-                    \item{\bold{\code{hclust_method}}: The \code{hclust} method to use. Default:
-                    \code{"complete"}.
-                 }
-                    \item{\bold{\code{...}}: More arguments to be passed to
-                    \code{\link[micropan]{distManhattan}}, or to \code{\link[ggdendro]{ggdendrogram}}.
-                 }
-                }
-            }
+            \item{Plot pangenome and/or coregenome curves with the fitted functions returned by \code{pg_power_law_fit()}
+            and \code{cg_exp_decay_fit()}. You can add points by adding \code{+ geom_points()}, of ggplot2 package}
             \item{\bold{Returns:}}{
                 \itemize{
-                    \item{A dendrogram plot (\code{ggdendro::ggdendrogram()}), and a \code{gg} object
-                    (\code{ggplot2} package) invisibly.}
+                    \item{A scatter plot, and a \code{gg} object (\code{ggplot2} package) invisibly.}
                 }
             }
-        }
+         }
     }
 }
 }
