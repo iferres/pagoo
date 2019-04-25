@@ -1,42 +1,49 @@
-# PgR6MS
-
-# sequences <- structure(list(org1 = structure(c("jwnxoarfiq", "wajpcygeox", "xvgfkqacpb", "rewbxafzdj"),
-#                                              .Names = c("gene1", "gene2", "gene3", "gene4")),
-#                             org2 = structure(c("vqphkgajem", "ictkgfpmvh"),
-#                                              .Names = c("gene1", "gene2")),
-#                             org3 = structure(c("ixwflohqzs", "fuivpjtehs"),
-#                                              .Names = c("gene1", "gene2"))),
-#                        .Names = c("org1", "org2", "org3"))
-# Expect 1) a named list of named character vector Names of list is names of
-# organisms, names of character vector are gene names; 2) a named list of
-# BStringSet objects (same requirements as (1), but with BStringSet names as
-# gene names); 3) a BStringSetList (same requirements as (3) but
-# BStringSetList names are organisms names).
-#
-#
-
 #' @name PgR6MS
 #' @title PgR6 class with Methods and Sequences.
 #' @description PgR6 with Methods and Sequences.
 #'  Inherits: \code{\link[pagoo]{PgR6M}}
 #' @section Class Constructor:
 #' \describe{
-#'     \item{\code{new(DF, sep = "__", sequences)}}{
+#'     \item{\code{new(DF, org_meta, group_meta, sep = "__")}}{
 #'         \itemize{
-#'             \item{~~DESCRIBE THE METHOD~~}
+#'             \item{Create a \code{PgR6M} object.}
 #'             \item{\bold{Args:}}{
 #'                 \itemize{
-#'                     \item{\bold{\code{DF}}: ~~DESCRIBE THIS PARAMETER~~
+#'                     \item{\bold{\code{DF}}: A \code{data.frame} or \code{\link[S4Vectors]{DataFrame}} containing at least the
+#'                     following columns: \code{gene} (gene name), \code{org} (organism name to which the gene belongs to),
+#'                     and \code{group} (group of orthologous to which the gene belongs to). More columns can be added as metadata
+#'                     for each gene.
 #'                  }
-#'                     \item{\bold{\code{sep}}: ~~DESCRIBE THIS PARAMETER~~
+#'                     \item{\bold{\code{org_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors]{DataFrame}}
+#'                     containging additional metadata for organisms. This \code{data.frame} must have a column named "org" with
+#'                     valid organisms names (that is, they should match with those provided in \code{DF}, column \code{org}), and
+#'                     additional columns will be used as metadata. Each row should correspond to each organism.
+#'
 #'                  }
-#'                     \item{\bold{\code{sequences}}: ~~DESCRIBE THIS PARAMETER~~
+#'                     \item{\bold{\code{group_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors]{DataFrame}}
+#'                     containging additional metadata for clusters. This \code{data.frame} must have a column named "group" with
+#'                     valid organisms names (that is, they should match with those provided in \code{DF}, column \code{group}), and
+#'                     additional columns will be used as metadata. Each row should correspond to each cluster.
+#'
 #'                  }
+#'                     \item{\bold{\code{sep}}: A separator. By default is '__'(two underscores). It will be used to
+#'                     create a unique \code{gid} (gene identifier) for each gene. \code{gid}s are created by pasting
+#'                     \code{org} to \code{gene}, separated by \code{sep}.
+#'                  }
+#'
+#'                     \item{\bold{\code{sequences}}: Can accept: 1) a named \code{list} of named \code{character} vector. Name of list
+#'                     are names of organisms, names of character vector are gene names; or 2) a named \code{list} of \code{\link[Biostrings]{DNAStringSet}}
+#'                     objects (same requirements as (1), but with BStringSet names as gene names); or 3) a \code{\link[Biostrings]{DNAStringSetList}}
+#'                     (same requirements as (2) but \code{DNAStringSetList} names are organisms names).
+#'                  }
+#'
 #'                 }
 #'             }
 #'             \item{\bold{Returns:}}{
 #'                 \itemize{
-#'                     \item{~~WHAT DOES THIS RETURN~~}
+#'                     \item{An R6 object of class PgR6M. It contains basic fields and methods for analyzing a pangenome. It also
+#'                     contains additional statistical methods for analize it, methods to make basic exploratory plots, and methods
+#'                     for sequence manipulation.}
 #'                 }
 #'             }
 #'         }
@@ -91,55 +98,92 @@
 #'             }
 #'         }
 #'     }
-#'     \item{\code{dist_jaccard()}}{
+#'     \item{\code{rarefact()}}{
 #'         \itemize{
-#'             \item{Computes Jaccard's distance between all pairs of genomes. See
-#'             \code{\link[micropan]{distJaccard}} for details, this is just a wrapper
-#'             function.}
+#'             \item{Rarefact pangenome or corgenome. Compute the number of genes which belong to
+#'             the pangenome or to the coregenome, for a number of random permutations of
+#'             increasingly bigger sample of genomes.}
+#'             \item{\bold{Args:}}{
+#'                 \itemize{
+#'                     \item{\bold{\code{what}}: One of \code{"pangenome"} or \code{"coregenome"}.}
+#'                     \item{\bold{\code{n.perm}}: The number of permutations to compute}
+#'                 }
+#'              }
 #'             \item{\bold{Returns:}}{
 #'                 \itemize{
-#'                     \item{A \code{dist} object (see \link[stats]{dist}) containing all pairwise
-#'                     Jaccard distances between genomes.}
+#'                     \item{A \code{matrix}, rows are the number of genomes added, columns are
+#'                     permutations, and the cell number is the number of genes in ethier category.
+#'                     }
 #'                 }
 #'             }
 #'         }
 #'     }
-#'     \item{\code{dist_manhattan(scale = 0, weights = rep(1, dim(self$pan_matrix)[2]))}}{
+#'     \item{\code{dist(method = 'bray', binary = FALSE, diag = FALSE, upper = FALSE, na.rm = FALSE, ...)}}{
 #'         \itemize{
-#'             \item{Computes the (weighted) Manhattan distances beween all pairs of genomes.
-#'             See \code{\link[micropan]{distManhattan}} for details. }
+#'             \item{Compute distance between all pairs of genomes. The default dist method is
+#'             \code{"bray"} (Bray-Curtis distance). Annother used distance method is \code{"jaccard"},
+#'             but you should set \code{binary = FALSE} (see below) to obtain a meaningful result.
+#'             See \code{\link[vegan]{vegdist}} for details, this is just a wrapper function.
+#'             }
 #'             \item{\bold{Args:}}{
 #'                 \itemize{
-#'                     \item{\bold{\code{scale}}: An optional scale to control how copy numbers should
-#'                     affect the distances.
-#'                  }
-#'                     \item{\bold{\code{weights}}: Vector of optional weights of gene clusters.
-#'                  }
+#'                     \item{\bold{\code{method}}: The distance method to use. See \link[vegan]{vegdist}
+#'                     for available methods, and details for each one.
+#'                     }
+#'                     \item{\bold{\code{binary}}: Transform abundance matrix into a presence/absence
+#'                     matrix before computing distance.}
+#'                     \item{\bold{\code{diag}}: Compute diagonals.}
+#'                     \item{\bold{\code{upper}}: Return only the upper diagonal.}
+#'                     \item{\bold{\code{na.rm}}: Pairwise deletion of missing observations when
+#'                     computing dissimilarities.}
+#'                     \item{\bold{\code{...}}: Other parameters. See \link[vegan]{vegdist} for details.}
 #'                 }
 #'             }
 #'             \item{\bold{Returns:}}{
 #'                 \itemize{
-#'                     \item{A \code{dist} object (see \link[stats]{dist}) containing all pairwise Manhattan
-#'                     distances between genomes.}
+#'                     \item{A \code{dist} object containing all pairwise dissimilarities between genomes.}
 #'                 }
 #'             }
 #'         }
 #'     }
-#'     \item{\code{heaps(n.perm = 100)}}{
+#'     \item{\code{pg_power_law_fit(raref, ...)}}{
 #'         \itemize{
-#'             \item{Estimating if a pan-genome is open or closed based on a Heaps law model.
-#'             See \code{\link[micropan]{heaps}} for more details.}
+#'             \item{Fits a power law curve for the pangenome rarefaction simulation.}
 #'             \item{\bold{Args:}}{
 #'                 \itemize{
-#'                     \item{\bold{\code{n.perm}}: The number of random permutations of genome
-#'                     ordering.
+#'                     \item{\bold{\code{raref}}: (Optional) A rarefaction matrix, as returned by \code{rarefact()}.
+#'                     }
+#'                     \item{\bold{\code{...}}: Further arguments to be passed to \code{rarefact()}. If \code{raref}
+#'                     is missing, it will be computed with default arguments, or with the ones provided here.
+#'                     }
 #'                  }
-#'                 }
+#'
 #'             }
 #'             \item{\bold{Returns:}}{
 #'                 \itemize{
-#'                     \item{A vector of two estimated parameters: The Intercept and the decay
-#'                     parameter alpha. If alpha<1.0 the pan-genome is open, if alpha>1.0 it is closed.}
+#'                     \item{A \code{list} of two elements: \code{$formula} with a fitted function, and \code{$params}
+#'                     with fitted intercept and decay parameters. An attribute \code{"alpha"} is also returned (If
+#'                     \code{alpha>1}, then the pangenome is closed, otherwise is open.)
+#'                     }
+#'                 }
+#'             }
+#'         }
+#'     }
+#'     \item{\code{cg_exp_decay_fit(raref, pcounts = 10, ...)}}{
+#'         \itemize{
+#'             \item{Fits an exponential decay curve for the coregenome rarefaction simulation.}
+#'             \item{\bold{Args:}}{
+#'                 \itemize{
+#'                     \item{\bold{\code{raref}}: (Optional) A rarefaction matrix, as returned by \code{rarefact()}.
+#'                     }
+#'                     \item{\bold{\code{pcounts}}: An integer of pseudo-counts. This is used to better fit the function
+#'                     at small numbers, as the linearization method requires to substract a constant C, which is the
+#'                     coregenome size, from \code{y}. As \code{y} becomes closer to the coregenome size, this operation
+#'                     tends to 0, and its logarithm goes crazy. By default \code{pcounts=10}.
+#'                     }
+#'                     \item{\bold{\code{...}}: Further arguments to be passed to \code{rarefact()}. If \code{raref}
+#'                     is missing, it will be computed with default arguments, or with the ones provided here.
+#'                     }
 #'                 }
 #'             }
 #'         }
@@ -249,44 +293,37 @@
 #'             }
 #'         }
 #'     }
-#'     \item{\code{gg_dendro(dist_method = "Jaccard", hclust_method = "complete", ...)}}{
+#'     \item{\code{gg_curves()}}{
 #'         \itemize{
-#'             \item{Plot a dendrogram showing the clustering between organisms.}
-#'             \item{\bold{Args:}}{
-#'                 \itemize{
-#'                     \item{\bold{\code{dist_method}}: The \code{dist} method to use. Default:
-#'                     \code{"Jaccard"}.
-#'                  }
-#'                     \item{\bold{\code{hclust_method}}: The \code{hclust} method to use. Default:
-#'                     \code{"complete"}.
-#'                  }
-#'                     \item{\bold{\code{...}}: More arguments to be passed to
-#'                     \code{\link[micropan]{distManhattan}}, or to \code{\link[ggdendro]{ggdendrogram}}.
-#'                  }
-#'                 }
-#'             }
+#'             \item{Plot pangenome and/or coregenome curves with the fitted functions returned by \code{pg_power_law_fit()}
+#'             and \code{cg_exp_decay_fit()}. You can add points by adding \code{+ geom_points()}, of ggplot2 package}
 #'             \item{\bold{Returns:}}{
 #'                 \itemize{
-#'                     \item{A dendrogram plot (\code{ggdendro::ggdendrogram()}), and a \code{gg} object
-#'                     (\code{ggplot2} package) invisibly.}
+#'                     \item{A scatter plot, and a \code{gg} object (\code{ggplot2} package) invisibly.}
 #'                 }
 #'             }
-#'         }
+#'          }
 #'     }
-#'     \item{\code{get_core_seqs(max_per_org = 1, fill = TRUE)}}{
+#'     \item{\code{core_seqs_4_phylo(max_per_org = 1, fill = TRUE)}}{
 #'         \itemize{
-#'             \item{~~DESCRIBE THE METHOD~~}
+#'             \item{A field for obtaining core gene sequences is available (see below), but for creating a phylogeny with this
+#'             sets is useful to: 1) have the possibility of extracting just one sequence of each organism on each cluster, in
+#'             case paralogues are present, and 2) filling gaps with empthy sequences in case the core_level was set below 100%,
+#'             allowing more genes (some not in 100% of organisms) to be incorporated to the phylogeny. That is the purpose of
+#'             this special function.}
 #'             \item{\bold{Args:}}{
 #'                 \itemize{
-#'                     \item{\bold{\code{max_per_org}}: ~~DESCRIBE THIS PARAMETER~~
+#'                     \item{\bold{\code{max_per_org}}: Maximum number of sequences of each organism to be taken from each cluster.
 #'                  }
-#'                     \item{\bold{\code{fill}}: ~~DESCRIBE THIS PARAMETER~~
+#'                     \item{\bold{\code{fill}}: \code{logical}. If fill \code{DNAStringSet} with emphty \code{DNAString} in cases where
+#'                     \code{core_level} is set below 100%, and some clusters with missing organisms are also considered.
 #'                  }
 #'                 }
 #'             }
 #'             \item{\bold{Returns:}}{
 #'                 \itemize{
-#'                     \item{~~WHAT DOES THIS RETURN~~}
+#'                     \item{A \code{DNAStringSetList} with core genes. Order of organisms on each cluster is conserved, so it is easier
+#'                     to concatenate them into a super-gene suitable for phylogenetic inference.}
 #'                 }
 #'             }
 #'         }
@@ -296,40 +333,56 @@
 #'
 #' @section Public Fields:
 #' \describe{
-#'      \item{\bold{\code{pan_matrix}}}{: The panmatrix. Rows are organisms, and
+#'     \item{\bold{\code{$pan_matrix}}}{: The panmatrix. Rows are organisms, and
 #'     columns are groups of orthologous. Cells indicates the presence (>=1) or
 #'     absence (0) of a given gene, in a given organism. Cells can have values
 #'     greater than 1 if contain in-paralogs.}
-#'     \item{\bold{\code{organisms}}}{: A \code{character} vector with available
-#'     organism names, and organism number identifier as \code{names()}. (Dropped
-#'     organisms will not be displayed in this field, see \code{$dropped} below).}
-#'     \item{\bold{\code{clusters}}}{: A named \code{list} of clusters. Clusters are
-#'     shown as \code{data.table} objects containing 3 columns: \code{gid}, \code{org},
-#'     and \code{gene}, as explained before.}
-#'     \item{\bold{\code{core_level}}}{: The percentage of organisms a gene must be in
+#'     \item{\bold{\code{$organisms}}}{: A \code{\link[S4Vectors]{DataFrame}} with available
+#'     organism names, and organism number identifier as \code{rownames()}. (Dropped
+#'     organisms will not be displayed in this field, see \code{$dropped} below).
+#'     Additional metadata will be shown if provided, as additional columns.}
+#'     \item{\bold{\code{$clusters}}}{: A \code{\link[S4Vectors]{DataFrame}} with the groups
+#'     of orthologous (clusters). Additional metadata will be shown as additional columns,
+#'     if provided before. Each row corresponds to each cluster.}
+#'     \item{\bold{\code{$genes}}}{: A \code{\link[S4Vectors]{SplitDataFrameList}} object with
+#'     one entry per cluster. Each element contains a \code{\link[S4Vectors]{DataFrame}}
+#'     with gene ids (\code{<gid>}) and additional metadata, if provided. \code{gid} are
+#'     created by \code{paste}ing organism and gene names, so duplication in gene names
+#'     are avoided.}
+#'     \item{\bold{\code{$sequences}}}{: A \code{\link[Biostrings]{DNAStringSetList}} with the
+#'     set of sequences grouped by cluster. Each group is accessible as were a list. All
+#'     \code{Biostrings} methods are available.}
+#'     \item{\bold{\code{$core_level}}}{: The percentage of organisms a gene must be in
 #'     to be considered as part of the coregenome. \code{core_level = 95} by default.
 #'     Can't be set above 100, and below 85 raises a warning.}
-#'     \item{\bold{\code{core_clusters}}}{: A \code{character} vector with core
-#'     cluster names, as defined by \code{$core_level}.}
-#'     \item{\bold{\code{cloud_clusters}}}{: A \code{character} vector with
-#'     cloud clusters. These are defined as those clusters which contain a single
-#'     gene (singletons), plus those which have more than one but its organisms are
-#'     probably clonal due to identical general gene content. Colloquially defined as
-#'     strain-specific genes.}
-#'     \item{\bold{\code{shell_clusters}}}{: A \code{character} vector with shell
-#'     clusters. These are defined as those clusters than don't belong nethier to the
-#'     core genome, nor to cloud genome. Colloquially defined as genes that are
-#'     present in some but not all strains, and that aren't strain-specific.}
-#'     \item{\bold{\code{summary_stats}}}{: A \code{data.frame} with information about
-#'     the number of core, shell, and cloud clusters, as well as the total number of
+#'     \item{\bold{\code{$core_genes}}}{: Like \code{genes}, but only showing core genes.}
+#'     \item{\bold{\code{$core_clusters}}}{: Like \code{$clusters}, but only showing core
 #'     clusters.}
-#'     \item{\bold{\code{random_seed}}}{: The last \code{.Random.seed}. Used for
+#'     \item{\bold{\code{$core_sequences}}}{: Like \code{$sequences}, but only showing core
+#'     sequences.}
+#'     \item{\bold{\code{$cloud_genes}}}{: Like \code{genes}, but only showing cloud genes.
+#'     These are defined as those clusters which contain a single gene (singletons), plus
+#'     those which have more than one but its organisms are probably clonal due to identical
+#'     general gene content. Colloquially defined as strain-specific genes.}
+#'     \item{\bold{\code{$cloud_clusters}}}{: Like \code{$clusters}, but only showing cloud
+#'     clusters as defined above.}
+#'     \item{\bold{\code{$cloud_sequences}}}{: Like \code{$sequences}, but only showing cloud
+#'     sequences as defined above.}
+#'     \item{\bold{\code{$shell_genes}}}{: Like \code{genes}, but only showing shell genes.
+#'     These are defined as those clusters than don't belong nethier to the core genome,
+#'     nor to cloud genome. Colloquially defined as genes that are present in some but not
+#'     all strains, and that aren't strain-specific.}
+#'     \item{\bold{\code{$shell_clusters}}}{: Like \code{$clusters}, but only showing shell
+#'     clusters, as defined above.}
+#'     \item{\bold{\code{$shell_sequences}}}{: Like \code{$sequences}, but only showing shell
+#'     sequences, as defined above.}
+#'     \item{\bold{\code{$summary_stats}}}{: A \code{\link[S4Vectors]{DataFrame}} with
+#'     information about the number of core, shell, and cloud clusters, as well as the
+#'     total number of clusters.}
+#'     \item{\bold{\code{$random_seed}}}{: The last \code{.Random.seed}. Used for
 #'     reproducibility purposes only.}
-#'     \item{\bold{\code{dropped}}}{: A \code{character} vector with dropped organism
+#'     \item{\bold{\code{$dropped}}}{: A \code{character} vector with dropped organism
 #'     names, and organism number identifier as \code{names()}}
-#'     \item{\bold{\code{sequences}}}{: A \code{DNAStringSetList}. Each entry represents
-#'     a pangenome cluster, and can be accessed via the \code{'[['} operator, as it were
-#'     a list. See \code{\link[Biostrings]{XStringSetList}}.}
 #' }
 #'
 #'
