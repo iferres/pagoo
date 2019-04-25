@@ -1,23 +1,3 @@
-# Basic pgr6 class
-# This is a basic pgr6 class constructor from which inherit more complex ones.
-
-# Test: bare input
-# cluster_list <- list(structure(c("gene1", "gene1", "gene1"),
-#                                .Names = c("org1","org2", "org3")),
-#                      structure(c("gene2", "gene3", "gene2"),
-#                                .Names = c("org1","org1", "org3")),
-#                      structure(c("gene4", "gene2"),
-#                                .Names = c("org1","org2")))
-
-# DF <- structure(list(group = c("group1", "group1", "group1", "group2",
-#                                        "group2", "group2", "group3", "group3"),
-#                              org = c("org1", "org2", "org3", "org1",
-#                                      "org1", "org3", "org1", "org2"),
-#                              gene = c("gene1","gene1", "gene1", "gene2",
-#                                       "gene3", "gene2", "gene4", "gene2")),
-#                         .Names = c("group", "org", "gene"),
-#                         row.names = c(NA, -8L),class = "data.frame")
-
 #' @name PgR6
 #' @title PgR6 basic class
 #' @description A basic \code{PgR6} class constructor. It contains basic fields
