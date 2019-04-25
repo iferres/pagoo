@@ -488,7 +488,7 @@ PgR6_subset <- R6::R6Class('PgR6_subset',
 
                                nnclu <- dimnames(x$pan_matrix)[[2]]
                                names(nnclu) <- seq_along(nnclu)
-                               nnorg <- x$organisms
+                               nnorg <- x$organisms[['org']]
 
                                # Simple subset
                                if(.simple){
