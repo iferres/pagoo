@@ -20,19 +20,20 @@
     orgs[orgs$org %in% un, ]
   },
 
+  #' @importFrom S4Vectors split
   genes = function(){
     jj <- private$.j
     ii <- private$.i
-    df <- private$.x$.__enclos_env_$.DF
+    df <- private$.x$.__enclos_env__$private$.DF
     wh <- which(df$org%in%ii & df$group%in%jj)
     df <- df[wh, ]
-    split(df, df$group)
+    split(df, df$group, drop = TRUE)
   },
 
   clusters = function(){
     jj <- private$.j
     ii <- private$.i
-    df <- private$.x$.__enclos_env_$.DF
+    df <- private$.x$.__enclos_env__$private$.DF
     clu <- private$.x$clusters
     wh <- which(df$org%in%ii & df$group%in%jj)
     un <- df[wh, 'group', drop = TRUE]

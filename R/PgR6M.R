@@ -8,15 +8,27 @@
 #'
 #' @section Class Constructor:
 #' \describe{
-#'     \item{\code{new(DF, sep = "__")}}{
+#'     \item{\code{new(DF, org_meta, group_meta, sep = "__")}}{
 #'         \itemize{
-#'             \item{Create a \code{PgR6} object.}
+#'             \item{Create a \code{PgR6M} object.}
 #'             \item{\bold{Args:}}{
 #'                 \itemize{
-#'                     \item{\bold{\code{DF}}: A \code{data.frame} or \code{data.table} containing at least the
+#'                     \item{\bold{\code{DF}}: A \code{data.frame} or \code{\link[S4Vectors]{DataFrame}} containing at least the
 #'                     following columns: \code{gene} (gene name), \code{org} (organism name to which the gene belongs to),
-#'                     and \code{group} (group of orthologous to which the gene belongs to). More columns are allowed but
-#'                     this basic class do not contain any methods to handle them.
+#'                     and \code{group} (group of orthologous to which the gene belongs to). More columns can be added as metadata
+#'                     for each gene.
+#'                  }
+#'                     \item{\bold{\code{org_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors]{DataFrame}}
+#'                     containging additional metadata for organisms. This \code{data.frame} must have a column named "org" with
+#'                     valid organisms names (that is, they should match with those provided in \code{DF}, column \code{org}), and
+#'                     additional columns will be used as metadata. Each row should correspond to each organism.
+#'
+#'                  }
+#'                     \item{\bold{\code{group_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors]{DataFrame}}
+#'                     containging additional metadata for clusters. This \code{data.frame} must have a column named "group" with
+#'                     valid organisms names (that is, they should match with those provided in \code{DF}, column \code{group}), and
+#'                     additional columns will be used as metadata. Each row should correspond to each cluster.
+#'
 #'                  }
 #'                     \item{\bold{\code{sep}}: A separator. By default is '__'(two underscores). It will be used to
 #'                     create a unique \code{gid} (gene identifier) for each gene. \code{gid}s are created by pasting
@@ -26,8 +38,8 @@
 #'             }
 #'             \item{\bold{Returns:}}{
 #'                 \itemize{
-#'                     \item{An R6 object of class PgR6. It contains basic fields and methods for
-#'                     analyzing a pangenome.}
+#'                     \item{An R6 object of class PgR6M. It contains basic fields and methods for analyzing a pangenome. It also
+#'                     contains additional statistical methods for analize it, and methods to make basic exploratory plots.}
 #'                 }
 #'             }
 #'         }
@@ -89,10 +101,10 @@
 #'             increasingly bigger sample of genomes.}
 #'             \item{\bold{Args:}}{
 #'                 \itemize{
-#'                     \item{\bold{\code{}}} #######################
-#'
+#'                     \item{\bold{\code{what}}: One of \code{"pangenome"} or \code{"coregenome"}.}
+#'                     \item{\bold{\code{n.perm}}: The number of permutations to compute}
 #'                 }
-#'             }
+#'              }
 #'             \item{\bold{Returns:}}{
 #'                 \itemize{
 #'                     \item{A \code{matrix}, rows are the number of genomes added, columns are
@@ -102,7 +114,7 @@
 #'             }
 #'         }
 #'     }
-#'     \item{\code{dist()}}{
+#'     \item{\code{dist(method = 'bray', binary = FALSE, diag = FALSE, upper = FALSE, na.rm = FALSE, ...)}}{
 #'         \itemize{
 #'             \item{Compute distance between all pairs of genomes. The default dist method is
 #'             \code{"bray"} (Bray-Curtis distance). Annother used distance method is \code{"jaccard"},
@@ -130,21 +142,44 @@
 #'             }
 #'         }
 #'     }
-#'     \item{\code{power_law_fit(raref, ...)}}{
+#'     \item{\code{pg_power_law_fit(raref, ...)}}{
 #'         \itemize{
-#'             \item{Estimating if a pan-genome is open or closed based on a Heaps law model.
-#'             See \code{\link[micropan]{heaps}} for more details.}
+#'             \item{Fits a power law curve for the pangenome rarefaction simulation.}
 #'             \item{\bold{Args:}}{
 #'                 \itemize{
-#'                     \item{\bold{\code{n.perm}}: The number of random permutations of genome
-#'                     ordering.
+#'                     \item{\bold{\code{raref}}: (Optional) A rarefaction matrix, as returned by \code{rarefact()}.
+#'                     }
+#'                     \item{\bold{\code{...}}: Further arguments to be passed to \code{rarefact()}. If \code{raref}
+#'                     is missing, it will be computed with default arguments, or with the ones provided here.
+#'                     }
 #'                  }
-#'                 }
+#'
 #'             }
 #'             \item{\bold{Returns:}}{
 #'                 \itemize{
-#'                     \item{A vector of two estimated parameters: The Intercept and the decay
-#'                     parameter alpha. If alpha<1.0 the pan-genome is open, if alpha>1.0 it is closed.}
+#'                     \item{A \code{list} of two elements: \code{$formula} with a fitted function, and \code{$params}
+#'                     with fitted intercept and decay parameters. An attribute \code{"alpha"} is also returned (If
+#'                     \code{alpha>1}, then the pangenome is closed, otherwise is open.)
+#'                     }
+#'                 }
+#'             }
+#'         }
+#'     }
+#'     \item{\code{cg_exp_decay_fit(raref, pcounts = 10, ...)}}{
+#'         \itemize{
+#'             \item{Fits an exponential decay curve for the coregenome rarefaction simulation.}
+#'             \item{\bold{Args:}}{
+#'                 \itemize{
+#'                     \item{\bold{\code{raref}}: (Optional) A rarefaction matrix, as returned by \code{rarefact()}.
+#'                     }
+#'                     \item{\bold{\code{pcounts}}: An integer of pseudo-counts. This is used to better fit the function
+#'                     at small numbers, as the linearization method requires to substract a constant C, which is the
+#'                     coregenome size, from \code{y}. As \code{y} becomes closer to the coregenome size, this operation
+#'                     tends to 0, and its logarithm goes crazy. By default \code{pcounts=10}.
+#'                     }
+#'                     \item{\bold{\code{...}}: Further arguments to be passed to \code{rarefact()}. If \code{raref}
+#'                     is missing, it will be computed with default arguments, or with the ones provided here.
+#'                     }
 #'                 }
 #'             }
 #'         }
@@ -254,65 +289,62 @@
 #'             }
 #'         }
 #'     }
-#'     \item{\code{gg_dendro(dist_method = "Jaccard", hclust_method = "complete", ...)}}{
+#'     \item{\code{gg_curves()}}{
 #'         \itemize{
-#'             \item{Plot a dendrogram showing the clustering between organisms.}
-#'             \item{\bold{Args:}}{
-#'                 \itemize{
-#'                     \item{\bold{\code{dist_method}}: The \code{dist} method to use. Default:
-#'                     \code{"Jaccard"}.
-#'                  }
-#'                     \item{\bold{\code{hclust_method}}: The \code{hclust} method to use. Default:
-#'                     \code{"complete"}.
-#'                  }
-#'                     \item{\bold{\code{...}}: More arguments to be passed to
-#'                     \code{\link[micropan]{distManhattan}}, or to \code{\link[ggdendro]{ggdendrogram}}.
-#'                  }
-#'                 }
-#'             }
+#'             \item{Plot pangenome and/or coregenome curves with the fitted functions returned by \code{pg_power_law_fit()}
+#'             and \code{cg_exp_decay_fit()}. You can add points by adding \code{+ geom_points()}, of ggplot2 package}
 #'             \item{\bold{Returns:}}{
 #'                 \itemize{
-#'                     \item{A dendrogram plot (\code{ggdendro::ggdendrogram()}), and a \code{gg} object
-#'                     (\code{ggplot2} package) invisibly.}
+#'                     \item{A scatter plot, and a \code{gg} object (\code{ggplot2} package) invisibly.}
 #'                 }
 #'             }
-#'         }
+#'          }
 #'     }
 #' }
 #'
 #'
 #' @section Public Fields:
 #' \describe{
-#'     \item{\bold{\code{pan_matrix}}}{: The panmatrix. Rows are organisms, and
+#'     \item{\bold{\code{$pan_matrix}}}{: The panmatrix. Rows are organisms, and
 #'     columns are groups of orthologous. Cells indicates the presence (>=1) or
 #'     absence (0) of a given gene, in a given organism. Cells can have values
 #'     greater than 1 if contain in-paralogs.}
-#'     \item{\bold{\code{organisms}}}{: A \code{character} vector with available
-#'     organism names, and organism number identifier as \code{names()}. (Dropped
-#'     organisms will not be displayed in this field, see \code{$dropped} below).}
-#'     \item{\bold{\code{clusters}}}{: A named \code{list} of clusters. Clusters are
-#'     shown as \code{data.table} objects containing 3 columns: \code{gid}, \code{org},
-#'     and \code{gene}, as explained before.}
-#'     \item{\bold{\code{core_level}}}{: The percentage of organisms a gene must be in
+#'     \item{\bold{\code{$organisms}}}{: A \code{\link[S4Vectors]{DataFrame}} with available
+#'     organism names, and organism number identifier as \code{rownames()}. (Dropped
+#'     organisms will not be displayed in this field, see \code{$dropped} below).
+#'     Additional metadata will be shown if provided, as additional columns.}
+#'     \item{\bold{\code{$clusters}}}{: A \code{\link[S4Vectors]{DataFrame}} with the groups
+#'     of orthologous (clusters). Additional metadata will be shown as additional columns,
+#'     if provided before. Each row corresponds to each cluster.}
+#'     \item{\bold{\code{$genes}}}{: A \code{\link[S4Vectors]{SplitDataFrameList}} object with
+#'     one entry per cluster. Each element contains a \code{\link[S4Vectors]{DataFrame}}
+#'     with gene ids (\code{<gid>}) and additional metadata, if provided. \code{gid} are
+#'     created by \code{paste}ing organism and gene names, so duplication in gene names
+#'     are avoided.}
+#'     \item{\bold{\code{$core_level}}}{: The percentage of organisms a gene must be in
 #'     to be considered as part of the coregenome. \code{core_level = 95} by default.
 #'     Can't be set above 100, and below 85 raises a warning.}
-#'     \item{\bold{\code{core_clusters}}}{: A \code{character} vector with core
-#'     cluster names, as defined by \code{$core_level}.}
-#'     \item{\bold{\code{cloud_clusters}}}{: A \code{character} vector with
-#'     cloud clusters. These are defined as those clusters which contain a single
-#'     gene (singletons), plus those which have more than one but its organisms are
-#'     probably clonal due to identical general gene content. Colloquially defined as
-#'     strain-specific genes.}
-#'     \item{\bold{\code{shell_clusters}}}{: A \code{character} vector with shell
-#'     clusters. These are defined as those clusters than don't belong nethier to the
-#'     core genome, nor to cloud genome. Colloquially defined as genes that are
-#'     present in some but not all strains, and that aren't strain-specific.}
-#'     \item{\bold{\code{summary_stats}}}{: A \code{data.frame} with information about
-#'     the number of core, shell, and cloud clusters, as well as the total number of
+#'     \item{\bold{\code{$core_genes}}}{: Like \code{genes}, but only showing core genes.}
+#'     \item{\bold{\code{$core_clusters}}}{: Like \code{$clusters}, but only showing core
 #'     clusters.}
-#'     \item{\bold{\code{random_seed}}}{: The last \code{.Random.seed}. Used for
+#'     \item{\bold{\code{$cloud_genes}}}{: Like \code{genes}, but only showing cloud genes.
+#'     These are defined as those clusters which contain a single gene (singletons), plus
+#'     those which have more than one but its organisms are probably clonal due to identical
+#'     general gene content. Colloquially defined as strain-specific genes.}
+#'     \item{\bold{\code{$cloud_clusters}}}{: Like \code{$clusters}, but only showing cloud
+#'     clusters as defined above.}
+#'     \item{\bold{\code{$shell_genes}}}{: Like \code{genes}, but only showing shell genes.
+#'     These are defined as those clusters than don't belong nethier to the core genome,
+#'     nor to cloud genome. Colloquially defined as genes that are present in some but not
+#'     all strains, and that aren't strain-specific.}
+#'     \item{\bold{\code{$shell_clusters}}}{: Like \code{$clusters}, but only showing shell
+#'     clusters, as defined above.}
+#'     \item{\bold{\code{$summary_stats}}}{: A \code{\link[S4Vectors]{DataFrame}} with
+#'     information about the number of core, shell, and cloud clusters, as well as the
+#'     total number of clusters.}
+#'     \item{\bold{\code{$random_seed}}}{: The last \code{.Random.seed}. Used for
 #'     reproducibility purposes only.}
-#'     \item{\bold{\code{dropped}}}{: A \code{character} vector with dropped organism
+#'     \item{\bold{\code{$dropped}}}{: A \code{character} vector with dropped organism
 #'     names, and organism number identifier as \code{names()}}
 #' }
 #'
@@ -340,7 +372,7 @@
 #'
 #' @importFrom R6 R6Class
 #' @importFrom micropan distJaccard fluidity binomixEstimate
-#' @importFrom ggplot2 ggplot aes geom_bar geom_raster geom_tile theme element_blank scale_fill_grey xlab ylab coord_polar
+#' @importFrom ggplot2 ggplot aes geom_bar geom_raster geom_tile theme element_blank scale_fill_grey xlab ylab coord_polar stat_function
 #' @importFrom reshape2 melt
 #' @importFrom vegan vegdist
 #' @export
@@ -414,7 +446,7 @@ PgR6M <- R6Class('PgR6M',
                                     ...)
                    },
 
-                   power_law_fit = function(raref, ...){
+                   pg_power_law_fit = function(raref, ...){
                      # #micropan::heaps()
                      # heaps(self$pan_matrix ,n.perm = n.perm)
                      if (missing(raref)){
@@ -436,7 +468,7 @@ PgR6M <- R6Class('PgR6M',
                      ret
                    },
 
-                   exp_decay_fit = function(raref, pcounts = 10, ...){
+                   cg_exp_decay_fit = function(raref, pcounts = 10, ...){
                      # Exponential decay linearization:
                      # y = A * exp(K * t) + C ==> y - C = K*t + log(A)
                      # C == core size
@@ -523,9 +555,9 @@ PgR6M <- R6Class('PgR6M',
                      lrar <- lapply(what, function(x) self$rarefact(what = x))
                      lfun <- lapply(what, function(x){
                        if (x == 'pangenome'){
-                         self$power_law_fit(raref = lrar[[x]])#$formula
+                         self$pg_power_law_fit(raref = lrar[[x]])#$formula
                        }else{
-                         self$exp_decay_fit(raref = lrar[[x]])#$formula
+                         self$cg_exp_decay_fit(raref = lrar[[x]])#$formula
                        }
                      })
                      lrarm <- lapply(lrar, melt)
