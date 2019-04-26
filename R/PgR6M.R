@@ -539,7 +539,7 @@ PgR6M <- R6Class('PgR6M',
                    },
 
                    gg_pie = function(){
-                     st <- self$summary_stats
+                     st <- self$summary_stats[-1, ]
                      # st <- st[-1, ]
                      st$Category <- factor(st$Category,
                                            levels = c("Cloud", "Shell", "Core"))
