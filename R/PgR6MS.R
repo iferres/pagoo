@@ -464,7 +464,7 @@ PgR6MS <- R6Class('PgR6MS',
                             sqs <- DNAStringSet(sqs)
                             names(sqs) <- gids
                           }else{
-                            sqs <- DNAStringSetList(sqs)
+                            sqs <- DNAStringSetList(sequences)
                             sqs <- unlist(sqs, use.names = FALSE)
                             names(sqs) <- gids
                           }
