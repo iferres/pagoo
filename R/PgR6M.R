@@ -540,10 +540,10 @@ PgR6M <- R6Class('PgR6M',
 
                    gg_pie = function(){
                      st <- self$summary_stats
-                     st <- st[-1, ]
+                     # st <- st[-1, ]
                      st$Category <- factor(st$Category,
                                            levels = c("Cloud", "Shell", "Core"))
-                     ggplot(st, aes(x='', y=Number, fill=Category)) +
+                     ggplot(as.data.frame(st), aes(x='', y=Number, fill=Category)) +
                        geom_bar(width = 1, stat = "identity") +
                        coord_polar("y", start=0)
                    },
