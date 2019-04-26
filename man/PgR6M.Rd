@@ -20,18 +20,18 @@ Inherits: \code{\link[pagoo]{PgR6}}
             \item{Create a \code{PgR6M} object.}
             \item{\bold{Args:}}{
                 \itemize{
-                    \item{\bold{\code{DF}}: A \code{data.frame} or \code{\link[S4Vectors]{DataFrame}} containing at least the
+                    \item{\bold{\code{DF}}: A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}} containing at least the
                     following columns: \code{gene} (gene name), \code{org} (organism name to which the gene belongs to),
                     and \code{group} (group of orthologous to which the gene belongs to). More columns can be added as metadata
                     for each gene.
                  }
-                    \item{\bold{\code{org_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors]{DataFrame}}
+                    \item{\bold{\code{org_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
                     containging additional metadata for organisms. This \code{data.frame} must have a column named "org" with
                     valid organisms names (that is, they should match with those provided in \code{DF}, column \code{org}), and
                     additional columns will be used as metadata. Each row should correspond to each organism.
 
                  }
-                    \item{\bold{\code{group_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors]{DataFrame}}
+                    \item{\bold{\code{group_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
                     containging additional metadata for clusters. This \code{data.frame} must have a column named "group" with
                     valid organisms names (that is, they should match with those provided in \code{DF}, column \code{group}), and
                     additional columns will be used as metadata. Each row should correspond to each cluster.
@@ -318,15 +318,15 @@ Inherits: \code{\link[pagoo]{PgR6}}
     columns are groups of orthologous. Cells indicates the presence (>=1) or
     absence (0) of a given gene, in a given organism. Cells can have values
     greater than 1 if contain in-paralogs.}
-    \item{\bold{\code{$organisms}}}{: A \code{\link[S4Vectors]{DataFrame}} with available
+    \item{\bold{\code{$organisms}}}{: A \code{\link[S4Vectors:DataFrame-class]{DataFrame}} with available
     organism names, and organism number identifier as \code{rownames()}. (Dropped
     organisms will not be displayed in this field, see \code{$dropped} below).
     Additional metadata will be shown if provided, as additional columns.}
-    \item{\bold{\code{$clusters}}}{: A \code{\link[S4Vectors]{DataFrame}} with the groups
+    \item{\bold{\code{$clusters}}}{: A \code{\link[S4Vectors:DataFrame-class]{DataFrame}} with the groups
     of orthologous (clusters). Additional metadata will be shown as additional columns,
     if provided before. Each row corresponds to each cluster.}
-    \item{\bold{\code{$genes}}}{: A \code{\link[S4Vectors]{SplitDataFrameList}} object with
-    one entry per cluster. Each element contains a \code{\link[S4Vectors]{DataFrame}}
+    \item{\bold{\code{$genes}}}{: A \code{\link[S4Vectors:DataFrame-class]{DataFrame}link[IRanges:DataFrameList-class]{SplitDataFrameList}} object with
+    one entry per cluster. Each element contains a \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
     with gene ids (\code{<gid>}) and additional metadata, if provided. \code{gid} are
     created by \code{paste}ing organism and gene names, so duplication in gene names
     are avoided.}
@@ -348,7 +348,7 @@ Inherits: \code{\link[pagoo]{PgR6}}
     all strains, and that aren't strain-specific.}
     \item{\bold{\code{$shell_clusters}}}{: Like \code{$clusters}, but only showing shell
     clusters, as defined above.}
-    \item{\bold{\code{$summary_stats}}}{: A \code{\link[S4Vectors]{DataFrame}} with
+    \item{\bold{\code{$summary_stats}}}{: A \code{\link[S4Vectors:DataFrame-class]{DataFrame}} with
     information about the number of core, shell, and cloud clusters, as well as the
     total number of clusters.}
     \item{\bold{\code{$random_seed}}}{: The last \code{.Random.seed}. Used for
