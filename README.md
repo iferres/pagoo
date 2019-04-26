@@ -111,7 +111,7 @@ head(org_meta)
     ## 4 organismD    a    Essos
     ## 5 organismE    b    Essos
 
-In both cases, the columns identifying each cluster and each organism must coincide with the names provided in the fist data frame, so `pagoo` can map the metadata correctly.
+In both cases, the columns identifying each cluster and each organism must coincide with the names provided in the first data frame, so `pagoo` can map the metadata correctly.
 
 As we will be working with the class `PgR6MS` in this example, DNA sequences are also required. The other 2 classes are lightweight, and don't use all this data, so keep it in mind you can work without sequences if you have limited computational resources.
 
