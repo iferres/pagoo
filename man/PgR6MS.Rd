@@ -43,8 +43,8 @@ PgR6 with Methods and Sequences.
                  }
 
                     \item{\bold{\code{sequences}}: Can accept: 1) a named \code{list} of named \code{character} vector. Name of list
-                    are names of organisms, names of character vector are gene names; or 2) a named \code{list} of \code{\link[Biostrings]{DNAStringSet}}
-                    objects (same requirements as (1), but with BStringSet names as gene names); or 3) a \code{\link[Biostrings]{DNAStringSetList}}
+                    are names of organisms, names of character vector are gene names; or 2) a named \code{list} of \code{\\link[Biostrings:XStringSet-class]{DNAStringSetList}}
+                    objects (same requirements as (1), but with BStringSet names as gene names); or 3) a \code{\\link[Biostrings:XStringSetList-class]{DNAStringSetList}}
                     (same requirements as (2) but \code{DNAStringSetList} names are organisms names).
                  }
 
@@ -362,7 +362,7 @@ PgR6 with Methods and Sequences.
     with gene ids (\code{<gid>}) and additional metadata, if provided. \code{gid} are
     created by \code{paste}ing organism and gene names, so duplication in gene names
     are avoided.}
-    \item{\bold{\code{$sequences}}}{: A \code{\link[Biostrings]{DNAStringSetList}} with the
+    \item{\bold{\code{$sequences}}}{: A \code{\\link[Biostrings:XStringSetList-class]{DNAStringSetList}} with the
     set of sequences grouped by cluster. Each group is accessible as were a list. All
     \code{Biostrings} methods are available.}
     \item{\bold{\code{$core_level}}}{: The percentage of organisms a gene must be in
