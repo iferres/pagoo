@@ -491,7 +491,7 @@ PgR6M <- R6Class('PgR6M',
                                     ...)
                    },
 
-                   pan_pca <- function(center = TRUE, scale. = TRUE, ...){
+                   pan_pca = function(center = TRUE, scale. = TRUE, ...){
                      prcomp(self$pan_matrix, center = center, scale. = scale., ...)
                    },
 
