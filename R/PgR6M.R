@@ -302,6 +302,26 @@
 #'             }
 #'         }
 #'     }
+#'     \item{\code{gg_pca()}}{
+#'         \itemize{
+#'             \item{Plot a scatter plot of a Principal Components Analysis.}
+#'             \item{\bold{Args:}}{
+#'                 \itemize{
+#'                     \item{\bold{\code{colour}}: The name of the column in \code{$organisms} field from which points will take
+#'                     colour (if provided). \code{NULL} (default) renders black points.
+#'                     }
+#'                     \item{\bold{...}}: Arguments to be passed to \code{$pan_pca(), or to \link[ggplot2]{autoplot} generic for
+#'                     class \code{prcomp}.}
+#'                 }
+#'             }
+#'             \item{\bold{Returns:}}{
+#'                 \itemize{
+#'                     \item{A scatter plot (\code{ggplot2::autoplot()}), and a \code{gg} object (\code{ggplot2}
+#'                     package) invisibly.}
+#'                 }
+#'             }
+#'         }
+#'     }
 #'     \item{\code{gg_pie()}}{
 #'         \itemize{
 #'             \item{Plot a pie chart showing the number of clusters of each pangenome category: core,
@@ -565,6 +585,17 @@ PgR6M <- R6Class('PgR6M',
                      me <- melt(m)
                      ggplot(me, aes(Var1, Var2, fill=value)) +
                        geom_tile()
+                   },
+
+                   gg_pca = function(colour = NULL, ...){
+                     ocol <- colnames(self$organisms)
+                     ocol <- ocol[ocol!='org']
+                     color <- match.arg(colour, c(ocol, NULL))
+                     pca <- self$pan_pca(...)
+                     autoplot(pca,
+                              data = as.data.frame(self$organisms),
+                              colour = colour,
+                              ...)
                    },
 
                    gg_pie = function(){
