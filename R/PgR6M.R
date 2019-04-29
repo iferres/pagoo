@@ -446,6 +446,10 @@ PgR6M <- R6Class('PgR6M',
                                     ...)
                    },
 
+                   pan_pca <- function(center = TRUE, scale. = FALSE, ...){
+                     prcomp(self$pan_matrix, center = center, scale. = scale., ...)
+                   },
+
                    pg_power_law_fit = function(raref, ...){
                      # #micropan::heaps()
                      # heaps(self$pan_matrix ,n.perm = n.perm)
