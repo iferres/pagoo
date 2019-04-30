@@ -57,14 +57,14 @@ files <- list.files(path = tempdir(), full.names = TRUE, pattern = 'tsv$|fasta$'
 files
 ```
 
-    ## [1] "/tmp/Rtmpft7ZWV/case_df.tsv"        
-    ## [2] "/tmp/Rtmpft7ZWV/case_group_meta.tsv"
-    ## [3] "/tmp/Rtmpft7ZWV/case_orgs_meta.tsv" 
-    ## [4] "/tmp/Rtmpft7ZWV/organismA.fasta"    
-    ## [5] "/tmp/Rtmpft7ZWV/organismB.fasta"    
-    ## [6] "/tmp/Rtmpft7ZWV/organismC.fasta"    
-    ## [7] "/tmp/Rtmpft7ZWV/organismD.fasta"    
-    ## [8] "/tmp/Rtmpft7ZWV/organismE.fasta"
+    ## [1] "/tmp/RtmpklNthp/case_df.tsv"        
+    ## [2] "/tmp/RtmpklNthp/case_group_meta.tsv"
+    ## [3] "/tmp/RtmpklNthp/case_orgs_meta.tsv" 
+    ## [4] "/tmp/RtmpklNthp/organismA.fasta"    
+    ## [5] "/tmp/RtmpklNthp/organismB.fasta"    
+    ## [6] "/tmp/RtmpklNthp/organismC.fasta"    
+    ## [7] "/tmp/RtmpklNthp/organismD.fasta"    
+    ## [8] "/tmp/RtmpklNthp/organismE.fasta"
 
 There are 3 `.tsv` files, and 5 `.fasta` files. The `case_df.tsv` file is the main one, having the information about the membership of each gene from each organism, to each group of orthologous (clusters). `case_*_meta.tsv` files have metadata for the clusters and for the organisms. `organism*.fasta` files have the sequences for each organism:
 
@@ -158,10 +158,12 @@ pg
     ##     gg_binmap: function () 
     ##     gg_curves: function (what = c("pangenome", "coregenome"), ...) 
     ##     gg_dist: function (method = "bray", ...) 
+    ##     gg_pca: function (colour = NULL, ...) 
     ##     gg_pie: function () 
     ##     initialize: function (DF, org_meta, group_meta, sep = "__", sequences) 
     ##     organisms: active binding
     ##     pan_matrix: active binding
+    ##     pan_pca: function (center = TRUE, scale. = FALSE, ...) 
     ##     pg_power_law_fit: function (raref, ...) 
     ##     random_seed: active binding
     ##     rarefact: function (what = "pangenome", n.perm = 10) 
@@ -583,10 +585,10 @@ pg$fluidity()
 ```
 
     ## $Mean
-    ## [1] 0.2555844
+    ## [1] 0.2492992
     ## 
     ## $Std
-    ## [1] 0.01441661
+    ## [1] 0.02779137
 
 ``` r
 # Fitting a power law to pangenome rarefaction curves
@@ -596,14 +598,14 @@ pg$pg_power_law_fit(n.perm=100)
     ## $formula
     ## function (x) 
     ## K * x^delta
-    ## <environment: 0x55c92d67e920>
+    ## <environment: 0x1398b4c0>
     ## 
     ## $params
     ##           K       delta 
-    ## 345.8856663   0.3402231 
+    ## 346.8620503   0.3369467 
     ## 
     ## attr(,"alpha")
-    ## [1] 0.6597769
+    ## [1] 0.6630533
 
 ...and some others. It is worth noting that each statistic will be computed for available organisms, not taking into consideration previously dropped ones.
 
@@ -616,28 +618,28 @@ I used [ggplot2](https://ggplot2.tidyverse.org/) as backend for vizualization me
 pg$gg_pie()
 ```
 
-![](vignettes/vignettes_files/unnamed-chunk-15-1.png)
+![](vignettes/README_files/figure-markdown_github/unnamed-chunk-15-1.png)
 
 ``` r
 # Classic barplot
 pg$gg_barplot()
 ```
 
-![](vignettes/vignettes_files/unnamed-chunk-15-2.png)
+![](vignettes/README_files/figure-markdown_github/unnamed-chunk-15-2.png)
 
 ``` r
 # Binmap
 pg$gg_binmap()
 ```
 
-![](vignettes/vignettes_files/unnamed-chunk-15-3.png)
+![](vignettes/README_files/figure-markdown_github/unnamed-chunk-15-3.png)
 
 ``` r
 # Pangenome and coregenome curves
 pg$gg_curves()
 ```
 
-![](vignettes/vignettes_files/unnamed-chunk-15-4.png)
+![](vignettes/README_files/figure-markdown_github/unnamed-chunk-15-4.png)
 
 ``` r
 # Customize with ggplot2
@@ -647,15 +649,17 @@ pg$gg_curves() +
   facet_wrap(~category, scales = 'free_y')
 ```
 
-![](vignettes/vignettes_files/unnamed-chunk-15-5.png)
+![](vignettes/README_files/figure-markdown_github/unnamed-chunk-15-5.png)
 
 ### Recipes
 
-I call recipes to short and easy scripts that solves a specific problem. Here I show a few to demostrate the potentialities of `pagoo`. You can help by expanding the following with more examples:
+I call recipes to short and easy scripts that solves a specific problem. Here I show a few to demostrate the potentialities of `pagoo`, and to show how to use it with popular genomics R packages. These examples uses sequence data because I think it's the most interesting case to work with, so assumes that you are working with a class, like the one in the tutorial.
+
+You can help by expanding the following with more examples:
 
 #### Plot Coregenome alignment NJ tree
 
-One standard analysis when dealing with a pangenome is to align each core cluster, concatenate them into a super alignment, and infer a phylogeny. Since core clusters might contain in-paralogs, you need to select no more than one of them on each cluster from each organism. Also, if `core_level` (that is, the percentage of organisms a gene has to be in, to be considered core) is set below 100%, some clusters might have few organisms missing, so you would have to fill with gaps and also not miss the sequence order before concatenating. For this purpose I wrote the `core_seqs_4_phylo()` function, which return something similar to `core_sequences` field, but with above considerations.
+One standard analysis when dealing with a pangenome is to align each core cluster, concatenate them into a super alignment, and infer a phylogeny. Since core clusters might contain in-paralogs, you need to select no more than one of them on each cluster from each organism. Also, if `core_level` (that is, the percentage of organisms a gene has to be in, to be considered core) is set below 100%, some clusters might have few organisms missing, so you would have to fill with gaps and also not miss the sequence order before concatenating. For this purpose I wrote the `core_seqs_4_phylo()` function, which return something similar to `core_sequences` field, but with above considerations. In the following example I use [phangorn](https://github.com/KlausVigo/phangorn) package to compute and visualize a phylogenetic tree.
 
 ``` r
 library(Biostrings) # DNAString xscat
@@ -684,7 +688,57 @@ library(magrittr)
 
 db_path <- 'path/to/custom/blastpdb'
 db <- blast(db = db_path, type = 'blastp')
-pg$sequences[[1]] %>%
-  translate() %>%
-  predict(db, .)
+
+pg$sequences[[1]] %>%   # Get DNAStringSet of cluster 1
+  translate() %>%       # Translate DNAStringSet
+  predict(db, .)        # Run Blastp
+```
+
+#### Compute dn/ds over alignment of core clusters
+
+A standard aproach for detecting selection over core genes is to compute dn/ds: the number of substitutions per synonymous site divided by the number of non-synonymous substitutions between two protein-coding genes. [ape](http://ape-package.ird.fr/) package provides a function for fast dnds computation, and [DECIPHER](http://www2.decipher.codes/) provides the function which aligns DNA sequences by aligning their translated amino acid sequences.
+
+``` r
+library(DECIPHER)
+library(ape)
+library(magrittr)
+
+# This function returns the mean dnds of all pairwise dnds computation
+# for a given DNAStringSet.
+compute_dnds <- function(dnastringset){
+  DECIPHER::AlignTranslation(dnastringset) %>%
+    ape::as.DNAbin() %>%
+    ape::dnds() %>%
+    mean()
+}
+
+# Set core_level to 100%
+pg$core_level <- 100
+# Compute dnds for all core sequences:
+sapply(pg$core_sequences, compute_dnds)
+```
+
+#### Heatmap associated to phylogenetic tree
+
+Is often useful to map organism metadata (or even the , like function) next to a phylogenetic tree. The below example shows how to do that using [ggtree](https://github.com/GuangchuangYu/ggtree). First computes the tree, then formats the metadata, and last creates the plot. Assumes you have provided organisms metadata when building the class, just like in the tutorial example.
+
+``` r
+tree <- lapply(pg$core_seqs_4_phylo(), AlignSeqs) %>%   # Align each core cluster
+  do.call(xscat, .) %>%                                 # Concatenate alignments
+  as('matrix') %>%                                      # Transform to matrix
+  phyDat(type = 'DNA') %>%                              # Transform to phangorn's phyDat
+  dist.ml() %>%                                         # Compute distance
+  NJ()                                                  # Compute NJ tree
+
+# Formats labels and converts 'phylo' object to 'gg' object
+tree$tip.label <- pg$organisms$org
+gtree <- ggtree(tree) + geom_tiplab()
+
+# Formats organisms metadata
+dat <- as.data.frame(pg$organisms[-1])
+dat[] <- lapply(dat, as.character)
+rownames(dat) <- pg$organisms[[1]]
+
+# Plot heatmap associated to tree
+gheatmap(gtree, data = dat)
 ```
