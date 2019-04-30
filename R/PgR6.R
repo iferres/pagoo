@@ -264,7 +264,7 @@ PgR6 <- R6Class('PgR6',
                     rownames(panmatrix) <- rn
 
                     # Populate private$ #
-                    private$version <- packageVersion('pgr6')
+                    private$version <- packageVersion('pagoo')
                     private$.DF <- DF
                     private$.organisms <- orgs_DF
                     private$.groups <- group_DF
