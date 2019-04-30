@@ -213,7 +213,7 @@ pg$gg_curves() +
 
 ### Recipes
 
-I call recipes to short and easy scripts that solves a specific problem. Here I show a few to demostrate the potentialities of `pagoo`, and to show how to use it with popular genomics R packages. These examples uses sequence data because I think it's the most interesting case to work with, so assumes that you are working with a \code{PgR6MS} class, like the one in the tutorial. 
+I call recipes to short and easy scripts that solves a specific problem. Here I show a few to demostrate the potentialities of `pagoo`, and to show how to use it with popular genomics R packages. These examples uses sequence data because I think it's the most interesting case to work with, so assumes that you are working with a `PgR6MS` class, like the one in the tutorial. 
 
 You can help by expanding the following with more examples:
 
@@ -280,7 +280,7 @@ sapply(pg$core_sequences, compute_dnds)
 
 #### Heatmap associated to phylogenetic tree
 
-Is often useful to map organism metadata (or even the \code{pan_matrix}, like \code{$gg_binmap()} function) next to a phylogenetic tree. The below example shows how to do that using [ggtree](https://github.com/GuangchuangYu/ggtree). First computes the tree, then formats the metadata, and last creates the plot. Assumes you have provided organisms metadata when building the class, just like in the tutorial example.
+Is often useful to map organism metadata (or even the `pan_matrix`, like `$gg_binmap()` function) next to a phylogenetic tree. The below example shows how to do that using [ggtree](https://github.com/GuangchuangYu/ggtree). First computes the tree, then formats the metadata, and last creates the plot. Assumes you have provided organisms metadata when building the class, just like in the tutorial example.
 
 ```{r, eval=FALSE}
 tree <- lapply(pg$core_seqs_4_phylo(), AlignSeqs) %>%   # Align each core cluster
