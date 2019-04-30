@@ -146,6 +146,31 @@
 #'             }
 #'         }
 #'     }
+#'     \item{\code{pan_pca(center = TRUE, scale. = FALSE, ...)}}{
+#'         \itemize{
+#'             \item{Performs a principal components analysis on the panmatrix}
+#'             \item{\bold{Args:}}{
+#'                 \itemize{
+#'                     \item{\bold{\code{center}}: a logical value indicating whether the variables should be shifted
+#'                     to be zero centered. Alternately, a vector of length equal the number of columns of x can be
+#'                     supplied. The value is passed to scale.
+#'                     }
+#'                     \item{\bold{\code{scale.}}: a logical value indicating whether the variables should be scaled
+#'                     to have unit variance before the analysis takes place. The default is TRUE.
+#'                     }
+#'                     \item{\bold{\code{...}}: Other arguments. See \link[stats]{prcomp}.
+#'                     }
+#'                  }
+#'
+#'             }
+#'             \item{\bold{Returns:}}{
+#'                 \itemize{
+#'                     \item{Returns a list with class "prcomp". See \link[stats]{prcomp} for more information.
+#'                     }
+#'                 }
+#'             }
+#'         }
+#'     }
 #'     \item{\code{pg_power_law_fit(raref, ...)}}{
 #'         \itemize{
 #'             \item{Fits a power law curve for the pangenome rarefaction simulation.}
@@ -276,6 +301,26 @@
 #'             \item{\bold{Returns:}}{
 #'                 \itemize{
 #'                     \item{A heatmap (\code{ggplot2::geom_tile()}), and a \code{gg} object (\code{ggplot2}
+#'                     package) invisibly.}
+#'                 }
+#'             }
+#'         }
+#'     }
+#'     \item{\code{gg_pca()}}{
+#'         \itemize{
+#'             \item{Plot a scatter plot of a Principal Components Analysis.}
+#'             \item{\bold{Args:}}{
+#'                 \itemize{
+#'                     \item{\bold{\code{colour}}: The name of the column in \code{$organisms} field from which points will take
+#'                     colour (if provided). \code{NULL} (default) renders black points.
+#'                     }
+#'                     \item{\bold{...}}: Arguments to be passed to \code{$pan_pca(), or to \link[ggplot2]{autoplot} generic for
+#'                     class \code{prcomp}.}
+#'                 }
+#'             }
+#'             \item{\bold{Returns:}}{
+#'                 \itemize{
+#'                     \item{A scatter plot (\code{ggplot2::autoplot()}), and a \code{gg} object (\code{ggplot2}
 #'                     package) invisibly.}
 #'                 }
 #'             }

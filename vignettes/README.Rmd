@@ -213,11 +213,13 @@ pg$gg_curves() +
 
 ### Recipes
 
-I call recipes to short and easy scripts that solves a specific problem. Here I show a few to demostrate the potentialities of `pagoo`. You can help by expanding the following with more examples:
+I call recipes to short and easy scripts that solves a specific problem. Here I show a few to demostrate the potentialities of `pagoo`, and to show how to use it with popular genomics R packages. These examples uses sequence data because I think it's the most interesting case to work with, so assumes that you are working with a \code{PgR6MS} class, like the one in the tutorial. 
+
+You can help by expanding the following with more examples:
 
 #### Plot Coregenome alignment NJ tree
 
-One standard analysis when dealing with a pangenome is to align each core cluster, concatenate them into a super alignment, and infer a phylogeny. Since core clusters might contain in-paralogs, you need to select no more than one of them on each cluster from each organism. Also, if `core_level` (that is, the percentage of organisms a gene has to be in, to be considered core) is set below 100%, some clusters might have few organisms missing, so you would have to fill with gaps and also not miss the sequence order before concatenating. For this purpose I wrote the `core_seqs_4_phylo()` function, which return something similar to `core_sequences` field, but with above considerations.
+One standard analysis when dealing with a pangenome is to align each core cluster, concatenate them into a super alignment, and infer a phylogeny. Since core clusters might contain in-paralogs, you need to select no more than one of them on each cluster from each organism. Also, if `core_level` (that is, the percentage of organisms a gene has to be in, to be considered core) is set below 100%, some clusters might have few organisms missing, so you would have to fill with gaps and also not miss the sequence order before concatenating. For this purpose I wrote the `core_seqs_4_phylo()` function, which return something similar to `core_sequences` field, but with above considerations. In the following example I use [phangorn](https://github.com/KlausVigo/phangorn) package to compute and visualize a phylogenetic tree.
 ```{r, eval=FALSE}
 library(Biostrings) # DNAString xscat
 library(magrittr)   # %>% (pipe operator)
@@ -245,8 +247,60 @@ library(magrittr)
 
 db_path <- 'path/to/custom/blastpdb'
 db <- blast(db = db_path, type = 'blastp')
-pg$sequences[[1]] %>%
-  translate() %>%
-  predict(db, .)
+
+pg$sequences[[1]] %>%   # Get DNAStringSet of cluster 1
+  translate() %>%       # Translate DNAStringSet
+  predict(db, .)        # Run Blastp
 ```
 
+
+#### Compute dn/ds over alignment of core clusters
+
+A standard aproach for detecting selection over core genes is to compute dn/ds: the number of substitutions per synonymous site divided by the number of non-synonymous substitutions between two protein-coding genes. [ape](http://ape-package.ird.fr/) package provides a function for fast dnds computation, and [DECIPHER](http://www2.decipher.codes/) provides the \code{AlignTranslation} function which aligns DNA sequences by aligning their translated amino acid sequences.
+
+```{r, eval=FALSE}
+library(DECIPHER)
+library(ape)
+library(magrittr)
+
+# This function returns the mean dnds of all pairwise dnds computation
+# for a given DNAStringSet.
+compute_dnds <- function(dnastringset){
+  DECIPHER::AlignTranslation(dnastringset) %>%
+    ape::as.DNAbin() %>%
+    ape::dnds() %>%
+    mean()
+}
+
+# Set core_level to 100%
+pg$core_level <- 100
+# Compute dnds for all core sequences:
+sapply(pg$core_sequences, compute_dnds)
+```
+
+#### Heatmap associated to phylogenetic tree
+
+Is often useful to map organism metadata (or even the \code{pan_matrix}, like \code{$gg_binmap()} function) next to a phylogenetic tree. The below example shows how to do that using [ggtree](https://github.com/GuangchuangYu/ggtree). First computes the tree, then formats the metadata, and last creates the plot. Assumes you have provided organisms metadata when building the class, just like in the tutorial example.
+
+```{r, eval=FALSE}
+tree <- lapply(pg$core_seqs_4_phylo(), AlignSeqs) %>%   # Align each core cluster
+  do.call(xscat, .) %>%                                 # Concatenate alignments
+  as('matrix') %>%                                      # Transform to matrix
+  phyDat(type = 'DNA') %>%                              # Transform to phangorn's phyDat
+  dist.ml() %>%                                         # Compute distance
+  NJ()                                                  # Compute NJ tree
+
+# Formats labels and converts 'phylo' object to 'gg' object
+tree$tip.label <- pg$organisms$org
+gtree <- ggtree(tree) + geom_tiplab()
+
+# Formats organisms metadata
+dat <- as.data.frame(pg$organisms[-1])
+dat[] <- lapply(dat, as.character)
+rownames(dat) <- pg$organisms[[1]]
+
+# Plot heatmap associated to tree
+gheatmap(gtree, data = dat)
+
+
+```

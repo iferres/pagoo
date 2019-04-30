@@ -618,28 +618,28 @@ I used [ggplot2](https://ggplot2.tidyverse.org/) as backend for vizualization me
 pg$gg_pie()
 ```
 
-![](vignettes/README_files/figure-markdown_github/unnamed-chunk-15-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-15-1.png)
 
 ``` r
 # Classic barplot
 pg$gg_barplot()
 ```
 
-![](vignettes/README_files/figure-markdown_github/unnamed-chunk-15-2.png)
+![](README_files/figure-markdown_github/unnamed-chunk-15-2.png)
 
 ``` r
 # Binmap
 pg$gg_binmap()
 ```
 
-![](vignettes/README_files/figure-markdown_github/unnamed-chunk-15-3.png)
+![](README_files/figure-markdown_github/unnamed-chunk-15-3.png)
 
 ``` r
 # Pangenome and coregenome curves
 pg$gg_curves()
 ```
 
-![](vignettes/README_files/figure-markdown_github/unnamed-chunk-15-4.png)
+![](README_files/figure-markdown_github/unnamed-chunk-15-4.png)
 
 ``` r
 # Customize with ggplot2
@@ -649,7 +649,7 @@ pg$gg_curves() +
   facet_wrap(~category, scales = 'free_y')
 ```
 
-![](vignettes/README_files/figure-markdown_github/unnamed-chunk-15-5.png)
+![](README_files/figure-markdown_github/unnamed-chunk-15-5.png)
 
 ### Recipes
 
