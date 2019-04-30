@@ -8,7 +8,7 @@ April 26, 2019
 Introduction
 ------------
 
-This package provides an encapsulated Object Oriented class system for analyzing bacterial pangenomes. It uses the [R6](https://r6.r-lib.org/) package as backend. It was designed in order to facilitate and speed up **a lot** my projects as a microbial genomics researcher, standarizing and optimizing routine tasks of my everyday work activities.
+This package provides an encapsulated Object Oriented class system for analyzing bacterial pangenomes. It uses the [R6](https://r6.r-lib.org/) package as backend. It was designed in order to facilitate and speed up **a lot** my projects as a microbial genomics researcher, standardizing and optimizing routine tasks of my everyday work activities.
 
 A few years on this field made me realize that there are three things I do almost every day when working with bacterial pangenomes:
 
@@ -47,7 +47,7 @@ To show the full capabilities of `pagoo` I will use the most complex class, `PgR
 
 ### Input
 
-First of all, lets extract and decompress the example data attatched to this package:
+First of all, lets extract and decompress the example data attached to this package:
 
 ``` r
 library(pagoo)
@@ -83,7 +83,7 @@ head(df)
 
 As you can see, `df` is a `data.frame` with 4 columns: the first one with the name of each gene, the second one with the organism to which each gene belongs, the third one with the cluster to which each gene was assigned in the pangenome reconstruction, and the last one with annotation metadata for each gene. Of the 4 columns, the former 3 are required, and `pagoo` will look for columns named "gene", "org", and "group". More columns are optional, and you can add as many as you want (or none) to add metadata of each gene.
 
-The next 2 `.tsv` files contanins metadata for each cluster and for each organism, respectively, and are optional arguments.
+The next 2 `.tsv` files contains metadata for each cluster and for each organism, respectively, and are optional arguments.
 
 ``` r
 #
@@ -454,9 +454,9 @@ pg[1:2, 1:3]$sequences
     ## [["OG002"]] organismA__gene352=ATGACAGATATACAGATTGAATTTCCGGAGAACTATCATTT...
     ## [["OG003"]] organismA__gene359=TTGTTTTTTTATTTCACATTATGGATCACAAAAAGGATCGG...
 
-The default print method for `DNAStringSetList` ([Biostring](https://bioconductor.org/packages/release/bioc/html/Biostrings.html) package) is not showing what's inside each list element, but you will check it has the precise sequences we asked for if you look inside each element.
+The default print method for `DNAStringSetList` ([Biostrings](https://bioconductor.org/packages/release/bioc/html/Biostrings.html) package) is not showing what's inside each list element, but you will check it has the precise sequences we asked for if you look inside each element.
 
-Another tedious task I found working with microbial genomics is when you run a pangenome tool over a dataset, and when you analize it you realize that one or some of the input genomes have very bad quality, or you want to remove them from downtream analysis for any other cause. I implemented `drop()` and `recover()` functions to remove or reload particular organisms from the data set:
+Another tedious task I found working with microbial genomics is when you run a pangenome tool over a data set, and when you analyze it you realize that one or some of the input genomes have very bad quality, or you want to remove them from downstream analysis for any other cause. I implemented `drop()` and `recover()` functions to remove or reload particular organisms from the data set:
 
 ``` r
 # Original dataset
@@ -564,6 +564,8 @@ pg$organisms
 
 Note that you don't have to reassign the result of the function to a new variable, that's [R6](https://r6.r-lib.org/articles/Introduction.html#r6-classes) reference semantics magic. Use with [caution](https://r6.r-lib.org/articles/Introduction.html#cloning-objects).
 
+An everyday application of using `drop()` and `recover()` is to reconstruct a pangenome including an outgroup organism for phylogenetic purposes, but discarding it for specific clade analysis which don't require it.
+
 ### 2. Applying statistical methods
 
 Once you have a pangenome, you may want to get some statistics about it. I implemented some methods in `pagoo`, and take some others from widely used packages as [vegan](https://github.com/vegandevs/vegan) and [micropan](https://github.com/larssnip/micropan). You can contribute by adding more.
@@ -611,7 +613,7 @@ pg$pg_power_law_fit(n.perm=100)
 
 ### 3. Visualizing results
 
-I used [ggplot2](https://ggplot2.tidyverse.org/) as backend for vizualization methods.
+I used [ggplot2](https://ggplot2.tidyverse.org/) as backend for visualization methods. Here I'm showing some of the available.
 
 ``` r
 # Summary pie
@@ -653,7 +655,7 @@ pg$gg_curves() +
 
 ### Recipes
 
-I call recipes to short and easy scripts that solves a specific problem. Here I show a few to demostrate the potentialities of `pagoo`, and to show how to use it with popular genomics R packages. These examples uses sequence data because I think it's the most interesting case to work with, so assumes that you are working with a `PgR6MS` class, like the one in the tutorial.
+I call recipes to short and easy scripts that solves a specific problem. Here I show a few to demonstrate the potentialities of `pagoo`, and to show how to use it with popular genomics R packages. These examples uses sequence data because I think it's the most interesting case to work with, so assumes that you are working with a `PgR6MS` class, like the one in the tutorial.
 
 You can help by expanding the following with more examples:
 
@@ -696,7 +698,7 @@ pg$sequences[[1]] %>%   # Get DNAStringSet of cluster 1
 
 #### Compute dn/ds over alignment of core clusters
 
-A standard aproach for detecting selection over core genes is to compute dn/ds: the number of substitutions per synonymous site divided by the number of non-synonymous substitutions between two protein-coding genes. [ape](http://ape-package.ird.fr/) package provides a function for fast dnds computation, and [DECIPHER](http://www2.decipher.codes/) provides the function which aligns DNA sequences by aligning their translated amino acid sequences.
+A standard approach for detecting selection over core genes is to compute dn/ds: the number of substitutions per synonymous site divided by the number of non-synonymous substitutions between two protein-coding genes. [ape](http://ape-package.ird.fr/) package provides a function for fast dnds computation, and [DECIPHER](http://www2.decipher.codes/) provides the `AlignTranslation()` function which aligns DNA sequences by aligning their translated amino acid sequences.
 
 ``` r
 library(DECIPHER)
