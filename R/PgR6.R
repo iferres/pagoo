@@ -216,7 +216,7 @@ PgR6 <- R6Class('PgR6',
                     # # 6. Change class
                     DF$group <- factor(DF$group)
                     # DF[, group := factor(group)]
-                    orgs <- levels(DF$org)
+                    orgs <- unique(DF$org)
                     DF$org <- factor(DF$org, levels = orgs)
                     # DF[, org := factor(org, levels = orgs)]
 
