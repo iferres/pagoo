@@ -337,7 +337,7 @@ PgR6 <- R6Class('PgR6',
                     drp <- private$.dropped
                     if (length(drp)>0){
                       idx <- as.integer(names(drp))
-                      orgs[-idx, ]
+                      orgs[-idx, ,drop = FALSE]
                     }else{
                       orgs
                     }
@@ -350,7 +350,7 @@ PgR6 <- R6Class('PgR6',
                     df <- private$.DF
                     act <- which(df$group%in%ogs & df$org%in%orgs)
                     df <- df[act, ]
-                    split(df[, -c(1,2,3)], f = df$group, drop = TRUE)
+                    split(df[, -c(1,2,3), drop = FALSE], f = df$group, drop = TRUE)
                   },
 
                   clusters = function(){
@@ -358,7 +358,7 @@ PgR6 <- R6Class('PgR6',
                     ogs <- dn[[2]]
                     df <- private$.groups
                     act <- which(df$group%in%ogs)
-                    df <- df[act, ]
+                    df <- df[act, , drop = FALSE]
                     df
                   },
 
@@ -381,7 +381,7 @@ PgR6 <- R6Class('PgR6',
                     df <- private$.DF
                     act <- which(df$group%in%ogs & df$org%in%orgs)
                     df <- df[act, ]
-                    split(df[, -c(1,2,3)], f = df$group, drop = TRUE)
+                    split(df[, -c(1,2,3), drop = FALSE], f = df$group, drop = TRUE)
 
                   },
 
@@ -391,7 +391,7 @@ PgR6 <- R6Class('PgR6',
                     pm <- self$pan_matrix
                     pm[which(pm>1L, arr.ind = TRUE)] <- 1L
                     wh <- which(colSums(pm) >= co)
-                    self$clusters[wh, ]
+                    self$clusters[wh, ,drop = FALSE]
                     # dimnames(self$pan_matrix)[[2]][wh]
                   },
 
@@ -409,7 +409,7 @@ PgR6 <- R6Class('PgR6',
                     df <- private$.DF
                     act <- which(df$group%in%ogs & df$org%in%orgs)
                     df <- df[act, ]
-                    split(df[, -c(1,2,3)], f = df$group, drop = TRUE)
+                    split(df[, -c(1,2,3), drop = FALSE], f = df$group, drop = TRUE)
                   },
 
                   cloud_clusters = function(){
@@ -421,7 +421,7 @@ PgR6 <- R6Class('PgR6',
                       pm <- pm[-wdups, ]
                     }
                     wh <- which(colSums(pm) == 1L)
-                    self$clusters[wh, ]
+                    self$clusters[wh, , drop = FALSE]
                   },
 
                   shell_genes = function(){
@@ -434,7 +434,7 @@ PgR6 <- R6Class('PgR6',
                     shell <- ogs[which(!ogs %in% c(core,cloud))]
                     act <- which(df$group%in%shell & df$org%in%orgs)
                     df <- df[act, ]
-                    split(df[, -c(1,2,3)], f = df$group, drop = TRUE)
+                    split(df[, -c(1,2,3), drop = FALSE], f = df$group, drop = TRUE)
                   },
 
                   shell_clusters = function(){
@@ -442,7 +442,7 @@ PgR6 <- R6Class('PgR6',
                     core <- self$core_clusters$group
                     cloud <- self$cloud_clusters$group
                     wh <- which(!ogs %in% c(core,cloud))
-                    self$clusters[wh, ]
+                    self$clusters[wh, , drop = FALSE]
                   },
 
                   summary_stats = function(){
