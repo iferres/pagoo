@@ -2,8 +2,20 @@ Package: pagoo
 Version: 0.1.1
 Title: What the Package Does (One Line, Title Case)
 Description: What the package does (one paragraph).
-Authors@R: person("First", "Last", , "first.last@example.com", c("aut", "cre"))
-License: What license it uses
+Authors@R: person("Ignacio", "Ferres", , "iferres@pasteur.edu.uy", c("aut", "cre"))
+Depends:
+  S4Vectors,
+  BiocGenerics,
+  Biostrings,
+  ggplot2,
+  ggfortify
+Imports:
+  R6,
+  reshape2,
+  vegan,
+  micropan,
+  GenomicRanges
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
