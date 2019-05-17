@@ -15,6 +15,11 @@ Imports:
   vegan,
   micropan,
   GenomicRanges
+Remotes:
+  bioc::release/S4Vectors,
+  bioc::release/BiocGenerics,
+  bioc::release/Biostrings,
+  bioc::release/GenomicRanges
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
