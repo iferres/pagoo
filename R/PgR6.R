@@ -45,6 +45,31 @@
 #'
 #' @section Public Methods:
 #' \describe{
+#'     \item{\code{add_metadata(map = 'org', df)}}{
+#'         \itemize{
+#'             \item{Add metadata to the object. You can add metadata to each organism, to each
+#'             group of orthologous, or to each gene. Elements with missing data should be filled
+#'             by \code{NA} (dimensions of the provided data.frame must be coherent with object
+#'             data).}
+#'             \item{\bold{Args:}}{
+#'                 \itemize{
+#'                     \item{\bold{\code{map}}: \code{character} identifiying the metadata to map. Can
+#'                     be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
+#'                     \item{\bold{\code{df}}: \code{data.frame} or \code{DataFrame} with the metadata to
+#'                     add. For ethier case, a column named as \code{"map"} must exists, which should
+#'                     contain identifiers for each element. In the case of adding gene (\code{gid})
+#'                     metadata,each gene should be referenced by the name of the organism and the name
+#'                     of the gene as provided in the \code{"DF"} data.frame, separated by the
+#'                     \code{"sep"} argument.}
+#'                 }
+#'             }
+#'             \item{\bold{Returns:}}{
+#'                 \itemize{
+#'                     \item{\code{self} invisibly, but with additional metadata.}
+#'                 }
+#'             }
+#'         }
+#'     }
 #'     \item{\code{drop(x)}}{
 #'         \itemize{
 #'             \item{Drop an organism from the dataset. This method allows to hide an organism
@@ -280,6 +305,59 @@ PgR6 <- R6Class('PgR6',
                   #              private$version,
                   #              '\n'))
                   # },
+
+                  add_metadata = function(map = 'org', df){
+                    map <- match.arg(map, choices = c('org', 'group', 'gid'))
+                    cl <- class(df)
+                    if (!cl%in%c('data.frame', 'DataFrame')){
+                      stop('df should be a data.frame .')
+                    }
+
+                    if (map == 'org'){
+                      if('org'%in%colnames(df)){
+                        ma <- match(df$org, private$.organisms$org)
+                        if (any(is.na(ma))) stop('df$org do not match with object organisms.')
+                        if (dim(df)[1]!=dim(private$.organisms)[1]){
+                          stp <- paste('df has', dim(df)[1], 'rows while object require', dim(private$.organisms)[1],'.')
+                          stop(stp)
+                        }
+                        df <- df[ma, ]
+                        oc <- which(colnames(df)=='org')
+                        private$.organisms <- cbind(private$.organisms, DataFrame(df[, -oc, drop=F]))
+                      }else{
+                        stop('"df" should contain an "org" column.')
+                      }
+                    }else if (map == 'group'){
+                      if('group'%in%colnames(df)){
+                        ma <- match(df$group, private$.groups$group)
+                        if (any(is.na(ma))) stop('df$group do not match with object groups.')
+                        if (dim(df)[1]!=dim(private$.groups)[1]){
+                          stp <- paste('df has', dim(df)[1], 'rows while object require', dim(private$.groups)[1],'.')
+                          stop(stp)
+                        }
+                        df <- df[ma, ]
+                        oc <- which(colnames(df)=='group')
+                        private$.groups <- cbind(private$.groups, DataFrame(df[, -oc, drop=F]))
+                      }else{
+                        stop('"df" should contain an "group" column.')
+                      }
+                    }else{
+                      if('gid'%in%colnames(df)){
+                        ma <- match(df$gid, private$.DF$gid)
+                        if (any(is.na(ma))) stop('df$gid do not match with object gid.')
+                        if (dim(df)[1]!=dim(private$.DF)[1]){
+                          stp <- paste('df has', dim(df)[1], 'rows while object require', dim(private$.DF)[1],'.')
+                          stop(stp)
+                        }
+                        df <- df[ma, ]
+                        oc <- which(colnames(df)=='gid')
+                        private$.DF <- cbind(private$.DF, DataFrame(df[, -oc, drop=F]))
+                      }else{
+                        stop('"df" should contain a "gid" column.')
+                      }
+                    }
+                    invisible(self)
+                  },
 
                   # Basic Subset Methods #
                   # Drop organisms from dataset

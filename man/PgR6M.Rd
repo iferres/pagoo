@@ -57,6 +57,31 @@ Inherits: \code{\link[pagoo]{PgR6}}
 \section{Public Methods}{
 
 \describe{
+    \item{\code{add_metadata(map = 'org', df)}}{
+        \itemize{
+            \item{Add metadata to the object. You can add metadata to each organism, to each
+            group of orthologous, or to each gene. Elements with missing data should be filled
+            by \code{NA} (dimensions of the provided data.frame must be coherent with object
+            data).}
+            \item{\bold{Args:}}{
+                \itemize{
+                    \item{\bold{\code{map}}: \code{character} identifiying the metadata to map. Can
+                    be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
+                    \item{\bold{\code{df}}: \code{data.frame} or \code{DataFrame} with the metadata to
+                    add. For ethier case, a column named as \code{"map"} must exists, which should
+                    contain identifiers for each element. In the case of adding gene (\code{gid})
+                    metadata,each gene should be referenced by the name of the organism and the name
+                    of the gene as provided in the \code{"DF"} data.frame, separated by the
+                    \code{"sep"} argument.}
+                }
+            }
+            \item{\bold{Returns:}}{
+                \itemize{
+                    \item{\code{self} invisibly, but with additional metadata.}
+                }
+            }
+        }
+    }
     \item{\code{drop(x)}}{
         \itemize{
             \item{Drop an organism from the dataset. This method allows to hide an organism
