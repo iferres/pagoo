@@ -327,7 +327,7 @@ PgR6 <- R6Class('PgR6',
                       }else{
                         stop('"df" should contain an "org" column.')
                       }
-                    }else if (map = 'group'){
+                    }else if (map == 'group'){
                       if('group'%in%colnames(df)){
                         ma <- match(df$group, private$.groups$group)
                         if (any(is.na(ma))) stop('df$group do not match with object groups.')
