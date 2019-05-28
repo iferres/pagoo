@@ -4,7 +4,7 @@
 #'  Inherits: \code{\link[pagoo]{PgR6M}}
 #' @section Class Constructor:
 #' \describe{
-#'     \item{\code{new(DF, org_meta, group_meta, sep = "__")}}{
+#'     \item{\code{new(DF, org_meta, group_meta, sep = "__", sequences)}}{
 #'         \itemize{
 #'             \item{Create a \code{PgR6M} object.}
 #'             \item{\bold{Args:}}{

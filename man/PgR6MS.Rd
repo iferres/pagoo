@@ -15,7 +15,7 @@ PgR6 with Methods and Sequences.
 \section{Class Constructor}{
 
 \describe{
-    \item{\code{new(DF, org_meta, group_meta, sep = "__")}}{
+    \item{\code{new(DF, org_meta, group_meta, sep = "__", sequences)}}{
         \itemize{
             \item{Create a \code{PgR6M} object.}
             \item{\bold{Args:}}{
