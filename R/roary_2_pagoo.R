@@ -31,7 +31,8 @@ roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '___'){
   df <- read.csv(gene_presence_absence_csv,
                  header = TRUE,
                  sep = ',',
-                 stringsAsFactors = FALSE)
+                 stringsAsFactors = FALSE,
+                 check.names = FALSE)
 
   group_meta <- df[, c('Gene', 'Annotation')]
   colnames(group_meta) <- c('group', 'Annotation')
@@ -52,6 +53,7 @@ roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '___'){
 
   }else{
 
+    names(gffs) <- sub('[.]gff$', '', basename(gffs))
     seqs <- lapply(gffs, function(x){
       sq <- read_gff(x)
       #There are some tRNAs genes that are not listed in
