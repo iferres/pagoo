@@ -67,7 +67,20 @@ roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '___'){
       mcls[[x]]$org <- x
       mcls[[x]]
     })
-    names(mcls) <- names(seqs)
+    # names(mcls) <- names(seqs)
+
+    # Just common columns
+    # cols <- Reduce(intersect, lapply(mcls, colnames))
+
+    # Selected columns
+    cols <- c('seqid', 'type', 'start', 'end', 'strand', 'product', 'org', 'locus_tag')
+    mcls <- lapply(mcls, function(x) x[ , cols])
+
+    # Match !
+    mcls <- do.call(rbind, mcls)
+    ma <- match(paste(mm$org, mm$gene, sep=sep), paste(mcls$org, mcls$locus_tag, sep = sep))
+
+    mm <- cbind(mm, mcls[ma, c('seqid', 'type', 'start', 'end', 'strand', 'product')])
 
 
 
