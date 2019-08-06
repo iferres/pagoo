@@ -1,33 +1,43 @@
 
-# df <- list(
-#   Gene=c('asdf', 'sdfg', 'dfgh', 'fghj'),
-#   Annotation=c('anot1', 'anot2', 'anot1', 'anot3'),
-#   org1=c('org1_01', 'org1_02;org1_03', 'org1_04', 'org1_05'),
-#   org2=c('org2_01', 'org2_02', 'org2_03;org2_04', 'org2_05'),
-#   org3=c('org3_01', 'org3_02;org3_03', 'org3_04', 'org3_05'),
-#   org4=c('org4_01;org4_02', 'org4_03', 'org4_04', 'org4_05')
-# )
-# df <- as.data.frame(df)
-# df[] <- lapply(df, as.character)
-#
-# gnam <- df$Gene
-# gann <- df$Annotation
-# dims <- dim(df)
-# df <- df[, 3:dims[2]]
-# lp <- lapply(df, strsplit, ';')
-# lp <- lapply(lp, setNames, gnam)
-#
-# mm <- melt(lp)
-# colnames(mm) <- c('gene', 'group', 'org')
-# mm$Annotation <- gann[factor(mm$group, levels = gnam)]
 
+#' @name roary_2_pagoo
+#' @title Read roary's output into a pagoo class
+#' @description This functions handle conversion of \href{https://sanger-pathogens.github.io/Roary/}{roary}'s output files into
+#' a pagoo R6 class object. It takes the "gene_presence_absence.csv" file and
+#' (optionally but recommended) gff input file paths, and returns an object of
+#' class \code{\link[pagoo]{PgR6MS}} (or \code{\link[pagoo]{PgR6M}} if left
+#' empthy the \code{gffs} argument).
+#' @param gene_presence_absence.csv \code{character}, path to the
+#' "gene_presence_absence.csv" file. (Do not confuse with the file with the
+#' same name but with \code{.Rtab} extension).
+#' @param gffs A \code{character} vector with paths to original gff files used
+#' as roary's input. Typically the return value of \code{list.files()} function.
+#' This parameter is optional but highly recommended if you want to manipulate
+#' sequences.
+#' @param sep \code{character}. Default: \code{"__"} (two underscores). See
+#' \link[pagoo]{PgR6MS} for a more detail argument description.
+#' @return A pagoo's R6 class object. Ethier \link[pagoo]{PgR6M}, if \code{gffs}
+#' argument is left empthy, or \link{pagoo}{PgR6MS} if path to gff files is
+#' provided.
+#' @examples
+#' \dontrun{
+#' gffs <- list.files(path = "path/to/gffs/",
+#'                    pattern = "[.]gff$",
+#'                    full.names = TRUE)
+#' gpa_csv <- "path/to/gene_presence_absence.csv"
+#'
+#' library(pagoo)
+#' pg <- roary_2_pagoo(gene_presence_absence_csv = gpa_csv,
+#'                     gffs = gffs)
+#' }
 #' @importFrom utils read.csv
 #' @importFrom reshape2 melt
 #' @importFrom Biostrings DNAStringSetList
 #' @importFrom S4Vectors mcols
 #' @export
-roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '___'){
+roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
 
+  message('Reading csv file (roary).')
   df <- read.csv(gene_presence_absence_csv,
                  header = TRUE,
                  sep = ',',
@@ -45,8 +55,10 @@ roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '___'){
   mm <- melt(lp)
   colnames(mm) <- c('gene', 'group', 'org')
 
+
   if(missing(gffs)){
 
+    message('Loading PgR6M class object.')
     pg <- PgR6M$new(DF = mm,
                     group_meta = group_meta,
                     sep = sep)
@@ -55,6 +67,7 @@ roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '___'){
 
     names(gffs) <- sub('[.]gff$', '', basename(gffs))
     seqs <- lapply(gffs, function(x){
+      message(paste('Reading gff file', x))
       sq <- read_gff(x)
       #There are some tRNAs genes that are not listed in
       # the gene_presence_absence.csv file
@@ -82,8 +95,7 @@ roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '___'){
 
     mm <- cbind(mm, mcls[ma, c('seqid', 'type', 'start', 'end', 'strand', 'product')])
 
-
-
+    message('Loading PgR6MS class object.')
     pg <- PgR6MS$new(DF = mm,
                      group_meta = group_meta,
                      sequences = DNAStringSetList(seqs),
@@ -91,11 +103,13 @@ roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '___'){
 
   }
 
+  message('Done.')
   return(pg)
 }
 
 
 # gffs <- list.files('../../pewit2_dataset/', pattern = 'gff$', full.names = T)
+
 
 #' @importFrom Biostrings DNAStringSet subseq reverseComplement
 #' @importFrom S4Vectors mcols<-
