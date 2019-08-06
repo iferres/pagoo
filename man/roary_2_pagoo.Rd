@@ -25,7 +25,7 @@ argument is left empthy, or \link[pagoo]{PgR6MS} if path to gff files is
 provided.
 }
 \description{
-This functions handle conversion of \href{https://sanger-pathogens.github.io/Roary/}{roary}'s output files into
+This function handle conversion of \href{https://sanger-pathogens.github.io/Roary/}{roary}'s output files into
 a pagoo R6 class object. It takes the "gene_presence_absence.csv" file and
 (optionally but recommended) gff input file paths, and returns an object of
 class \code{\link[pagoo]{PgR6MS}} (or \code{\link[pagoo]{PgR6M}} if left
