@@ -2,7 +2,7 @@
 % Please edit documentation in R/roary_2_pagoo.R
 \name{roary_2_pagoo}
 \alias{roary_2_pagoo}
-\title{Read roary's output into a pagoo class}
+\title{Read roary's output into a pagoo's R6 class object}
 \usage{
 roary_2_pagoo(gene_presence_absence_csv, gffs, sep = "__")
 }

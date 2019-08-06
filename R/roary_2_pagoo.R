@@ -1,7 +1,7 @@
 
 
 #' @name roary_2_pagoo
-#' @title Read roary's output into a pagoo class
+#' @title Read roary's output into a pagoo's R6 class object
 #' @description This functions handle conversion of \href{https://sanger-pathogens.github.io/Roary/}{roary}'s output files into
 #' a pagoo R6 class object. It takes the "gene_presence_absence.csv" file and
 #' (optionally but recommended) gff input file paths, and returns an object of
