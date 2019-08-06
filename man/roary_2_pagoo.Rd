@@ -43,3 +43,9 @@ pg <- roary_2_pagoo(gene_presence_absence_csv = gpa_csv,
                     gffs = gffs)
 }
 }
+\references{
+Andrew J. Page, Carla A. Cummins, Martin Hunt, Vanessa K. Wong, Sandra Reuter,
+ Matthew T. G. Holden, Maria Fookes, Daniel Falush, Jacqueline A. Keane, Julian
+ Parkhill, "Roary: Rapid large-scale prokaryote pan genome analysis",
+ Bioinformatics, 2015;31(22):3691-3693
+}

@@ -19,6 +19,11 @@
 #' @return A pagoo's R6 class object. Ethier \link[pagoo]{PgR6M}, if \code{gffs}
 #' argument is left empthy, or \link[pagoo]{PgR6MS} if path to gff files is
 #' provided.
+#' @references
+#' Andrew J. Page, Carla A. Cummins, Martin Hunt, Vanessa K. Wong, Sandra Reuter,
+#'  Matthew T. G. Holden, Maria Fookes, Daniel Falush, Jacqueline A. Keane, Julian
+#'  Parkhill, "Roary: Rapid large-scale prokaryote pan genome analysis",
+#'  Bioinformatics, 2015;31(22):3691-3693
 #' @examples
 #' \dontrun{
 #' gffs <- list.files(path = "path/to/gffs/",
