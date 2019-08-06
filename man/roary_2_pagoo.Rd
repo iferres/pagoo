@@ -21,7 +21,7 @@ same name but with \code{.Rtab} extension).}
 }
 \value{
 A pagoo's R6 class object. Ethier \link[pagoo]{PgR6M}, if \code{gffs}
-argument is left empthy, or \link{pagoo}{PgR6MS} if path to gff files is
+argument is left empthy, or \link[pagoo]{PgR6MS} if path to gff files is
 provided.
 }
 \description{
