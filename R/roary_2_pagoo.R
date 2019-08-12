@@ -49,6 +49,7 @@ roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
                  stringsAsFactors = FALSE,
                  check.names = FALSE)
 
+  message('Processing csv file.')
   group_meta <- df[, c('Gene', 'Annotation')]
   colnames(group_meta) <- c('group', 'Annotation')
 
