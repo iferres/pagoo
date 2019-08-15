@@ -12,10 +12,12 @@ panx_2_pagoo <- function(allclusters_final_tsv, nucleotide_fnas, group_prefix = 
 
   if (missing(nucleotide_fnas)){
 
-
+    pg <- PgR6M$new(DF = df, sep = sep)
 
   }else{
 
+    message('Not implemented yet')
+    NULL
 
   }
 
