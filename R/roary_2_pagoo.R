@@ -55,7 +55,7 @@ roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
 
   dims <- dim(df)
   df <- df[, 15:dims[2]]
-  lp <- lapply(df, strsplit, ';')
+  lp <- lapply(df, strsplit, '\t')
   lp <- lapply(lp, setNames, group_meta$group)
 
   mm <- melt(lp)
