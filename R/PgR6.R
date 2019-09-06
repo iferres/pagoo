@@ -263,7 +263,7 @@ PgR6 <- R6Class('PgR6',
                     }
 
                     #create group field. Add metadata (if provided)
-                    group_DF <- DataFrame(group=levels(DF$group))
+                    group_DF <- DataFrame(group=as.character(unique(DF$group)))
                     if (!missing(group_meta)){
                       if (!class(group_meta)%in%c('data.frame', 'DataFrame'))
                         stop('"group_meta" should be a data.frame')
