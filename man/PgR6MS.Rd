@@ -47,6 +47,9 @@ PgR6 with Methods and Sequences.
                     objects (same requirements as (1), but with BStringSet names as gene names); or 3) a \code{\\link[Biostrings:XStringSetList-class]{DNAStringSetList}}
                     (same requirements as (2) but \code{DNAStringSetList} names are organisms names).
                  }
+                    \item{\bold{\code{verbose}}: \code{logical}. Whether to display progress messages when loading class.
+
+                 }
 
                 }
             }

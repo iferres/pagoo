@@ -41,6 +41,10 @@ Inherits: \code{\link[pagoo]{PgR6}}
                     create a unique \code{gid} (gene identifier) for each gene. \code{gid}s are created by pasting
                     \code{org} to \code{gene}, separated by \code{sep}.
                  }
+                    \item{\bold{\code{verbose}}: \code{logical}. Whether to display progress messages when loading class.
+
+                 }
+
                 }
             }
             \item{\bold{Returns:}}{

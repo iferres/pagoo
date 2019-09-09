@@ -34,6 +34,10 @@
 #'                     create a unique \code{gid} (gene identifier) for each gene. \code{gid}s are created by pasting
 #'                     \code{org} to \code{gene}, separated by \code{sep}.
 #'                  }
+#'                     \item{\bold{\code{verbose}}: \code{logical}. Whether to display progress messages when loading class.
+#'
+#'                  }
+#'
 #'                 }
 #'             }
 #'             \item{\bold{Returns:}}{
@@ -456,12 +460,14 @@ PgR6M <- R6Class('PgR6M',
                    initialize = function(DF,
                                          org_meta,
                                          group_meta,
-                                         sep = '__'){
+                                         sep = '__',
+                                         verbose = TRUE){
 
                      super$initialize(DF = DF,
                                       org_meta,
                                       group_meta,
-                                      sep = sep)
+                                      sep = sep,
+                                      verbose = TRUE)
 
                    },
 
