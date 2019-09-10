@@ -571,7 +571,7 @@ PgR6MS <- R6Class('PgR6MS',
                       spl <- strsplit(gids, sep)
                       mcols(private$.sequences)$org <- vapply(spl, '[', 1,
                                                               FUN.VALUE = NA_character_)
-                      mcols(private$.sequences)$group <- as.character(private$.DF$group[match(gids, DF[, 'gid'])])
+                      mcols(private$.sequences)$group <- as.character(private$.DF$group[match(gids, dfgid)])
                     },
 
                     # Methods for sequences
