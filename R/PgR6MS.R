@@ -36,6 +36,9 @@
 #'                     objects (same requirements as (1), but with BStringSet names as gene names); or 3) a \code{\\link[Biostrings:XStringSetList-class]{DNAStringSetList}}
 #'                     (same requirements as (2) but \code{DNAStringSetList} names are organisms names).
 #'                  }
+#'                     \item{\bold{\code{verbose}}: \code{logical}. Whether to display progress messages when loading class.
+#'
+#'                  }
 #'
 #'                 }
 #'             }
@@ -495,14 +498,17 @@ PgR6MS <- R6Class('PgR6MS',
                                           org_meta,
                                           group_meta,
                                           sep = '__',
-                                          sequences){
+                                          sequences,
+                                          verbose = TRUE){
 
                       super$initialize(DF = DF,
                                        org_meta,
                                        group_meta,
-                                       sep = sep)
+                                       sep = sep,
+                                       verbose = TRUE)
 
                       # Check input sequences
+                      if (verbose) message('Checking input sequences.')
                       if (class(sequences)%in%c('list',
                                                 'BStringSetList',
                                                 'DNAStringSetList')){
@@ -548,6 +554,8 @@ PgR6MS <- R6Class('PgR6MS',
                         stop('Unrecognized sequences format')
                       }
 
+                      if (verbose) message('Checking that sequence names matches with DataFrame.')
+
                       dfgid <- private$.DF[, 'gid']
 
                       if (!all(dfgid%in%gids)){
@@ -559,17 +567,11 @@ PgR6MS <- R6Class('PgR6MS',
                       }
 
                       # Add metadata to sequences
+                      if (verbose) message('Adding metadata to sequences.')
                       spl <- strsplit(gids, sep)
                       mcols(private$.sequences)$org <- vapply(spl, '[', 1,
                                                               FUN.VALUE = NA_character_)
-                      mcols(private$.sequences)$group <- vapply(gids,
-                                                                function(x){
-                                                                  wh <- which(dfgid==x)
-                                                                  if (length(wh))
-                                                                    as.character(private$.DF$group[wh])
-                                                                  else
-                                                                    NA_character_
-                                                                }, FUN.VALUE = NA_character_)
+                      mcols(private$.sequences)$group <- as.character(private$.DF$group[match(gids, dfgid)])
                     },
 
                     # Methods for sequences

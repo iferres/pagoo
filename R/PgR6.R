@@ -30,6 +30,8 @@
 #'                     create a unique \code{gid} (gene identifier) for each gene. \code{gid}s are created by pasting
 #'                     \code{org} to \code{gene}, separated by \code{sep}.
 #'                  }
+#'                     \item{\bold{\code{verbose}}: \code{logical}. Whether to display progress messages when loading class.
+#'
 #'                 }
 #'             }
 #'             \item{\bold{Returns:}}{
@@ -209,15 +211,18 @@ PgR6 <- R6Class('PgR6',
                   initialize = function(DF,
                                         org_meta,
                                         group_meta,
-                                        sep = '__'){
+                                        sep = '__',
+                                        verbose = TRUE){
 
                     # Check DF input
                     # 1. Is data.frame or DataFrame?
+                    if (verbose) message('Checking class.')
                     cl <- class(DF)
                     if (! cl %in% c('data.frame', 'DataFrame'))
                       stop('"DF" is not a data.frame.')
 
                     # 2. Are colnames correct?
+                    if (verbose) message('Checking dimnames.')
                     dn <- dimnames(DF)[[2]]
                     if (!all(c('group', 'org', 'gene') %in% dn))
                       stop('colnames must have "group", "org", and "gene".')
@@ -228,6 +233,7 @@ PgR6 <- R6Class('PgR6',
                     }
 
                     # 4. Create gid
+                    if (verbose) message('Creating gid (gene ids).')
                     DF$gid <- paste(DF$org, DF$gene, sep = sep)
                     if (any(duplicated(DF$gid)))
                       stop('Duplicated gene names in DF.')
@@ -249,6 +255,7 @@ PgR6 <- R6Class('PgR6',
                     names(orgs) <- seq_along(orgs)
                     orgs_DF <- DataFrame(org=orgs, row.names = seq_along(orgs))
                     if (!missing(org_meta)){
+                      if (verbose) message('Checking provided organism metadata.')
                       if (!class(org_meta)%in%c('data.frame', 'DataFrame'))
                         stop('"org_meta" should be a data.frame.')
                       if('org'%in%colnames(org_meta)){
@@ -265,6 +272,7 @@ PgR6 <- R6Class('PgR6',
                     #create group field. Add metadata (if provided)
                     group_DF <- DataFrame(group=levels(DF$group))
                     if (!missing(group_meta)){
+                      if (verbose) message('Checking provided group metadata.')
                       if (!class(group_meta)%in%c('data.frame', 'DataFrame'))
                         stop('"group_meta" should be a data.frame')
                       if ('group'%in%colnames(group_meta)){
@@ -279,6 +287,7 @@ PgR6 <- R6Class('PgR6',
                     }
 
                     # Create panmatrix #
+                    if (verbose) message('Creating panmatrix.')
                     panmatrix <- dcast(as.data.frame(DF),
                                        org~group,
                                        value.var = 'gene',
@@ -289,6 +298,7 @@ PgR6 <- R6Class('PgR6',
                     rownames(panmatrix) <- rn
 
                     # Populate private$ #
+                    if (verbose) message('Populating class.')
                     private$version <- packageVersion('pagoo')
                     private$.DF <- DF
                     private$.organisms <- orgs_DF
