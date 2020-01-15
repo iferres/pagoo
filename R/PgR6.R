@@ -372,7 +372,8 @@ PgR6 <- R6Class('PgR6',
                   # Basic Subset Methods #
                   # Drop organisms from dataset
                   drop = function(x){
-                    orgs <- private$.organisms[['org']]
+                    orgs <- as.character(private$.organisms[['org']])
+                    orgs <- setNames(orgs, seq_along(orgs))
                     if (is.numeric(x)){
                       vec <- c(private$.dropped, orgs[x])
                       un <- vec[unique(names(vec))]
@@ -390,7 +391,8 @@ PgR6 <- R6Class('PgR6',
 
                   # Recover from trash previously dropped organisms
                   recover = function(x){
-                    orgs <- private$.organisms[['org']]
+                    orgs <- as.character(private$.organisms[['org']])
+                    orgs <- setNames(orgs, seq_along(orgs))
                     if (is.numeric(x)){
                       dp <- private$.dropped[!names(private$.dropped)%in%x]
                     } else if (is.character(x)){
