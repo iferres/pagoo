@@ -32,6 +32,7 @@
 #'                  }
 #'                     \item{\bold{\code{verbose}}: \code{logical}. Whether to display progress messages when loading class.
 #'
+#'                   }
 #'                 }
 #'             }
 #'             \item{\bold{Returns:}}{
