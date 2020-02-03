@@ -21,7 +21,8 @@ Imports:
   DT,
   plotly, 
   heatmaply,
-  dendextend
+  dendextend,
+  magrittr
 Remotes:
   bioc::release/S4Vectors,
   bioc::release/BiocGenerics,

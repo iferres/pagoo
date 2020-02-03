@@ -453,10 +453,11 @@
 #' @import shinyWidgets
 #' @importFrom DT DTOutput renderDT datatable
 #' @importFrom plotly plot_ly plotlyOutput renderPlotly layout add_lines
-#' @importFrom heatmaply heatmaply
+#' @importFrom heatmaply heatmaply Blues
 #' @importFrom reshape2 melt
 #' @importFrom vegan vegdist
 #' @importFrom dendextend seriate_dendrogram
+#' @importFrom magrittr `%>%`
 #' @export
 PgR6M <- R6Class('PgR6M',
 
