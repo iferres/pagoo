@@ -452,7 +452,7 @@
 #' @import shinyjs
 #' @import shinyWidgets
 #' @importFrom DT DTOutput renderDT datatable
-#' @importFrom plotly plotlyOutput renderPlotly layout add_lines
+#' @importFrom plotly plot_ly plotlyOutput renderPlotly layout add_lines
 #' @importFrom heatmaply heatmaply
 #' @importFrom reshape2 melt
 #' @importFrom vegan vegdist
