@@ -24,5 +24,9 @@ License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
+<<<<<<< HEAD
 RoxygenNote: 6.1.1
+=======
+RoxygenNote: 7.0.2
+>>>>>>> develop
 Roxygen: list(r6 = FALSE)
