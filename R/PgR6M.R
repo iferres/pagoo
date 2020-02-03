@@ -451,8 +451,8 @@
 #' @import shiny
 #' @import shinyjs
 #' @import shinyWidgets
-#' @importFrom DT DTOutput renderDT datatable
-#' @importFrom plotly plot_ly plotlyOutput renderPlotly layout add_lines
+#' @importFrom DT DTOutput renderDT datatable formatSignif
+#' @importFrom plotly plot_ly plotlyOutput renderPlotly layout add_lines subplot
 #' @importFrom heatmaply heatmaply Blues
 #' @importFrom reshape2 melt
 #' @importFrom vegan vegdist
