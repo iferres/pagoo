@@ -379,7 +379,7 @@ PgR6 <- R6Class('PgR6',
                       un <- vec[unique(names(vec))]
                       dp <- un[!is.na(un)]
                     }else if (is.character(x)){
-                      vec <- c(private$dropped, orgs[orgs%in%x])
+                      vec <- c(private$.dropped, orgs[orgs%in%x])
                       un <- vec[unique(names(vec))]
                       dp <- un[!is.na(un)]
                     }else{
