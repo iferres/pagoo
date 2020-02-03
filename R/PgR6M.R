@@ -448,6 +448,7 @@
 #' @importFrom micropan fluidity binomixEstimate
 #' @import ggplot2
 #' @import ggfortify
+#' @import shiny
 #' @importFrom reshape2 melt
 #' @importFrom vegan vegdist
 #' @export
@@ -670,6 +671,13 @@ PgR6M <- R6Class('PgR6M',
                                        fun = lfun[[what[i]]]$formula)
                      }
                      g
+                   },
+
+
+                   runShinyApp = function(){
+
+                     shinyApp(ui = ui, server = server)
+
                    }
 
 
