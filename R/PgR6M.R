@@ -872,6 +872,7 @@ PgR6M <- R6Class('PgR6M',
                        output$core_evol <- renderPlotly({
                          updateOrganisms()
                          pm <- pg$pan_matrix
+                         pm[which(pm>1L, arr.ind = TRUE)] <- 1L
                          sq <- seq(1, 0.85, -0.01)
                          cs <- colSums(pm)
                          ev <- sapply(sq, function(x){
