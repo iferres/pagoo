@@ -463,7 +463,7 @@ PgR6 <- R6Class('PgR6',
 
                   core_genes = function(){
                     ln <- length(self$organisms[['org']])
-                    co <- round(private$.level * ln / 100)
+                    co <- floor(private$.level * ln / 100)
                     pm <- self$pan_matrix
                     orgs <- dimnames(pm)[[1]]
                     ogs <- dimnames(pm)[[2]]
@@ -478,7 +478,7 @@ PgR6 <- R6Class('PgR6',
 
                   core_clusters = function(){
                     ln <- length(self$organisms[['org']])
-                    co <- round(private$.level * ln / 100)
+                    co <- floor(private$.level * ln / 100)
                     pm <- self$pan_matrix
                     pm[which(pm>1L, arr.ind = TRUE)] <- 1L
                     wh <- which(colSums(pm) >= co)
