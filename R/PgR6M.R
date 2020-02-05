@@ -875,8 +875,9 @@ PgR6M <- R6Class('PgR6M',
                          pm[which(pm>1L, arr.ind = TRUE)] <- 1L
                          sq <- seq(1, 0.85, -0.01)
                          cs <- colSums(pm)
+                         norg <- dim(pm)[1]
                          ev <- sapply(sq, function(x){
-                           length(which( cs >= (dim(pm)[1]*x) ))
+                           length(which( cs >= floor(norg*x) ))
                          })
                          df <- data.frame(core_level = sq*100, core_number = ev)
                          plot_ly(df, x = ~core_level, y = ~core_number,
