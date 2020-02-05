@@ -1063,6 +1063,7 @@ PgR6M <- R6Class('PgR6M',
                          updateCoreLevel()
                          selected_cluster <- input$core_clusters_rows_selected
                          df <- as.data.frame(pg$core_genes[[selected_cluster]])
+                         tgt <- which(sapply(df, function(x) max(nchar(as.character(x), allowNA = T, type = "width")) )>=26)
                          datatable(df,
                                    selection = "none",
                                    options = list(
@@ -1070,8 +1071,17 @@ PgR6M <- R6Class('PgR6M',
                                      paging = FALSE,
                                      scrollX = TRUE,
                                      scrollY = "200px",
-                                     dom ='ft'
-                                     # pageLength = 5
+                                     dom ='ft',
+                                     autoWidth = TRUE,
+                                     columnDefs = list(list(
+                                       targets = unname(tgt),
+                                       render = JS(
+                                         "function(data, type, row, meta) {",
+                                         "return type === 'display' && data.length > 30 ?",
+                                         "'<span title=\"' + data + '\">' + data.substr(0, 26) + '...</span>' : data;",
+                                         "}"),
+                                       width = "200px"
+                                     ))
                                    ))
                        })
 
@@ -1291,6 +1301,8 @@ PgR6M <- R6Class('PgR6M',
                          wh <- colnames(accs_pm())
                          selected_cluster <- wh[input$accs_clusters_rows_selected]
                          df <- as.data.frame(pg$genes[[selected_cluster]])
+                         # chf <- which(lapply(df, class) %in% c("character", "factor"))
+                         tgt <- which(sapply(df, function(x) max(nchar(as.character(x), allowNA = T, type = "width")) )>=26)
                          datatable(df,
                                    selection = "none",
                                    options = list(
@@ -1298,8 +1310,17 @@ PgR6M <- R6Class('PgR6M',
                                      paging = FALSE,
                                      scrollX = TRUE,
                                      scrollY = "200px",
-                                     dom ='ft'
-                                     # pageLength = 5
+                                     dom ='ft',
+                                     autoWidth = TRUE,
+                                     columnDefs = list(list(
+                                       targets = unname(tgt),
+                                       render = JS(
+                                         "function(data, type, row, meta) {",
+                                         "return type === 'display' && data.length > 30 ?",
+                                         "'<span title=\"' + data + '\">' + data.substr(0, 26) + '...</span>' : data;",
+                                         "}"),
+                                       width = "200px"
+                                     ))
                                    ))
                        })
 
