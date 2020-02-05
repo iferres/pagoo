@@ -451,7 +451,8 @@
 #' @import shiny
 #' @import shinyjs
 #' @import shinyWidgets
-#' @importFrom DT DTOutput renderDT datatable formatSignif
+#' @import shinydashboard
+#' @importFrom DT DTOutput renderDT datatable formatSignif JS
 #' @importFrom plotly plot_ly plotlyOutput renderPlotly layout add_lines subplot
 #' @importFrom heatmaply heatmaply Blues
 #' @importFrom reshape2 melt
@@ -685,131 +686,185 @@ PgR6M <- R6Class('PgR6M',
 
                      pg <- self
 
-                     app <- list(ui = fluidPage(
+                     app <- list(ui = dashboardPage(
 
-                       useShinyjs(),
-                       # setBackgroundColor(),
+                       header = dashboardHeader(title = "Pagoo Shiny App"),
+                       sidebar = dashboardSidebar(width = 250,
 
-                       titlePanel("Pagoo Shiny App"),
+                                                  sidebarMenu(
 
-                       tabsetPanel(
+                                                    menuItem(
+                                                      text = "Organisms", icon = NULL,
+                                                      radioButtons("input_type",
+                                                                   label = "Selection type:",
+                                                                   choices = c("organism", "metadata"),
+                                                                   selected = "organism"),
+                                                      uiOutput("select_organisms")
+                                                    ),
 
-                         tabPanel(
-                           "Summary",
+                                                    menuItem(
+                                                      "Core genes",
+                                                      sliderInput("core_level",
+                                                                  "Core Level",
+                                                                  min=85,
+                                                                  max=100,
+                                                                  value=95)
+                                                    ),
 
-                           fluidRow(
-                             column(width = 3, sliderInput("core_level",
-                                                           "Core Level",
-                                                           min=85,
-                                                           max=100,
-                                                           value=95)),
+                                                    menuItem(
+                                                      "Accessory genes",
+                                                      uiOutput(outputId = "accs_slider"),
 
-                             column(width = 2,
-                                    radioButtons("input_type",
-                                                 label = "Selection type:",
-                                                 choices = c("organism", "metadata"),
-                                                 selected = "organism")
-                             ),
+                                                      checkboxInput("check_color_meta",
+                                                                    label = "Color by",
+                                                                    value = FALSE),
 
-                             uiOutput("select_organisms")
+                                                      uiOutput("pca_color_meta")
+                                                    )
 
-                           ),
-
-                           fluidRow(
-                             column(width = 2,
-                                    align = "center",
-                                    DT::DTOutput("summary_counts"),
-                                    plotlyOutput("core_evol", width = "auto")
-                             ),
-                             column(width = 3, offset = 0, plotlyOutput("pie")),
-                             column(width = 3, offset = 0, plotlyOutput("barplot")),
-                             column(width = 4, offset = 0, plotlyOutput("curves"))
-                           ),
-
-                           # hr(),
-
-                           fluidRow(
-                             column(width = 6,style = "margin-top:-5em;",
-                                    align = "center",
-                                    DT::DTOutput("core_clusters"), br()
-                             ),
-                             column(
-                               width = 6,style = "margin-top:-5em;",
-                               align = "center",
-                               DT::DTOutput("core_genes"), br()
-                             )
-                           )
+                                                  )
+                       ),
 
 
-                         ), # Ends tabPanel "Summary"
 
-                         tabPanel(
-                           "Accessory",
+                       body = dashboardBody(
+                         tags$script(HTML("$('body').addClass('fixed');")),
+                         useShinyjs(),
+                         fluidRow(
+                           infoBoxOutput("num_orgs"),
+                           infoBoxOutput("num_clus"),
+                           infoBoxOutput("num_gene")
+                         ),
+                         tabBox(width = 12,
 
-                           fluidRow(
-                             column(
-                               width = 3,
-                               uiOutput(outputId = "accs_slider")
-                             ),
+                                tabPanel(
+                                  title = "Summary",
 
-                             column(
-                               width = 1,
-                               br(),
-                               uiOutput("pca_x"),
-                             ),
+                                  fluidRow(
+                                    box(
+                                      title = "Core number",
+                                      status = "primary",
+                                      solidHeader = T,
+                                      width = 3,
+                                      height = 500,
+                                      # align = "center",
+                                      # DT::DTOutput("summary_counts"),
+                                      plotlyOutput("core_evol", width = "auto")
+                                    ),
+                                    box(
+                                      title = "Summary",
+                                      status = "primary",
+                                      solidHeader = T,
+                                      width = 3,
+                                      height = 500,
+                                      #offset = 0,
+                                      plotlyOutput("pie")
+                                    ),
+                                    box(
+                                      title = "Frequency plot",
+                                      status = "primary",
+                                      solidHeader = T,
+                                      width = 3,
+                                      height = 500,
+                                      #offset = 0,
+                                      plotlyOutput("barplot")
+                                    ),
+                                    box(
+                                      title = "Pangenome curves",
+                                      status = "primary",
+                                      solidHeader = T,
+                                      width = 3,
+                                      height = 500,
+                                      #offset = 0,
+                                      plotlyOutput("curves")
+                                    )
+                                  ),
 
-                             column(
-                               width = 1,
-                               br(),
-                               uiOutput("pca_y")
-                             ),
+                                  # hr(),
 
-                             column(
-                               width = 2,
-                               # offset = 1,
-                               # br(),
-                               checkboxInput("check_color_meta",
-                                             label = "Color by",
-                                             value = FALSE),
-                               uiOutput("pca_color_meta")
+                                  fluidRow(
+                                    box(
+                                      title = "Core clusters",
+                                      status = "primary",
+                                      solidHeader = T,
+                                      width = 6,
+                                      DT::DTOutput("core_clusters"),
+                                    ),
+                                    box(
+                                      title = "Core genes",
+                                      status = "primary",
+                                      solidHeader = T,
+                                      width = 6,
+                                      DT::DTOutput("core_genes"),
+                                    )
 
-                             ),
+                                  )
 
-                             column(
-                               width = 4,
-                               # offset = 1,
-                               # br(),
-                               DT::DTOutput("pca_summary")
-                             )
-                           ),
 
-                           hr(),
+                                ), # Ends tabPanel "Summary"
 
-                           fluidRow(
-                             splitLayout(
-                               plotlyOutput("heat_freq", height = "350px"),
-                               plotlyOutput("pca", height = "350px"),
-                               cellWidths = c("60%", "40%")
-                             )
-                           ),
+                                tabPanel(
+                                  title = "Accessory",
 
-                           hr(),
+                                  fluidRow(
 
-                           fluidRow(
-                             column(
-                               width = 6,align = "center",
-                               DT::DTOutput("accs_clusters"),
-                             ),
-                             column(
-                               width = 6, align = "center",
-                               DT::DTOutput("accs_genes")
-                             )
+                                    box(
+                                      title = "Gene presence/absence",
+                                      status = "primary",
+                                      solidHeader = T,
+                                      height = 500,
+                                      plotlyOutput("heat_freq", height = 420)
+                                    ),
 
-                           )
+                                    box(
+                                      title = "PCA",
+                                      status = "primary",
+                                      solidHeader = T,
+                                      height = 500,
+                                      splitLayout(
+                                        DT::DTOutput("pca_summary"),
+                                        column(width = 12,
+                                               uiOutput("pca_x"),
+                                               uiOutput("pca_y")
+                                        ),
+                                        cellWidths = c("80%", "20%")
+                                      ),
+                                      # fluidRow(
+                                      #   box(width = 9, DT::DTOutput("pca_summary")),
+                                      #   box(width = 3,
+                                      #     uiOutput("pca_x"),
+                                      #     uiOutput("pca_y")
+                                      #   )
+                                      # ),
+                                      box(plotlyOutput("pca", height = 250), width = 12)
+                                    ),
 
-                         ) # Ends tabPanel "Accessory"
+                                  ),
 
-                       ) # Ends tabPanel
+                                  fluidRow(
+                                    box(
+                                      title = "Accessory clusters",
+                                      status = "primary",
+                                      solidHeader = T,
+                                      width = 6,
+                                      DT::DTOutput("accs_clusters"),
+                                    ),
+                                    box(
+                                      title = "Accessory genes",
+                                      status = "primary",
+                                      solidHeader = T,
+                                      width = 6,
+                                      DT::DTOutput("accs_genes")
+                                    )
+
+                                  )
+
+                                ) # Ends tabPanel "Accessory"
+
+                         )
+                       )
+
+                       # Ends tabPanel
 
                      ),
 
@@ -882,30 +937,29 @@ PgR6M <- R6Class('PgR6M',
                          df <- data.frame(core_level = sq*100, core_number = ev)
                          plot_ly(df, x = ~core_level, y = ~core_number,
                                  type = "scatter",
-                                 mode = "markers", height = 230) %>%
+                                 mode = "markers", height = 420) %>%
                            layout(xaxis = list(title = "Core Level"),
                                   yaxis = list(title = "Core Number"))
                        })
 
-                       output$summary_counts <- DT::renderDT({
+                       output$num_orgs <- renderInfoBox({
                          updateOrganisms()
-                         v1 <- c("Number of organisms",
-                                 "Number of clusters",
-                                 "Number of genes")
-                         v2 <- c(dim(pg$organisms)[1],
-                                 dim(pg$clusters)[1],
-                                 sum(pg$pan_matrix))
-                         df <- data.frame(v1, v2)
-                         datatable(df,
-                                   selection = "none", colnames = "", rownames=F,
-                                   options = list(
-                                     # colnames = "",
-                                     # rownames = FALSE,
-                                     paging = FALSE,
-                                     dom ='t',
-                                     bSort=FALSE
-                                   ))
+                         x <- dim(pg$organisms)[1]
+                         infoBox("Number of organisms", x)
                        })
+
+                       output$num_clus <- renderInfoBox({
+                         updateOrganisms()
+                         x <- dim(pg$clusters)[1]
+                         infoBox("Number of clusters", x, color = "purple")
+                       })
+
+                       output$num_gene <- renderInfoBox({
+                         updateOrganisms()
+                         x <- sum(pg$pan_matrix)
+                         infoBox("Number of genes", x, color = "yellow")
+                       })
+
 
 
                        output$select_organisms <- renderUI({
@@ -914,13 +968,13 @@ PgR6M <- R6Class('PgR6M',
                            all_orgs <- as.character(pg$.__enclos_env__$private$.organisms$org)
                            fluidRow(
                              column(
-                               width = 6,
+                               width = 12,
                                pickerInput(inputId = "organisms",
                                            label = "Organisms",
                                            choices = all_orgs,
                                            selected = all_orgs,#selectize = T,
                                            multiple = TRUE, options = list(`actions-box` = TRUE),
-                                           width = "70%")
+                                           width = "100%")
                              )
                            )
 
@@ -934,25 +988,26 @@ PgR6M <- R6Class('PgR6M',
                              col <- meta_column
                            }
                            chs <- as.character(pg$organisms[[col]])
-                           fluidRow(
-                             column(
-                               width = 3,
-                               selectInput(inputId = "meta_column",
-                                           label = "Select metadata:",
-                                           selected = cols[1],
-                                           choices = cols,
-                                           multiple = FALSE)
-                             ),
-                             column(
-                               width = 3,
-                               pickerInput(inputId = "meta_dat",
-                                           label = "Select organism group:",
-                                           selected = chs,
-                                           choices = chs,
-                                           multiple = TRUE, options = list(`actions-box` = TRUE))
-                             )
-
-                           )
+                           # fluidRow(
+                           #   column(
+                           #     width = 3,
+                           box(
+                             selectInput(inputId = "meta_column",
+                                         label = "Select metadata:",
+                                         selected = cols[1],
+                                         choices = cols,
+                                         multiple = FALSE),
+                             # ),
+                             # column(
+                             #   width = 3,
+                             pickerInput(inputId = "meta_dat",
+                                         label = "Select organism group:",
+                                         selected = chs,
+                                         choices = chs,
+                                         multiple = TRUE, options = list(`actions-box` = TRUE)))
+                           # )
+                           #
+                           # )
 
                          }
                        })
@@ -966,14 +1021,32 @@ PgR6M <- R6Class('PgR6M',
                          st$Category <- factor(st$Category, levels = c("Cloud", "Shell", "Core"))
                          plot_ly(st, labels = ~Category, values = ~Number,
                                  type = "pie",
-                                 showlegend=FALSE,
-                                 textposition = 'inside', height = 350)
+                                 showlegend=FALSE,height = 400,
+                                 textposition = 'inside') %>%
+                           layout(margin = list(
+                             l = 20,
+                             r = 20,
+                             b = 0,
+                             t = 20,
+                             pad = 4
+                           ))
                        })
 
+                       # Initialize accs_pm in order to not have to wait until user clicks on
+                       # accessory tab.
+                       pm <- pg$pan_matrix
+                       norgs <- length(pg$organisms$org)
+                       pmb <- pm
+                       pmb[which(pmb>1L, arr.ind = TRUE)] <- 1L
+                       accs_freq <- c(0, pg$core_level-1)
+                       accs_num <- round(accs_freq *  norgs / 100)
+                       clsu <- colSums(pmb)
+                       wh <- which( clsu >= min(accs_num) & clsu <= max(accs_num))
+                       colnames(pmb)[wh]
+                       accs_pm_i <- pm[, wh, drop = FALSE]
+                       accs_pm <- reactiveVal(value = accs_pm_i)
 
-                       accs_pm <- eventReactive({
-                         # input$core_level
-                         # input$accs_level
+                       observeEvent({
                          input$accs_freq
                        }, {
                          updateOrganisms()
@@ -986,7 +1059,7 @@ PgR6M <- R6Class('PgR6M',
                          clsu <- colSums(pmb)
                          wh <- which( clsu >= min(accs_num) & clsu <= max(accs_num))
                          colnames(pmb)[wh]
-                         pm[, wh, drop = FALSE]
+                         accs_pm(pm[, wh, drop = FALSE])
                        }, ignoreNULL = TRUE)
 
 
@@ -998,7 +1071,7 @@ PgR6M <- R6Class('PgR6M',
                          colnames(dd) <- c("Count", "Frequency")
                          plot_ly(dd,
                                  x = ~Count, y = ~Frequency,
-                                 type = "bar", height = 350) %>%
+                                 type = "bar", height = 420) %>%
                            layout(xaxis = list(title = "Number of genomes"),
                                   yaxis = list(title = 'Number of genes'))
                        })
@@ -1035,7 +1108,7 @@ PgR6M <- R6Class('PgR6M',
                                  mode="markers",
                                  marker = list(opacity = 0.3),
                                  showlegend = FALSE,
-                                 height = 350) %>%
+                                 height = 420) %>%
                            add_lines(x = interp, y = lfun$pangenome$formula(interp), color = "pangenome") %>%
                            add_lines(x = interp, y = lfun$coregenome$formula(interp), color = "coregenome")
                        })
@@ -1108,7 +1181,8 @@ PgR6M <- R6Class('PgR6M',
                                      label = "X-axis PC",
                                      choices = paste0("PC", seq_len(norgs)),
                                      selected = "PC1",
-                                     multiple = FALSE)
+                                     multiple = FALSE,
+                                     width = "100px")
                        })
 
                        output$pca_y <- renderUI({
@@ -1118,7 +1192,8 @@ PgR6M <- R6Class('PgR6M',
                                      label = "Y-axis PC",
                                      choices = paste0("PC", seq_len(norgs)),
                                      selected = "PC2",
-                                     multiple = FALSE)
+                                     multiple = FALSE,
+                                     width = "100px")
                        })
 
 
@@ -1326,6 +1401,7 @@ PgR6M <- R6Class('PgR6M',
                        })
 
                      })
+
 
                      runApp(app)
 
