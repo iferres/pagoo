@@ -730,10 +730,6 @@ PgR6M <- R6Class('PgR6M',
                                                       "Accessory genes",
                                                       uiOutput(outputId = "accs_slider"),
 
-                                                      checkboxInput("check_color_meta",
-                                                                    label = "Color by",
-                                                                    value = FALSE),
-
                                                       uiOutput("pca_color_meta")
                                                     )
 
@@ -747,7 +743,7 @@ PgR6M <- R6Class('PgR6M',
                          tags$head(tags$style(HTML('.info-box {min-height: 45px;}
                                                    .info-box-icon {height: 45px; line-height: 45px;}
                                                    .info-box-content {padding-top: 0px; padding-bottom: 0px;}
-                                                   .selectize-dropdown {z-index: 10000}'))),
+                                                   .selectize-dropdown {z-index: 10000 !important;}'))),
 
                          tags$script(HTML("$('body').addClass('fixed');")),
                          useShinyjs(),
@@ -771,7 +767,7 @@ PgR6M <- R6Class('PgR6M',
                                         height = 500,
                                         # align = "center",
                                         # DT::DTOutput("summary_counts"),
-                                        plotlyOutput("core_evol", width = "auto")
+                                        addSpinner(plotlyOutput("core_evol", width = "auto"))
                                       ),
                                       box(
                                         title = "Summary",
@@ -780,7 +776,7 @@ PgR6M <- R6Class('PgR6M',
                                         width = 3,
                                         height = 500,
                                         #offset = 0,
-                                        plotlyOutput("pie")
+                                        addSpinner(plotlyOutput("pie"))
                                       ),
                                       box(
                                         title = "Frequency plot",
@@ -789,7 +785,7 @@ PgR6M <- R6Class('PgR6M',
                                         width = 3,
                                         height = 500,
                                         #offset = 0,
-                                        plotlyOutput("barplot")
+                                        addSpinner(plotlyOutput("barplot"))
                                       ),
                                       box(
                                         title = "Pangenome curves",
@@ -798,7 +794,7 @@ PgR6M <- R6Class('PgR6M',
                                         width = 3,
                                         height = 500,
                                         #offset = 0,
-                                        plotlyOutput("curves")
+                                        addSpinner(plotlyOutput("curves"))
                                       )
                                     ),
 
@@ -810,14 +806,14 @@ PgR6M <- R6Class('PgR6M',
                                         status = "primary",
                                         solidHeader = T,
                                         width = 6,
-                                        DT::DTOutput("core_clusters"),
+                                        addSpinner(DT::DTOutput("core_clusters"))
                                       ),
                                       box(
                                         title = "Core genes",
                                         status = "primary",
                                         solidHeader = T,
                                         width = 6,
-                                        DT::DTOutput("core_genes"),
+                                        addSpinner(DT::DTOutput("core_genes"))
                                       )
 
                                     )
@@ -835,7 +831,7 @@ PgR6M <- R6Class('PgR6M',
                                         status = "primary",
                                         solidHeader = T,
                                         height = 500,
-                                        plotlyOutput("heat_freq", height = 420)
+                                        addSpinner(plotlyOutput("heat_freq", height = 420))
                                       ),
 
                                       box(
@@ -844,21 +840,15 @@ PgR6M <- R6Class('PgR6M',
                                         solidHeader = T,
                                         height = 500,
                                         splitLayout(
-                                          DT::DTOutput("pca_summary"),
+                                          addSpinner(DT::DTOutput("pca_summary")),
                                           column(width = 12,
                                                  uiOutput("pca_x"),
-                                                 uiOutput("pca_y")
+                                                 uiOutput("pca_y"),
+                                                 style="z-index:1002;"
                                           ),
                                           cellWidths = c("80%", "20%")
                                         ),
-                                        # fluidRow(
-                                        #   box(width = 9, DT::DTOutput("pca_summary")),
-                                        #   box(width = 3,
-                                        #     uiOutput("pca_x"),
-                                        #     uiOutput("pca_y")
-                                        #   )
-                                        # ),
-                                        box(plotlyOutput("pca", height = 250), width = 12)
+                                        box(addSpinner(plotlyOutput("pca", height = 250)), width = 12)
                                       ),
 
                                     ),
@@ -869,7 +859,7 @@ PgR6M <- R6Class('PgR6M',
                                         status = "primary",
                                         solidHeader = T,
                                         width = 6,
-                                        DT::DTOutput("accs_clusters"),
+                                        addSpinner(DT::DTOutput("accs_clusters"))
                                       ),
                                       box(
                                         title = "Accessory genes",
@@ -1158,7 +1148,7 @@ PgR6M <- R6Class('PgR6M',
                        output$core_genes <- DT::renderDT({
                          updateOrganisms()
                          updateCoreLevel()
-                         selected_cluster <- input$core_clusters_rows_selected
+                         selected_cluster <- req(input$core_clusters_rows_selected)
                          df <- as.data.frame(pg$core_genes[[selected_cluster]])
                          tgt <- which(sapply(df, function(x) max(nchar(as.character(x), allowNA = T, type = "width")) )>=26)
                          datatable(df,
@@ -1228,11 +1218,11 @@ PgR6M <- R6Class('PgR6M',
 
                        output$pca_color_meta <- renderUI({
                          updateOrganisms()
-                         ch <- colnames(pg$organisms)[-1]
+                         ch <- c("\a", colnames(pg$organisms)[-1])
                          selectInput("color_meta_selected",
                                      label = "Select metadata",
                                      choices = ch,
-                                     selected = NULL)
+                                     selected = ch[1])
                        })
 
 
@@ -1240,14 +1230,15 @@ PgR6M <- R6Class('PgR6M',
                        output$pca <- renderPlotly({
                          updateOrganisms()
                          df <- as.data.frame(pca()$x)
-                         xax <- input$xpc
-                         yax <- input$ypc
+                         xax <- req(input$xpc)
+                         yax <- req(input$ypc)
                          df$xx <- df[[xax]]
                          df$yy <- df[[yax]]
 
                          opts <- list()
-                         if (input$check_color_meta){
-                           cls <- pg$organisms[[input$color_meta_selected]]
+                         # color_by <- input$color_meta_selected
+                         if (colorBy() != "\a"){
+                           cls <- pg$organisms[[colorBy()]]
                            ln <- length(levels(cls))
                            clrs <- colorSet(ln)
                            opts <- c(opts, list(color = cls, colors = clrs))
@@ -1303,12 +1294,19 @@ PgR6M <- R6Class('PgR6M',
                        }
 
 
+                       colorBy <- reactiveVal("\a")
+                       observeEvent(input$color_meta_selected, {
+                         colorBy(input$color_meta_selected)
+                       })
+
                        output$heat_freq <- renderPlotly({
                          updateOrganisms()
 
                          opts <- list()
-                         if (input$check_color_meta){
-                           cls <- as.data.frame(pg$organisms[input$color_meta_selected])
+                         # color_by <- input$color_meta_selected
+                         # if (is.null(color_by)) color_by <- "\a"
+                         if (colorBy() != "\a"){
+                           cls <- as.data.frame(pg$organisms[colorBy()])
                            rownames(cls) <- as.character(pg$organisms$org)
                            opts <- c(opts, list(row_side_colors = cls, row_side_palette=colorSet))
                          }
@@ -1397,8 +1395,9 @@ PgR6M <- R6Class('PgR6M',
 
                        output$accs_genes <- DT::renderDT({
                          updateOrganisms()
+                         accs_rows <- req(input$accs_clusters_rows_selected)
                          wh <- colnames(accs_pm())
-                         selected_cluster <- wh[input$accs_clusters_rows_selected]
+                         selected_cluster <- wh[accs_rows]
                          df <- as.data.frame(pg$genes[[selected_cluster]])
                          # chf <- which(lapply(df, class) %in% c("character", "factor"))
                          tgt <- which(sapply(df, function(x) max(nchar(as.character(x), allowNA = T, type = "width")) )>=26)
