@@ -454,7 +454,7 @@
 #' @import shinydashboard
 #' @importFrom DT DTOutput renderDT datatable formatSignif JS
 #' @importFrom plotly plot_ly plotlyOutput renderPlotly layout add_lines subplot
-#' @importFrom heatmaply heatmaply Blues
+#' @importFrom heatmaply heatmaply
 #' @importFrom reshape2 melt
 #' @importFrom vegan vegdist
 #' @importFrom dendextend seriate_dendrogram
@@ -1059,9 +1059,7 @@ PgR6M <- R6Class('PgR6M',
                        accs_pm_i <- pm[, wh, drop = FALSE]
                        accs_pm <- reactiveVal(value = accs_pm_i)
 
-                       observeEvent({
-                         input$accs_freq
-                       }, {
+                       observeEvent(input$accs_freq, {
                          updateOrganisms()
                          pm <- pg$pan_matrix
                          norgs <- length(pg$organisms$org)
@@ -1220,7 +1218,7 @@ PgR6M <- R6Class('PgR6M',
                          updateOrganisms()
                          ch <- c("\a", colnames(pg$organisms)[-1])
                          selectInput("color_meta_selected",
-                                     label = "Select metadata",
+                                     label = "Color by (select metadata):",
                                      choices = ch,
                                      selected = ch[1])
                        })
@@ -1341,7 +1339,7 @@ PgR6M <- R6Class('PgR6M',
                          ## HEATMAP
                          opts <- c(opts,
                                    list(x=pm,
-                                        colors = Blues,
+                                        colors = c("#F7FBFF", "#08306B"),
                                         Colv = FALSE,
                                         Rowv = dend,
                                         margin = c(0,0,0,0),
