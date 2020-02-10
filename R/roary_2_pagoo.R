@@ -7,7 +7,7 @@
 #' (optionally but recommended) gff input file paths, and returns an object of
 #' class \code{\link[pagoo]{PgR6MS}} (or \code{\link[pagoo]{PgR6M}} if left
 #' empthy the \code{gffs} argument).
-#' @param gene_presence_absence.csv \code{character}, path to the
+#' @param gene_presence_absence_csv \code{character}, path to the
 #' "gene_presence_absence.csv" file. (Do not confuse with the file with the
 #' same name but with \code{.Rtab} extension).
 #' @param gffs A \code{character} vector with paths to original gff files used
@@ -39,6 +39,7 @@
 #' @importFrom reshape2 melt
 #' @importFrom Biostrings DNAStringSetList
 #' @importFrom S4Vectors mcols
+#' @importFrom stats setNames
 #' @export
 roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
 
