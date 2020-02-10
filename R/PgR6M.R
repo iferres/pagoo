@@ -708,30 +708,34 @@ PgR6M <- R6Class('PgR6M',
 
                                                   sidebarMenu(
 
-                                                    menuItem(
-                                                      text = "Organisms", icon = NULL,
-                                                      radioButtons("input_type",
-                                                                   label = "Selection type:",
-                                                                   choices = c("organism", "metadata"),
-                                                                   selected = "organism"),
-                                                      uiOutput("select_organisms")
-                                                    ),
+                                                    # uiOutput("select_organisms"),
+                                                    pickerInput(inputId = "organisms",
+                                                                label = "Organisms",
+                                                                choices = as.character(pg$.__enclos_env__$private$.organisms$org),
+                                                                selected = as.character(pg$organisms$org),
+                                                                multiple = TRUE,
+                                                                options = list(`actions-box` = TRUE),
+                                                                width = "100%"),
 
-                                                    menuItem(
-                                                      "Core genes",
-                                                      sliderInput("core_level",
-                                                                  "Core Level",
-                                                                  min=85,
-                                                                  max=100,
-                                                                  value=95)
-                                                    ),
+                                                    # uiOutput("select_variable"),
+                                                    pickerInput(inputId = "variable",
+                                                                label = "Variable",
+                                                                choices = c("\a", colnames(pg$.__enclos_env__$private$.organisms)[-1]),
+                                                                # selected = all_vars[1],
+                                                                multiple = FALSE,
+                                                                width = "100%"),
 
-                                                    menuItem(
-                                                      "Accessory genes",
-                                                      uiOutput(outputId = "accs_slider"),
+                                                    uiOutput("select_category"),
 
-                                                      uiOutput("pca_color_meta")
-                                                    )
+                                                    sliderInput("core_level",
+                                                                "Core Level",
+                                                                min=85,
+                                                                max=100,
+                                                                value=95),
+
+                                                    uiOutput(outputId = "accs_slider"),
+
+                                                    uiOutput("pca_color_meta")
 
                                                   )
                        ),
@@ -884,46 +888,50 @@ PgR6M <- R6Class('PgR6M',
 
                      server = function(input, output, session){
 
-                       if (dim(pg$organisms)[2] < 2){
-                         shinyjs::disable(selector = "[type=radio][value=metadata]")
-                         shinyjs::runjs("$('[type=radio][value=metadata]').parent().parent().addClass('disabled').css('opacity', 0.4)")
-                         shinyjs::disable(selector = "[type=check][value=check_color_meta]")
-                         shinyjs::runjs("$('[type=check][value=check_color_meta]').parent().parent().addClass('disabled').css('opacity', 0.4)")
-                       }
-
 
                        #############
-                       ## SUMMARY ##
+                       ## OPTIONS ##
                        #############
 
-                       updateCoreLevel <- eventReactive(input$core_level, {
-                         pg$core_level <- input$core_level
-                         pg
-                       })
+                       dforg <- as.data.frame(pg$.__enclos_env__$private$.organisms)
+                       all_orgs <- as.character(dforg$org)
+                       orgs <- reactiveVal(as.character(pg$organisms$org))
+                       all_vars <- colnames(dforg)[-1]
+                       # all_cats <- reactiveVal()
 
-                       accs_level <- reactiveVal(value = pg$core_level - 1L)
+                       # output$select_organisms <- renderUI(
+                       #   pickerInput(inputId = "organisms",
+                       #               label = "Organisms",
+                       #               choices = all_orgs,
+                       #               selected = orgs(),
+                       #               multiple = TRUE,
+                       #               options = list(`actions-box` = TRUE),
+                       #               width = "100%")
+                       # )
 
-                       observeEvent(input$core_level, {
-                         accs_level(input$core_level-1L)
-                       })
+                       # output$select_variable <- renderUI(
+                       #   pickerInput(inputId = "variable",
+                       #               label = "Variable",
+                       #               choices = all_vars,
+                       #               selected = all_vars[1],
+                       #               multiple = FALSE,
+                       #               width = "100%")
+                       # )
 
-                       orgs <- reactiveVal(as.character(pg$.__enclos_env__$private$.organisms$org))
+                       output$select_category <- renderUI(
+                         pickerInput(inputId = "category",
+                                     label = "Category",
+                                     choices = "\a",
+                                     selected = "\a",
+                                     multiple = TRUE,
+                                     options = list(`actions-box` = TRUE),
+                                     width = "100%")
+                       )
+
 
                        observeEvent(input$organisms, {
                          orgs(input$organisms)
                        })
-
-                       observeEvent(input$meta_dat, {
-                         updateOrganisms()
-                         org <- pg$.__enclos_env__$private$.organisms
-                         meta_column <- input$meta_column
-                         if (!is.null(meta_column)){
-                           wh <- which(org[[meta_column]] %in% input$meta_dat)
-                           sele <- as.character(org$org)[wh]
-                           orgs(sele)
-                         }
-                       })
-
 
                        updateOrganisms <- reactive({
                          ava_orgs <- as.character(pg$organisms[["org"]])
@@ -934,6 +942,41 @@ PgR6M <- R6Class('PgR6M',
 
                          pg$drop(toDrop)
                          pg$recover(toReco)
+                       })
+
+                       observeEvent(input$variable, {
+                         # updateOrganisms()
+                         meta <- unique(as.character(dforg[[req(input$variable)]]))
+                         updatePickerInput(session = session,
+                                           inputId = "category",
+                                           label = "Category",
+                                           choices = meta,
+                                           selected = meta)
+                       })
+
+                       observeEvent(input$category, {
+                         # updateOrganisms()
+                         var <- input$variable
+                         # orgs <- as.character(pg$organisms$org)
+                         nw <- all_orgs[dforg[[var]] %in% req(input$category)]
+                         updatePickerInput(
+                           session = session,
+                           inputId = "organisms",
+                           label = "Organisms",
+                           choices = all_orgs,
+                           selected = nw
+                         )
+                       })
+
+                       updateCoreLevel <- eventReactive(input$core_level, {
+                         pg$core_level <- input$core_level
+                         pg
+                       })
+
+                       accs_level <- reactiveVal(value = pg$core_level - 1L)
+
+                       observeEvent(input$core_level, {
+                         accs_level(input$core_level-1L)
                        })
 
                        output$num_orgs <- renderInfoBox({
@@ -955,6 +998,13 @@ PgR6M <- R6Class('PgR6M',
                        })
 
 
+
+                       #############
+                       ## SUMMARY ##
+                       #############
+
+
+
                        output$core_evol <- renderPlotly({
                          updateOrganisms()
                          pm <- pg$pan_matrix
@@ -971,58 +1021,6 @@ PgR6M <- R6Class('PgR6M',
                                  mode = "markers", height = 420) %>%
                            layout(xaxis = list(title = "Core Level"),
                                   yaxis = list(title = "Core Number"))
-                       })
-
-
-
-                       output$select_organisms <- renderUI({
-
-                         if (input$input_type == "organism"){
-                           all_orgs <- as.character(pg$.__enclos_env__$private$.organisms$org)
-                           fluidRow(
-                             column(
-                               width = 12,
-                               pickerInput(inputId = "organisms",
-                                           label = "Organisms",
-                                           choices = all_orgs,
-                                           selected = all_orgs,#selectize = T,
-                                           multiple = TRUE, options = list(`actions-box` = TRUE),
-                                           width = "100%")
-                             )
-                           )
-
-                         }else{
-
-                           cols <- colnames(pg$organisms[, -1])
-                           meta_column <- input$meta_column
-                           if (is.null(meta_column)){
-                             col <- colnames(pg$organisms)[2]
-                           }else{
-                             col <- meta_column
-                           }
-                           chs <- as.character(pg$organisms[[col]])
-                           # fluidRow(
-                           #   column(
-                           #     width = 3,
-                           box(
-                             selectInput(inputId = "meta_column",
-                                         label = "Select metadata:",
-                                         selected = cols[1],
-                                         choices = cols,
-                                         multiple = FALSE),
-                             # ),
-                             # column(
-                             #   width = 3,
-                             pickerInput(inputId = "meta_dat",
-                                         label = "Select organism group:",
-                                         selected = chs,
-                                         choices = chs,
-                                         multiple = TRUE, options = list(`actions-box` = TRUE)))
-                           # )
-                           #
-                           # )
-
-                         }
                        })
 
 
@@ -1059,14 +1057,17 @@ PgR6M <- R6Class('PgR6M',
                        accs_pm_i <- pm[, wh, drop = FALSE]
                        accs_pm <- reactiveVal(value = accs_pm_i)
 
-                       observeEvent(input$accs_freq, {
+                       observeEvent({
+                         input$accs_freq
+                         input$organisms
+                       },{
                          updateOrganisms()
                          pm <- pg$pan_matrix
                          norgs <- length(pg$organisms$org)
                          pmb <- pm
                          pmb[which(pmb>1L, arr.ind = TRUE)] <- 1L
                          accs_freq <- input$accs_freq
-                         accs_num <- round(accs_freq *  norgs / 100)
+                         accs_num <- floor(accs_freq *  norgs / 100)
                          clsu <- colSums(pmb)
                          wh <- which( clsu >= min(accs_num) & clsu <= max(accs_num))
                          colnames(pmb)[wh]
@@ -1299,6 +1300,8 @@ PgR6M <- R6Class('PgR6M',
 
                        output$heat_freq <- renderPlotly({
                          updateOrganisms()
+                         pm <- accs_pm()
+                         pm[which(pm>1L, arr.ind = TRUE)] <- 1L
 
                          opts <- list()
                          # color_by <- input$color_meta_selected
@@ -1311,8 +1314,6 @@ PgR6M <- R6Class('PgR6M',
 
                          # wh <- updateClusterList()
                          # pm <- pg$pan_matrix[, wh, drop = FALSE]
-                         pm <- accs_pm()
-                         pm[which(pm>1L, arr.ind = TRUE)] <- 1L
 
                          # wh <- updateClusterList()
                          # pm <- pm[, wh, drop=FALSE]
@@ -1338,7 +1339,7 @@ PgR6M <- R6Class('PgR6M',
 
                          ## HEATMAP
                          opts <- c(opts,
-                                   list(x=pm,
+                                   list(x = pm,
                                         colors = c("#F7FBFF", "#08306B"),
                                         Colv = FALSE,
                                         Rowv = dend,
