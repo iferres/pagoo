@@ -8,22 +8,21 @@ Depends:
   BiocGenerics,
   Biostrings,
   ggplot2,
-  ggfortify,
-  shiny,
+  shiny
 Imports:
   R6,
   reshape2,
   vegan,
   micropan,
   GenomicRanges,
-  shinyjs,
   shinyWidgets,
   shinydashboard,
   DT,
   plotly, 
   heatmaply,
   dendextend,
-  magrittr
+  magrittr,
+  ggfortify
 Remotes:
   bioc::release/S4Vectors,
   bioc::release/BiocGenerics,
