@@ -448,8 +448,16 @@
 #' @importFrom micropan fluidity binomixEstimate
 #' @import ggplot2
 #' @import ggfortify
+#' @import shiny
+#' @import shinyWidgets
+#' @import shinydashboard
+#' @importFrom DT DTOutput renderDT datatable formatSignif JS
+#' @importFrom plotly plot_ly plotlyOutput renderPlotly layout add_lines subplot
+#' @importFrom heatmaply heatmaply
 #' @importFrom reshape2 melt
 #' @importFrom vegan vegdist
+#' @importFrom dendextend seriate_dendrogram
+#' @importFrom magrittr `%>%`
 #' @export
 PgR6M <- R6Class('PgR6M',
 
@@ -670,6 +678,727 @@ PgR6M <- R6Class('PgR6M',
                                        fun = lfun[[what[i]]]$formula)
                      }
                      g
+                   },
+
+
+
+
+
+                   #################
+                   ##             ##
+                   ##  SHINY APP  ##
+                   ##             ##
+                   #################
+
+
+                   runShinyApp = function(){
+
+                     pg <- self
+
+                     app <- list(ui = dashboardPage(
+
+                       header = dashboardHeader(
+                         title = "Pagoo Shiny App",
+                         titleWidth = 250
+                       ),
+
+
+                       sidebar = dashboardSidebar(width = 250,
+
+                                                  sidebarMenu(
+
+                                                    # uiOutput("select_organisms"),
+                                                    pickerInput(inputId = "organisms",
+                                                                label = "Organisms",
+                                                                choices = as.character(pg$.__enclos_env__$private$.organisms$org),
+                                                                selected = as.character(pg$organisms$org),
+                                                                multiple = TRUE,
+                                                                options = list(`actions-box` = TRUE),
+                                                                width = "100%"),
+
+                                                    # uiOutput("select_variable"),
+                                                    pickerInput(inputId = "variable",
+                                                                label = "Variable",
+                                                                choices = c("\a", colnames(pg$.__enclos_env__$private$.organisms)[-1]),
+                                                                # selected = all_vars[1],
+                                                                multiple = FALSE,
+                                                                width = "100%"),
+
+                                                    uiOutput("select_category"),
+
+                                                    sliderInput("core_level",
+                                                                "Core Level",
+                                                                min=85,
+                                                                max=100,
+                                                                value=95),
+
+                                                    uiOutput(outputId = "accs_slider"),
+
+                                                    selectInput("color_meta_selected",
+                                                                label = "Color by (select metadata):",
+                                                                choices = c("\a", colnames(pg$.__enclos_env__$private$.organisms)[-1]))
+
+                                                  )
+                       ),
+
+
+
+                       body = dashboardBody(
+
+                         tags$head(tags$style(HTML('.info-box {min-height: 45px;}
+                                                   .info-box-icon {height: 45px; line-height: 45px;}
+                                                   .info-box-content {padding-top: 0px; padding-bottom: 0px;}
+                                                   .selectize-dropdown {z-index: 10000 !important;}'))),
+
+                         tags$script(HTML("$('body').addClass('fixed');")),
+
+                         fluidRow(
+                           infoBoxOutput("num_orgs"),
+                           infoBoxOutput("num_clus"),
+                           infoBoxOutput("num_gene")
+                         ),
+                         fluidRow(
+                           tabBox(width = 12,
+
+                                  tabPanel(
+                                    title = "Summary",
+
+                                    fluidRow(
+                                      box(
+                                        title = "Core number",
+                                        status = "primary",
+                                        solidHeader = T,
+                                        width = 3,
+                                        height = 500,
+                                        # align = "center",
+                                        # DT::DTOutput("summary_counts"),
+                                        addSpinner(plotlyOutput("core_evol", width = "auto"))
+                                      ),
+                                      box(
+                                        title = "Summary",
+                                        status = "primary",
+                                        solidHeader = T,
+                                        width = 3,
+                                        height = 500,
+                                        #offset = 0,
+                                        addSpinner(plotlyOutput("pie"))
+                                      ),
+                                      box(
+                                        title = "Frequency plot",
+                                        status = "primary",
+                                        solidHeader = T,
+                                        width = 3,
+                                        height = 500,
+                                        #offset = 0,
+                                        addSpinner(plotlyOutput("barplot"))
+                                      ),
+                                      box(
+                                        title = "Pangenome curves",
+                                        status = "primary",
+                                        solidHeader = T,
+                                        width = 3,
+                                        height = 500,
+                                        #offset = 0,
+                                        addSpinner(plotlyOutput("curves"))
+                                      )
+                                    ),
+
+                                    # hr(),
+
+                                    fluidRow(
+                                      box(
+                                        title = "Core clusters",
+                                        status = "primary",
+                                        solidHeader = T,
+                                        width = 6,
+                                        addSpinner(DT::DTOutput("core_clusters"))
+                                      ),
+                                      box(
+                                        title = "Core genes",
+                                        status = "primary",
+                                        solidHeader = T,
+                                        width = 6,
+                                        addSpinner(DT::DTOutput("core_genes"))
+                                      )
+
+                                    )
+
+
+                                  ), # Ends tabPanel "Summary"
+
+                                  tabPanel(
+                                    title = "Accessory",
+
+                                    fluidRow(
+
+                                      box(
+                                        title = "Gene presence/absence",
+                                        status = "primary",
+                                        solidHeader = T,
+                                        height = 500,
+                                        addSpinner(plotlyOutput("heat_freq", height = 420))
+                                      ),
+
+                                      box(
+                                        title = "PCA",
+                                        status = "primary",
+                                        solidHeader = T,
+                                        height = 500,
+                                        splitLayout(
+                                          addSpinner(DT::DTOutput("pca_summary")),
+                                          column(width = 12,
+                                                 uiOutput("pca_x"),
+                                                 uiOutput("pca_y"),
+                                                 style="z-index:1002;"
+                                          ),
+                                          cellWidths = c("80%", "20%")
+                                        ),
+                                        box(addSpinner(plotlyOutput("pca", height = 250)), width = 12)
+                                      ),
+
+                                    ),
+
+                                    fluidRow(
+                                      box(
+                                        title = "Accessory clusters",
+                                        status = "primary",
+                                        solidHeader = T,
+                                        width = 6,
+                                        addSpinner(DT::DTOutput("accs_clusters"))
+                                      ),
+                                      box(
+                                        title = "Accessory genes",
+                                        status = "primary",
+                                        solidHeader = T,
+                                        width = 6,
+                                        DT::DTOutput("accs_genes")
+                                      )
+
+                                    )
+
+                                  ) # Ends tabPanel "Accessory"
+
+                           )
+                         )
+                       )
+
+                       # Ends tabPanel
+
+                     ),
+
+
+                     server = function(input, output, session){
+
+
+                       #############
+                       ## OPTIONS ##
+                       #############
+
+                       dforg <- as.data.frame(pg$.__enclos_env__$private$.organisms)
+                       all_orgs <- as.character(dforg$org)
+                       orgs <- reactiveVal(as.character(pg$organisms$org))
+                       all_vars <- colnames(dforg)[-1]
+
+                       output$select_category <- renderUI(
+                         pickerInput(inputId = "category",
+                                     label = "Category",
+                                     choices = "\a",
+                                     selected = "\a",
+                                     multiple = TRUE,
+                                     options = list(`actions-box` = TRUE),
+                                     width = "100%")
+                       )
+
+
+                       observeEvent(input$organisms, {
+                         orgs(input$organisms)
+                       })
+
+                       updateOrganisms <- reactive({
+                         ava_orgs <- as.character(pg$organisms[["org"]])
+                         inp_orgs <- orgs()
+
+                         toDrop <- ava_orgs[! ava_orgs %in% inp_orgs]
+                         toReco <- inp_orgs[! inp_orgs %in% ava_orgs]
+
+                         pg$drop(toDrop)
+                         pg$recover(toReco)
+                       })
+
+                       observeEvent(input$variable, {
+                         # updateOrganisms()
+                         meta <- unique(as.character(dforg[[req(input$variable)]]))
+                         updatePickerInput(session = session,
+                                           inputId = "category",
+                                           label = "Category",
+                                           choices = meta,
+                                           selected = meta)
+                       })
+
+                       observeEvent(input$category, {
+                         # updateOrganisms()
+                         var <- input$variable
+                         # orgs <- as.character(pg$organisms$org)
+                         nw <- all_orgs[dforg[[var]] %in% req(input$category)]
+                         updatePickerInput(
+                           session = session,
+                           inputId = "organisms",
+                           label = "Organisms",
+                           choices = all_orgs,
+                           selected = nw
+                         )
+                       })
+
+                       updateCoreLevel <- eventReactive(input$core_level, {
+                         pg$core_level <- input$core_level
+                         pg
+                       })
+
+                       accs_level <- reactiveVal(value = pg$core_level - 1L)
+
+                       observeEvent(input$core_level, {
+                         accs_level(input$core_level-1L)
+                       })
+
+                       output$num_orgs <- renderInfoBox({
+                         updateOrganisms()
+                         x <- dim(pg$organisms)[1]
+                         infoBox("Number of organisms", x)
+                       })
+
+                       output$num_clus <- renderInfoBox({
+                         updateOrganisms()
+                         x <- dim(pg$clusters)[1]
+                         infoBox("Number of clusters", x, color = "purple")
+                       })
+
+                       output$num_gene <- renderInfoBox({
+                         updateOrganisms()
+                         x <- sum(pg$pan_matrix)
+                         infoBox("Number of genes", x, color = "yellow")
+                       })
+
+
+
+                       #############
+                       ## SUMMARY ##
+                       #############
+
+
+
+                       output$core_evol <- renderPlotly({
+                         updateOrganisms()
+                         pm <- pg$pan_matrix
+                         pm[which(pm>1L, arr.ind = TRUE)] <- 1L
+                         sq <- seq(1, 0.85, -0.01)
+                         cs <- colSums(pm)
+                         norg <- dim(pm)[1]
+                         ev <- sapply(sq, function(x){
+                           length(which( cs >= floor(norg*x) ))
+                         })
+                         df <- data.frame(core_level = sq*100, core_number = ev)
+                         plot_ly(df, x = ~core_level, y = ~core_number,
+                                 type = "scatter",
+                                 mode = "markers", height = 420) %>%
+                           layout(xaxis = list(title = "Core Level"),
+                                  yaxis = list(title = "Core Number"))
+                       })
+
+
+                       output$pie <- renderPlotly({
+                         # pg$core_level <- input$core_level
+                         updateCoreLevel()
+                         updateOrganisms()
+                         st <- as.data.frame(pg$summary_stats[-1, ])
+                         st$Category <- factor(st$Category, levels = c("Cloud", "Shell", "Core"))
+                         plot_ly(st, labels = ~Category, values = ~Number,
+                                 type = "pie",
+                                 showlegend=FALSE,height = 400,
+                                 textposition = 'inside') %>%
+                           layout(margin = list(
+                             l = 20,
+                             r = 20,
+                             b = 0,
+                             t = 20,
+                             pad = 4
+                           ))
+                       })
+
+                       # Initialize accs_pm in order to not have to wait until user clicks on
+                       # accessory tab.
+                       pm <- pg$pan_matrix
+                       norgs <- length(pg$organisms$org)
+                       pmb <- pm
+                       pmb[which(pmb>1L, arr.ind = TRUE)] <- 1L
+                       accs_freq <- c(0, pg$core_level-1)
+                       accs_num <- round(accs_freq *  norgs / 100)
+                       clsu <- colSums(pmb)
+                       wh <- which( clsu >= min(accs_num) & clsu <= max(accs_num))
+                       colnames(pmb)[wh]
+                       accs_pm_i <- pm[, wh, drop = FALSE]
+                       accs_pm <- reactiveVal(value = accs_pm_i)
+
+                       observeEvent({
+                         input$accs_freq
+                         input$organisms
+                       },{
+                         updateOrganisms()
+                         pm <- pg$pan_matrix
+                         norgs <- length(pg$organisms$org)
+                         pmb <- pm
+                         pmb[which(pmb>1L, arr.ind = TRUE)] <- 1L
+                         accs_freq <- input$accs_freq
+                         accs_num <- floor(accs_freq *  norgs / 100)
+                         clsu <- colSums(pmb)
+                         wh <- which( clsu >= min(accs_num) & clsu <= max(accs_num))
+                         colnames(pmb)[wh]
+                         accs_pm(pm[, wh, drop = FALSE])
+                       }, ignoreNULL = TRUE)
+
+
+                       output$barplot <- renderPlotly({
+                         updateOrganisms()
+                         pm <- pg$pan_matrix
+                         pm[which(pm > 0, arr.ind = TRUE)] <- 1L
+                         dd <- as.data.frame(table(colSums(pm)))
+                         colnames(dd) <- c("Count", "Frequency")
+                         plot_ly(dd,
+                                 x = ~Count, y = ~Frequency,
+                                 type = "bar", height = 420) %>%
+                           layout(xaxis = list(title = "Number of genomes"),
+                                  yaxis = list(title = 'Number of genes'))
+                       })
+
+                       output$curves <- renderPlotly({
+                         updateOrganisms()
+                         updateCoreLevel()
+                         what <- c('pangenome', 'coregenome')
+                         names(what) <- what
+                         lrar <- lapply(what, function(x) pg$rarefact(what = x))
+                         lfun <- lapply(what, function(x){
+                           if (x == 'pangenome'){
+                             pg$pg_power_law_fit(raref = lrar[[x]])#$formula
+                           }else{
+                             pg$cg_exp_decay_fit(raref = lrar[[x]])#$formula
+                           }
+                         })
+                         lrarm <- lapply(lrar, melt)
+                         ll <- lapply(what, function(x) {
+                           lrarm[[x]]$category <- x
+                           lrarm[[x]]
+                         })
+                         df <- Reduce(rbind, ll)
+
+                         norgs <- dim(pg$organisms)[1]
+                         interv <- (norgs - 1) / 512
+                         interp <- seq(1, norgs, interv)
+
+                         plot_ly(df,
+                                 x=~Var1,
+                                 y=~value,
+                                 color = ~category,
+                                 type="scatter",
+                                 mode="markers",
+                                 marker = list(opacity = 0.3),
+                                 showlegend = FALSE,
+                                 height = 420) %>%
+                           add_lines(x = interp, y = lfun$pangenome$formula(interp), color = "pangenome") %>%
+                           add_lines(x = interp, y = lfun$coregenome$formula(interp), color = "coregenome") %>%
+                           layout(xaxis = list(title = "Number of genomes"),
+                                  yaxis = list(title = "Number of genes"))
+                       })
+
+
+                       output$core_clusters <- DT::renderDT({
+                         updateOrganisms()
+                         updateCoreLevel()
+                         df <- as.data.frame(pg$core_clusters)
+                         datatable(df,
+                                   selection = list(mode = "single", selected = 1),
+                                   options = list(
+                                     rownames = FALSE,
+                                     paging = FALSE,
+                                     # autoWidth = T,
+                                     scrollX = T,
+                                     scrollY = "200px",
+                                     # scrollCollapse = T,
+                                     pageLength = 3,
+                                     dom ='ft'
+                                   ))
+                       })
+
+                       output$core_genes <- DT::renderDT({
+                         updateOrganisms()
+                         updateCoreLevel()
+                         selected_cluster <- req(input$core_clusters_rows_selected)
+                         df <- as.data.frame(pg$core_genes[[selected_cluster]])
+                         tgt <- which(sapply(df, function(x) max(nchar(as.character(x), allowNA = T, type = "width")) )>=26)
+                         datatable(df,
+                                   selection = "none",
+                                   options = list(
+                                     rownames = FALSE,
+                                     paging = FALSE,
+                                     scrollX = TRUE,
+                                     scrollY = "200px",
+                                     dom ='ft',
+                                     autoWidth = TRUE,
+                                     columnDefs = list(list(
+                                       targets = unname(tgt),
+                                       render = JS(
+                                         "function(data, type, row, meta) {",
+                                         "return type === 'display' && data.length > 30 ?",
+                                         "'<span title=\"' + data + '\">' + data.substr(0, 26) + '...</span>' : data;",
+                                         "}"),
+                                       width = "200px"
+                                     ))
+                                   ))
+                       })
+
+
+
+                       #############
+                       # ACCESSORY #
+                       #############
+
+                       output$accs_slider <- renderUI({
+                         # corelev <- input$core_level
+                         sliderInput("accs_freq",
+                                     "Accessory frequency (%)",
+                                     min = 0,
+                                     max = accs_level(),
+                                     value=c(0, accs_level()))
+                       })
+
+                       output$pca_x <- renderUI({
+                         updateOrganisms()
+                         norgs <- dim(pg$organisms)[1]
+                         selectInput("xpc",
+                                     label = "X-axis PC",
+                                     choices = paste0("PC", seq_len(norgs)),
+                                     selected = "PC1",
+                                     multiple = FALSE,
+                                     width = "100px")
+                       })
+
+                       output$pca_y <- renderUI({
+                         updateOrganisms()
+                         norgs <- dim(pg$organisms)[1]
+                         selectInput("ypc",
+                                     label = "Y-axis PC",
+                                     choices = paste0("PC", seq_len(norgs)),
+                                     selected = "PC2",
+                                     multiple = FALSE,
+                                     width = "100px")
+                       })
+
+
+                       pca <- reactive({
+                         pm <- accs_pm()
+                         prcomp(pm)
+                       })
+
+
+
+                       output$pca <- renderPlotly({
+                         updateOrganisms()
+                         df <- as.data.frame(pca()$x)
+                         xax <- req(input$xpc)
+                         yax <- req(input$ypc)
+                         df$xx <- df[[xax]]
+                         df$yy <- df[[yax]]
+
+                         opts <- list()
+                         # color_by <- input$color_meta_selected
+                         if (colorBy() != "\a"){
+                           cls <- pg$organisms[[colorBy()]]
+                           ln <- length(levels(cls))
+                           clrs <- colorSet(ln)
+                           opts <- c(opts, list(color = cls, colors = clrs))
+                         }
+
+                         opts <- c(opts, list(
+                           data = df,
+                           x = ~xx,
+                           y = ~yy,
+                           text = ~rownames(df),
+                           mode = "markers",
+                           marker = list(size = 12),
+                           type = "scatter"
+                         ))
+
+                         p <- do.call(plot_ly, opts)
+
+                         p %>% layout(xaxis = list(title = xax), yaxis = list(title = yax))
+
+                       })
+
+
+
+
+                       output$pca_summary <- DT::renderDT({
+                         updateOrganisms()
+                         PCA <- pca()
+                         sumpca <- summary(PCA)$importance
+                         datatable(sumpca,
+                                   selection = "none",
+                                   extensions = "FixedColumns",
+                                   options = list(
+                                     pageLength = 3,
+                                     lengthChange = FALSE,
+                                     searching = FALSE,
+                                     scrollX = TRUE,
+                                     dom = "t",
+                                     # bsort = FALSE,
+                                     fixedColumns = list(leftColumns = 1),
+                                     autoWidth = TRUE,
+                                     columnDefs = list(list(width = '150px', targets = 0),
+                                                       list(width = '40px', targets = 1:dim(sumpca)[2]))
+                                   )) %>% formatSignif(columns = T, digits = 3)
+                       }, rownames = TRUE)
+
+
+
+                       colorSet <- function(n) {
+                         colors <- c("#66C2A5", "#FC8D62", "#8DA0CB", "#E78AC3", "#A6D854", "#FFD92F",
+                                     "#E5C494", "#B3B3B3", "#1B9E77", "#D95F02", "#7570B3", "#E7298A",
+                                     "#66A61E", "#E6AB02", "#A6761D", "#666666")
+                         colors[seq_len(n)]
+                       }
+
+
+                       colorBy <- reactiveVal("\a")
+                       observeEvent(input$color_meta_selected, {
+                         colorBy(input$color_meta_selected)
+                       })
+
+                       output$heat_freq <- renderPlotly({
+                         updateOrganisms()
+                         pm <- accs_pm()
+                         pm[which(pm>1L, arr.ind = TRUE)] <- 1L
+
+                         opts <- list()
+                         # color_by <- input$color_meta_selected
+                         # if (is.null(color_by)) color_by <- "\a"
+                         if (colorBy() != "\a"){
+                           cls <- as.data.frame(pg$organisms[colorBy()])
+                           rownames(cls) <- as.character(pg$organisms$org)
+                           opts <- c(opts, list(row_side_colors = cls, row_side_palette=colorSet))
+                         }
+
+                         # wh <- updateClusterList()
+                         # pm <- pg$pan_matrix[, wh, drop = FALSE]
+
+                         # wh <- updateClusterList()
+                         # pm <- pm[, wh, drop=FALSE]
+                         csm <- colSums(pm)
+                         spl <- split(names(csm), csm)
+                         tpm <- t(pm)
+                         norder <- lapply(spl, function(x) {
+                           if (length(x)<2){
+                             x
+                           }else{
+                             d <- vegdist(tpm[x, , drop=F], method = "jaccard", binary = T, na.rm = T)
+                             hc <- hclust(d, "single")
+                             x[hc$order]
+                           }
+                         })
+                         norder <- norder[order(as.integer(names(norder)), decreasing = T)]
+                         forder <- unlist(norder)
+                         pm <- pm[, forder,  drop = F]
+
+                         d <- vegdist(pm, method = "jaccard")
+                         hc <- as.dendrogram(hclust(d))
+                         dend <- dendextend::seriate_dendrogram(hc, d)
+
+                         ## HEATMAP
+                         opts <- c(opts,
+                                   list(x = pm,
+                                        colors = c("#F7FBFF", "#08306B"),
+                                        Colv = FALSE,
+                                        Rowv = dend,
+                                        margin = c(0,0,0,0),
+                                        # distfun = vegan::vegdist,
+                                        # dist_method = "jaccard",
+                                        hide_colorbar = TRUE,
+                                        showticklabels = FALSE))
+
+                         p1 <- do.call(heatmaply, opts)
+
+                         ## BARPLOT
+                         rsum <- rowSums(pm)
+                         odend <- rev(order.dendrogram(dend))
+                         bar <- data.frame(org = factor(names(rsum),
+                                                        levels = names(rsum)[odend]),
+                                           Count = rsum,
+                                           row.names = NULL)
+                         # bar <- rsdf[hc$order, ]
+                         p2 <- plot_ly(#data = bar,
+                           y = ~bar$org,
+                           x = ~bar$Count,
+                           type = "bar",
+                           orientation="h") %>%
+                           layout(xaxis = list(autorange='reversed', showticklabels=FALSE),
+                                  yaxis = list(showticklabels = FALSE))
+
+                         subplot(p2, p1, widths = c(.3,.7))
+
+                       })
+
+                       output$accs_clusters <- DT::renderDT({
+                         updateOrganisms()
+                         # wh <- updateClusterList()
+                         wh <- colnames(accs_pm())
+                         clust <- pg$clusters
+                         ma <- match(wh, clust$group)
+                         df <- as.data.frame(clust[ma, ,drop=FALSE])
+                         datatable(df,
+                                   selection = list(mode = "single", selected = 1),
+                                   options = list(
+                                     rownames = FALSE,
+                                     paging = FALSE,
+                                     # autoWidth = T,
+                                     scrollX = T,
+                                     scrollY = "200px",
+                                     # scrollCollapse = T,
+                                     pageLength = 3,
+                                     dom ='ft'
+                                   ))
+                       })
+
+                       output$accs_genes <- DT::renderDT({
+                         updateOrganisms()
+                         accs_rows <- req(input$accs_clusters_rows_selected)
+                         wh <- colnames(accs_pm())
+                         selected_cluster <- wh[accs_rows]
+                         df <- as.data.frame(pg$genes[[selected_cluster]])
+                         # chf <- which(lapply(df, class) %in% c("character", "factor"))
+                         tgt <- which(sapply(df, function(x) max(nchar(as.character(x), allowNA = T, type = "width")) )>=26)
+                         datatable(df,
+                                   selection = "none",
+                                   options = list(
+                                     rownames = FALSE,
+                                     paging = FALSE,
+                                     scrollX = TRUE,
+                                     scrollY = "200px",
+                                     dom ='ft',
+                                     autoWidth = TRUE,
+                                     columnDefs = list(list(
+                                       targets = unname(tgt),
+                                       render = JS(
+                                         "function(data, type, row, meta) {",
+                                         "return type === 'display' && data.length > 30 ?",
+                                         "'<span title=\"' + data + '\">' + data.substr(0, 26) + '...</span>' : data;",
+                                         "}"),
+                                       width = "200px"
+                                     ))
+                                   ))
+                       })
+
+                     })
+
+
+                     runApp(app)
+
                    }
 
 

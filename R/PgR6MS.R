@@ -584,13 +584,16 @@ PgR6MS <- R6Class('PgR6MS',
                       if (!is.logical(fill))
                         stop('"fill" is not logical')
 
-                      ccl <- self$core_clusters$group
-                      orgs <- self$organisms$org
-                      sqs <- private$.sequences
+                      # ccl <- self$core_clusters$group
+                      # orgs <- self$organisms$org
+                      # sqs <- private$.sequences
+                      # mcls <- mcols(sqs)
+                      # whcore <- which(mcls$group %in% ccl)
+                      # sqs <- sqs[whcore]
+                      # mcls <- mcols(sqs)
+                      sqs <- unlist(self$core_sequences, use.names = FALSE)
                       mcls <- mcols(sqs)
-                      whcore <- which(mcls$group %in% ccl)
-                      sqs <- sqs[whcore]
-                      mcls <- mcols(sqs)
+                      ccl <- unique(mcls$group)
 
                       if (!(is.na(max_per_org) | is.null(max_per_org))){
                         wma <- which(self$pan_matrix[, ccl] > max_per_org, arr.ind = T)

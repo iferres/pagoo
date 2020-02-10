@@ -7,6 +7,10 @@
 roary_2_pagoo(gene_presence_absence_csv, gffs, sep = "__")
 }
 \arguments{
+\item{gene_presence_absence_csv}{\code{character}, path to the
+"gene_presence_absence.csv" file. (Do not confuse with the file with the
+same name but with \code{.Rtab} extension).}
+
 \item{gffs}{A \code{character} vector with paths to original gff files used
 as roary's input. Typically the return value of \code{list.files()} function.
 This parameter is optional but highly recommended if you want to manipulate
@@ -14,10 +18,6 @@ sequences.}
 
 \item{sep}{\code{character}. Default: \code{"__"} (two underscores). See
 \link[pagoo]{PgR6MS} for a more detail argument description.}
-
-\item{gene_presence_absence.csv}{\code{character}, path to the
-"gene_presence_absence.csv" file. (Do not confuse with the file with the
-same name but with \code{.Rtab} extension).}
 }
 \value{
 A pagoo's R6 class object. Ethier \link[pagoo]{PgR6M}, if \code{gffs}
