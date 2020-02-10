@@ -1101,7 +1101,9 @@ PgR6M <- R6Class('PgR6M',
                                  showlegend = FALSE,
                                  height = 420) %>%
                            add_lines(x = interp, y = lfun$pangenome$formula(interp), color = "pangenome") %>%
-                           add_lines(x = interp, y = lfun$coregenome$formula(interp), color = "coregenome")
+                           add_lines(x = interp, y = lfun$coregenome$formula(interp), color = "coregenome") %>%
+                           layout(xaxis = list(title = "Number of genomes"),
+                                  yaxis = list(title = "Number of genes"))
                        })
 
 
