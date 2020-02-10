@@ -734,7 +734,9 @@ PgR6M <- R6Class('PgR6M',
 
                                                     uiOutput(outputId = "accs_slider"),
 
-                                                    uiOutput("pca_color_meta")
+                                                    selectInput("color_meta_selected",
+                                                                label = "Color by (select metadata):",
+                                                                choices = c("\a", colnames(pg$.__enclos_env__$private$.organisms)[-1]))
 
                                                   )
                        ),
@@ -1193,16 +1195,6 @@ PgR6M <- R6Class('PgR6M',
                        pca <- reactive({
                          pm <- accs_pm()
                          prcomp(pm)
-                       })
-
-
-                       output$pca_color_meta <- renderUI({
-                         updateOrganisms()
-                         ch <- c("\a", colnames(pg$organisms)[-1])
-                         selectInput("color_meta_selected",
-                                     label = "Color by (select metadata):",
-                                     choices = ch,
-                                     selected = ch[1])
                        })
 
 
