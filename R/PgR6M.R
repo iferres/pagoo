@@ -449,7 +449,6 @@
 #' @import ggplot2
 #' @import ggfortify
 #' @import shiny
-#' @import shinyjs
 #' @import shinyWidgets
 #' @import shinydashboard
 #' @importFrom DT DTOutput renderDT datatable formatSignif JS
@@ -750,7 +749,7 @@ PgR6M <- R6Class('PgR6M',
                                                    .selectize-dropdown {z-index: 10000 !important;}'))),
 
                          tags$script(HTML("$('body').addClass('fixed');")),
-                         useShinyjs(),
+
                          fluidRow(
                            infoBoxOutput("num_orgs"),
                            infoBoxOutput("num_clus"),
@@ -897,26 +896,6 @@ PgR6M <- R6Class('PgR6M',
                        all_orgs <- as.character(dforg$org)
                        orgs <- reactiveVal(as.character(pg$organisms$org))
                        all_vars <- colnames(dforg)[-1]
-                       # all_cats <- reactiveVal()
-
-                       # output$select_organisms <- renderUI(
-                       #   pickerInput(inputId = "organisms",
-                       #               label = "Organisms",
-                       #               choices = all_orgs,
-                       #               selected = orgs(),
-                       #               multiple = TRUE,
-                       #               options = list(`actions-box` = TRUE),
-                       #               width = "100%")
-                       # )
-
-                       # output$select_variable <- renderUI(
-                       #   pickerInput(inputId = "variable",
-                       #               label = "Variable",
-                       #               choices = all_vars,
-                       #               selected = all_vars[1],
-                       #               multiple = FALSE,
-                       #               width = "100%")
-                       # )
 
                        output$select_category <- renderUI(
                          pickerInput(inputId = "category",
