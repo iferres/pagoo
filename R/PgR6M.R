@@ -1047,7 +1047,7 @@ PgR6M <- R6Class('PgR6M',
                          norgs <- length(pg$organisms$org)
                          pmb <- pm
                          pmb[which(pmb>1L, arr.ind = TRUE)] <- 1L
-                         accs_freq <- input$accs_freq
+                         accs_freq <- req(input$accs_freq)
                          accs_num <- floor(accs_freq *  norgs / 100)
                          clsu <- colSums(pmb)
                          wh <- which( clsu >= min(accs_num) & clsu <= max(accs_num))
