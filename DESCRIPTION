@@ -22,7 +22,8 @@ Imports:
   heatmaply,
   dendextend,
   magrittr,
-  ggfortify
+  ggfortify,
+  readr
 Remotes:
   bioc::release/S4Vectors,
   bioc::release/BiocGenerics,
