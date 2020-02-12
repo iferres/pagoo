@@ -8,11 +8,11 @@ panx_2_pagoo <- function(allclusters_final_tsv, nucleotide_fnas, group_prefix = 
   sb <- lapply(spl, function(i) sub('[|]', sep, i))
   df <- melt(sb)
   df$org <- sub(paste0(sep, '.+$'), '', df$value)
-  colnames(df) <- c('gene', 'group', 'org')
+  colnames(df) <- c('gene', 'cluster', 'org')
 
   if (missing(nucleotide_fnas)){
 
-    pg <- PgR6M$new(DF = df, sep = sep)
+    pg <- PgR6M$new(data = df, sep = sep)
 
   }else{
 

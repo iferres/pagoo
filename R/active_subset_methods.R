@@ -13,9 +13,9 @@
   organisms = function(){
     ii <- private$.i
     jj <- private$.j
-    df <- private$.x$.__enclos_env__$private$.DF
+    df <- private$.x$.__enclos_env__$private$.data
     orgs <- private$.x$organisms
-    wh <- which(df$org%in%ii & df$group%in%jj)
+    wh <- which(df$org%in%ii & df$cluster%in%jj)
     un <- df[wh, 'org', drop = TRUE]
     orgs[orgs$org %in% un, ]
   },
@@ -24,20 +24,20 @@
   genes = function(){
     jj <- private$.j
     ii <- private$.i
-    df <- private$.x$.__enclos_env__$private$.DF
-    wh <- which(df$org%in%ii & df$group%in%jj)
+    df <- private$.x$.__enclos_env__$private$.data
+    wh <- which(df$org%in%ii & df$cluster%in%jj)
     df <- df[wh, ]
-    split(df, df$group, drop = TRUE)
+    split(df, df$cluster, drop = TRUE)
   },
 
   clusters = function(){
     jj <- private$.j
     ii <- private$.i
-    df <- private$.x$.__enclos_env__$private$.DF
+    df <- private$.x$.__enclos_env__$private$.data
     clu <- private$.x$clusters
-    wh <- which(df$org%in%ii & df$group%in%jj)
-    un <- df[wh, 'group', drop = TRUE]
-    clu[clu$group %in% un, ]
+    wh <- which(df$org%in%ii & df$cluster%in%jj)
+    un <- df[wh, 'cluster', drop = TRUE]
+    clu[clu$cluster %in% un, ]
   },
 
   #' @importFrom S4Vectors split
@@ -49,9 +49,9 @@
       .__enclos_env__$
       private$
       .sequences
-    sset <- which(mcols(sqs)$group %in% jj &
+    sset <- which(mcols(sqs)$cluster %in% jj &
                     mcols(sqs)$org %in% ii)
-    split(sqs[sset], mcols(sqs[sset])$group)
+    split(sqs[sset], mcols(sqs[sset])$cluster)
   }
 
 )

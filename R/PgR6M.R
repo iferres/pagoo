@@ -8,25 +8,25 @@
 #'
 #' @section Class Constructor:
 #' \describe{
-#'     \item{\code{new(DF, org_meta, group_meta, sep = "__")}}{
+#'     \item{\code{new(data, org_meta, cluster_meta, sep = "__")}}{
 #'         \itemize{
 #'             \item{Create a \code{PgR6M} object.}
 #'             \item{\bold{Args:}}{
 #'                 \itemize{
-#'                     \item{\bold{\code{DF}}: A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}} containing at least the
+#'                     \item{\bold{\code{data}}: A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}} containing at least the
 #'                     following columns: \code{gene} (gene name), \code{org} (organism name to which the gene belongs to),
-#'                     and \code{group} (group of orthologous to which the gene belongs to). More columns can be added as metadata
+#'                     and \code{cluster} (cluster of orthologous to which the gene belongs to). More columns can be added as metadata
 #'                     for each gene.
 #'                  }
 #'                     \item{\bold{\code{org_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
 #'                     containging additional metadata for organisms. This \code{data.frame} must have a column named "org" with
-#'                     valid organisms names (that is, they should match with those provided in \code{DF}, column \code{org}), and
+#'                     valid organisms names (that is, they should match with those provided in \code{data}, column \code{org}), and
 #'                     additional columns will be used as metadata. Each row should correspond to each organism.
 #'
 #'                  }
-#'                     \item{\bold{\code{group_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
-#'                     containging additional metadata for clusters. This \code{data.frame} must have a column named "group" with
-#'                     valid organisms names (that is, they should match with those provided in \code{DF}, column \code{group}), and
+#'                     \item{\bold{\code{cluster_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
+#'                     containging additional metadata for clusters. This \code{data.frame} must have a column named "cluster" with
+#'                     valid organisms names (that is, they should match with those provided in \code{data}, column \code{cluster}), and
 #'                     additional columns will be used as metadata. Each row should correspond to each cluster.
 #'
 #'                  }
@@ -53,21 +53,21 @@
 #'
 #' @section Public Methods:
 #' \describe{
-#'     \item{\code{add_metadata(map = 'org', df)}}{
+#'     \item{\code{add_metadata(map = 'org', data)}}{
 #'         \itemize{
 #'             \item{Add metadata to the object. You can add metadata to each organism, to each
-#'             group of orthologous, or to each gene. Elements with missing data should be filled
+#'             cluster of orthologous, or to each gene. Elements with missing data should be filled
 #'             by \code{NA} (dimensions of the provided data.frame must be coherent with object
 #'             data).}
 #'             \item{\bold{Args:}}{
 #'                 \itemize{
 #'                     \item{\bold{\code{map}}: \code{character} identifiying the metadata to map. Can
-#'                     be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
-#'                     \item{\bold{\code{df}}: \code{data.frame} or \code{DataFrame} with the metadata to
+#'                     be one of \code{"org"}, \code{"cluster"}, or \code{"gid"}.}
+#'                     \item{\bold{\code{data}}: \code{data.frame} or \code{DataFrame} with the metadata to
 #'                     add. For ethier case, a column named as \code{"map"} must exists, which should
 #'                     contain identifiers for each element. In the case of adding gene (\code{gid})
 #'                     metadata,each gene should be referenced by the name of the organism and the name
-#'                     of the gene as provided in the \code{"DF"} data.frame, separated by the
+#'                     of the gene as provided in the \code{"data"} data.frame, separated by the
 #'                     \code{"sep"} argument.}
 #'                 }
 #'             }
@@ -380,14 +380,14 @@
 #' @section Public Fields:
 #' \describe{
 #'     \item{\bold{\code{$pan_matrix}}}{: The panmatrix. Rows are organisms, and
-#'     columns are groups of orthologous. Cells indicates the presence (>=1) or
+#'     columns are clusters of orthologous. Cells indicates the presence (>=1) or
 #'     absence (0) of a given gene, in a given organism. Cells can have values
 #'     greater than 1 if contain in-paralogs.}
 #'     \item{\bold{\code{$organisms}}}{: A \code{\link[S4Vectors:DataFrame-class]{DataFrame}} with available
 #'     organism names, and organism number identifier as \code{rownames()}. (Dropped
 #'     organisms will not be displayed in this field, see \code{$dropped} below).
 #'     Additional metadata will be shown if provided, as additional columns.}
-#'     \item{\bold{\code{$clusters}}}{: A \code{\link[S4Vectors:DataFrame-class]{DataFrame}} with the groups
+#'     \item{\bold{\code{$clusters}}}{: A \code{\link[S4Vectors:DataFrame-class]{DataFrame}} with the clusters
 #'     of orthologous (clusters). Additional metadata will be shown as additional columns,
 #'     if provided before. Each row corresponds to each cluster.}
 #'     \item{\bold{\code{$genes}}}{: A \code{\link[S4Vectors:DataFrame-class]{DataFrame}link[IRanges:DataFrameList-class]{SplitDataFrameList}} object with
@@ -465,15 +465,34 @@ PgR6M <- R6Class('PgR6M',
 
                  public = list(
 
-                   initialize = function(DF,
+                   initialize = function(data,
                                          org_meta,
-                                         group_meta,
+                                         cluster_meta,
                                          sep = '__',
-                                         verbose = TRUE){
+                                         verbose = TRUE,
+                                         DF,
+                                         group_meta){
 
-                     super$initialize(DF = DF,
+                     # Deprecated args
+                     if (!missing(DF)){
+                       data <- DF
+                       warning('Argument "DF" is deprecated. You should use "data" instead. ',
+                               'This still exists for compatibility with previous versions, ',
+                               'but will throw an error in the future.',
+                               immediate. = TRUE, noBreaks. = TRUE)
+                     }
+
+                     if (!missing(group_meta)){
+                       cluster_meta <- group_meta
+                       warning('Argument "group_meta" is deprecated. You should use "cluster_meta" instead. ',
+                               'This still exists for compatibility with previous versions, ',
+                               'but will throw an error in the future.',
+                               immediate. = TRUE, noBreaks. = TRUE)
+                     }
+
+                     super$initialize(data = data,
                                       org_meta,
-                                      group_meta,
+                                      cluster_meta,
                                       sep = sep,
                                       verbose = TRUE)
 
@@ -666,15 +685,15 @@ PgR6M <- R6Class('PgR6M',
                        lrarm[[x]]$category <- x
                        lrarm[[x]]
                       })
-                     df <- Reduce(rbind, ll)
+                     data <- Reduce(rbind, ll)
 
                      #plot
-                     g <- ggplot(df, aes(x=factor(Var1), y=value, colour=category)) +
+                     g <- ggplot(data, aes(x=factor(Var1), y=value, colour=category)) +
                        xlab('Number of genomes') +
                        ylab('Number of clusters')
                      for (i in seq_along(what)){
                        g <- g +
-                         stat_function(data = df[which(df$category == what[i]), ],
+                         stat_function(data = data[which(data$category == what[i]), ],
                                        fun = lfun[[what[i]]]$formula)
                      }
                      g
@@ -894,10 +913,10 @@ PgR6M <- R6Class('PgR6M',
                        ## OPTIONS ##
                        #############
 
-                       dforg <- as.data.frame(pg$.__enclos_env__$private$.organisms)
-                       all_orgs <- as.character(dforg$org)
+                       dataorg <- as.data.frame(pg$.__enclos_env__$private$.organisms)
+                       all_orgs <- as.character(dataorg$org)
                        orgs <- reactiveVal(as.character(pg$organisms$org))
-                       all_vars <- colnames(dforg)[-1]
+                       all_vars <- colnames(dataorg)[-1]
 
                        output$select_category <- renderUI(
                          pickerInput(inputId = "category",
@@ -927,7 +946,7 @@ PgR6M <- R6Class('PgR6M',
 
                        observeEvent(input$variable, {
                          # updateOrganisms()
-                         meta <- unique(as.character(dforg[[req(input$variable)]]))
+                         meta <- unique(as.character(dataorg[[req(input$variable)]]))
                          updatePickerInput(session = session,
                                            inputId = "category",
                                            label = "Category",
@@ -939,7 +958,7 @@ PgR6M <- R6Class('PgR6M',
                          # updateOrganisms()
                          var <- input$variable
                          # orgs <- as.character(pg$organisms$org)
-                         nw <- all_orgs[dforg[[var]] %in% req(input$category)]
+                         nw <- all_orgs[dataorg[[var]] %in% req(input$category)]
                          updatePickerInput(
                            session = session,
                            inputId = "organisms",
@@ -996,8 +1015,8 @@ PgR6M <- R6Class('PgR6M',
                          ev <- sapply(sq, function(x){
                            length(which( cs >= floor(norg*x) ))
                          })
-                         df <- data.frame(core_level = sq*100, core_number = ev)
-                         plot_ly(df, x = ~core_level, y = ~core_number,
+                         data <- data.frame(core_level = sq*100, core_number = ev)
+                         plot_ly(data, x = ~core_level, y = ~core_number,
                                  type = "scatter",
                                  mode = "markers", height = 420) %>%
                            layout(xaxis = list(title = "Core Level"),
@@ -1087,13 +1106,13 @@ PgR6M <- R6Class('PgR6M',
                            lrarm[[x]]$category <- x
                            lrarm[[x]]
                          })
-                         df <- Reduce(rbind, ll)
+                         data <- Reduce(rbind, ll)
 
                          norgs <- dim(pg$organisms)[1]
                          interv <- (norgs - 1) / 512
                          interp <- seq(1, norgs, interv)
 
-                         plot_ly(df,
+                         plot_ly(data,
                                  x=~Var1,
                                  y=~value,
                                  color = ~category,
@@ -1112,8 +1131,8 @@ PgR6M <- R6Class('PgR6M',
                        output$core_clusters <- DT::renderDT({
                          updateOrganisms()
                          updateCoreLevel()
-                         df <- as.data.frame(pg$core_clusters)
-                         datatable(df,
+                         data <- as.data.frame(pg$core_clusters)
+                         datatable(data,
                                    selection = list(mode = "single", selected = 1),
                                    options = list(
                                      rownames = FALSE,
@@ -1131,9 +1150,9 @@ PgR6M <- R6Class('PgR6M',
                          updateOrganisms()
                          updateCoreLevel()
                          selected_cluster <- req(input$core_clusters_rows_selected)
-                         df <- as.data.frame(pg$core_genes[[selected_cluster]])
-                         tgt <- which(sapply(df, function(x) max(nchar(as.character(x), allowNA = T, type = "width")) )>=26)
-                         datatable(df,
+                         data <- as.data.frame(pg$core_genes[[selected_cluster]])
+                         tgt <- which(sapply(data, function(x) max(nchar(as.character(x), allowNA = T, type = "width")) )>=26)
+                         datatable(data,
                                    selection = "none",
                                    options = list(
                                      rownames = FALSE,
@@ -1201,11 +1220,11 @@ PgR6M <- R6Class('PgR6M',
 
                        output$pca <- renderPlotly({
                          updateOrganisms()
-                         df <- as.data.frame(pca()$x)
+                         data <- as.data.frame(pca()$x)
                          xax <- req(input$xpc)
                          yax <- req(input$ypc)
-                         df$xx <- df[[xax]]
-                         df$yy <- df[[yax]]
+                         data$xx <- data[[xax]]
+                         data$yy <- data[[yax]]
 
                          opts <- list()
                          # color_by <- input$color_meta_selected
@@ -1217,10 +1236,10 @@ PgR6M <- R6Class('PgR6M',
                          }
 
                          opts <- c(opts, list(
-                           data = df,
+                           data = data,
                            x = ~xx,
                            y = ~yy,
-                           text = ~rownames(df),
+                           text = ~rownames(data),
                            mode = "markers",
                            marker = list(size = 12),
                            type = "scatter"
@@ -1331,7 +1350,7 @@ PgR6M <- R6Class('PgR6M',
                                                         levels = names(rsum)[odend]),
                                            Count = rsum,
                                            row.names = NULL)
-                         # bar <- rsdf[hc$order, ]
+                         # bar <- rsdata[hc$order, ]
                          p2 <- plot_ly(#data = bar,
                            y = ~bar$org,
                            x = ~bar$Count,
@@ -1349,9 +1368,9 @@ PgR6M <- R6Class('PgR6M',
                          # wh <- updateClusterList()
                          wh <- colnames(accs_pm())
                          clust <- pg$clusters
-                         ma <- match(wh, clust$group)
-                         df <- as.data.frame(clust[ma, ,drop=FALSE])
-                         datatable(df,
+                         ma <- match(wh, clust$cluster)
+                         data <- as.data.frame(clust[ma, ,drop=FALSE])
+                         datatable(data,
                                    selection = list(mode = "single", selected = 1),
                                    options = list(
                                      rownames = FALSE,
@@ -1370,10 +1389,10 @@ PgR6M <- R6Class('PgR6M',
                          accs_rows <- req(input$accs_clusters_rows_selected)
                          wh <- colnames(accs_pm())
                          selected_cluster <- wh[accs_rows]
-                         df <- as.data.frame(pg$genes[[selected_cluster]])
-                         # chf <- which(lapply(df, class) %in% c("character", "factor"))
-                         tgt <- which(sapply(df, function(x) max(nchar(as.character(x), allowNA = T, type = "width")) )>=26)
-                         datatable(df,
+                         data <- as.data.frame(pg$genes[[selected_cluster]])
+                         # chf <- which(lapply(data, class) %in% c("character", "factor"))
+                         tgt <- which(sapply(data, function(x) max(nchar(as.character(x), allowNA = T, type = "width")) )>=26)
+                         datatable(data,
                                    selection = "none",
                                    options = list(
                                      rownames = FALSE,

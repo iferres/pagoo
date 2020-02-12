@@ -501,9 +501,26 @@ PgR6MS <- R6Class('PgR6MS',
                                           sequences,
                                           verbose = TRUE){
 
-                      super$initialize(DF = DF,
+                      # Deprecated args
+                      if (!missing(DF)){
+                        data <- DF
+                        warning('Argument "DF" is deprecated. You should use "data" instead. ',
+                                'This still exists for compatibility with previous versions, ',
+                                'but will throw an error in the future.',
+                                immediate. = TRUE, noBreaks. = TRUE)
+                      }
+
+                      if (!missing(group_meta)){
+                        cluster_meta <- group_meta
+                        warning('Argument "group_meta" is deprecated. You should use "cluster_meta" instead. ',
+                                'This still exists for compatibility with previous versions, ',
+                                'but will throw an error in the future.',
+                                immediate. = TRUE, noBreaks. = TRUE)
+                      }
+
+                      super$initialize(data = data,
                                        org_meta,
-                                       group_meta,
+                                       cluster_meta,
                                        sep = sep,
                                        verbose = TRUE)
 
@@ -556,7 +573,7 @@ PgR6MS <- R6Class('PgR6MS',
 
                       if (verbose) message('Checking that sequence names matches with DataFrame.')
 
-                      dfgid <- private$.DF[, 'gid']
+                      dfgid <- private$.data[, 'gid']
 
                       if (!all(dfgid%in%gids)){
                         stop('Missing sequences: some gid do not match any sequence name.')
@@ -571,7 +588,7 @@ PgR6MS <- R6Class('PgR6MS',
                       spl <- strsplit(gids, sep)
                       mcols(private$.sequences)$org <- vapply(spl, '[', 1,
                                                               FUN.VALUE = NA_character_)
-                      mcols(private$.sequences)$group <- as.character(private$.DF$group[match(gids, dfgid)])
+                      mcols(private$.sequences)$cluster <- as.character(private$.data$cluster[match(gids, dfgid)])
                     },
 
                     # Methods for sequences
@@ -593,7 +610,7 @@ PgR6MS <- R6Class('PgR6MS',
                       # mcls <- mcols(sqs)
                       sqs <- unlist(self$core_sequences, use.names = FALSE)
                       mcls <- mcols(sqs)
-                      ccl <- unique(mcls$group)
+                      ccl <- unique(mcls$cluster)
 
                       if (!(is.na(max_per_org) | is.null(max_per_org))){
                         wma <- which(self$pan_matrix[, ccl] > max_per_org, arr.ind = T)
@@ -633,7 +650,7 @@ PgR6MS <- R6Class('PgR6MS',
                       mcls <- mcols(sqs)
 
                       # Return
-                      split(sqs, mcls$group)
+                      split(sqs, mcls$cluster)
                     }
 
                   ),
@@ -645,37 +662,37 @@ PgR6MS <- R6Class('PgR6MS',
                       ogs <- dn[[2]]
                       orgs <- dn[[1]]
                       sqs <- private$.sequences
-                      sset <- which(mcols(sqs)$group %in% ogs &
+                      sset <- which(mcols(sqs)$cluster %in% ogs &
                                       mcols(sqs)$org %in% orgs)
-                      split(sqs[sset], mcols(sqs[sset])$group)
+                      split(sqs[sset], mcols(sqs[sset])$cluster)
                     },
 
                     core_sequences = function(){
                       orgs <- self$organisms$org
-                      ogs <- self$core_clusters$group
+                      ogs <- self$core_clusters$cluster
                       sqs <- private$.sequences
-                      sset <- which(mcols(sqs)$group %in% ogs &
+                      sset <- which(mcols(sqs)$cluster %in% ogs &
                                       mcols(sqs)$org %in% orgs)
-                      split(sqs[sset], mcols(sqs[sset])$group)
+                      split(sqs[sset], mcols(sqs[sset])$cluster)
 
                     },
 
                     cloud_sequences = function(){
                       orgs <- self$organisms$org
-                      ogs <- self$cloud_clusters$group
+                      ogs <- self$cloud_clusters$cluster
                       sqs <- private$.sequences
-                      sset <- which(mcols(sqs)$group %in% ogs &
+                      sset <- which(mcols(sqs)$cluster %in% ogs &
                                       mcols(sqs)$org %in% orgs)
-                      split(sqs[sset], mcols(sqs[sset])$group)
+                      split(sqs[sset], mcols(sqs[sset])$cluster)
                     },
 
                     shell_sequences = function(){
                       orgs <- self$organisms$org
-                      ogs <- self$shell_clusters$group
+                      ogs <- self$shell_clusters$cluster
                       sqs <- private$.sequences
-                      sset <- which(mcols(sqs)$group %in% ogs &
+                      sset <- which(mcols(sqs)$cluster %in% ogs &
                                       mcols(sqs)$org %in% orgs)
-                      split(sqs[sset], mcols(sqs[sset])$group)
+                      split(sqs[sset], mcols(sqs[sset])$cluster)
                     }
 
                   )
