@@ -10,25 +10,25 @@ Inherits: \code{\link[pagoo]{PgR6}}
 \section{Class Constructor}{
 
 \describe{
-    \item{\code{new(DF, org_meta, group_meta, sep = "__")}}{
+    \item{\code{new(data, org_meta, cluster_meta, sep = "__")}}{
         \itemize{
             \item{Create a \code{PgR6M} object.}
             \item{\bold{Args:}}{
                 \itemize{
-                    \item{\bold{\code{DF}}: A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}} containing at least the
+                    \item{\bold{\code{data}}: A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}} containing at least the
                     following columns: \code{gene} (gene name), \code{org} (organism name to which the gene belongs to),
-                    and \code{group} (group of orthologous to which the gene belongs to). More columns can be added as metadata
+                    and \code{cluster} (cluster of orthologous to which the gene belongs to). More columns can be added as metadata
                     for each gene.
                  }
                     \item{\bold{\code{org_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
                     containging additional metadata for organisms. This \code{data.frame} must have a column named "org" with
-                    valid organisms names (that is, they should match with those provided in \code{DF}, column \code{org}), and
+                    valid organisms names (that is, they should match with those provided in \code{data}, column \code{org}), and
                     additional columns will be used as metadata. Each row should correspond to each organism.
 
                  }
-                    \item{\bold{\code{group_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
-                    containging additional metadata for clusters. This \code{data.frame} must have a column named "group" with
-                    valid organisms names (that is, they should match with those provided in \code{DF}, column \code{group}), and
+                    \item{\bold{\code{cluster_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
+                    containging additional metadata for clusters. This \code{data.frame} must have a column named "cluster" with
+                    valid organisms names (that is, they should match with those provided in \code{data}, column \code{cluster}), and
                     additional columns will be used as metadata. Each row should correspond to each cluster.
 
                  }
@@ -56,21 +56,21 @@ Inherits: \code{\link[pagoo]{PgR6}}
 \section{Public Methods}{
 
 \describe{
-    \item{\code{add_metadata(map = 'org', df)}}{
+    \item{\code{add_metadata(map = 'org', data)}}{
         \itemize{
             \item{Add metadata to the object. You can add metadata to each organism, to each
-            group of orthologous, or to each gene. Elements with missing data should be filled
+            cluster of orthologous, or to each gene. Elements with missing data should be filled
             by \code{NA} (dimensions of the provided data.frame must be coherent with object
             data).}
             \item{\bold{Args:}}{
                 \itemize{
                     \item{\bold{\code{map}}: \code{character} identifiying the metadata to map. Can
-                    be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
-                    \item{\bold{\code{df}}: \code{data.frame} or \code{DataFrame} with the metadata to
+                    be one of \code{"org"}, \code{"cluster"}, or \code{"gid"}.}
+                    \item{\bold{\code{data}}: \code{data.frame} or \code{DataFrame} with the metadata to
                     add. For ethier case, a column named as \code{"map"} must exists, which should
                     contain identifiers for each element. In the case of adding gene (\code{gid})
                     metadata,each gene should be referenced by the name of the organism and the name
-                    of the gene as provided in the \code{"DF"} data.frame, separated by the
+                    of the gene as provided in the \code{"data"} data.frame, separated by the
                     \code{"sep"} argument.}
                 }
             }
@@ -384,14 +384,14 @@ Inherits: \code{\link[pagoo]{PgR6}}
 
 \describe{
     \item{\bold{\code{$pan_matrix}}}{: The panmatrix. Rows are organisms, and
-    columns are groups of orthologous. Cells indicates the presence (>=1) or
+    columns are clusters of orthologous. Cells indicates the presence (>=1) or
     absence (0) of a given gene, in a given organism. Cells can have values
     greater than 1 if contain in-paralogs.}
     \item{\bold{\code{$organisms}}}{: A \code{\link[S4Vectors:DataFrame-class]{DataFrame}} with available
     organism names, and organism number identifier as \code{rownames()}. (Dropped
     organisms will not be displayed in this field, see \code{$dropped} below).
     Additional metadata will be shown if provided, as additional columns.}
-    \item{\bold{\code{$clusters}}}{: A \code{\link[S4Vectors:DataFrame-class]{DataFrame}} with the groups
+    \item{\bold{\code{$clusters}}}{: A \code{\link[S4Vectors:DataFrame-class]{DataFrame}} with the clusters
     of orthologous (clusters). Additional metadata will be shown as additional columns,
     if provided before. Each row corresponds to each cluster.}
     \item{\bold{\code{$genes}}}{: A \code{\link[S4Vectors:DataFrame-class]{DataFrame}link[IRanges:DataFrameList-class]{SplitDataFrameList}} object with

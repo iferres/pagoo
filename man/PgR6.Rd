@@ -10,25 +10,25 @@ and subset functions to handle a pangenome.
 \section{Class Constructor}{
 
 \describe{
-    \item{\code{new(DF, org_meta, group_meta, sep = "__")}}{
+    \item{\code{new(data, org_meta, cluster_meta, sep = "__")}}{
         \itemize{
             \item{Create a \code{PgR6} object.}
             \item{\bold{Args:}}{
                 \itemize{
-                    \item{\bold{\code{DF}}: A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}} containing at least the
+                    \item{\bold{\code{data}}: A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}} containing at least the
                     following columns: \code{gene} (gene name), \code{org} (organism name to which the gene belongs to),
                     and \code{group} (group of orthologous to which the gene belongs to). More columns can be added as metadata
                     for each gene.
                  }
                     \item{\bold{\code{org_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
                     containging additional metadata for organisms. This \code{data.frame} must have a column named "org" with
-                    valid organisms names (that is, they should match with those provided in \code{DF}, column \code{org}), and
+                    valid organisms names (that is, they should match with those provided in \code{data}, column \code{org}), and
                     additional columns will be used as metadata. Each row should correspond to each organism.
 
                  }
-                    \item{\bold{\code{group_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
+                    \item{\bold{\code{cluster_meta}}: (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
                     containging additional metadata for clusters. This \code{data.frame} must have a column named "group" with
-                    valid organisms names (that is, they should match with those provided in \code{DF}, column \code{group}), and
+                    valid organisms names (that is, they should match with those provided in \code{data}, column \code{group}), and
                     additional columns will be used as metadata. Each row should correspond to each cluster.
 
                  }
@@ -55,7 +55,7 @@ and subset functions to handle a pangenome.
 \section{Public Methods}{
 
 \describe{
-    \item{\code{add_metadata(map = 'org', df)}}{
+    \item{\code{add_metadata(map = 'org', data)}}{
         \itemize{
             \item{Add metadata to the object. You can add metadata to each organism, to each
             group of orthologous, or to each gene. Elements with missing data should be filled
@@ -65,11 +65,11 @@ and subset functions to handle a pangenome.
                 \itemize{
                     \item{\bold{\code{map}}: \code{character} identifiying the metadata to map. Can
                     be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
-                    \item{\bold{\code{df}}: \code{data.frame} or \code{DataFrame} with the metadata to
+                    \item{\bold{\code{data}}: \code{data.frame} or \code{DataFrame} with the metadata to
                     add. For ethier case, a column named as \code{"map"} must exists, which should
                     contain identifiers for each element. In the case of adding gene (\code{gid})
                     metadata,each gene should be referenced by the name of the organism and the name
-                    of the gene as provided in the \code{"DF"} data.frame, separated by the
+                    of the gene as provided in the \code{"data"} data.frame, separated by the
                     \code{"sep"} argument.}
                 }
             }
