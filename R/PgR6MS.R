@@ -499,7 +499,7 @@ PgR6MS <- R6Class('PgR6MS',
                                           group_meta,
                                           sep = '__',
                                           sequences,
-                                          verbose = TRUE){
+                                          verbose = verbose){
 
                       # Deprecated args
                       if (!missing(DF)){

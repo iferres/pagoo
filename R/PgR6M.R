@@ -494,7 +494,7 @@ PgR6M <- R6Class('PgR6M',
                                       org_meta,
                                       cluster_meta,
                                       sep = sep,
-                                      verbose = TRUE)
+                                      verbose = verbose)
 
                    },
 
