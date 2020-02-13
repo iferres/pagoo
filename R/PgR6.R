@@ -461,7 +461,7 @@ PgR6 <- R6Class('PgR6',
                                 col.names = TRUE,
                                 sep = "\t")
                     # Organisms
-                    write_tsv(self$organisms,
+                    write.tsv(self$organisms,
                               file = paste0(dir, "organisms.tsv"),
                               quote = FALSE,
                               row.names = FALSE,
@@ -480,12 +480,14 @@ PgR6 <- R6Class('PgR6',
                     cluster_meta <- as.data.frame(self$clusters)
                     org_meta <- as.data.frame(self$organisms)
                     core_level <- self$core_level
-                    sep <- self$.__enclos_env__$private$.sep
+                    sep <- private$.sep
+                    dropped <- self$dropped
                     pg_data<- list(data = data,
                                    org_meta = org_meta,
                                    cluster_meta = cluster_meta,
                                    core_level = core_level,
-                                   sep = sep)
+                                   sep = sep,
+                                   dropped = dropped)
 
                     attr(pg_data, "package") <- "pagoo"
                     attr(pg_data, "has_seqs") <- FALSE
