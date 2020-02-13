@@ -213,6 +213,7 @@ PgR6 <- R6Class('PgR6',
                   initialize = function(data,
                                         org_meta,
                                         cluster_meta,
+                                        core_level = 95,
                                         sep = '__',
                                         verbose = TRUE,
                                         DF,
@@ -325,7 +326,7 @@ PgR6 <- R6Class('PgR6',
                     private$.organisms <- orgs_data
                     private$.clusters <- cluster_data
                     private$.panmatrix <- panmatrix
-                    private$.level <- 95 #default
+                    private$.level <- core_level
                     private$.sep <- sep
                   },
 

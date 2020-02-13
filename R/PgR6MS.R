@@ -497,9 +497,10 @@ PgR6MS <- R6Class('PgR6MS',
                     initialize = function(DF,
                                           org_meta,
                                           group_meta,
+                                          core_level = 95,
                                           sep = '__',
                                           sequences,
-                                          verbose = verbose){
+                                          verbose = TRUE){
 
                       # Deprecated args
                       if (!missing(DF)){
@@ -521,8 +522,9 @@ PgR6MS <- R6Class('PgR6MS',
                       super$initialize(data = data,
                                        org_meta,
                                        cluster_meta,
+                                       core_level = core_level,
                                        sep = sep,
-                                       verbose = TRUE)
+                                       verbose = verbose)
 
                       # Check input sequences
                       if (verbose) message('Checking input sequences.')
