@@ -33,4 +33,4 @@ Encoding: UTF-8
 LazyData: true
 ByteCompile: true
 RoxygenNote: 7.0.2
-Roxygen: list(r6 = FALSE)
+Roxygen: list(r6 = TRUE)
