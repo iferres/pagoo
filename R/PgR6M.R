@@ -27,22 +27,27 @@ PgR6M <- R6Class('PgR6M',
 
                    #' @description
                    #' Create a \code{PgR6M} object.
-                   #' @param DF A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}} containing at least the
+                   #' @param data A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}} containing at least the
                    #' following columns: \code{gene} (gene name), \code{org} (organism name to which the gene belongs to),
-                   #' and \code{group} (group of orthologous to which the gene belongs to). More columns can be added as metadata
+                   #' and \code{cluster} (group of orthologous to which the gene belongs to). More columns can be added as metadata
                    #' for each gene.
                    #' @param org_meta (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
                    #' containging additional metadata for organisms. This \code{data.frame} must have a column named "org" with
-                   #' valid organisms names (that is, they should match with those provided in \code{DF}, column \code{org}), and
+                   #' valid organisms names (that is, they should match with those provided in \code{data}, column \code{org}), and
                    #' additional columns will be used as metadata. Each row should correspond to each organism.
-                   #' @param group_meta (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
-                   #' containging additional metadata for clusters. This \code{data.frame} must have a column named "group" with
-                   #' valid organisms names (that is, they should match with those provided in \code{DF}, column \code{group}), and
+                   #' @param cluster_meta (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
+                   #' containging additional metadata for clusters. This \code{data.frame} must have a column named "cluster" with
+                   #' valid organisms names (that is, they should match with those provided in \code{data}, column \code{cluster}), and
                    #' additional columns will be used as metadata. Each row should correspond to each cluster.
+                   #' @param core_level The initial core_level (thats the percentage of organisms a core cluster must be in to be
+                   #' considered as part of the core genome). Must be a number between 100 and 85, (default: 95). You can change it
+                   #' later by using the \code{$core_level} field once the object was created.
                    #' @param sep A separator. By default is '__'(two underscores). It will be used to
                    #' create a unique \code{gid} (gene identifier) for each gene. \code{gid}s are created by pasting
                    #' \code{org} to \code{gene}, separated by \code{sep}.
                    #' @param verbose \code{logical}. Whether to display progress messages when loading class.
+                   #' @param DF Deprecated. Use \code{data} instead.
+                   #' @param group_meta Deprecated. Use \code{cluster_meta} instead.
                    #' @return An R6 object of class PgR6M. It contains basic fields and methods for analyzing a pangenome. It also
                    #' contains additional statistical methods for analize it, and methods to make basic
                    #' exploratory plots.
@@ -405,6 +410,32 @@ PgR6M <- R6Class('PgR6M',
                    #################
 
 
+                   #' @description
+                   #' Launch an interactive shiny app. It contains a sidebar
+                   #' with controls and switches to interact with the pagoo
+                   #' object. You can drop/recover organisms from the dataset,
+                   #' modify the core_level, visualize statistics, plots, and
+                   #' browse cluster and gene information. In the main body, it
+                   #' contains 2 tabs to switch between summary statistics plots
+                   #' and core genome information on one side, and accessory
+                   #' genome plots and information on the other.
+                   #'
+                   #' The lower part of each tab contains two tables, side by
+                   #' side. On the "Summary" tab, the left one contain
+                   #' information about core clusters, with one cluster per row.
+                   #' When one of them is selected (click), the one on the right
+                   #' is updated to show information about its genes (if
+                   #' provided), one gene per row. On the "Accessory" tab, a
+                   #' similar configuration is shown, but on this case only
+                   #' accessory clusters/genes are displayed. There is a slider
+                   #' on the sidebar where one can select the accessory
+                   #' frequency range to display.
+                   #'
+                   #' Give it a try!
+                   #'
+                   #' Take into account that big pangenomes can slow down the
+                   #' performance of the app. More than 50-70 organisms often
+                   #' leads to a delay in the update of the plots/tables.
                    runShinyApp = function(){
 
                      pg <- self

@@ -1,7 +1,4 @@
-#' @name PgR6
-#' @title PgR6 basic class
-#' @description A basic \code{PgR6} class constructor. It contains basic fields
-#' and subset functions to handle a pangenome.
+
 #' @name PgR6
 #' @title PgR6 basic class
 #' @description A basic \code{PgR6} class constructor. It contains basic fields
@@ -30,22 +27,27 @@ PgR6 <- R6Class('PgR6',
                 public = list(
                   #' @description A basic \code{PgR6} class constructor. It contains basic fields
                   #' and subset functions to handle a pangenome.
-                  #' @param DF A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}} containing at least the
+                  #' @param data A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}} containing at least the
                   #' following columns: \code{gene} (gene name), \code{org} (organism name to which the gene belongs to),
-                  #' and \code{group} (group of orthologous to which the gene belongs to). More columns can be added as metadata
+                  #' and \code{cluster} (group of orthologous to which the gene belongs to). More columns can be added as metadata
                   #' for each gene.
                   #' @param org_meta (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
                   #' containging additional metadata for organisms. This \code{data.frame} must have a column named "org" with
-                  #' valid organisms names (that is, they should match with those provided in \code{DF}, column \code{org}), and
+                  #' valid organisms names (that is, they should match with those provided in \code{data}, column \code{org}), and
                   #' additional columns will be used as metadata. Each row should correspond to each organism.
-                  #' @param group_meta (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
-                  #' containging additional metadata for clusters. This \code{data.frame} must have a column named "group" with
-                  #' valid organisms names (that is, they should match with those provided in \code{DF}, column \code{group}), and
+                  #' @param cluster_meta (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
+                  #' containging additional metadata for clusters. This \code{data.frame} must have a column named "cluster" with
+                  #' valid organisms names (that is, they should match with those provided in \code{data}, column \code{cluster}), and
                   #' additional columns will be used as metadata. Each row should correspond to each cluster.
+                  #' @param core_level The initial core_level (thats the percentage of organisms a core cluster must be in to be
+                  #' considered as part of the core genome). Must be a number between 100 and 85, (default: 95). You can change it
+                  #' later by using the \code{$core_level} field once the object was created.
                   #' @param sep A separator. By default is '__'(two underscores). It will be used to
                   #' create a unique \code{gid} (gene identifier) for each gene. \code{gid}s are created by pasting
                   #' \code{org} to \code{gene}, separated by \code{sep}.
                   #' @param verbose \code{logical}. Whether to display progress messages when loading class.
+                  #' @param DF Deprecated. Use \code{data} instead.
+                  #' @param group_meta Deprecated. Use \code{cluster_meta} instead.
                   #' @return An R6 object of class PgR6. It contains basic fields and methods for
                   #' analyzing a pangenome.
                   initialize = function(data,
@@ -182,11 +184,11 @@ PgR6 <- R6Class('PgR6',
                   #' data).
                   #' @param map \code{character} identifiying the metadata to map. Can
                   #' be one of \code{"org"}, \code{"group"}, or \code{"gid"}.
-                  #' @param df \code{data.frame} or \code{DataFrame} with the metadata to
+                  #' @param data \code{data.frame} or \code{DataFrame} with the metadata to
                   #' add. For ethier case, a column named as \code{"map"} must exists, which should
                   #' contain identifiers for each element. In the case of adding gene (\code{gid})
                   #' metadata,each gene should be referenced by the name of the organism and the name
-                  #' of the gene as provided in the \code{"DF"} data.frame, separated by the
+                  #' of the gene as provided in the \code{"data"} data.frame, separated by the
                   #'  \code{"sep"} argument.
                   #' @return \code{self} invisibly, but with additional metadata.
                   add_metadata = function(map = 'org', data){
@@ -297,6 +299,24 @@ PgR6 <- R6Class('PgR6',
                   },
 
                   # Method for saving the pangenome as flat files (text)
+                  #' @description
+                  #' Write the pangenome data as flat tables (text). Is not the most recomended way
+                  #' to save a pangenome, since you can loose information as numeric precision,
+                  #' column classes (factor, numeric, integer), and the state of the object itself
+                  #' (i.e. dropped organisms, or core_level), loosing reproducibility. Use
+                  #' \link{save_pangenomeRDS} for a more precise way of saveing a pagoo object.
+                  #' Still, it is useful if you want to work with the data outside R, just keep
+                  #' the above in mind.
+                  #' @param dir The unexisting directory name where to put the data files. Default
+                  #' is "pangenome".
+                  #' @param force \code{logical}. Whether to overwrite the directory if it already
+                  #' exists. Default: \code{FALSE}.
+                  #' @return A directory with at least 3 files. "data.tsv" contain the basic
+                  #' pangenome data as it is provided to the \code{data} argumnet in the
+                  #' initialization method (\code{$new(...)}). "clusters.tsv" contain any metadata
+                  #' asociated to the clusters. "organisms.tsv" contain any metadata asociated to
+                  #' the organisms. The latter 2 files will contain a single column if no metadata
+                  #' was provided.
                   write_pangenome = function(dir = "pangenome", force = FALSE){
 
                     dexist <- dir.exists(dir)
@@ -342,7 +362,18 @@ PgR6 <- R6Class('PgR6',
 
                   },
 
-                  save_pangenomeRDS = function(file){
+                  #' @description
+                  #' Save a pagoo pangenome object. This function provides a method for saving a pagoo
+                  #' object and its state into a "RDS" file. To load the pangenome, use the
+                  #' \link{load_pangenomeRDS} function in this package. It *should* be compatible between
+                  #' pagoo versions, so you could update pagoo and still recover the same pangenome. Even
+                  #' \code{sep} and \code{core_level} are restored unless the user provides those
+                  #' arguments in \code{load_pangenomeRDS}. \code{dropped} organisms also kept hidden, as
+                  #' you where working with the original object.
+                  #' @param file The name of the file to save. Default: "pangenome.rds".
+                  #' @return Writes a list with all the information needed to restore the object by
+                  #' using the load_pangenomeRDS function, into an RDS (binary) file.
+                  save_pangenomeRDS = function(file = "pangenome.rds"){
                     dn <- dimnames(self$pan_matrix)
                     ogs <- dn[[2]]
                     orgs <- dn[[1]]

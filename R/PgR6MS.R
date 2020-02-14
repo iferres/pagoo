@@ -18,21 +18,26 @@ PgR6MS <- R6Class('PgR6MS',
 
                     #' @description
                     #' Create a \code{PgR6MS} object.
-                    #' @param DF A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}} containing at least the
+                    #' @param data A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}} containing at least the
                     #' following columns: \code{gene} (gene name), \code{org} (organism name to which the gene belongs to),
-                    #' and \code{group} (group of orthologous to which the gene belongs to). More columns can be added as metadata
+                    #' and \code{cluster} (group of orthologous to which the gene belongs to). More columns can be added as metadata
                     #' for each gene.
                     #' @param org_meta (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
                     #' containging additional metadata for organisms. This \code{data.frame} must have a column named "org" with
-                    #' valid organisms names (that is, they should match with those provided in \code{DF}, column \code{org}), and
+                    #' valid organisms names (that is, they should match with those provided in \code{data}, column \code{org}), and
                     #' additional columns will be used as metadata. Each row should correspond to each organism.
-                    #' @param group_meta (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
-                    #' containging additional metadata for organisms. This \code{data.frame} must have a column named "org" with
-                    #' valid organisms names (that is, they should match with those provided in \code{DF}, column \code{org}), and
-                    #' additional columns will be used as metadata. Each row should correspond to each organism.
+                    #' @param cluster_meta (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
+                    #' containging additional metadata for clusters. This \code{data.frame} must have a column named "cluster" with
+                    #' valid organisms names (that is, they should match with those provided in \code{data}, column \code{cluster}), and
+                    #' additional columns will be used as metadata. Each row should correspond to each cluster.
+                    #' @param core_level The initial core_level (thats the percentage of organisms a core cluster must be in to be
+                    #' considered as part of the core genome). Must be a number between 100 and 85, (default: 95). You can change it
+                    #' later by using the \code{$core_level} field once the object was created.
                     #' @param sep A separator. By default is '__'(two underscores). It will be used to
                     #' create a unique \code{gid} (gene identifier) for each gene. \code{gid}s are created by pasting
                     #' \code{org} to \code{gene}, separated by \code{sep}.
+                    #' @param DF Deprecated. Use \code{data} instead.
+                    #' @param group_meta Deprecated. Use \code{cluster_meta} instead.
                     #' @param sequences Can accept: 1) a named \code{list} of named \code{character} vector. Name of list
                     #' are names of organisms, names of character vector are gene names; or 2) a named \code{list} of \code{\link[Biostrings:XStringSet-class]{DNAStringSetList}}
                     #' objects (same requirements as (1), but with BStringSet names as gene names); or 3) a \code{\link[Biostrings:XStringSetList-class]{DNAStringSetList}}
@@ -41,11 +46,13 @@ PgR6MS <- R6Class('PgR6MS',
                     #' @return An R6 object of class PgR6MS. It contains basic fields and methods for analyzing a pangenome. It also
                     #' contains additional statistical methods for analize it, methods to make basic exploratory plots, and methods
                     #' for sequence manipulation.
-                    initialize = function(DF,
+                    initialize = function(data,
                                           org_meta,
-                                          group_meta,
+                                          cluster_meta,
                                           core_level = 95,
                                           sep = '__',
+                                          DF,
+                                          group_meta,
                                           sequences,
                                           verbose = TRUE){
 
