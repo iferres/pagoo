@@ -201,7 +201,7 @@ PgR6 <- R6Class('PgR6',
 
                     if (map == 'org'){
                       if('org'%in%colnames(data)){
-                        ma <- match(data$org, private$.organisms$org)
+                        ma <- match(private$.organisms$org, data$org)
                         if (any(is.na(ma))) stop('data$org do not match with object organisms.')
                         if (dim(data)[1]!=dim(private$.organisms)[1]){
                           stp <- paste('data has', dim(data)[1], 'rows while object require', dim(private$.organisms)[1],'.')
@@ -215,7 +215,7 @@ PgR6 <- R6Class('PgR6',
                       }
                     }else if (map == 'cluster'){
                       if('cluster'%in%colnames(data)){
-                        ma <- match(data$cluster, private$.clusters$cluster)
+                        ma <- match(private$.clusters$cluster, data$cluster)
                         if (any(is.na(ma))) stop('data$cluster do not match with object "cluster" column.')
                         if (dim(data)[1]!=dim(private$.clusters)[1]){
                           stp <- paste('data has', dim(data)[1], 'rows while object require', dim(private$.clusters)[1],'.')
@@ -229,7 +229,7 @@ PgR6 <- R6Class('PgR6',
                       }
                     }else{
                       if('gid'%in%colnames(data)){
-                        ma <- match(data$gid, private$.data$gid)
+                        ma <- match(private$.data$gid, data$gid)
                         if (any(is.na(ma))) stop('data$gid do not match with object gid.')
                         if (dim(data)[1]!=dim(private$.data)[1]){
                           stp <- paste('data has', dim(data)[1], 'rows while object require', dim(private$.data)[1],'.')
