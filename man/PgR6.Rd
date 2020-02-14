@@ -5,7 +5,8 @@
 \title{PgR6 basic class}
 \description{
 A basic \code{PgR6} class constructor. It contains basic fields
-and subset functions to handle a pangenome.
+and subset functions to handle a pangenome. Final users should use \code{\link{pagoo}}
+instead of this, since is more easy to understand.
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

@@ -1,5 +1,6 @@
 #' @name PgR6MS
-#' @title PgR6 class with Methods and Sequences.
+#' @title PgR6 class with Methods and Sequences. Final users should use \code{\link{pagoo}}
+#' instead of this, since is more easy to understand.
 #' @description PgR6 with Methods and Sequences.
 #'  Inherits: \code{\link[pagoo]{PgR6M}}
 #' @importFrom GenomicRanges mcols mcols<-

@@ -2,7 +2,8 @@
 #' @name PgR6
 #' @title PgR6 basic class
 #' @description A basic \code{PgR6} class constructor. It contains basic fields
-#' and subset functions to handle a pangenome.
+#' and subset functions to handle a pangenome. Final users should use \code{\link{pagoo}}
+#' instead of this, since is more easy to understand.
 #' @importFrom R6 R6Class
 #' @importFrom S4Vectors DataFrame
 #' @importFrom reshape2 dcast

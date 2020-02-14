@@ -2,7 +2,8 @@
 
 #' @name PgR6M
 #' @title PgR6 class with methods.
-#' @description PgR6 with Methods.
+#' @description PgR6 with Methods. Final users should use \code{\link{pagoo}}
+#' instead of this, since is more easy to understand.
 #' Inherits: \code{\link[pagoo]{PgR6}}
 #' @importFrom R6 R6Class
 #' @importFrom micropan fluidity binomixEstimate
