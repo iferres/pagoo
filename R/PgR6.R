@@ -7,7 +7,6 @@
 #' @importFrom R6 R6Class
 #' @importFrom S4Vectors DataFrame
 #' @importFrom reshape2 dcast
-#' @importFrom readr write_tsv
 # #' @importFrom data.table as.data.table setcolorder dcast
 #' @export
 PgR6 <- R6Class('PgR6',
