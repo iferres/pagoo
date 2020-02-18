@@ -80,7 +80,7 @@ PgR6 <- R6Class('PgR6',
                     # 1. Is data.frame or DataFrame?
                     if (verbose) message('Checking class.')
                     cl <- class(data)
-                    if (! cl %in% c('data.frame', 'DataFrame'))
+                    if (! cl %in% c('data.frame', 'DataFrame', 'DFrame'))
                       stop('"data" is not a data.frame.')
 
                     # 2. Are colnames correct?
@@ -118,7 +118,7 @@ PgR6 <- R6Class('PgR6',
                     orgs_data <- DataFrame(org=orgs, row.names = seq_along(orgs))
                     if (!missing(org_meta)){
                       if (verbose) message('Checking provided organism metadata.')
-                      if (!class(org_meta)%in%c('data.frame', 'DataFrame'))
+                      if (!class(org_meta)%in%c('data.frame', 'DataFrame', 'DFrame'))
                         stop('"org_meta" should be a data.frame.')
                       if('org'%in%colnames(org_meta)){
                         ma <- match(org_meta$org, orgs_data$org)
@@ -135,7 +135,7 @@ PgR6 <- R6Class('PgR6',
                     cluster_data <- DataFrame(cluster=levels(data$cluster))
                     if (!missing(cluster_meta)){
                       if (verbose) message('Checking provided cluster metadata.')
-                      if (!class(cluster_meta)%in%c('data.frame', 'DataFrame'))
+                      if (!class(cluster_meta)%in%c('data.frame', 'DataFrame', 'DFrame'))
                         stop('"cluster_meta" should be a data.frame')
                       if ('cluster'%in%colnames(cluster_meta)){
                         ma <- match(cluster_meta$cluster, cluster_data$cluster)
