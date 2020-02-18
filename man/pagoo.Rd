@@ -72,7 +72,7 @@ This package uses
 unified, comprehensive, standarized, but at the same time flexible, way to
 analyze a pangenome. The idea is to have a single object which contains both
 the data and the basic methods to analyze them, as well as manipulate fields,
-explore, and to use in harmony with the already existing extensive list of R
+explore, and to use in harmony with the already existing and extensive list of R
 packages available created for comparative genomics and genetics.
 
 For more information, tutorials, and resources, please visit XXXXXXXXXXXXXXXX.
@@ -80,57 +80,104 @@ For more information, tutorials, and resources, please visit XXXXXXXXXXXXXXXX.
 Above you will find a detailed description of each method/field provided
 once you load a pagoo object.
 }
+\section{Index}{
+
+\subsection{Active Bindings}{
+   \itemize{
+   \item \href{#field-pan_matrix}{\code{$pan_matrix}}
+   \item \href{#field-organisms}{\code{$organisms}}
+   \item \href{#field-clusters}{\code{$clusters}}
+   \item \href{#field-genes}{\code{$genes}}
+   \item \href{#field-sequences}{\code{$sequences}}
+   \item \href{#field-core_level}{\code{$core_level}}
+   \item \href{#field-core_genes}{\code{$core_genes}}
+   \item \href{#field-core_clusters}{\code{$core_clusters}}
+   \item \href{#field-core_sequences}{\code{$core_sequences}}
+   \item \href{#field-shell_genes}{\code{$shell_genes}}
+   \item \href{#field-shell_clusters}{\code{$shell_clusters}}
+   \item \href{#field-shell_sequences}{\code{$shell_sequences}}
+   \item \href{#field-cloud_genes}{\code{$cloud_genes}}
+   \item \href{#field-cloud_clusters}{\code{$cloud_clusters}}
+   \item \href{#field-cloud_sequences}{\code{$cloud_sequences}}
+   }
+}
+\subsection{Methods}{
+   \itemize{
+   \item \href{#method-add_metadata}{\code{$add_metadata()}}
+   }
+}
+\subsection{Special Methods}{}
+}
+
 \section{Active bindings}{
 
 \describe{\itemize{
+    \if{html}{\out{<a id="field-pan_matrix"></a>}}
     \item{\bold{\code{$pan_matrix}}}{ The panmatrix. Rows are organisms, and
     columns are groups of orthologous. Cells indicates the presence (>=1) or
     absence (0) of a given gene, in a given organism. Cells can have values
     greater than 1 if contain in-paralogs.}
+    \if{html}{\out{<a id="field-organisms"></a>}}
     \item{\bold{\code{$organisms}}}{ A \code{\link[S4Vectors:DataFrame-class]{DataFrame}} with available
     organism names, and organism number identifier as \code{rownames()}. (Dropped
     organisms will not be displayed in this field, see \code{$dropped} below).
     Additional metadata will be shown if provided, as additional columns.}
+    \if{html}{\out{<a id="field-clusters"></a>}}
     \item{\bold{\code{$clusters}}}{ A \code{\link[S4Vectors:DataFrame-class]{DataFrame}} with the groups
     of orthologous (clusters). Additional metadata will be shown as additional columns,
     if provided before. Each row corresponds to each cluster.}
+    \if{html}{\out{<a id="field-genes"></a>}}
     \item{\bold{\code{$genes}}}{ A \code{\link[IRanges:DataFrameList-class]{SplitDataFrameList}} object with
     one entry per cluster. Each element contains a \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
     with gene ids (\code{<gid>}) and additional metadata, if provided. \code{gid} are
     created by \code{paste}ing organism and gene names, so duplication in gene names
     are avoided.}
+    \if{html}{\out{<a id="field-sequences"></a>}}
     \item{\bold{\code{$sequences}}}{ A \code{\link[Biostrings:XStringSetList-class]{DNAStringSetList}} with the
     set of sequences grouped by cluster. Each group is accessible as were a list. All
     \code{Biostrings} methods are available.}
+    \if{html}{\out{<a id="field-core_level"></a>}}
     \item{\bold{\code{$core_level}}}{ The percentage of organisms a gene must be in
     to be considered as part of the coregenome. \code{core_level = 95} by default.
     Can't be set above 100, and below 85 raises a warning.}
+    \if{html}{\out{<a id="field-core_genes"></a>}}
     \item{\bold{\code{$core_genes}}}{ Like \code{genes}, but only showing core genes.}
+    \if{html}{\out{<a id="field-core_clusters"></a>}}
     \item{\bold{\code{$core_clusters}}}{ Like \code{$clusters}, but only showing core
     clusters.}
+    \if{html}{\out{<a id="field-core_sequences"></a>}}
     \item{\bold{\code{$core_sequences}}}{ Like \code{$sequences}, but only showing core
     sequences.}
+    \if{html}{\out{<a id="field-cloud_genes"></a>}}
     \item{\bold{\code{$cloud_genes}}}{ Like \code{genes}, but only showing cloud genes.
     These are defined as those clusters which contain a single gene (singletons), plus
     those which have more than one but its organisms are probably clonal due to identical
     general gene content. Colloquially defined as strain-specific genes.}
+    \if{html}{\out{<a id="field-cloud_clusters"></a>}}
     \item{\bold{\code{$cloud_clusters}}}{ Like \code{$clusters}, but only showing cloud
     clusters as defined above.}
+    \if{html}{\out{<a id="field-cloud_sequences"></a>}}
     \item{\bold{\code{$cloud_sequences}}}{ Like \code{$sequences}, but only showing cloud
     sequences as defined above.}
+    \if{html}{\out{<a id="field-shell_genes"></a>}}
     \item{\bold{\code{$shell_genes}}}{ Like \code{genes}, but only showing shell genes.
     These are defined as those clusters than don't belong nethier to the core genome,
     nor to cloud genome. Colloquially defined as genes that are present in some but not
     all strains, and that aren't strain-specific.}
+    \if{html}{\out{<a id="field-shell_clusters"></a>}}
     \item{\bold{\code{$shell_clusters}}}{ Like \code{$clusters}, but only showing shell
     clusters, as defined above.}
+    \if{html}{\out{<a id="field-shell_sequences"></a>}}
     \item{\bold{\code{$shell_sequences}}}{ Like \code{$sequences}, but only showing shell
     sequences, as defined above.}
+    \if{html}{\out{<a id="field-summary_stats"></a>}}
     \item{\bold{\code{$summary_stats}}}{ A \code{\link[S4Vectors:DataFrame-class]{DataFrame}} with
     information about the number of core, shell, and cloud clusters, as well as the
     total number of clusters.}
+    \if{html}{\out{<a id="field-random_seed"></a>}}
     \item{\bold{\code{$random_seed}}}{ The last \code{.Random.seed}. Used for
     reproducibility purposes only.}
+    \if{html}{\out{<a id="field-dropped"></a>}}
     \item{\bold{\code{$dropped}}}{ A \code{character} vector with dropped organism
     names, and organism number identifier as \code{names()}}
  }
@@ -140,24 +187,22 @@ once you load a pagoo object.
 \section{Methods}{
 
 \describe{
-    Above is a comprehensive description of all the methods provided by the object.
+    Below is a comprehensive description of all the methods provided by the object.
+
+    \if{html}{\out{<a id="method-add_metadata"></a>}}
     \item{\bold{Add metadata}}{
-            \bold{Description:}{
-               \itemize{
+            \subsection{Description:}{
                   Add metadata to the object. You can add metadata to each organism, to each
                   group of orthologous, or to each gene. Elements with missing data should be filled
                   by \code{NA} (dimensions of the provided data.frame must be coherent with object
                   data).
-               }
             }
 
-            \bold{Usage:}{
-               \itemize{
-                  \code{$add_metadata(map = 'org', df)}
-               }
+            \subsection{Usage:}{
+                  \verb{                  }\code{$add_metadata(map = 'org', df)}
             }
 
-            \bold{Arguments:}{
+            \subsection{Arguments:}{
                 \itemize{
                     \item{\bold{\code{map}}: \code{character} identifiying the metadata to map. Can
                     be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
@@ -169,393 +214,230 @@ once you load a pagoo object.
                     \code{"sep"} argument.}
                 }
             }
-            \bold{Return:}{
-                \itemize{
+            \subsection{Return:}{
                     \code{self} invisibly, but with additional metadata.
-                }
             }
     }
 
+    \if{html}{\out{<a id="method-drop"></a>}}
     \item{\bold{Drop an organism}}{
-            \bold{Description:}{
-               \itemize{
+            \subsection{Description:}{
                    Drop an organism from the dataset. This method allows to hide an organism from
                    the real dataset, ignoring it in downstream analyses. All the fields and
                    methods will behave as it doesn't exist. For instance, if you decide to drop
                    organism 1, the \code{$pan_matrix} field (see below) would not show it when
                    called.
-               }
             }
 
-            \bold{Usage:}{
-               \itemize{
-                  \code{$drop(x)}
-               }
+            \subsection{Usage:}{
+                  \verb{                  }\code{$drop(x)}
             }
 
-            \bold{Arguments:}{
+            \subsection{Arguments:}{
                 \itemize{
                     \item{\bold{\code{x}}:  \code{character} or \code{numeric}. The name of the
                     organism wanted to be dropped, or its numeric id as returned in
                     \code{$organism} field (see below).}
                 }
             }
-            \bold{Return:}{
-                \itemize{
+            \subsection{Return:}{
                     \code{self} invisibly, but with \code{x} dropped. It isn't necessary
                     to assign the function call to a new object, nor to re-write it as R6 objects
                     are mutable.
-                }
             }
     }
 
-    \item{\bold{Add metadata}}{
-            \bold{Description:}{
-               \itemize{
-                  Add metadata to the object. You can add metadata to each organism, to each
-                  group of orthologous, or to each gene. Elements with missing data should be filled
-                  by \code{NA} (dimensions of the provided data.frame must be coherent with object
-                  data).
-               }
+    \if{html}{\out{<a id="method-recover"></a>}}
+    \item{\bold{Recover a dropped organism}}{
+            \subsection{Description:}{
+                  Recover a previously \code{$drop()}ped organism (see above). All fields
+                  and methods will start to behave considering this organism again.
             }
 
-            \bold{Usage:}{
-               \itemize{
-                  \code{add_metadata(map = 'org', df)}
-               }
+            \subsection{Usage:}{
+                  \verb{                  }\code{$recover(x)}
             }
 
-            \bold{Arguments:}{
+            \subsection{Arguments:}{
                 \itemize{
-                    \item{\bold{\code{map}}: \code{character} identifiying the metadata to map. Can
-                    be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
-                    \item{\bold{\code{df}}: \code{data.frame} or \code{DataFrame} with the metadata to
-                    add. For ethier case, a column named as \code{"map"} must exists, which should
-                    contain identifiers for each element. In the case of adding gene (\code{gid})
-                    metadata,each gene should be referenced by the name of the organism and the name
-                    of the gene as provided in the \code{"DF"} data.frame, separated by the
-                    \code{"sep"} argument.}
+                    \item{\bold{\code{x}}: \code{character} or \code{numeric}. The name of the
+                    organism wanted to be recover, or its numeric id as returned in
+                    \code{$dropped} field (see below).}
                 }
             }
-            \bold{Return:}{
-                \itemize{
-                    \code{self} invisibly, but with additional metadata.
-                }
+            \subsection{Return:}{
+                    \code{self} invisibly, but with \code{x} recovered. It isn't necessary
+                    to assign the function call to a new object, nor to re-write it as R6 objects
+                    are mutable.
             }
     }
 
-    \item{\bold{Add metadata}}{
-            \bold{Description:}{
-               \itemize{
-                  Add metadata to the object. You can add metadata to each organism, to each
-                  group of orthologous, or to each gene. Elements with missing data should be filled
-                  by \code{NA} (dimensions of the provided data.frame must be coherent with object
-                  data).
-               }
+    \if{html}{\out{<a id="method-write_pangenome"></a>}}
+    \item{\bold{Write a pangenome as flat (text) files.}}{
+            \subsection{Description:}{
+                  Write the pangenome data as flat tables (text). Is not the most recomended way
+                  to save a pangenome, since you can loose information as numeric precision,
+                  column classes (factor, numeric, integer), and the state of the object itself
+                  (i.e. dropped organisms, or core_level), loosing reproducibility. Use
+                  \link{save_pangenomeRDS} for a more precise way of saveing a pagoo object.
+                  Still, it is useful if you want to work with the data outside R, just keep
+                  the above in mind.
             }
 
-            \bold{Usage:}{
-               \itemize{
-                  \code{add_metadata(map = 'org', df)}
-               }
+            \subsection{Usage:}{
+                  \verb{                  }\code{$write_pangenome(dir = "pangenome", force = FALSE)}
             }
 
-            \bold{Arguments:}{
+            \subsection{Arguments:}{
                 \itemize{
-                    \item{\bold{\code{map}}: \code{character} identifiying the metadata to map. Can
-                    be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
-                    \item{\bold{\code{df}}: \code{data.frame} or \code{DataFrame} with the metadata to
-                    add. For ethier case, a column named as \code{"map"} must exists, which should
-                    contain identifiers for each element. In the case of adding gene (\code{gid})
-                    metadata,each gene should be referenced by the name of the organism and the name
-                    of the gene as provided in the \code{"DF"} data.frame, separated by the
-                    \code{"sep"} argument.}
+                    \item{\bold{\code{dir}}: The unexisting directory name where to put the data files. Default
+                    is "pangenome".}
+                    \item{\bold{\code{force}}: \code{logical}. Whether to overwrite the directory if it already
+                    exists. Default: \code{FALSE}.}
                 }
             }
-            \bold{Return:}{
-                \itemize{
-                    \code{self} invisibly, but with additional metadata.
-                }
+            \subsection{Return:}{
+                    A directory with at least 3 files. "data.tsv" contain the basic
+                    pangenome data as it is provided to the \code{data} argumnet in the
+                    initialization method (\code{$new(...)}). "clusters.tsv" contain any metadata
+                    asociated to the clusters. "organisms.tsv" contain any metadata asociated to
+                    the organisms. The latter 2 files will contain a single column if no metadata
+                    was provided.
             }
     }
 
-    \item{\bold{Add metadata}}{
-            \bold{Description:}{
-               \itemize{
-                  Add metadata to the object. You can add metadata to each organism, to each
-                  group of orthologous, or to each gene. Elements with missing data should be filled
-                  by \code{NA} (dimensions of the provided data.frame must be coherent with object
-                  data).
-               }
+    \if{html}{\out{<a id="method-save_pangenomeRDS"></a>}}
+    \item{\bold{Save a pangenome as a RDS (binary) file.}}{
+            \subsection{Description:}{
+                 Save a pagoo pangenome object. This function provides a method for saving a pagoo
+                 object and its state into a "RDS" file. To load the pangenome, use the
+                 \link{load_pangenomeRDS} function in this package. It *should* be compatible between
+                 pagoo versions, so you could update pagoo and still recover the same pangenome. Even
+                 \code{sep} and \code{core_level} are restored unless the user provides those
+                 arguments in \code{load_pangenomeRDS}. \code{dropped} organisms also kept hidden, as
+                 you where working with the original object.
             }
 
-            \bold{Usage:}{
-               \itemize{
-                  \code{add_metadata(map = 'org', df)}
-               }
+            \subsection{Usage:}{
+                 \verb{                  }\code{$save_pangenomeRDS(file = "pangenome.rds")}
             }
 
-            \bold{Arguments:}{
+            \subsection{Arguments:}{
                 \itemize{
-                    \item{\bold{\code{map}}: \code{character} identifiying the metadata to map. Can
-                    be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
-                    \item{\bold{\code{df}}: \code{data.frame} or \code{DataFrame} with the metadata to
-                    add. For ethier case, a column named as \code{"map"} must exists, which should
-                    contain identifiers for each element. In the case of adding gene (\code{gid})
-                    metadata,each gene should be referenced by the name of the organism and the name
-                    of the gene as provided in the \code{"DF"} data.frame, separated by the
-                    \code{"sep"} argument.}
+                    \item{\bold{\code{file}}: The name of the file to save. Default: "pangenome.rds".}
                 }
             }
-            \bold{Return:}{
-                \itemize{
-                    \code{self} invisibly, but with additional metadata.
-                }
+            \subsection{Return:}{
+                    Writes a list with all the information needed to restore the object by
+                    using the load_pangenomeRDS function, into an RDS (binary) file.
             }
     }
 
-    \item{\bold{Add metadata}}{
-            \bold{Description:}{
-               \itemize{
-                  Add metadata to the object. You can add metadata to each organism, to each
-                  group of orthologous, or to each gene. Elements with missing data should be filled
-                  by \code{NA} (dimensions of the provided data.frame must be coherent with object
-                  data).
-               }
+    \if{html}{\out{<a id="method-clone"></a>}}
+    \item{\bold{Clone a pagoo object.}}{
+            \subsection{Description:}{
+                  The objects of this class are cloneable with this method.
             }
 
-            \bold{Usage:}{
-               \itemize{
-                  \code{add_metadata(map = 'org', df)}
-               }
+            \subsection{Usage:}{
+                  \verb{                  }\code{$clone(deep = FALSE)}
             }
 
-            \bold{Arguments:}{
+            \subsection{Arguments:}{
                 \itemize{
-                    \item{\bold{\code{map}}: \code{character} identifiying the metadata to map. Can
+                    \item{\bold{\code{deep}}: \code{character} identifiying the metadata to map. Can
                     be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
-                    \item{\bold{\code{df}}: \code{data.frame} or \code{DataFrame} with the metadata to
-                    add. For ethier case, a column named as \code{"map"} must exists, which should
-                    contain identifiers for each element. In the case of adding gene (\code{gid})
-                    metadata,each gene should be referenced by the name of the organism and the name
-                    of the gene as provided in the \code{"DF"} data.frame, separated by the
-                    \code{"sep"} argument.}
                 }
             }
-            \bold{Return:}{
-                \itemize{
-                    \code{self} invisibly, but with additional metadata.
-                }
+            \subsection{Return:}{
+                    Whether to make a deep clone.
             }
     }
 
-    \item{\bold{Add metadata}}{
-            \bold{Description:}{
-               \itemize{
-                  Add metadata to the object. You can add metadata to each organism, to each
-                  group of orthologous, or to each gene. Elements with missing data should be filled
-                  by \code{NA} (dimensions of the provided data.frame must be coherent with object
-                  data).
-               }
+    \if{html}{\out{<a id="method-dist"></a>}}
+    \item{\bold{Compute distances}}{
+            \subsection{Description:}{
+                  Compute distance between all pairs of genomes. The default dist method is
+                  \code{"bray"} (Bray-Curtis distance). Annother used distance method is \code{"jaccard"},
+                  but you should set \code{binary = FALSE} (see below) to obtain a meaningful result.
+                  See \code{\link[vegan]{vegdist}} for details, this is just a wrapper function.
             }
 
-            \bold{Usage:}{
-               \itemize{
-                  \code{add_metadata(map = 'org', df)}
-               }
+            \subsection{Usage:}{
+                  \verb{                  }\code{$dist(
+                  method = "bray",
+                  binary = FALSE,
+                  diag = FALSE,
+                  upper = FALSE,
+                  na.rm = FALSE,
+                  ...
+                  )}
             }
 
-            \bold{Arguments:}{
+            \subsection{Arguments:}{
                 \itemize{
-                    \item{\bold{\code{map}}: \code{character} identifiying the metadata to map. Can
-                    be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
-                    \item{\bold{\code{df}}: \code{data.frame} or \code{DataFrame} with the metadata to
-                    add. For ethier case, a column named as \code{"map"} must exists, which should
-                    contain identifiers for each element. In the case of adding gene (\code{gid})
-                    metadata,each gene should be referenced by the name of the organism and the name
-                    of the gene as provided in the \code{"DF"} data.frame, separated by the
-                    \code{"sep"} argument.}
+                    \item{\bold{\code{method}}: The distance method to use. See \link[vegan]{vegdist}
+                    for available methods, and details for each one.}
+                    \item{\bold{\code{binary}}: Transform abundance matrix into a presence/absence
+                    matrix before computing distance.}
+                    \item{\bold{\code{diag}}: Compute diagonals.}
+                    \item{\bold{\code{upper}}: Return only the upper diagonal.}
+                    \item{\bold{\code{na.rm}}: Pairwise deletion of missing observations when
+                    computing dissimilarities.}
+                    \item{\bold{\code{...}}: Other parameters. See \link[vegan]{vegdist} for details.}
                 }
             }
-            \bold{Return:}{
-                \itemize{
-                    \code{self} invisibly, but with additional metadata.
-                }
+            \subsection{Return:}{
+                    A \code{dist} object containing all pairwise dissimilarities between genomes.
             }
     }
 
-    \item{\bold{Add metadata}}{
-            \bold{Description:}{
-               \itemize{
-                  Add metadata to the object. You can add metadata to each organism, to each
-                  group of orthologous, or to each gene. Elements with missing data should be filled
-                  by \code{NA} (dimensions of the provided data.frame must be coherent with object
-                  data).
-               }
+    \if{html}{\out{<a id="method-pan_pca"></a>}}
+    \item{\bold{Compute a Principal Component Analysis}}{
+            \subsection{Description:}{
+                  Performs a principal components analysis on the panmatrix.
             }
 
-            \bold{Usage:}{
-               \itemize{
-                  \code{add_metadata(map = 'org', df)}
-               }
+            \subsection{Usage:}{
+                  \verb{                  }\code{$pan_pca( center = TRUE, scale. = FALSE, ...)}
             }
 
-            \bold{Arguments:}{
+            \subsection{Arguments:}{
                 \itemize{
-                    \item{\bold{\code{map}}: \code{character} identifiying the metadata to map. Can
-                    be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
-                    \item{\bold{\code{df}}: \code{data.frame} or \code{DataFrame} with the metadata to
-                    add. For ethier case, a column named as \code{"map"} must exists, which should
-                    contain identifiers for each element. In the case of adding gene (\code{gid})
-                    metadata,each gene should be referenced by the name of the organism and the name
-                    of the gene as provided in the \code{"DF"} data.frame, separated by the
-                    \code{"sep"} argument.}
+                    \item{\bold{\code{center}}: a logical value indicating whether the variables should be shifted
+                    to be zero centered. Alternately, a vector of length equal the number of columns of x can be
+                    supplied. The value is passed to scale.}
+                    \item{\bold{\code{scale.}}: a logical value indicating whether the variables should be scaled
+                    to have unit variance before the analysis takes place. The default is TRUE.}
+                    \item{\bold{\code{...}}: Other arguments. See \link[stats]{prcomp}}
                 }
             }
-            \bold{Return:}{
-                \itemize{
-                    \code{self} invisibly, but with additional metadata.
-                }
+            \subsection{Return:}{
+                    Returns a list with class "prcomp". See \link[stats]{prcomp} for more information.
             }
     }
 
-    \item{\bold{Add metadata}}{
-            \bold{Description:}{
-               \itemize{
-                  Add metadata to the object. You can add metadata to each organism, to each
-                  group of orthologous, or to each gene. Elements with missing data should be filled
-                  by \code{NA} (dimensions of the provided data.frame must be coherent with object
-                  data).
-               }
+    \if{html}{\out{<a id="method-pg_power_law_fit"></a>}}
+    \item{\bold{Fit a Power Law Function}}{
+            \subsection{Description:}{
+                  Fits a power law curve for the pangenome rarefaction simulation.
             }
 
-            \bold{Usage:}{
-               \itemize{
-                  \code{add_metadata(map = 'org', df)}
-               }
+            \subsection{Usage:}{
+                  \verb{                  }\code{$pg_power_law_fit(raref, ...)}
             }
 
-            \bold{Arguments:}{
+            \subsection{Arguments:}{
                 \itemize{
-                    \item{\bold{\code{map}}: \code{character} identifiying the metadata to map. Can
-                    be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
-                    \item{\bold{\code{df}}: \code{data.frame} or \code{DataFrame} with the metadata to
-                    add. For ethier case, a column named as \code{"map"} must exists, which should
-                    contain identifiers for each element. In the case of adding gene (\code{gid})
-                    metadata,each gene should be referenced by the name of the organism and the name
-                    of the gene as provided in the \code{"DF"} data.frame, separated by the
-                    \code{"sep"} argument.}
+                    \item{\bold{\code{raref}}: (Optional) A rarefaction matrix, as returned by \code{rarefact()}.}
+                    \item{\bold{\code{...}}: Further arguments to be passed to \code{rarefact()}. If \code{raref}
+                    is missing, it will be computed with default arguments, or with the ones provided here.}
                 }
             }
-            \bold{Return:}{
-                \itemize{
-                    \code{self} invisibly, but with additional metadata.
-                }
-            }
-    }
-
-    \item{\bold{Add metadata}}{
-            \bold{Description:}{
-               \itemize{
-                  Add metadata to the object. You can add metadata to each organism, to each
-                  group of orthologous, or to each gene. Elements with missing data should be filled
-                  by \code{NA} (dimensions of the provided data.frame must be coherent with object
-                  data).
-               }
-            }
-
-            \bold{Usage:}{
-               \itemize{
-                  \code{add_metadata(map = 'org', df)}
-               }
-            }
-
-            \bold{Arguments:}{
-                \itemize{
-                    \item{\bold{\code{map}}: \code{character} identifiying the metadata to map. Can
-                    be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
-                    \item{\bold{\code{df}}: \code{data.frame} or \code{DataFrame} with the metadata to
-                    add. For ethier case, a column named as \code{"map"} must exists, which should
-                    contain identifiers for each element. In the case of adding gene (\code{gid})
-                    metadata,each gene should be referenced by the name of the organism and the name
-                    of the gene as provided in the \code{"DF"} data.frame, separated by the
-                    \code{"sep"} argument.}
-                }
-            }
-            \bold{Return:}{
-                \itemize{
-                    \code{self} invisibly, but with additional metadata.
-                }
-            }
-    }
-
-    \item{\bold{Add metadata}}{
-            \bold{Description:}{
-               \itemize{
-                  Add metadata to the object. You can add metadata to each organism, to each
-                  group of orthologous, or to each gene. Elements with missing data should be filled
-                  by \code{NA} (dimensions of the provided data.frame must be coherent with object
-                  data).
-               }
-            }
-
-            \bold{Usage:}{
-               \itemize{
-                  \code{add_metadata(map = 'org', df)}
-               }
-            }
-
-            \bold{Arguments:}{
-                \itemize{
-                    \item{\bold{\code{map}}: \code{character} identifiying the metadata to map. Can
-                    be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
-                    \item{\bold{\code{df}}: \code{data.frame} or \code{DataFrame} with the metadata to
-                    add. For ethier case, a column named as \code{"map"} must exists, which should
-                    contain identifiers for each element. In the case of adding gene (\code{gid})
-                    metadata,each gene should be referenced by the name of the organism and the name
-                    of the gene as provided in the \code{"DF"} data.frame, separated by the
-                    \code{"sep"} argument.}
-                }
-            }
-            \bold{Return:}{
-                \itemize{
-                    \code{self} invisibly, but with additional metadata.
-                }
-            }
-    }
-
-    \item{\bold{Add metadata}}{
-            \bold{Description:}{
-               \itemize{
-                  Add metadata to the object. You can add metadata to each organism, to each
-                  group of orthologous, or to each gene. Elements with missing data should be filled
-                  by \code{NA} (dimensions of the provided data.frame must be coherent with object
-                  data).
-               }
-            }
-
-            \bold{Usage:}{
-               \itemize{
-                  \code{add_metadata(map = 'org', df)}
-               }
-            }
-
-            \bold{Arguments:}{
-                \itemize{
-                    \item{\bold{\code{map}}: \code{character} identifiying the metadata to map. Can
-                    be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
-                    \item{\bold{\code{df}}: \code{data.frame} or \code{DataFrame} with the metadata to
-                    add. For ethier case, a column named as \code{"map"} must exists, which should
-                    contain identifiers for each element. In the case of adding gene (\code{gid})
-                    metadata,each gene should be referenced by the name of the organism and the name
-                    of the gene as provided in the \code{"DF"} data.frame, separated by the
-                    \code{"sep"} argument.}
-                }
-            }
-            \bold{Return:}{
-                \itemize{
-                    \code{self} invisibly, but with additional metadata.
-                }
+            \subsection{Return:}{
+                    A \code{list} of two elements: \code{$formula} with a fitted function, and \code{$params}
+                    with fitted parameters. An attribute \code{"alpha"} is also returned (If
+                    \code{alpha>1}, then the pangenome is closed, otherwise is open.
             }
     }
 }
