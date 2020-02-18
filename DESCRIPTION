@@ -9,6 +9,7 @@ Depends:
   Biostrings,
   ggplot2,
   shiny
+biocViews:
 Imports:
   R6,
   reshape2,
@@ -22,12 +23,11 @@ Imports:
   heatmaply,
   dendextend,
   magrittr,
-  ggfortify
-Remotes:
-  bioc::release/S4Vectors,
-  bioc::release/BiocGenerics,
-  bioc::release/Biostrings,
-  bioc::release/GenomicRanges
+  ggfortify,
+  S4Vectors, 
+  BiocGenerics,
+  Biostrings,
+  GenomicRanges
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
