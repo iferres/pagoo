@@ -32,5 +32,5 @@ License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-RoxygenNote: 7.0.2
-Roxygen: list(r6 = FALSE)
+RoxygenNote: 7.0.2.9000
+Roxygen: list(r6 = TRUE)

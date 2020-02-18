@@ -51,23 +51,23 @@ roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
                  check.names = FALSE)
 
   message('Processing csv file.')
-  group_meta <- df[, c('Gene', 'Annotation')]
-  colnames(group_meta) <- c('group', 'Annotation')
+  cluster_meta <- df[, c('Gene', 'Annotation')]
+  colnames(cluster_meta) <- c('cluster', 'Annotation')
 
   dims <- dim(df)
   df <- df[, 15:dims[2]]
   lp <- lapply(df, strsplit, '\t')
-  lp <- lapply(lp, setNames, group_meta$group)
+  lp <- lapply(lp, setNames, cluster_meta$cluster)
 
   mm <- melt(lp)
-  colnames(mm) <- c('gene', 'group', 'org')
+  colnames(mm) <- c('gene', 'cluster', 'org')
 
 
   if(missing(gffs)){
 
     message('Loading PgR6M class object.')
-    pg <- PgR6M$new(DF = mm,
-                    group_meta = group_meta,
+    pg <- PgR6M$new(data = mm,
+                    cluster_meta = cluster_meta,
                     sep = sep)
 
   }else{
@@ -104,7 +104,7 @@ roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
 
     message('Loading PgR6MS class object.')
     pg <- PgR6MS$new(DF = mm,
-                     group_meta = group_meta,
+                     cluster_meta = cluster_meta,
                      sequences = DNAStringSetList(seqs),
                      sep = sep)
 
