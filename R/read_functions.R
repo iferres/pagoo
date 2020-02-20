@@ -468,7 +468,7 @@ load_pangenomeRDS = function(file, seqs.if.avail = TRUE, ...){
     args$core_level <- core_level2
   }
 
-  if (attr(pg_data, "has_seqs") & !seqs.if.avail){
+  if (attr(args, "has_seqs") & !seqs.if.avail){
     message("RDS file has sequences available but 'seq.if.avail = FALSE', so not loading them.")
     args$sequences <- NULL
   }
