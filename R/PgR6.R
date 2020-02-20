@@ -405,7 +405,7 @@ PgR6 <- R6Class('PgR6',
                     attr(pg_data, "version") <- version
 
                     if (clss[1] == "PgR6MS" & seqs.if.avail){
-                      sqs <- private$.seqs
+                      sqs <- private$.sequences
                       spl <- split(sqs, mcols(sqs)$org)
                       pg_data$sequences <- lapply(spl, function(x) {
                         patt <- paste0("^.+", sep, collapse = "")
