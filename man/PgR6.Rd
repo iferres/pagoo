@@ -263,13 +263,16 @@ pagoo versions, so you could update pagoo and still recover the same pangenome. 
 arguments in \code{load_pangenomeRDS}. \code{dropped} organisms also kept hidden, as
 you where working with the original object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PgR6$save_pangenomeRDS(file = "pangenome.rds")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PgR6$save_pangenomeRDS(file = "pangenome.rds", seqs.if.avail = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{file}}{The name of the file to save. Default: "pangenome.rds".}
+
+\item{\code{seqs.if.avail}}{\code{logical}. Whether to save sequences in the rds file or not,
+if they are available. Only relevant if class is PgR6MS, otherwise ignored.}
 }
 \if{html}{\out{</div>}}
 }

@@ -442,7 +442,7 @@ pagoo <- function(data, org_meta, cluster_meta, sequences, core_level = 95, sep 
 
 
 #' @export
-load_pangenomeRDS = function(file, ...){
+load_pangenomeRDS = function(file, seqs.if.avail = TRUE, ...){
 
   args <- readRDS(file)
   atrs <- attributes(args)
@@ -466,6 +466,11 @@ load_pangenomeRDS = function(file, ...){
   if (!is.null(core_level2)){
     if (core_level2 != core_level1) warning('"core_level" argument provided is not the same as the original object. Overwriting.')
     args$core_level <- core_level2
+  }
+
+  if (attr(pg_data, "has_seqs") & !seqs.if.avail){
+    message("RDS file has sequences available but 'seq.if.avail = FALSE', so not loading them.")
+    args$sequences <- NULL
   }
 
   p <- do.call("pagoo", args)

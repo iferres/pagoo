@@ -371,9 +371,12 @@ PgR6 <- R6Class('PgR6',
                   #' arguments in \code{load_pangenomeRDS}. \code{dropped} organisms also kept hidden, as
                   #' you where working with the original object.
                   #' @param file The name of the file to save. Default: "pangenome.rds".
+                  #' @param seqs.if.avail \code{logical}. Whether to save sequences in the rds file or not,
+                  #' if they are available. Only relevant if class is PgR6MS, otherwise ignored.
                   #' @return Writes a list with all the information needed to restore the object by
                   #' using the load_pangenomeRDS function, into an RDS (binary) file.
-                  save_pangenomeRDS = function(file = "pangenome.rds"){
+                  save_pangenomeRDS = function(file = "pangenome.rds", seqs.if.avail = TRUE){
+                    clss <- class(self)
                     dn <- dimnames(self$pan_matrix)
                     ogs <- dn[[2]]
                     orgs <- dn[[1]]
@@ -383,15 +386,34 @@ PgR6 <- R6Class('PgR6',
                     core_level <- self$core_level
                     sep <- private$.sep
                     dropped <- self$dropped
-                    pg_data<- list(data = data,
-                                   org_meta = org_meta,
-                                   cluster_meta = cluster_meta,
-                                   core_level = core_level,
-                                   sep = sep,
-                                   dropped = dropped)
+                    version <- private$version
 
+                    pg_data <- list()
+                    pg_data$data <- data
+                    pg_data$sep <- sep
+                    pg_data$dropped <- dropped
+                    pg_data$core_level <- core_level
+                    if (dim(cluster_meta)[2] > 1){
+                      pg_data$cluster_meta <- cluster_meta
+                    }
+                    if (dim(org_meta)[2] > 1){
+                      pg_data$org_meta <- org_meta
+                    }
                     attr(pg_data, "package") <- "pagoo"
                     attr(pg_data, "has_seqs") <- FALSE
+                    attr(pg_data, "class") <- clss
+                    attr(pg_data, "version") <- version
+
+                    if (clss[1] == "PgR6MS" & seqs.if.avail){
+                      sqs <- private$.seqs
+                      spl <- split(sqs, mcols(sqs)$org)
+                      pg_data$sequences <- lapply(spl, function(x) {
+                        patt <- paste0("^.+", sep, collapse = "")
+                        names(x) <- sub(patt, "", names(x))
+                        as.character(x)
+                      })
+                      attr(pg_data, "has_seqs") <- TRUE
+                    }
 
                     saveRDS(pg_data, file = file)
                   }
