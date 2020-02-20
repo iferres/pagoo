@@ -425,13 +425,13 @@ pagoo <- function(data, org_meta, cluster_meta, sequences, core_level = 95, sep 
 
   } else{
 
-    PgR6M$new(data = data,
-              org_meta = org_meta,
-              cluster_meta = cluster_meta,
-              sequences = sequences,
-              core_level = core_level,
-              sep = sep,
-              verbose = verbose)
+    PgR6MS$new(data = data,
+               org_meta = org_meta,
+               cluster_meta = cluster_meta,
+               sequences = sequences,
+               core_level = core_level,
+               sep = sep,
+               verbose = verbose)
   }
 }
 
