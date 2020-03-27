@@ -387,7 +387,7 @@
 #'     }
 #'
 #'     \if{html}{\out{<a id="method-pg_power_law_fit"></a>}}
-#'     \item{\bold{Fit a Power Law Function}}{
+#'     \item{\bold{Fit a Power Law Function for the Pangenome}}{
 #'             \subsection{Description:}{
 #'                   Fits a power law curve for the pangenome rarefaction simulation.
 #'             }
@@ -407,6 +407,89 @@
 #'                     A \code{list} of two elements: \code{$formula} with a fitted function, and \code{$params}
 #'                     with fitted parameters. An attribute \code{"alpha"} is also returned (If
 #'                     \code{alpha>1}, then the pangenome is closed, otherwise is open.
+#'             }
+#'     }
+#'
+#'     \if{html}{\out{<a id="method-cg_exp_decay_fit"></a>}}
+#'     \item{\bold{Fit an Exponential Decay Function for the Coregenome}}{
+#'             \subsection{Description:}{
+#'                   Fits an exponential decay curve for the coregenome rarefaction simulation.
+#'             }
+#'
+#'             \subsection{Usage:}{
+#'                   \verb{                  }\code{$cg_exp_decay_fit(raref, pcounts = 10, ...)}
+#'             }
+#'
+#'             \subsection{Arguments:}{
+#'                 \itemize{
+#'                     \item{\bold{\code{raref}}: (Optional) A rarefaction matrix, as returned by \code{rarefact()}.}
+#'                     \item{\bold{\code{pcounts}}: An integer of pseudo-counts. This is used to better fit the function
+#'                     at small numbers, as the linearization method requires to substract a constant C, which is the
+#'                     coregenome size, from \code{y}. As \code{y} becomes closer to the coregenome size, this operation
+#'                     tends to 0, and its logarithm goes crazy. By default \code{pcounts=10}.}
+#'                     \item{\bold{\code{...}}: Further arguments to be passed to \code{rarefact()}. If \code{raref}
+#'                     is missing, it will be computed with default arguments, or with the ones provided here.}
+#'                 }
+#'             }
+#'             \subsection{Return:}{
+#'                     A \code{list} of two elements: \code{$formula} with a fitted function, and \code{$params}
+#'                     with fitted intercept and decay parameters.
+#'             }
+#'     }
+#'
+#'     \if{html}{\out{<a id="method-fluidity"></a>}}
+#'     \item{\bold{Fit an Exponential Decay Function for the Coregenome}}{
+#'             \subsection{Description:}{
+#'                   Computes the genomic fluidity, which is a measure of population
+#'                   diversity. See \code{\link[micropan]{fluidity}} for more details.
+#'             }
+#'
+#'             \subsection{Usage:}{
+#'                   \verb{                  }\code{$fluidity(nsim = 10)}
+#'             }
+#'
+#'             \subsection{Arguments:}{
+#'                 \itemize{
+#'                     \item{\bold{\code{nsim}}:An integer specifying the number of random samples
+#'                      to use in the computations.}
+#'                 }
+#'             }
+#'             \subsection{Return:}{
+#'                     A list with two elements, the mean fluidity and its sample standard
+#'                     deviation over the n.sim computed values.
+#'             }
+#'     }
+#'
+#'     \if{html}{\out{<a id="method-binomix_estimate"></a>}}
+#'     \item{\bold{Fit an Exponential Decay Function for the Coregenome}}{
+#'             \subsection{Description:}{
+#'                   Fits binomial mixture models to the data given as a pan-matrix. From the
+#'                   fitted models both estimates of pan-genome size and core-genome size are
+#'                   available. See \code{\link[micropan]{binomixEstimate}} for more details.
+#'             }
+#'
+#'             \subsection{Usage:}{
+#'                   \verb{                  }\code{$binomix_estimate(K.range = 3:5, core.detect.prob = 1, verbose = TRUE))}
+#'             }
+#'
+#'             \subsection{Arguments:}{
+#'                 \itemize{
+#'                     \item{\bold{\code{K.range}}: The range of model complexities to explore. The
+#'                     vector of integers specify the number of binomial densities to combine in the
+#'                     mixture models.}
+#'                     \item{\bold{\code{core.detect.prob}}: The detection probability of core genes.
+#'                     This should almost always be 1.0, since a core gene is by definition always
+#'                     present in all genomes, but can be set fractionally smaller.}
+#'                     \item{\bold{\code{verbose}}: Logical indicating if textual output should be
+#'                     given to monitor the progress of the computations.}
+#'                 }
+#'             }
+#'             \subsection{Return:}{
+#'                     A \code{Binomix} object (\code{micropan} package), which is a small (S3)
+#'                     extension of a \code{list} with two components. These two components are named
+#'                     \code{BIC.table} and \code{Mix.list}. Refer to the \code{micropan} function
+#'                     \code{\link[micropan]{binomixEstimate}} for a detailed explanation of this
+#'                     method.
 #'             }
 #'     }
 #' }
