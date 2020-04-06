@@ -418,7 +418,7 @@ once you load a pagoo object.
     }
 
     \if{html}{\out{<a id="method-pg_power_law_fit"></a>}}
-    \item{\bold{Fit a Power Law Function}}{
+    \item{\bold{Fit a Power Law Function for the Pangenome}}{
             \subsection{Description:}{
                   Fits a power law curve for the pangenome rarefaction simulation.
             }
@@ -438,6 +438,249 @@ once you load a pagoo object.
                     A \code{list} of two elements: \code{$formula} with a fitted function, and \code{$params}
                     with fitted parameters. An attribute \code{"alpha"} is also returned (If
                     \code{alpha>1}, then the pangenome is closed, otherwise is open.
+            }
+    }
+
+    \if{html}{\out{<a id="method-cg_exp_decay_fit"></a>}}
+    \item{\bold{Fit an Exponential Decay Function for the Coregenome}}{
+            \subsection{Description:}{
+                  Fits an exponential decay curve for the coregenome rarefaction simulation.
+            }
+
+            \subsection{Usage:}{
+                  \verb{                  }\code{$cg_exp_decay_fit(raref, pcounts = 10, ...)}
+            }
+
+            \subsection{Arguments:}{
+                \itemize{
+                    \item{\bold{\code{raref}}: (Optional) A rarefaction matrix, as returned by \code{rarefact()}.}
+                    \item{\bold{\code{pcounts}}: An integer of pseudo-counts. This is used to better fit the function
+                    at small numbers, as the linearization method requires to substract a constant C, which is the
+                    coregenome size, from \code{y}. As \code{y} becomes closer to the coregenome size, this operation
+                    tends to 0, and its logarithm goes crazy. By default \code{pcounts=10}.}
+                    \item{\bold{\code{...}}: Further arguments to be passed to \code{rarefact()}. If \code{raref}
+                    is missing, it will be computed with default arguments, or with the ones provided here.}
+                }
+            }
+            \subsection{Return:}{
+                    A \code{list} of two elements: \code{$formula} with a fitted function, and \code{$params}
+                    with fitted intercept and decay parameters.
+            }
+    }
+
+    \if{html}{\out{<a id="method-fluidity"></a>}}
+    \item{\bold{Compute Genomic Fluidity}}{
+            \subsection{Description:}{
+                  Computes the genomic fluidity, which is a measure of population
+                  diversity. See \code{\link[micropan]{fluidity}} for more details.
+            }
+
+            \subsection{Usage:}{
+                  \verb{                  }\code{$fluidity(nsim = 10)}
+            }
+
+            \subsection{Arguments:}{
+                \itemize{
+                    \item{\bold{\code{nsim}}:An integer specifying the number of random samples
+                     to use in the computations.}
+                }
+            }
+            \subsection{Return:}{
+                    A list with two elements, the mean fluidity and its sample standard
+                    deviation over the n.sim computed values.
+            }
+    }
+
+    \if{html}{\out{<a id="method-gg_barplot"></a>}}
+    \item{\bold{Plot Accessory Frequency Plot}}{
+            \subsection{Description:}{
+                  Plot a barplot with the frequency of genes within the total number of
+                  genomes.
+            }
+
+            \subsection{Usage:}{
+                  \verb{                  }\code{$gg_barplot()}
+            }
+
+
+            \subsection{Return:}{
+                    A barplot, and a \code{gg} object (\code{ggplot2} package) invisibly.
+            }
+    }
+
+    \if{html}{\out{<a id="method-gg_dist"></a>}}
+    \item{\bold{Plot a Distance Heatmap}}{
+            \subsection{Description:}{
+                  Plot a heatmap showing the computed distance between all pairs of organisms.
+            }
+
+            \subsection{Usage:}{
+                  \verb{                  }\code{$gg_dist(method = "bray", ...)}
+            }
+
+            \subsection{Arguments:}{
+                \itemize{
+                    \item{\bold{\code{method}}: Distance method. One of "Jaccard" (default), or
+                    "Manhattan",see above.}
+                    \item{\bold{\code{...}}: More arguments to be passed to \code{\link[micropan]{distManhattan}}}
+                }
+            }
+            \subsection{Return:}{
+                     A heatmap (\code{ggplot2::geom_tile()}), and a \code{gg} object (\code{ggplot2}
+                     package) invisibly.
+            }
+    }
+
+    \if{html}{\out{<a id="method-gg_binmap"></a>}}
+    \item{\bold{Plot a Pangenome Binary Map}}{
+            \subsection{Description:}{
+                  Plot a pangenome binary map representing the presence/absence of each
+                  gene within each organism.
+            }
+
+            \subsection{Usage:}{
+                  \verb{                  }\code{$gg_binmap()}
+            }
+
+            \subsection{Return:}{
+                    A binary map (\code{ggplot2::geom_raster()}), and a \code{gg} object (\code{ggplot2}
+                    package) invisibly.
+            }
+    }
+
+    \if{html}{\out{<a id="method-gg_pca"></a>}}
+    \item{\bold{Plot a PCA}}{
+            \subsection{Description:}{
+                  Plot a scatter plot of a Principal Components Analysis.
+            }
+
+            \subsection{Usage:}{
+                  \verb{                  }\code{$gg_pca(colour = NULL, ...))}
+            }
+
+            \subsection{Arguments:}{
+                \itemize{
+                    \item{\bold{\code{colour}}:The name of the column in \code{$organisms} field
+                    from which points will takecolour (if provided). \code{NULL} (default) renders
+                    black points.}
+                    \item{\bold{\code{...}}: More arguments to be passed to \code{ggplot2::autoplot()}.}
+                }
+            }
+            \subsection{Return:}{
+                    A scatter plot (\code{ggplot2::autoplot()}), and a \code{gg} object
+                    (\code{ggplot2} package) invisibly.
+            }
+    }
+
+    \if{html}{\out{<a id="method-gg_pie"></a>}}
+    \item{\bold{Plot a Pie with Pangenome Categories}}{
+            \subsection{Description:}{
+                  Plot a pie chart showing the number of clusters of each pangenome category: core,
+                  shell, or cloud.
+            }
+
+            \subsection{Usage:}{
+                  \verb{                  }\code{$gg_pie()}
+            }
+
+            \subsection{Return:}{
+                    A pie chart (\code{ggplot2::geom_bar() + coord_polar()}), and a
+                    \code{gg} object (\code{ggplot2} package) invisibly.
+            }
+    }
+
+    \if{html}{\out{<a id="method-gg_curves"></a>}}
+    \item{\bold{Plot Pangenome Curves}}{
+            \subsection{Description:}{
+                  Plot pangenome and/or coregenome curves with the fitted functions returned by
+                  \code{pg_power_law_fit()} and \code{cg_exp_decay_fit()}. You can add points by
+                  adding \code{+ geom_points()}, of ggplot2 package.
+            }
+
+            \subsection{Usage:}{
+                  \verb{                  }\code{$gg_curves(what = c("pangenome", "coregenome", ...)}
+            }
+
+            \subsection{Arguments:}{
+                \itemize{
+                    \item{\bold{\code{what}}:  \code{"pangenome"} and/or \code{"coregenome"}.}
+                    \item{\bold{\code{...}}: ignored}
+                }
+            }
+            \subsection{Return:}{
+                   A scatter plot, and a \code{gg} object (\code{ggplot2} package) invisibly.
+            }
+    }
+
+    \if{html}{\out{<a id="method-runShinyApp"></a>}}
+    \item{\bold{Run a Shiny App}}{
+            \subsection{Description:}{
+                  Launch an interactive shiny app. It contains a sidebar
+                  with controls and switches to interact with the pagoo
+                  object. You can drop/recover organisms from the dataset,
+                  modify the core_level, visualize statistics, plots, and
+                  browse cluster and gene information. In the main body, it
+                  contains 2 tabs to switch between summary statistics plots
+                  and core genome information on one side, and accessory
+                  genome plots and information on the other.
+
+                  The lower part of each tab contains two tables, side by
+                  side. On the "Summary" tab, the left one contain
+                  information about core clusters, with one cluster per row.
+                  When one of them is selected (click), the one on the right
+                  is updated to show information about its genes (if
+                  provided), one gene per row. On the "Accessory" tab, a
+                  similar configuration is shown, but on this case only
+                  accessory clusters/genes are displayed. There is a slider
+                  on the sidebar where one can select the accessory
+                  frequency range to display.
+
+                  Give it a try!
+
+                  Take into account that big pangenomes can slow down the
+                  performance of the app. More than 50-70 organisms often
+                  leads to a delay in the update of the plots/tables.
+            }
+
+            \subsection{Usage:}{
+                  \verb{                  }\code{$runShinyApp()}
+            }
+
+            \subsection{Return:}{
+                   Opens a shiny app on the browser.
+            }
+    }
+
+    \if{html}{\out{<a id="method-core_seqs_4_phylo"></a>}}
+    \item{\bold{Retrieve Core Genes for Phylogeny}}{
+            \subsection{Description:}{
+                 A field for obtaining core gene sequences is available (see below),
+                 but for creating a phylogeny with this sets is useful to: 1) have the
+                 possibility of extracting just one sequence of each organism on each
+                 cluster, in case paralogues are present, and 2) filling gaps with
+                 empthy sequences in case the core_level was set below 100\%, allowing
+                 more genes (some not in 100\% of organisms) to be incorporated to the
+                 phylogeny. That is the purpose of this special function.
+            }
+
+            \subsection{Usage:}{
+                  \verb{                  }\code{$core_seqs_4_phylo(max_per_org = 1, fill = TRUE)}
+            }
+
+            \subsection{Arguments:}{
+                \itemize{
+                    \item{\bold{\code{max_per_org}}:  Maximum number of sequences of each organism
+                    to be taken from each cluster.}
+                    \item{\bold{\code{fill}}: \code{logical}. If fill \code{DNAStringSet} with
+                    emphty \code{DNAString} in cases where \code{core_level} is set below 100\%,
+                    and some clusters with missing organisms are also considered.}
+                }
+            }
+
+            \subsection{Return:}{
+                   A \code{DNAStringSetList} with core genes. Order of organisms on each cluster
+                   is conserved, so it is easier to concatenate them into a super-gene suitable
+                   for phylogenetic inference.
             }
     }
 }
