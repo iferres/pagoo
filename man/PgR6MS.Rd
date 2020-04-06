@@ -64,6 +64,7 @@ sequences, as defined above.}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a \code{PgR6MS} object.
 \subsection{Usage}{
@@ -127,6 +128,7 @@ for sequence manipulation.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-core_seqs_4_phylo"></a>}}
+\if{latex}{\out{\hypertarget{method-core_seqs_4_phylo}{}}}
 \subsection{Method \code{core_seqs_4_phylo()}}{
 A field for obtaining core gene sequences is available (see below), but for creating a phylogeny with this
 sets is useful to: 1) have the possibility of extracting just one sequence of each organism on each cluster, in
@@ -154,6 +156,7 @@ to concatenate them into a super-gene suitable for phylogenetic inference.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -45,6 +45,7 @@ Inherits: \code{\link[pagoo]{PgR6}}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a \code{PgR6M} object.
 \subsection{Usage}{
@@ -102,6 +103,7 @@ exploratory plots.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-rarefact"></a>}}
+\if{latex}{\out{\hypertarget{method-rarefact}{}}}
 \subsection{Method \code{rarefact()}}{
 Rarefact pangenome or corgenome. Compute the number of genes which belong to
 the pangenome or to the coregenome, for a number of random permutations of
@@ -126,6 +128,7 @@ permutations, and the cell number is the number of genes in ethier category.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-dist"></a>}}
+\if{latex}{\out{\hypertarget{method-dist}{}}}
 \subsection{Method \code{dist()}}{
 Compute distance between all pairs of genomes. The default dist method is
 \code{"bray"} (Bray-Curtis distance). Annother used distance method is \code{"jaccard"},
@@ -168,6 +171,7 @@ A \code{dist} object containing all pairwise dissimilarities between genomes.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-pan_pca"></a>}}
+\if{latex}{\out{\hypertarget{method-pan_pca}{}}}
 \subsection{Method \code{pan_pca()}}{
 Performs a principal components analysis on the panmatrix
 \subsection{Usage}{
@@ -194,6 +198,7 @@ Returns a list with class "prcomp". See \link[stats]{prcomp} for more informatio
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-pg_power_law_fit"></a>}}
+\if{latex}{\out{\hypertarget{method-pg_power_law_fit}{}}}
 \subsection{Method \code{pg_power_law_fit()}}{
 Fits a power law curve for the pangenome rarefaction simulation.
 \subsection{Usage}{
@@ -218,6 +223,7 @@ with fitted parameters. An attribute \code{"alpha"} is also returned (If
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-cg_exp_decay_fit"></a>}}
+\if{latex}{\out{\hypertarget{method-cg_exp_decay_fit}{}}}
 \subsection{Method \code{cg_exp_decay_fit()}}{
 Fits an exponential decay curve for the coregenome rarefaction simulation.
 \subsection{Usage}{
@@ -246,6 +252,7 @@ with fitted intercept and decay parameters.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fluidity"></a>}}
+\if{latex}{\out{\hypertarget{method-fluidity}{}}}
 \subsection{Method \code{fluidity()}}{
 Computes the genomic fluidity, which is a measure of population
 diversity. See \code{\link[micropan]{fluidity}} for more details.
@@ -268,6 +275,7 @@ deviation over the n.sim computed values.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-binomix_estimate"></a>}}
+\if{latex}{\out{\hypertarget{method-binomix_estimate}{}}}
 \subsection{Method \code{binomix_estimate()}}{
 Fits binomial mixture models to the data given as a pan-matrix. From the
 fitted models both estimates of pan-genome size and core-genome size are
@@ -302,6 +310,7 @@ method.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gg_barplot"></a>}}
+\if{latex}{\out{\hypertarget{method-gg_barplot}{}}}
 \subsection{Method \code{gg_barplot()}}{
 Plot a barplot with the frequency of genes within the total number of
 genomes.
@@ -315,6 +324,7 @@ A barplot, and a \code{gg} object (\code{ggplot2} package) invisibly.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gg_binmap"></a>}}
+\if{latex}{\out{\hypertarget{method-gg_binmap}{}}}
 \subsection{Method \code{gg_binmap()}}{
 Plot a pangenome binary map representing the presence/absence of each
 gene within each organism.
@@ -329,6 +339,7 @@ package) invisibly.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gg_dist"></a>}}
+\if{latex}{\out{\hypertarget{method-gg_dist}{}}}
 \subsection{Method \code{gg_dist()}}{
 Plot a heatmap showing the computed distance between all pairs of organisms.
 \subsection{Usage}{
@@ -352,6 +363,7 @@ package) invisibly.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gg_pca"></a>}}
+\if{latex}{\out{\hypertarget{method-gg_pca}{}}}
 \subsection{Method \code{gg_pca()}}{
 Plot a scatter plot of a Principal Components Analysis.
 \subsection{Usage}{
@@ -362,8 +374,7 @@ Plot a scatter plot of a Principal Components Analysis.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{colour}}{The name of the column in \code{$organisms} field from which points will take
-colour (if provided). \code{NULL} (default) renders black points.
-class \code{prcomp}.}
+colour (if provided). \code{NULL} (default) renders black points.}
 
 \item{\code{...}}{More arguments to be passed to \code{ggplot2::autoplot()}.}
 }
@@ -376,6 +387,7 @@ package) invisibly.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gg_pie"></a>}}
+\if{latex}{\out{\hypertarget{method-gg_pie}{}}}
 \subsection{Method \code{gg_pie()}}{
 Plot a pie chart showing the number of clusters of each pangenome category: core,
 shell, or cloud.
@@ -390,6 +402,7 @@ A pie chart (\code{ggplot2::geom_bar() + coord_polar()}), and a \code{gg} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gg_curves"></a>}}
+\if{latex}{\out{\hypertarget{method-gg_curves}{}}}
 \subsection{Method \code{gg_curves()}}{
 Plot pangenome and/or coregenome curves with the fitted functions returned by \code{pg_power_law_fit()}
  and \code{cg_exp_decay_fit()}. You can add points by adding \code{+ geom_points()}, of ggplot2 package
@@ -412,6 +425,7 @@ A scatter plot, and a \code{gg} object (\code{ggplot2} package) invisibly.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-runShinyApp"></a>}}
+\if{latex}{\out{\hypertarget{method-runShinyApp}{}}}
 \subsection{Method \code{runShinyApp()}}{
 Launch an interactive shiny app. It contains a sidebar
 with controls and switches to interact with the pagoo
@@ -445,6 +459,7 @@ leads to a delay in the update of the plots/tables.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
