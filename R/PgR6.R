@@ -470,7 +470,7 @@ PgR6 <- R6Class('PgR6',
                     data <- private$.data
                     act <- which(data$cluster%in%ogs & data$org%in%orgs)
                     data <- data[act, ]
-                    split(data[, -c(1,2,3), drop = FALSE], f = data$cluster, drop = TRUE)
+                    split(data[, , drop = FALSE], f = data$cluster, drop = TRUE)
                   },
 
                   #' @field clusters A \code{\link[S4Vectors:DataFrame-class]{DataFrame}} with the groups
@@ -508,7 +508,7 @@ PgR6 <- R6Class('PgR6',
                     data <- private$.data
                     act <- which(data$cluster%in%ogs & data$org%in%orgs)
                     data <- data[act, ]
-                    split(data[, -c(1,2,3), drop = FALSE], f = data$cluster, drop = TRUE)
+                    split(data[, , drop = FALSE], f = data$cluster, drop = TRUE)
 
                   },
 
@@ -542,7 +542,7 @@ PgR6 <- R6Class('PgR6',
                     data <- private$.data
                     act <- which(data$cluster%in%ogs & data$org%in%orgs)
                     data <- data[act, ]
-                    split(data[, -c(1,2,3), drop = FALSE], f = data$cluster, drop = TRUE)
+                    split(data[, , drop = FALSE], f = data$cluster, drop = TRUE)
                   },
 
                   #' @field cloud_clusters Like \code{$clusters}, but only showing cloud
@@ -573,7 +573,7 @@ PgR6 <- R6Class('PgR6',
                     shell <- ogs[which(!ogs %in% c(core,cloud))]
                     act <- which(data$cluster%in%shell & data$org%in%orgs)
                     data <- data[act, ]
-                    split(data[, -c(1,2,3), drop = FALSE], f = data$cluster, drop = TRUE)
+                    split(data[, , drop = FALSE], f = data$cluster, drop = TRUE)
                   },
 
                   #' @field shell_clusters Like \code{$clusters}, but only showing shell
