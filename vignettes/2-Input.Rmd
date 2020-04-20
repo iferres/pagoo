@@ -1,0 +1,144 @@
+---
+title: "2 - Input"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Input From Scratch
+
+In order to generate a `pagoo` object, the only mandatory data structure is a `data.frame` which has to contain 3 basic columns. Let's ilustrate it with an toy dataset.
+
+First load `pagoo`:
+```{r, echo=TRUE,  warning=FALSE, message=FALSE}
+library(pagoo) # Load package
+tgz <- system.file('extdata', 'toy_data.tar.gz', package = 'pagoo')
+untar(tarfile = tgz, exdir = tempdir()) # Decompress example dataset
+files <- list.files(path = tempdir(), full.names = TRUE, pattern = 'tsv$|fasta$') # List files
+files
+```
+The file we need now is `case_df.tsv`. Lets load it and see what's its structure:
+```{r}
+data_file <- grep("case_df.tsv", files, value = TRUE)
+data <- read.table(data_file, header = TRUE, sep = '\t', quote = '')
+head(data)
+```
+So it is a `data.frame` with 4 columns. The first one with the name of each gene, the second one with the organism to which each gene belongs, the third one with the cluster to which each gene was assigned in the pangenome reconstruction, and the last one with annotation metadata for each gene. Of the 4 columns, the former 3 are required, and `pagoo` will look for columns named "gene", "org", and "cluster". More columns are optional, and you can add as many as you want (or none) to add metadata of each gene.
+
+With only this data (even ignoring the fourth column, which is metadata), you can start working with pagoo:
+```{r, eval=FALSE}
+pg <- pagoo(data = data)
+```
+
+but let's continue adding more.
+
+## Including organism metadata
+
+The next 2 `.tsv` files contains metadata for each cluster and for each organism, respectively, and are optional arguments. 
+```{r}
+# Organism metadata
+orgs_file <- grep("case_orgs_meta.tsv", files, value = TRUE)
+orgs_meta <- read.table(orgs_file, header = TRUE, sep = '\t', quote = '')
+head(orgs_meta)
+```
+On this `data.frame` we have a column named `org` which is mandatory in case you provide this argument. Other columns are metadata asociated to each organism. Beware that organisms provided in this table (`orgs_meta$org`) must concide with the names provided in the `data$org` field, in order to correctly map each variables.
+
+## Including cluster metadata
+
+Last file contains metadata asociated with each cluster of orthologous:
+```{r}
+# Cluster metadata
+clust_file <- grep("case_clusters_meta.tsv", files, value = TRUE)
+clust_meta <- read.table(clust_file, header = TRUE, sep = '\t', quote = '')
+head(clust_meta)
+```
+Again, the column `clust_meta$cluster` must contain the same elements as `data$cluster` column to be able to map one into the other.
+
+With all this data the `pagoo` object will look much more complete. But you can still add sequence information to the pangenome, which makes it much more useful and interesting to work with.
+
+## Including sequences
+
+In this made up dataset we have 5 organisms, so if you decide to add sequences to the pangenome you must provide them for all 5 organisms. The type of data needed is a DNA multifasta file for each organism, in which each sequence is a gene whose name can be mapped to the `data$gene` column. You must first load the sequences into a `list`, and name each list element as the organism provided in `data$org` (as well as `org_meta$org`). 
+The `list` would look something like:
+
+1. organism1
+    + gene1
+    + gene2
+    + ...
+    + geneN
+    
+2. organism2
+    + gene1
+    + gene2
+    + ...
+    + geneM
+    
+3. organism3
+    + gene1
+    + gene2
+    + ...
+    + geneP
+    
+4. ...
+
+In the case of the example we are working on:
+```{r}
+# Sequences
+fasta_files <- grep("[.]fasta", files, value = TRUE) # List fasta files
+names(fasta_files) <- sub('[.]fasta', '', basename(fasta_files)) # Name them 
+# Read fasta files with Biostrings:
+library(Biostrings)
+sq <- lapply(fasta_files, readDNAStringSet)
+class(sq) # Is list?
+length(sq) # One list element per organism
+names(sq) # Names are the same as in data$org
+class(sq[[1]]) # Class of each element of the list
+```
+And we have a `list` of `DNAStringSet` (Biostrings package). Now we can load a quite complete `pagoo` object (you could still add more metadata to genes, clusters, or organisms):
+
+```{r, message=FALSE}
+p <- pagoo(data = data, # Required data
+           org_meta = orgs_meta, # Organism's metadata
+           cluster_meta = clust_meta, # Cluster's metadata
+           sequences = sq) # Sequences
+```
+
+All this stuff with preparing data and loading classes seems difficult and time-consuming, but in real life working datasets this will be rarely needed. We are explaning it here to provide full details about how the software works, but this package also provides functions to automatically read-in output files from pangenome reconstruction softwares into `pagoo`, avoiding any formating or manipulation of data.
+
+For pangenome reconstruction you can use the software of your choice. For example, since last years <a [roary](https://sanger-pathogens.github.io/Roary/) (Page et al., 2015) has been the standard and most cited software for pangenome reconstruction. More recently, other good software has emerged like [PanX](http://pangenome.tuebingen.mpg.de) (Ding et al., 2018), [PRIATE](https://github.com/SionBayliss/PIRATE) (Bayliss et al., 2019), [micropan](https://github.com/cran/micropan) (Snipen & Liland, 2015), [PEPPA](https://github.com/zheminzhou/PEPPA) (Zhou & Achtman, 2020), [panaroo](https://github.com/gtonkinhill/panaroo) (Tonkin-Hill et al., 2020), among others. Also, we have created our own pangenome reconstruction software called [pewit](https://github.com/iferres/pewit) (Ferrés et al., still unpublished), which automatically generates a `pagoo` object to perform downstream analyses. To use `pagoo` from the outputs produced by most of the other software tools mentioned above, we provide specific functions to read-in pangenome data.
+
+# Adding Metadata After Object Creation
+
+After object creation, you may want to add new metadata given new information or as result of posterior analyses. `pagoo` objects include a function to add columns of metadata to each gene, each cluster, or each organism. To illustrate it, we will add a new column to the `$organisms` field named `host` to add made up information about the host where each genome was isolated from.
+
+```{r}
+host_df <- data.frame(org = p$organisms$org, host = c("Cow", "Dog", "Cat", "Cow", "Sheep"))
+p$add_metadata(map = "org", host_df)
+p$organisms
+```
+
+In order to allow `pagoo` correct data mapping, the values in the first column of the metadata table should be the same as `p$organisms$org`, and its column header must also be named `org`.
+
+As said, you can add `gene` or `cluster` metadata following the same idea.
+
+# Saving and Loading `pagoo` objects
+
+Once loaded, it has two methods for saving and reloading to a new R session. The first one is by saving them as flat (text) files:
+
+```{r}
+p$write_pangenome(dir = "pangenome")
+list.files("pangenome")
+```
+This creates a directory with 3 text files. The advantage of this approach is that you can analyze it outside R, the disadvantage is that from a reproducibility point of view reading text could be less stable since class or number precision can be lost, and also you can't save the state of the object in any given time. Only available organisms/genes/clusters are saved, and if you reload the class using the tsv files, any previously dropped organisms/gene/cluster won't be available any more. (For information about dropping/recovering organisms, see "Subset" tutorial).
+```{r, echo=FALSE}
+# Remove unused directory
+unlink("pangenome", recursive = TRUE)
+```
+If you want to save the object and continue working with it in other R session, we recommend to save them as R objects with the RDS methods provided:
+```{r, eval=FALSE}
+p$save_pangenomeRDS(file = "pangenome.RDS")
+p2 <- load_pangenomeRDS("pangenome.RDS")
+```
+This method is more stable (compatible between `pagoo` versions), secure (uses the same metadata classes, and precision isn't lost), and convinient (the exact state of the object saved is restored, keeping dropped organisms/genes/clusters hidden, available to be recovered, and other object state configuration, e.g. `core_level`, is also saved).
+

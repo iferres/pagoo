@@ -1,0 +1,92 @@
+---
+title: "3 - Querying Data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In this section we will start exploring what is stored inside the `pagoo` object and how we can access this information. Keep in mind that this object has its own associated data and methods that can be easily queried with the `$` operator. These methods allow for the rapid subsetting, extraction and visualization of pangenome data.
+
+First of all, we will load a pangenome using a toy dataset included in the package. This is the same pangenome used in the "Input" tutorial, just loaded in a more convinient way.
+
+```{r, echo=TRUE,  warning=FALSE, message=FALSE}
+library(pagoo) # Load package
+toy_rds <- system.file('extdata', 'toy_data.RDS', package = 'pagoo')
+p <- load_pangenomeRDS(toy_rds)
+```
+
+# Summary statistics
+
+A pangenome can be stratified in different gene subsets according to their frequency in the dataset. The `core genes` can be defined as those present in all or almost every genome (typically 95-100%). The remaining genes are defined as the accessory genome, that can be subdivided in `cloud genes` or singletons (present in one genome or in genomes that are identical) and `shell genes` which are those in the middle. Let's see this using `pagoo`:
+
+```{r}
+p$summary_stats
+```
+
+## Core level
+
+The `core level` defines the minimum number of genomes (as a percentage) in which a certain gene should be present to be considered a core gene. By default, `pagoo` considers as core all genes present in at least 95% of organisms. The core level can be modified to be more or less stringent defining the core genome. This feature exemplifies R6's reference semantics, since modifying the core level will affect the pangenome object state resulting in different core, shell and cloud sets. Have a look:
+
+```{r}
+p$core_level       # Default
+p$core_level <- 99 # Change value
+p$summary_stats    # Updated object
+```
+As you can see, changing the core level from 95% to a more stringent 90% cause an increase in the number of core genes from 1557 to 1613, and a concomitant decrease in shell genes from 1341 to 1285. This means that 56 genes migrated from shell to core when relaxing the core level to 90%. Now this changes remain in the object for subsequent analysis, or can be reverted by setting the core level again at the original value.
+
+```{r}
+p$core_level <- 95
+```
+
+# Pangenome matrix
+
+The pangenome matrix is one of the most useful things when analyzing pangenomes. Typically, it represents organisms in rows and clusters of orthologous in columns informing about gene abundance (considering paralogues). The pangenome matrix looks like this (printing only first 5 columns):
+
+```{r}
+p$pan_matrix[, 1:5]
+```
+
+# Gene metadata
+
+Individual gene metadata can be accessed by using the `$genes` suffix. It always contains the gene name, the organism to which it belongs, the cluster to where it was assigned, and a gene identifier (`gid`) that is mainly used internally to organize the data. Also, it may typically include annotation data, genomic coordinates, etc, but this other metadata is optional. Gene metadata is splited by cluster, so it consist in a `List` of `DataFrame`s.
+
+```{r}
+p$genes
+```
+
+If you want to work with this data as a single `DataFrame`, just `unlist` it:
+
+```{r}
+unlist(p$genes, use.names = FALSE)
+```
+
+`pagoo` also includes predefined subsets fields to list only certain pangenome category, these are queried by adding a prefix with the desired category followed by an underscore: `$core_genes`, `$shell_genes`, and `$cloud_genes`. These kind of subsets are better explaied in the '4 - Subets' tutorial, and also apply to other pangenome data described below.
+
+# Clusters metadata
+
+Groups of orthologues (clusters) are also stored in `pagoo` objects as a table with a cluster identifier per row, and optional metadata associated as additional columns.
+
+```{r}
+p$clusters
+```
+Subsets also exists for this field: `$core_clusters`, `$shell_clusters`, and `$cloud_clusters`.
+
+# Sequences
+
+Although is an optional field (it exists only if user provide this data as an argument when object is created), `$sequences` gives access to sequence data. Sequences are stored as a `List` of `DNAStringSet` (a.k.a `DNAStringSetList`, Biostrings package), grouped by cluster. 
+
+```{r}
+p$sequences             # List all sequences grouped by cluster
+p$sequences[["OG001"]]  # List first cluster
+```
+Note that sequence names are created by pasteing organism names and gene names, separated by a string that by default is `sep = '__'` (two underscores). This are the same as the `gid` column in the `$genes` field, and are initially set when `pagoo` object is created. If you think your dataset contain names with this separator, then you should set this parameter to other string to avoid conflicts. 
+`$sequences` field also has predefied subsets: `$core_sequences`, `$shell_sequences`, and `$cloud_sequences`.
+
+# Organism metadata
+The `$organisms` field contain a table with organisms and metadata as additional columns if provided.
+```{r}
+p$organisms
+```
+
