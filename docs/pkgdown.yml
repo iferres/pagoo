@@ -1,0 +1,11 @@
+pandoc: 2.3.1
+pkgdown: 1.4.1
+pkgdown_sha: ~
+articles:
+  1-Quick_Start: 1-Quick_Start.html
+  2-Input: 2-Input.html
+  3-Querying_Data: 3-Querying_Data.html
+  4-Subseting: 4-Subseting.html
+  5-Methods_Plots: 5-Methods_Plots.html
+  6-Recipes: 6-Recipes.html
+
