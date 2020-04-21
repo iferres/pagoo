@@ -63,5 +63,5 @@ campy$gg_barplot()
 One of the main advantages of using `pagoo` is the ability to very easily manipulate sequences. Sequences are stored as a `List` of `DNAStringSet` from `Biostrings` package.
 
 ```{r}
-p$sequences
+campy$sequences
 ```
