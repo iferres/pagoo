@@ -107,50 +107,48 @@
 <a href="#basic-fields" class="anchor"></a>Basic Fields</h2>
 <p>So this 3 variables are 3 separate tables that can be queried:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">campy<span class="op">$</span>organisms</a></code></pre></div>
-<pre><code>## DataFrame with 69 rows and 8 columns
-##            org       id    strain      year  country     host   source
-##       &lt;factor&gt; &lt;factor&gt;  &lt;factor&gt; &lt;integer&gt; &lt;factor&gt; &lt;factor&gt; &lt;factor&gt;
-## 1    16244_6_1     FR10 2006/367h      2006   France    Human      CSF
-## 2    16244_6_2     FR11 2006/479h      2006   France    Human    Feces
-## 3    16244_6_3     FR12 2006/588h      2006   France    Human      CSF
-## 4    16244_6_4     FR13 2006/621h      2006   France    Human    Blood
-## 5    16244_6_5     FR14 2006/649h      2006   France    Human    Feces
-## ...        ...      ...       ...       ...      ...      ...      ...
-## 65  16244_6_32      TR1     CF156      2013   Turkey    Human    Blood
-## 66  17059_2_39      TW3      7035      2004   Taiwan    Human    Blood
-## 67  17059_2_40      TW4    My5726      2006   Taiwan    Human    Blood
-## 68  17059_2_41      TW5      1592      2006   Taiwan    Human    Blood
-## 69  17059_2_42      TW6      1830      2008   Taiwan    Human    Blood
-##     accession
-##      &lt;factor&gt;
-## 1   ERS672242
-## 2   ERS672243
-## 3   ERS672244
-## 4   ERS672245
-## 5   ERS672246
-## ...       ...
-## 65  ERS672273
-## 66  ERS739258
-## 67  ERS739259
-## 68  ERS739260
-## 69  ERS739261</code></pre>
+<pre><code>## DataFrame with 10 rows and 8 columns
+##           org          id      strain      year     country        host
+##      &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;
+## 1   16244_6_6        FR15   2008/170h      2008      France       Human
+## 2  16244_6_18        FR27   2012/185h      2012      France       Human
+## 3  16244_6_24        FR33    2014/52h      2014      France       Human
+## 4  16244_6_31        FR40    2009/56h      2009      France       Human
+## 5  17059_2_16         AR1      99/801      1999   Argentina      Bovine
+## 6  17059_2_23         AR8      04/875      2004   Argentina      Bovine
+## 7  17059_2_27        AR12      06/195      2006   Argentina      Bovine
+## 8  17150_1_73         CA1   001A-0374      2005      Canada       Human
+## 9  17059_2_11        CA22    ID136207      2014      Canada       Human
+## 10 17059_2_42         TW6        1830      2008      Taiwan       Human
+##         source   accession
+##    &lt;character&gt; &lt;character&gt;
+## 1        Feces   ERS672247
+## 2        Blood   ERS672259
+## 3          CSF   ERS672265
+## 4          CSF   ERS672272
+## 5      Prepuce   ERS739235
+## 6        Fetus   ERS739242
+## 7           VM   ERS739246
+## 8        Blood   ERS686652
+## 9        Blood   ERS739230
+## 10       Blood   ERS739261</code></pre>
 <p><em>(Tip: To see all fields and methods, in any R console type <code>campy$</code> and press the [TAB] key two times.)</em></p>
 <p>This dataset consist in 69 <em>Campylobacter spp</em> genomes. For each organism, you have a row with associated metadata. The first column, <code>org</code>, indicates the organism.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">campy<span class="op">$</span>clusters</a></code></pre></div>
-<pre><code>## DataFrame with 3179 rows and 2 columns
+<pre><code>## DataFrame with 2599 rows and 2 columns
 ##          cluster                   Pfam_Arch
 ##      &lt;character&gt;                 &lt;character&gt;
-## 1      group0001                2-Hacid_dh_C
-## 2      group0002     2-Hacid_dh_C;2-Hacid_dh
-## 3      group0003 2-Hacid_dh_C;ACT;2-Hacid_dh
-## 4      group0004             2Fe-2S_thioredx
-## 5      group0005                   4HB_MCP_1
+## 1         OG0001                2-Hacid_dh_C
+## 2         OG0002     2-Hacid_dh_C;2-Hacid_dh
+## 3         OG0003 2-Hacid_dh_C;ACT;2-Hacid_dh
+## 4         OG0004             2Fe-2S_thioredx
+## 5         OG0005         4HB_MCP_1;MCPsignal
 ## ...          ...                         ...
-## 3175   group3175                   zf-RING_7
-## 3176   group3176                    zf-TFIIB
-## 3177   group3177                        ZinT
-## 3178   group3178                        ZnuA
-## 3179   group3179                    ZT_dimer</code></pre>
+## 2595      OG2595                   zf-RING_7
+## 2596      OG2596                    zf-TFIIB
+## 2597      OG2597                        ZinT
+## 2598      OG2598                        ZnuA
+## 2599      OG2599                    ZT_dimer</code></pre>
 <p>The <code>$clusters</code> field returns a table with metadata associated to each group of orthologous, in this case is the Pfam architecture domain (second column).</p>
 <p>The last, and most important field is <code>$genes</code>, which returns a list of <code>DataFrame</code> with information given for each individual gene, grouped by cluster. We let the user to inspect this field by him/herself.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">campy<span class="op">$</span>genes</a></code></pre></div>
@@ -164,7 +162,7 @@
 <p>For example:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">campy<span class="op">$</span><span class="kw">fluidity</span>(<span class="dt">n.sim =</span> <span class="dv">10</span>)</a></code></pre></div>
 <pre><code>##       Mean        Std 
-## 0.09937901 0.02612196</code></pre>
+## 0.08009963 0.04093023</code></pre>
 <p>Or:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">campy<span class="op">$</span><span class="kw">gg_barplot</span>()</a></code></pre></div>
 <p><img src="1-Quick_Start_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
@@ -172,7 +170,21 @@
 <div id="sequence-manipulation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#sequence-manipulation" class="anchor"></a>Sequence Manipulation</h2>
-<p>One of the main advantages of using <code>pagoo</code> is the ability to very easily manipulate sequences. This tutorial dataset doesn’t contain sequences, and they are an optional requirement. We strongly recommend to also giving a look to other <code>pagoo</code> tutorials in which sequences are used to understand the potential of using this package to work with pangenomes.</p>
+<p>One of the main advantages of using <code>pagoo</code> is the ability to very easily manipulate sequences. Sequences are stored as a <code>List</code> of <code>DNAStringSet</code> from <code>Biostrings</code> package.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">campy<span class="op">$</span>sequences</a></code></pre></div>
+<pre><code>## DNAStringSetList of length 2599
+## [["OG0001"]] 16244_6_18__16244_6_18_00172=ATGGCGATAACAGTTTATTACGACAAAGATTGCGA...
+## [["OG0002"]] 16244_6_18__16244_6_18_01307=ATGAAAATAGTATGCTTAGATGCCGACACGCTTGG...
+## [["OG0003"]] 16244_6_18__16244_6_18_00052=ATGAAAACAGTTATAGTTTGCGATGCAATACATCC...
+## [["OG0004"]] 16244_6_18__16244_6_18_01700=ATGAAATTCGAATTTACTCATGAGCAATTATCGGC...
+## [["OG0005"]] 16244_6_18__16244_6_18_00072=ATGTCAAATTTAACTACTAATTTAACTACCAAAAC...
+## [["OG0006"]] 16244_6_18__16244_6_18_01083=ATGAATTATTTTGAGAATTTAAAAGTTTCAACAAA...
+## [["OG0007"]] 16244_6_18__16244_6_18_01638=ATGCGAATTAGAATTTATTATGAAGATACCGATGC...
+## [["OG0008"]] 16244_6_18__16244_6_18_00021=ATGATGAAAGATATGGGCGAGCCACGTATAAAAAT...
+## [["OG0009"]] 16244_6_18__16244_6_18_01216=ATGGGGCTTACTACGAGTACGACAAAGTATATAAC...
+## [["OG0010"]] 16244_6_18__16244_6_18_00770=ATGAAAAGAGTGGTTATAAAAGTAGGCTCTCACGT...
+## ...
+## &lt;2589 more elements&gt;</code></pre>
 </div>
   </div>
 

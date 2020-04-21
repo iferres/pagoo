@@ -98,10 +98,10 @@
     
     
 <p>In this section we will start exploring what is stored inside the <code>pagoo</code> object and how we can access this information. Keep in mind that this object has its own associated data and methods that can be easily queried with the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> operator. These methods allow for the rapid subsetting, extraction and visualization of pangenome data.</p>
-<p>First of all, we will load a pangenome using a toy dataset included in the package. This is the same pangenome used in the “Input” tutorial, just loaded in a more convinient way.</p>
+<p>First of all, we will load a pangenome using a toy dataset included in the package. This is a preloaded set of 10 <em>Campylobacter spp.</em> genomes, with metadata associated.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(pagoo) <span class="co"># Load package</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">toy_rds &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">'extdata'</span>, <span class="st">'toy_data.RDS'</span>, <span class="dt">package =</span> <span class="st">'pagoo'</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">p &lt;-<span class="st"> </span><span class="kw">load_pangenomeRDS</span>(toy_rds)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2">rds &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">'extdata'</span>, <span class="st">'campylobacter.RDS'</span>, <span class="dt">package =</span> <span class="st">'pagoo'</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">p &lt;-<span class="st"> </span><span class="kw">load_pangenomeRDS</span>(rds)</a></code></pre></div>
 <div id="summary-statistics" class="section level1">
 <h1 class="hasAnchor">
 <a href="#summary-statistics" class="anchor"></a>Summary statistics</h1>
@@ -110,27 +110,27 @@
 <pre><code>## DataFrame with 4 rows and 2 columns
 ##      Category    Number
 ##   &lt;character&gt; &lt;integer&gt;
-## 1       Total       600
-## 2        Core       254
-## 3       Shell       118
-## 4       Cloud       228</code></pre>
+## 1       Total      2599
+## 2        Core      1623
+## 3       Shell       441
+## 4       Cloud       535</code></pre>
 <div id="core-level" class="section level2">
 <h2 class="hasAnchor">
 <a href="#core-level" class="anchor"></a>Core level</h2>
 <p>The <code>core level</code> defines the minimum number of genomes (as a percentage) in which a certain gene should be present to be considered a core gene. By default, <code>pagoo</code> considers as core all genes present in at least 95% of organisms. The core level can be modified to be more or less stringent defining the core genome. This feature exemplifies R6’s reference semantics, since modifying the core level will affect the pangenome object state resulting in different core, shell and cloud sets. Have a look:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">p<span class="op">$</span>core_level       <span class="co"># Default</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">p<span class="op">$</span>core_level       </a></code></pre></div>
 <pre><code>## [1] 95</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">p<span class="op">$</span>core_level &lt;-<span class="st"> </span><span class="dv">99</span> <span class="co"># Change value</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">p<span class="op">$</span>summary_stats    <span class="co"># Updated object</span></a></code></pre></div>
 <pre><code>## DataFrame with 4 rows and 2 columns
 ##      Category    Number
 ##   &lt;character&gt; &lt;integer&gt;
-## 1       Total       600
-## 2        Core       254
-## 3       Shell       118
-## 4       Cloud       228</code></pre>
-<p>As you can see, changing the core level from 95% to a more stringent 90% cause an increase in the number of core genes from 1557 to 1613, and a concomitant decrease in shell genes from 1341 to 1285. This means that 56 genes migrated from shell to core when relaxing the core level to 90%. Now this changes remain in the object for subsequent analysis, or can be reverted by setting the core level again at the original value.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">p<span class="op">$</span>core_level &lt;-<span class="st"> </span><span class="dv">95</span></a></code></pre></div>
+## 1       Total      2599
+## 2        Core      1623
+## 3       Shell       441
+## 4       Cloud       535</code></pre>
+<p>As you can see, changing the core level from 100% to a less stringent 99% cause in increase in the number of core genes from 1553 to 1623, and a concomitant decrease in shell genes from 511 to 441. This means that 70 genes migrated from shell to core when relaxing the core level to 99%. Now this changes remain in the object for subsequent analysis, or can be reverted by setting the core level again at the original value.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">p<span class="op">$</span>core_level &lt;-<span class="st"> </span><span class="dv">100</span></a></code></pre></div>
 </div>
 </div>
 <div id="pangenome-matrix" class="section level1">
@@ -138,154 +138,216 @@
 <a href="#pangenome-matrix" class="anchor"></a>Pangenome matrix</h1>
 <p>The pangenome matrix is one of the most useful things when analyzing pangenomes. Typically, it represents organisms in rows and clusters of orthologous in columns informing about gene abundance (considering paralogues). The pangenome matrix looks like this (printing only first 5 columns):</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">p<span class="op">$</span>pan_matrix[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a></code></pre></div>
-<pre><code>##           OG001 OG002 OG003 OG004 OG005
-## organismA     1     1     1     1     1
-## organismB     1     1     0     1     1
-## organismC     1     1     1     1     1
-## organismD     1     1     1     1     1
-## organismE     1     0     0     1     1</code></pre>
+<pre><code>##            OG0001 OG0002 OG0003 OG0004 OG0005
+## 16244_6_6       1      1      1      1      1
+## 16244_6_18      1      1      1      1      1
+## 16244_6_24      1      1      1      1      1
+## 16244_6_31      1      1      1      1      1
+## 17059_2_16      1      1      1      1      1
+## 17059_2_23      1      1      1      1      0
+## 17059_2_27      1      1      1      1      1
+## 17150_1_73      1      1      1      1      1
+## 17059_2_11      1      1      1      1      0
+## 17059_2_42      1      1      1      1      0</code></pre>
 </div>
 <div id="gene-metadata" class="section level1">
 <h1 class="hasAnchor">
 <a href="#gene-metadata" class="anchor"></a>Gene metadata</h1>
 <p>Individual gene metadata can be accessed by using the <code>$genes</code> suffix. It always contains the gene name, the organism to which it belongs, the cluster to where it was assigned, and a gene identifier (<code>gid</code>) that is mainly used internally to organize the data. Also, it may typically include annotation data, genomic coordinates, etc, but this other metadata is optional. Gene metadata is splited by cluster, so it consist in a <code>List</code> of <code>DataFrame</code>s.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">p<span class="op">$</span>genes</a></code></pre></div>
-<pre><code>## SplitDataFrameList of length 600
-## $OG001
-## DataFrame with 5 rows and 5 columns
-##    cluster       org     gene                gid
-##   &lt;factor&gt;  &lt;factor&gt; &lt;factor&gt;        &lt;character&gt;
-## 1    OG001 organismA  gene081 organismA__gene081
-## 2    OG001 organismB  gene122 organismB__gene122
-## 3    OG001 organismC  gene299 organismC__gene299
-## 4    OG001 organismD  gene186 organismD__gene186
-## 5    OG001 organismE  gene076 organismE__gene076
-##                              annot
-##                           &lt;factor&gt;
-## 1 Thioesterase superfamily protein
-## 2         Thioesterase superfamily
-## 3 Thioesterase superfamily protein
-## 4 Thioesterase superfamily protein
-## 5         Thioesterase superfamily
+<pre><code>## SplitDataFrameList of length 2599
+## $OG0001
+## DataFrame with 10 rows and 10 columns
+##     cluster        org             gene                          gid
+##    &lt;factor&gt;   &lt;factor&gt;      &lt;character&gt;                  &lt;character&gt;
+## 1    OG0001  16244_6_6  16244_6_6_00150   16244_6_6__16244_6_6_00150
+## 2    OG0001 16244_6_18 16244_6_18_00172 16244_6_18__16244_6_18_00172
+## 3    OG0001 16244_6_24 16244_6_24_01512 16244_6_24__16244_6_24_01512
+## 4    OG0001 16244_6_31 16244_6_31_00173 16244_6_31__16244_6_31_00173
+## 5    OG0001 17059_2_16 17059_2_16_01012 17059_2_16__17059_2_16_01012
+## 6    OG0001 17059_2_23 17059_2_23_01040 17059_2_23__17059_2_23_01040
+## 7    OG0001 17059_2_27 17059_2_27_00492 17059_2_27__17059_2_27_00492
+## 8    OG0001 17150_1_73 17150_1_73_00221 17150_1_73__17150_1_73_00221
+## 9    OG0001 17059_2_11 17059_2_11_00174 17059_2_11__17059_2_11_00174
+## 10   OG0001 17059_2_42 17059_2_42_00176 17059_2_42__17059_2_42_00176
+##       geneName
+##    &lt;character&gt;
+## 1         ilvC
+## 2         ilvC
+## 3         ilvC
+## 4         ilvC
+## 5         ilvC
+## 6         ilvC
+## 7         ilvC
+## 8         ilvC
+## 9         ilvC
+## 10        ilvC
+##                                                                                                                                                                   product
+##                                                                                                                                                               &lt;character&gt;
+## 1  ketol-acid reductoisomerase,Ketol-acid reductoisomerase,ketol-acid reductoisomerase,ketol-acid reductoisomerase,Acetohydroxy acid isomeroreductase%2C catalytic domain
+## 2  ketol-acid reductoisomerase,Ketol-acid reductoisomerase,ketol-acid reductoisomerase,ketol-acid reductoisomerase,Acetohydroxy acid isomeroreductase%2C catalytic domain
+## 3  ketol-acid reductoisomerase,Ketol-acid reductoisomerase,ketol-acid reductoisomerase,ketol-acid reductoisomerase,Acetohydroxy acid isomeroreductase%2C catalytic domain
+## 4  ketol-acid reductoisomerase,Ketol-acid reductoisomerase,ketol-acid reductoisomerase,ketol-acid reductoisomerase,Acetohydroxy acid isomeroreductase%2C catalytic domain
+## 5  ketol-acid reductoisomerase,Ketol-acid reductoisomerase,ketol-acid reductoisomerase,ketol-acid reductoisomerase,Acetohydroxy acid isomeroreductase%2C catalytic domain
+## 6  ketol-acid reductoisomerase,Ketol-acid reductoisomerase,ketol-acid reductoisomerase,ketol-acid reductoisomerase,Acetohydroxy acid isomeroreductase%2C catalytic domain
+## 7  ketol-acid reductoisomerase,Ketol-acid reductoisomerase,ketol-acid reductoisomerase,ketol-acid reductoisomerase,Acetohydroxy acid isomeroreductase%2C catalytic domain
+## 8  ketol-acid reductoisomerase,Ketol-acid reductoisomerase,ketol-acid reductoisomerase,ketol-acid reductoisomerase,Acetohydroxy acid isomeroreductase%2C catalytic domain
+## 9  ketol-acid reductoisomerase,Ketol-acid reductoisomerase,ketol-acid reductoisomerase,ketol-acid reductoisomerase,Acetohydroxy acid isomeroreductase%2C catalytic domain
+## 10 ketol-acid reductoisomerase,Ketol-acid reductoisomerase,ketol-acid reductoisomerase,ketol-acid reductoisomerase,Acetohydroxy acid isomeroreductase%2C catalytic domain
+##                       contig      from        to      strand
+##                  &lt;character&gt; &lt;integer&gt; &lt;integer&gt; &lt;character&gt;
+## 1  ERS672247|SC|contig000001    137333    138355           +
+## 2  ERS672259|SC|contig000001    173541    174563           +
+## 3  ERS672265|SC|contig000005    173654    174676           +
+## 4  ERS672272|SC|contig000001    173541    174563           +
+## 5  ERS739235|SC|contig000005     43645     44667           -
+## 6  ERS739242|SC|contig000004    173578    174600           +
+## 7  ERS739246|SC|contig000002    184035    185057           -
+## 8  ERS686652|SC|contig000001    207206    208228           +
+## 9  ERS739230|SC|contig000001    173577    174599           +
+## 10 ERS739261|SC|contig000001    173569    174591           +
 ## 
-## $OG002
-## DataFrame with 4 rows and 5 columns
-##    cluster       org     gene                gid
-##   &lt;factor&gt;  &lt;factor&gt; &lt;factor&gt;        &lt;character&gt;
-## 1    OG002 organismA  gene352 organismA__gene352
-## 2    OG002 organismB  gene145 organismB__gene145
-## 3    OG002 organismC  gene251 organismC__gene251
-## 4    OG002 organismD  gene299 organismD__gene299
-##                               annot
-##                            &lt;factor&gt;
-## 1 Inherit from proNOG: Thioesterase
-## 2 Inherit from proNOG: Thioesterase
-## 3 Inherit from proNOG: Thioesterase
-## 4 Inherit from proNOG: Thioesterase
-## 
-## $OG003
-## DataFrame with 3 rows and 5 columns
-##    cluster       org     gene                gid    annot
-##   &lt;factor&gt;  &lt;factor&gt; &lt;factor&gt;        &lt;character&gt; &lt;factor&gt;
-## 1    OG003 organismA  gene359 organismA__gene359       NA
-## 2    OG003 organismC  gene237 organismC__gene237       NA
-## 3    OG003 organismD  gene069 organismD__gene069       NA
+## $OG0002
+## DataFrame with 10 rows and 10 columns
+##     cluster        org             gene                          gid
+##    &lt;factor&gt;   &lt;factor&gt;      &lt;character&gt;                  &lt;character&gt;
+## 1    OG0002  16244_6_6  16244_6_6_01290   16244_6_6__16244_6_6_01290
+## 2    OG0002 16244_6_18 16244_6_18_01307 16244_6_18__16244_6_18_01307
+## 3    OG0002 16244_6_24 16244_6_24_01054 16244_6_24__16244_6_24_01054
+## 4    OG0002 16244_6_31 16244_6_31_01312 16244_6_31__16244_6_31_01312
+## 5    OG0002 17059_2_16 17059_2_16_01627 17059_2_16__17059_2_16_01627
+## 6    OG0002 17059_2_23 17059_2_23_00348 17059_2_23__17059_2_23_00348
+## 7    OG0002 17059_2_27 17059_2_27_01208 17059_2_27__17059_2_27_01208
+## 8    OG0002 17150_1_73 17150_1_73_01398 17150_1_73__17150_1_73_01398
+## 9    OG0002 17059_2_11 17059_2_11_01048 17059_2_11__17059_2_11_01048
+## 10   OG0002 17059_2_42 17059_2_42_00751 17059_2_42__17059_2_42_00751
+##       geneName
+##    &lt;character&gt;
+## 1         hprA
+## 2         hprA
+## 3         hprA
+## 4         hprA
+## 5         hprA
+## 6         hprA
+## 7         hprA
+## 8         hprA
+## 9         hprA
+## 10        hprA
+##                                                                                                                                                                                                                                   product
+##                                                                                                                                                                                                                               &lt;character&gt;
+## 1  2-hydroxyacid dehydrogenase,Putative 2-hydroxyacid dehydrogenase HI_1556,2-hydroxyacid dehydrogenase,Phosphoserine aminotransferase,phosphoglycerate dehydrogenase,D-isomer specific 2-hydroxyacid dehydrogenase%2C NAD binding domain
+## 2  2-hydroxyacid dehydrogenase,Putative 2-hydroxyacid dehydrogenase HI_1556,2-hydroxyacid dehydrogenase,Phosphoserine aminotransferase,phosphoglycerate dehydrogenase,D-isomer specific 2-hydroxyacid dehydrogenase%2C NAD binding domain
+## 3  2-hydroxyacid dehydrogenase,Putative 2-hydroxyacid dehydrogenase HI_1556,2-hydroxyacid dehydrogenase,Phosphoserine aminotransferase,phosphoglycerate dehydrogenase,D-isomer specific 2-hydroxyacid dehydrogenase%2C NAD binding domain
+## 4  2-hydroxyacid dehydrogenase,Putative 2-hydroxyacid dehydrogenase HI_1556,2-hydroxyacid dehydrogenase,Phosphoserine aminotransferase,phosphoglycerate dehydrogenase,D-isomer specific 2-hydroxyacid dehydrogenase%2C NAD binding domain
+## 5  2-hydroxyacid dehydrogenase,Putative 2-hydroxyacid dehydrogenase HI_1556,2-hydroxyacid dehydrogenase,Phosphoserine aminotransferase,phosphoglycerate dehydrogenase,D-isomer specific 2-hydroxyacid dehydrogenase%2C NAD binding domain
+## 6  2-hydroxyacid dehydrogenase,Putative 2-hydroxyacid dehydrogenase HI_1556,2-hydroxyacid dehydrogenase,Phosphoserine aminotransferase,phosphoglycerate dehydrogenase,D-isomer specific 2-hydroxyacid dehydrogenase%2C NAD binding domain
+## 7  2-hydroxyacid dehydrogenase,Putative 2-hydroxyacid dehydrogenase HI_1556,2-hydroxyacid dehydrogenase,Phosphoserine aminotransferase,phosphoglycerate dehydrogenase,D-isomer specific 2-hydroxyacid dehydrogenase%2C NAD binding domain
+## 8  2-hydroxyacid dehydrogenase,Putative 2-hydroxyacid dehydrogenase HI_1556,2-hydroxyacid dehydrogenase,Phosphoserine aminotransferase,phosphoglycerate dehydrogenase,D-isomer specific 2-hydroxyacid dehydrogenase%2C NAD binding domain
+## 9  2-hydroxyacid dehydrogenase,Putative 2-hydroxyacid dehydrogenase HI_1556,2-hydroxyacid dehydrogenase,Phosphoserine aminotransferase,phosphoglycerate dehydrogenase,D-isomer specific 2-hydroxyacid dehydrogenase%2C NAD binding domain
+## 10 2-hydroxyacid dehydrogenase,Putative 2-hydroxyacid dehydrogenase HI_1556,2-hydroxyacid dehydrogenase,Phosphoserine aminotransferase,phosphoglycerate dehydrogenase,D-isomer specific 2-hydroxyacid dehydrogenase%2C NAD binding domain
+##                       contig      from        to      strand
+##                  &lt;character&gt; &lt;integer&gt; &lt;integer&gt; &lt;character&gt;
+## 1  ERS672247|SC|contig000003    274585    275517           -
+## 2  ERS672259|SC|contig000003    272748    273680           -
+## 3  ERS672265|SC|contig000003    274698    275630           -
+## 4  ERS672272|SC|contig000003    274593    275525           -
+## 5  ERS739235|SC|contig000012     11617     12549           +
+## 6  ERS739242|SC|contig000001    308107    309039           -
+## 7  ERS739246|SC|contig000005    114555    115487           -
+## 8  ERS686652|SC|contig000003    273866    274798           -
+## 9  ERS739230|SC|contig000003     15410     16342           +
+## 10 ERS739261|SC|contig000003     15409     16341           +
 ## 
 ## ...
-## &lt;597 more elements&gt;</code></pre>
+## &lt;2597 more elements&gt;</code></pre>
 <p>If you want to work with this data as a single <code>DataFrame</code>, just <code>unlist</code> it:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(p<span class="op">$</span>genes, <span class="dt">use.names =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<pre><code>## DataFrame with 1796 rows and 5 columns
-##       cluster       org     gene                gid
-##      &lt;factor&gt;  &lt;factor&gt; &lt;factor&gt;        &lt;character&gt;
-## 1       OG001 organismA  gene081 organismA__gene081
-## 2       OG001 organismB  gene122 organismB__gene122
-## 3       OG001 organismC  gene299 organismC__gene299
-## 4       OG001 organismD  gene186 organismD__gene186
-## 5       OG001 organismE  gene076 organismE__gene076
-## ...       ...       ...      ...                ...
-## 1792    OG596 organismD  gene205 organismD__gene205
-## 1793    OG597 organismD  gene344 organismD__gene344
-## 1794    OG598 organismE  gene123 organismE__gene123
-## 1795    OG599 organismE  gene216 organismE__gene216
-## 1796    OG600 organismE  gene104 organismE__gene104
-##                                 annot
-##                              &lt;factor&gt;
-## 1    Thioesterase superfamily protein
-## 2            Thioesterase superfamily
-## 3    Thioesterase superfamily protein
-## 4    Thioesterase superfamily protein
-## 5            Thioesterase superfamily
-## ...                               ...
-## 1792      Integrase catalytic subunit
-## 1793                Methyltransferase
-## 1794     von Willebrand factor type A
-## 1795                               NA
-## 1796                               NA</code></pre>
 <p><code>pagoo</code> also includes predefined subsets fields to list only certain pangenome category, these are queried by adding a prefix with the desired category followed by an underscore: <code>$core_genes</code>, <code>$shell_genes</code>, and <code>$cloud_genes</code>. These kind of subsets are better explaied in the ‘4 - Subets’ tutorial, and also apply to other pangenome data described below.</p>
 </div>
 <div id="clusters-metadata" class="section level1">
 <h1 class="hasAnchor">
 <a href="#clusters-metadata" class="anchor"></a>Clusters metadata</h1>
 <p>Groups of orthologues (clusters) are also stored in <code>pagoo</code> objects as a table with a cluster identifier per row, and optional metadata associated as additional columns.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">p<span class="op">$</span>clusters</a></code></pre></div>
-<pre><code>## DataFrame with 600 rows and 3 columns
-##         cluster     kegg      cog
-##     &lt;character&gt; &lt;factor&gt; &lt;factor&gt;
-## 1         OG001       NA        S
-## 2         OG002       NA        S
-## 3         OG003       NA       NA
-## 4         OG004       NA        D
-## 5         OG005   K01990        V
-## ...         ...      ...      ...
-## 596       OG596       NA        L
-## 597       OG597       NA        H
-## 598       OG598       NA        S
-## 599       OG599       NA       NA
-## 600       OG600       NA       NA</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">p<span class="op">$</span>clusters</a></code></pre></div>
+<pre><code>## DataFrame with 2599 rows and 2 columns
+##          cluster                   Pfam_Arch
+##      &lt;character&gt;                 &lt;character&gt;
+## 1         OG0001                2-Hacid_dh_C
+## 2         OG0002     2-Hacid_dh_C;2-Hacid_dh
+## 3         OG0003 2-Hacid_dh_C;ACT;2-Hacid_dh
+## 4         OG0004             2Fe-2S_thioredx
+## 5         OG0005         4HB_MCP_1;MCPsignal
+## ...          ...                         ...
+## 2595      OG2595                   zf-RING_7
+## 2596      OG2596                    zf-TFIIB
+## 2597      OG2597                        ZinT
+## 2598      OG2598                        ZnuA
+## 2599      OG2599                    ZT_dimer</code></pre>
 <p>Subsets also exists for this field: <code>$core_clusters</code>, <code>$shell_clusters</code>, and <code>$cloud_clusters</code>.</p>
 </div>
 <div id="sequences" class="section level1">
 <h1 class="hasAnchor">
 <a href="#sequences" class="anchor"></a>Sequences</h1>
 <p>Although is an optional field (it exists only if user provide this data as an argument when object is created), <code>$sequences</code> gives access to sequence data. Sequences are stored as a <code>List</code> of <code>DNAStringSet</code> (a.k.a <code>DNAStringSetList</code>, Biostrings package), grouped by cluster.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">p<span class="op">$</span>sequences             <span class="co"># List all sequences grouped by cluster</span></a></code></pre></div>
-<pre><code>## DNAStringSetList of length 600
-## [["OG001"]] organismA__gene081=ATGGAATCGGAAACAATCTTTCGGGAAATCAAAGCAAGCCAAAACG...
-## [["OG002"]] organismA__gene352=ATGACAGATATACAGATTGAATTTCCGGAGAACTATCATTTTTCAA...
-## [["OG003"]] organismA__gene359=TTGTTTTTTTATTTCACATTATGGATCACAAAAAGGATCGGTTTTC...
-## [["OG004"]] organismA__gene258=ATGAAACAGATCCTCTGTATTGCAAACCAGAAAGGCGGAGTCGGTA...
-## [["OG005"]] organismA__gene118=ATGATCAAAGTTAAAAACCTATCTAAATTCTATGGCAAAAAACTCG...
-## [["OG006"]] organismA__gene348=GTGAGTCTGATCAAAGTAAGAAATTTGGTAAAGAATTATCATATTC...
-## [["OG007"]] organismA__gene140=ATGAAGTTTTTTTTCAGACTTCTATCCTATTCCGTACATTACAAAT...
-## [["OG008"]] organismB__gene075=ATGATTCAAAAAGCGAATTATAAACAGATTTTATTAGAATTTTTCT...
-## [["OG009"]] organismB__gene328=ATGAATGATTATCTCACGTACGTATCTGACAATCGTTCCGTTCGAA...
-## [["OG010"]] organismA__gene013=ATGAGCGAAATTGAAAGCGGTTTTTTTCAATCCGGCGGGTACAATC...
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">p<span class="op">$</span>sequences             <span class="co"># List all sequences grouped by cluster</span></a></code></pre></div>
+<pre><code>## DNAStringSetList of length 2599
+## [["OG0001"]] 16244_6_18__16244_6_18_00172=ATGGCGATAACAGTTTATTACGACAAAGATTGCGA...
+## [["OG0002"]] 16244_6_18__16244_6_18_01307=ATGAAAATAGTATGCTTAGATGCCGACACGCTTGG...
+## [["OG0003"]] 16244_6_18__16244_6_18_00052=ATGAAAACAGTTATAGTTTGCGATGCAATACATCC...
+## [["OG0004"]] 16244_6_18__16244_6_18_01700=ATGAAATTCGAATTTACTCATGAGCAATTATCGGC...
+## [["OG0005"]] 16244_6_18__16244_6_18_00072=ATGTCAAATTTAACTACTAATTTAACTACCAAAAC...
+## [["OG0006"]] 16244_6_18__16244_6_18_01083=ATGAATTATTTTGAGAATTTAAAAGTTTCAACAAA...
+## [["OG0007"]] 16244_6_18__16244_6_18_01638=ATGCGAATTAGAATTTATTATGAAGATACCGATGC...
+## [["OG0008"]] 16244_6_18__16244_6_18_00021=ATGATGAAAGATATGGGCGAGCCACGTATAAAAAT...
+## [["OG0009"]] 16244_6_18__16244_6_18_01216=ATGGGGCTTACTACGAGTACGACAAAGTATATAAC...
+## [["OG0010"]] 16244_6_18__16244_6_18_00770=ATGAAAAGAGTGGTTATAAAAGTAGGCTCTCACGT...
 ## ...
-## &lt;590 more elements&gt;</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">p<span class="op">$</span>sequences[[<span class="st">"OG001"</span>]]  <span class="co"># List first cluster</span></a></code></pre></div>
-<pre><code>##   A DNAStringSet instance of length 5
-##     width seq                                               names               
-## [1]   576 ATGGAATCGGAAACAATCTTTCG...AACTTCAAAAGACGGATTCCTGA organismA__gene081
-## [2]   576 ATGGAACCAGAGGCAATCTACCG...AACTTCAAAACATAGAACCCTAA organismB__gene122
-## [3]   576 ATGGATACGGAAACGATCTACCG...AACTTCAAAAGGTAAATTCTTAA organismC__gene299
-## [4]   576 ATGGAAACAGAAACAATCTACCG...AACTTCAAAAGGTAAATTCCTAG organismD__gene186
-## [5]   576 ATGGAATCAGAGGCAATCTACCG...AACTTCAAAAGATAATTTCCTAG organismE__gene076</code></pre>
+## &lt;2589 more elements&gt;</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">p<span class="op">$</span>sequences[[<span class="st">"OG0001"</span>]]  <span class="co"># List first cluster</span></a></code></pre></div>
+<pre><code>##   A DNAStringSet instance of length 10
+##      width seq                                              names               
+##  [1]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 16244_6_18__16244...
+##  [2]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 16244_6_24__16244...
+##  [3]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 16244_6_31__16244...
+##  [4]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 16244_6_6__16244_...
+##  [5]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 17059_2_11__17059...
+##  [6]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 17059_2_16__17059...
+##  [7]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 17059_2_23__17059...
+##  [8]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 17059_2_27__17059...
+##  [9]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 17059_2_42__17059...
+## [10]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 17150_1_73__17150...</code></pre>
 <p>Note that sequence names are created by pasteing organism names and gene names, separated by a string that by default is <code>sep = '__'</code> (two underscores). This are the same as the <code>gid</code> column in the <code>$genes</code> field, and are initially set when <code>pagoo</code> object is created. If you think your dataset contain names with this separator, then you should set this parameter to other string to avoid conflicts. <code>$sequences</code> field also has predefied subsets: <code>$core_sequences</code>, <code>$shell_sequences</code>, and <code>$cloud_sequences</code>.</p>
 </div>
 <div id="organism-metadata" class="section level1">
 <h1 class="hasAnchor">
 <a href="#organism-metadata" class="anchor"></a>Organism metadata</h1>
 <p>The <code>$organisms</code> field contain a table with organisms and metadata as additional columns if provided.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">p<span class="op">$</span>organisms</a></code></pre></div>
-<pre><code>## DataFrame with 5 rows and 3 columns
-##         org     sero  country
-##    &lt;factor&gt; &lt;factor&gt; &lt;factor&gt;
-## 1 organismA        a Westeros
-## 2 organismB        b Westeros
-## 3 organismC        c Westeros
-## 4 organismD        a    Essos
-## 5 organismE        b    Essos</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">p<span class="op">$</span>organisms</a></code></pre></div>
+<pre><code>## DataFrame with 10 rows and 8 columns
+##           org          id      strain      year     country        host
+##      &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;
+## 1   16244_6_6        FR15   2008/170h      2008      France       Human
+## 2  16244_6_18        FR27   2012/185h      2012      France       Human
+## 3  16244_6_24        FR33    2014/52h      2014      France       Human
+## 4  16244_6_31        FR40    2009/56h      2009      France       Human
+## 5  17059_2_16         AR1      99/801      1999   Argentina      Bovine
+## 6  17059_2_23         AR8      04/875      2004   Argentina      Bovine
+## 7  17059_2_27        AR12      06/195      2006   Argentina      Bovine
+## 8  17150_1_73         CA1   001A-0374      2005      Canada       Human
+## 9  17059_2_11        CA22    ID136207      2014      Canada       Human
+## 10 17059_2_42         TW6        1830      2008      Taiwan       Human
+##         source   accession
+##    &lt;character&gt; &lt;character&gt;
+## 1        Feces   ERS672247
+## 2        Blood   ERS672259
+## 3          CSF   ERS672265
+## 4          CSF   ERS672272
+## 5      Prepuce   ERS739235
+## 6        Fetus   ERS739242
+## 7           VM   ERS739246
+## 8        Blood   ERS686652
+## 9        Blood   ERS739230
+## 10       Blood   ERS739261</code></pre>
 </div>
   </div>
 
