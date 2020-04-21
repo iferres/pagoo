@@ -137,7 +137,7 @@ phy <- p$core_seqs_4_phylo() %>%                    # Core genome sequences
   phangorn::NJ() %>%                                # Compute NJ
   ggtree::ggtree() %<+%                             # Create ggtree
      as.data.frame(p$organisms) +                   # Get organisms metadata
-     ggtree::geom_tippoint(aes(colour = country))   # Add coloured tip points
+     ggtree::geom_tippoint(aes(colour = host))      # Add coloured tip points
 ```
 
 
