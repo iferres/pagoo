@@ -15,7 +15,7 @@ Start by loading the example dataset.
 
 ```{r, warning=FALSE, message=FALSE}
 library(pagoo) # Load package
-toy_rds <- system.file('extdata', 'toy_data.RDS', package = 'pagoo')
+toy_rds <- system.file('extdata', 'campylobacter.RDS', package = 'pagoo')
 p <- load_pangenomeRDS(toy_rds)
 ```
 

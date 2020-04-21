@@ -13,7 +13,7 @@ If you want to standarize any analysis from your pangenome data that is not cove
 Start by loading the `pagoo` object, as in previous tutorials:
 ```{r, warning=FALSE, message=FALSE}
 library(pagoo) # Load package
-toy_rds <- system.file('extdata', 'toy_data.RDS', package = 'pagoo')
+toy_rds <- system.file('extdata', 'campylobacter.RDS', package = 'pagoo')
 p <- load_pangenomeRDS(toy_rds)
 ```
 
