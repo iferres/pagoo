@@ -60,4 +60,8 @@ campy$gg_barplot()
 
 ## Sequence Manipulation
 
-One of the main advantages of using `pagoo` is the ability to very easily manipulate sequences. This tutorial dataset doesn't contain sequences, and they are an optional requirement. We strongly recommend to also giving a look to other `pagoo` tutorials in which sequences are used to understand the potential of using this package to work with pangenomes.
+One of the main advantages of using `pagoo` is the ability to very easily manipulate sequences. Sequences are stored as a `List` of `DNAStringSet` from `Biostrings` package.
+
+```{r}
+p$sequences
+```

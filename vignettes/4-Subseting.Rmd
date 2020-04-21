@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 One fundamental operation when working with pangenomic data is to subset it in order to better analyze it. `pagoo` provides three convinent ways that can help in different scenarios. First we will see predefined subsets, then we will understand how to use the classic R's `[` operator with `pagoo` objects, and finally we will see how to temporarily remove one or more organisms from the dataset, and then to recover them.
 
-Start the tutorial by loading the included pangenome.
+Start the tutorial by loading the included *Campylobacter* pangenome.
 
 ```{r, warning=FALSE, message=FALSE}
 library(pagoo) # Load package

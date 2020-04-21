@@ -151,7 +151,7 @@ p$organisms
 Since we have metadata asociated to each organism, we will use it to colour the organisms according to the `country` variable.
 
 ```{r, warning=FALSE}
-p$gg_pca(colour = 'country', size = 4) + 
+p$gg_pca(colour = 'host', size = 4) + 
   theme_bw(base_size = 15) +
   scale_color_brewer(palette = "Set2")
 ```

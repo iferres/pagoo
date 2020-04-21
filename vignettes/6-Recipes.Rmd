@@ -42,8 +42,8 @@ bars <- p$gg_barplot() +                                       # Plot gene frequ
         axis.text=element_text(size = 12)) +                   # Customize axis text size
   geom_bar(stat = 'identity', color = 'black', fill = 'black') # Customize bar color and borders
 
-# 3. PCA of accessory genes colored by country
-pca <- p$gg_pca(colour = 'country', size = 4) +             # Plot PCA, color by country
+# 3. PCA of accessory genes colored by host
+pca <- p$gg_pca(colour = 'host', size = 4) +                # Plot PCA, color by host
   theme_bw(base_size = 15) +                                # Customize background theme
   theme(legend.position = 'bottom') +                       # Customize legend position
   theme(axis.title = element_text(size = 12),               # Customize axis title
