@@ -1,7 +1,13 @@
 Package: pagoo
-Version: 0.2.1
-Title: What the Package Does (One Line, Title Case)
-Description: What the package does (one paragraph).
+Version: 0.3.0
+Title: Analyze Bacterial Pangenomes in R
+Description: pagoo is an encapsulated, object-oriented class system for 
+  analyzing bacterial pangenomes. It uses the R6 package as backend. It was 
+  designed in order to facilitate and speed-up the comparative analysis of 
+  multiple bacterial genomes, standardizing and optimizing routine tasks 
+  performed everyday. There are a handful of things done everyday when working 
+  with bacterial pangenomes: subset, summarize, extract, visualize and store 
+  data. So, pagoo is intended to facilitate these tasks as much as possible.
 Authors@R: person("Ignacio", "Ferres", , "iferres@pasteur.edu.uy", c("aut", "cre"))
 Depends:
   S4Vectors,
@@ -28,6 +34,14 @@ Imports:
   BiocGenerics,
   Biostrings,
   GenomicRanges
+Suggests:
+  patchwork,
+  ape,
+  phangorn,
+  pegas,
+  DECIPHER,
+  magrittr,
+  rhierbaps
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
