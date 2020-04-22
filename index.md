@@ -1,3 +1,8 @@
+<!-- badges: start -->
+[![R build status](https://github.com/iferres/pagoo/workflows/R-CMD-check/badge.svg)](https://github.com/iferres/pagoo/actions)
+![pkgdown](https://github.com/iferres/pagoo/workflows/pkgdown/badge.svg)
+<!-- badges: end -->
+
 # Pagoo: An encapsulated OO class system for analyzing bacterial pangenomes in R
 
 *"One object to store them all, one object to find them, one object to query from and with ggplot2 visualize them." (Lord Sauron)*
