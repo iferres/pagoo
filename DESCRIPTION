@@ -15,7 +15,7 @@ Authors@R: c(
     person("Gregorio", "Iraola", , "iferres@pasteur.edu.uy", role = c("aut"), 
       comment = c(ORCID = "0000-0002-6516-3404")
     ),
-    person("Institut Pasteur de Montevideo", role = c("fnd"))
+    person("Institut Pasteur de Montevideo", role = c("fnd")
     )
   )
 Maintainer: <iferres@pasteur.edu.uy>
