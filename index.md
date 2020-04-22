@@ -78,7 +78,7 @@ You can see that basically there are public and private fields/methods. In priva
 
 ### Pangenome reconstruction
 
-Pagoo works over the pangenome **after it has been built** with any pangenome reconstruction software. So, you can do it with the software of your preference. Despite we recommend `Pewit`, our own pangenome reconstruction software, `pagoo` can read-in the output of most popular and state-of-the-art pangenome softwares like `Roary`, `Panaroo`, `panX` and `PIRATE`. `pagoo` also runs a `Shiny` application that provides reactive interaction with the data and facillitates handling and visualization.
+Pagoo works over the pangenome **after it has been built** with any pangenome reconstruction software. So, you can do it with the software of your preference. Despite we recommend `Pewit`, our own pangenome reconstruction software, `pagoo` can read-in the output of the most popular pangenome reconstruction software, `roary`, and also we are planning to give support to others like `Panaroo`, `PanX` and `PIRATE`. `pagoo` also runs a `Shiny` application that provides reactive interaction with the data and facillitates handling and visualization.
 
 ### Installation
 
