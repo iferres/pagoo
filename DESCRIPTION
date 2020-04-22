@@ -8,7 +8,15 @@ Description: pagoo is an encapsulated, object-oriented class system for
   performed everyday. There are a handful of things done everyday when working 
   with bacterial pangenomes: subset, summarize, extract, visualize and store 
   data. So, pagoo is intended to facilitate these tasks as much as possible.
-Authors@R: person("Ignacio", "Ferres", , "iferres@pasteur.edu.uy", c("aut", "cre"))
+Authors@R: c(
+    person("Ignacio", "Ferres", , "iferres@pasteur.edu.uy", role =  c("aut", "cre"), 
+      comment = c(ORCID = "0000-0003-0910-6568")
+    ),
+    person("Gregorio", "Iraola", , "iferres@pasteur.edu.uy", role = c("aut"), 
+      comment = c(ORCID = "0000-0002-6516-3404")
+    )
+  )
+Maintainer: <iferres@pasteur.edu.uy>
 Depends:
   S4Vectors,
   BiocGenerics,
