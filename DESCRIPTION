@@ -18,6 +18,7 @@ Authors@R: c(
   )
 Maintainer: <iferres@pasteur.edu.uy>
 URL: https://iferres.github.io/pagoo/, https://github.com/iferres/pagoo
+BugReports: https://github.com/iferres/pagoo/issues
 Depends:
   S4Vectors,
   BiocGenerics,
