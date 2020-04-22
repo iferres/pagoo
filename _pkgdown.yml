@@ -2,3 +2,8 @@ destination: docs
 template:
   params:
     bootswatch: flatly
+
+home:
+  links:
+  - text: Who we are:
+    href: http://pasteur.uy/en/research/g4-labs/microbial-genomics-laboratory/

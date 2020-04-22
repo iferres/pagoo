@@ -14,9 +14,13 @@ Authors@R: c(
     ),
     person("Gregorio", "Iraola", , "iferres@pasteur.edu.uy", role = c("aut"), 
       comment = c(ORCID = "0000-0002-6516-3404")
+    ),
+    person("Institut Pasteur de Montevideo", role = c("fnd"))
     )
   )
 Maintainer: <iferres@pasteur.edu.uy>
+URL: https://iferres.github.io/pagoo/, https://github.com/iferres/pagoo
+BugReports: https://github.com/iferres/pagoo/issues
 Depends:
   S4Vectors,
   BiocGenerics,
