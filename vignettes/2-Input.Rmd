@@ -104,9 +104,15 @@ p <- pagoo(data = data, # Required data
            sequences = sq) # Sequences
 ```
 
-All this stuff with preparing data and loading classes seems difficult and time-consuming, but in real life working datasets this will be rarely needed. We are explaning it here to provide full details about how the software works, but this package also provides functions to automatically read-in output files from pangenome reconstruction softwares into `pagoo`, avoiding any formating or manipulation of data.
+# Input From Pangenome Reconstruction Software
 
-For pangenome reconstruction you can use the software of your choice. For example, since last years <a [roary](https://sanger-pathogens.github.io/Roary/) (Page et al., 2015) has been the standard and most cited software for pangenome reconstruction. More recently, other good software has emerged like [PanX](http://pangenome.tuebingen.mpg.de) (Ding et al., 2018), [PRIATE](https://github.com/SionBayliss/PIRATE) (Bayliss et al., 2019), [micropan](https://github.com/cran/micropan) (Snipen & Liland, 2015), [PEPPA](https://github.com/zheminzhou/PEPPA) (Zhou & Achtman, 2020), [panaroo](https://github.com/gtonkinhill/panaroo) (Tonkin-Hill et al., 2020), among others. Also, we have created our own pangenome reconstruction software called [pewit](https://github.com/iferres/pewit) (Ferrés et al., still unpublished), which automatically generates a `pagoo` object to perform downstream analyses. To use `pagoo` from the outputs produced by most of the other software tools mentioned above, we provide specific functions to read-in pangenome data.
+All the above stuff with preparing data and loading classes seems difficult and time-consuming, but in real life working datasets this will be rarely needed. We are explaning it here to provide full details about how the software works, but this package also provides functions to automatically read-in output files from pangenome reconstruction softwares into `pagoo`, avoiding any formating or manipulation of data.
+
+Currently `pagoo` supports input from [roary](https://sanger-pathogens.github.io/Roary/) (Page et al., 2015), which has been the standard and most cited software for pangenome reconstruction. To work with `roary`'s ouput, please refer to `?roary_2_pagoo` documentation. You will only need the `.gff` files, and the `gene_presence_absence.csv` file.
+
+Also, we have created our own pangenome reconstruction software called [pewit](https://github.com/iferres/pewit) (Ferrés et al., still unpublished), which automatically generates a `pagoo`-like object to perform downstream analyses. This object contain all the methods and fields `pagoo` provides, plus a set of methods and fields exclusive to this software.
+
+More recently, other good software has emerged like [PanX](http://pangenome.tuebingen.mpg.de) (Ding et al., 2018), [PRIATE](https://github.com/SionBayliss/PIRATE) (Bayliss et al., 2019), [micropan](https://github.com/cran/micropan) (Snipen & Liland, 2015), [PEPPA](https://github.com/zheminzhou/PEPPA) (Zhou & Achtman, 2020), [panaroo](https://github.com/gtonkinhill/panaroo) (Tonkin-Hill et al., 2020), among others. We plan to provide support to most of them in the future, although some of them already provide options to output its results as roary's, so in theory you could use them as `pagoo`'s input.
 
 # Adding Metadata After Object Creation
 
