@@ -1,0 +1,115 @@
+---
+title: "4 - Subseting"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+One fundamental operation when working with pangenomic data is to subset it in order to better analyze it. `pagoo` provides three convinent ways that can help in different scenarios. First we will see predefined subsets, then we will understand how to use the classic R's `[` operator with `pagoo` objects, and finally we will see how to temporarily remove one or more organisms from the dataset, and then to recover them.
+
+Start the tutorial by loading the included *Campylobacter* pangenome.
+
+```{r, warning=FALSE, message=FALSE}
+library(pagoo) # Load package
+toy_rds <- system.file('extdata', 'campylobacter.RDS', package = 'pagoo')
+p <- load_pangenomeRDS(toy_rds)
+```
+
+# Predefined Subsets
+
+Predefined subsets were already superficially seen in **3 - Querying Data** tutorial. Here we will review them and understand its notation.
+
+ | - | `$core_*` | `$shell_*` | `$cloud_*` |
+ | --- | --- | --- | --- |
+ | **`$*_genes`** | `$core_genes` | `$shell_genes` | `$cloud_genes` |
+ | **`$*_clusters`** | `$core_clusters` | `$shell_clusters` | `$cloud_clusters` |
+ | **`$*_sequences`** | `$core_sequences` | `$shell_sequences` | `$cloud_sequences` |
+
+As seen in the above table, the notation is quite straightforward. Lets take `clusters` for instance to illustrate it better.
+
+```{r}
+p$clusters
+p$core_clusters
+p$shell_clusters
+p$cloud_clusters
+```
+
+# The `[` operator
+
+Using `[` for subset vectors, lists, or matrices in R is one of the most common operations we, as R users, do every day. Methods using `[` for subsetting can be divided into 2 types: 
+
+1. Subsetting vector or list like objects.
+2. Subsetting matrix-like objects.
+
+In the following subsections we will see how to use them to subset `$pan_matrix`, `$genes`, `$clusters`, `$sequences`, or`$organisms` fields.
+
+## Vector/List notation
+
+When we subset a vector or list in R we use a single number or a vector of numbers, lets say from `i` to `j`, to pick those elements by indexes: `x[i:j]`. In `pagoo` we implement a method for this generic function to subset data fields, where indexes represent **clusters**. So instead of subseting directly the final object (which you can of course) you apply this method directly to the object, and then select any of the data fields.
+
+```{r}
+# From clusters 1 to 3
+p[1:3]$pan_matrix
+p[1:3]$genes
+p[1:3]$clusters
+p[1:3]$sequences
+p[1:3]$organisms
+```
+Note that in each case, indexes can be interpreted as clusters. In `pan_matrix` they refer to columns, in `genes` and `sequences` to elements in a list, in `clusters` rows in the dataframe, and in the case of `$organisms` it returns the organisms (rows) where those clusters are present. See what happen for this last case when we query for organisms present for a shell cluster:
+
+```{r}
+shell_clust <- p$shell_clusters$cluster[1] # [1] "OG008"
+p[shell_clust]$organisms
+```
+Only (3) organisms which contain that shell cluster will be listed.
+
+## Matrix notation
+The other use of `[` notation is when we subset a matrix-like object. In this case we provide 2 sets of indexes: the first for rows, and the second for columns, separated by a coma. `pagoo` interprets these indexes as organisms (rows) and clusters (columns), so you are referencing a set of genes (cell value). Basically you are referencing cells in the pan_matrix.
+
+```{r}
+p$pan_matrix[1:3,125:127]
+```
+Here we are selecting the first 3 organisms, and the clusters indexed from the 125 to the 127. Note that we see (sum columns) 2 genes in the first cluster, 1 in the second, and 3 in the third. Now we flip the notation and subset directly the `pagoo` object, and then ask for a data field:
+
+```{r}
+p[1:3, 125:127]$pan_matrix # The same as above
+p[1:3, 125:127]$genes
+p[1:3, 125:127]$clusters
+p[1:3, 125:127]$sequences
+p[1:3, 125:127]$organisms
+```
+So this selection returns a list of length 3, with 2, 1, and 3 elements respectively for `$genes` and `$sequences`, a dataframe showing only the selected clusters in the `$clusters` field, and a dataframe showing only the selected organisms in the `$organisms` field.
+
+We found this implemetation quite useful for both data exploration and fine grained analysis.
+
+
+# Dropping and Recovering Organisms
+
+One useful feature implemented in `pagoo` is the possibility of easily removing (hiding) organisms from the dataset. This is useful if during the analysis we identify some genome with weird charactersitics (i.e. potentially contaminated), or if we want to focus just in a subset of genomes of interest given any metadata value, or if we included an outgroup for phylogenetic purposes but we want to remove it from downstream analyses. Let's see how it works..
+
+## Dropping organisms
+```{r}
+p$organisms
+p$summary_stats
+```
+We can see that we have 5 organisms, and we have the pangenome summary statistics. Let's say, for instance, that we want to remove organismC (row 3) because we only want to analyze organisms with `sero` `a` and `b`.
+
+```{r}
+p$drop(3) # We can use p$drop("organismC") as well
+p$organisms # Updated organims !!
+p$summary_stats # Updated stats !!
+```
+As you see, not only the organismC has been removed from the dataset, but also summary statistics have been updated! This is also true for any other data field: `$pan_matrix`, `$genes`, `$clusters`, `$sequences`, and`$organisms` fields are automatically updated. Also any embebbed statistical or visualization methods will now only consider available organisms/clusters/genes. When we drop an organims, we are hiding all features associated to that genomes including genes, sequences, gene clusters and metadata. 
+
+**It's important to note that you don't have to reassign the object to a new one, it is self modified (in place modification). That's R6 reference semantics (see R6 documentation for details), use with caution.**
+
+## Recovering dropped organisms
+You can recover dropped organisms. To see if we have any hidden organism, we use the `$dropped` field, and then recover it using its index or its name.
+```{r}
+p$dropped
+p$recover(3) # We could also use p$recover("organismC")
+p$organisms
+```
+Now organismC and all its features will be available again.

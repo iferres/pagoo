@@ -331,7 +331,6 @@ PgR6M <- R6Class('PgR6M',
                    #' Plot a scatter plot of a Principal Components Analysis.
                    #' @param colour The name of the column in \code{$organisms} field from which points will take
                    #' colour (if provided). \code{NULL} (default) renders black points.
-                   #' class \code{prcomp}.
                    #' @param ... More arguments to be passed to \code{ggplot2::autoplot()}.
                    #' @return A scatter plot (\code{ggplot2::autoplot()}), and a \code{gg} object (\code{ggplot2}
                    #' package) invisibly.

@@ -82,6 +82,7 @@ names, and organism number identifier as \code{names()}}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 A basic \code{PgR6} class constructor. It contains basic fields
 and subset functions to handle a pangenome.
@@ -139,6 +140,7 @@ analyzing a pangenome.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-add_metadata"></a>}}
+\if{latex}{\out{\hypertarget{method-add_metadata}{}}}
 \subsection{Method \code{add_metadata()}}{
 Add metadata to the object. You can add metadata to each organism, to each
 group of orthologous, or to each gene. Elements with missing data should be filled
@@ -169,6 +171,7 @@ of the gene as provided in the \code{"data"} data.frame, separated by the
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-drop"></a>}}
+\if{latex}{\out{\hypertarget{method-drop}{}}}
 \subsection{Method \code{drop()}}{
 Drop an organism from the dataset. This method allows to hide an organism
 from the real dataset, ignoring it in downstream analyses. All the fields and
@@ -196,6 +199,7 @@ are mutable.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-recover"></a>}}
+\if{latex}{\out{\hypertarget{method-recover}{}}}
 \subsection{Method \code{recover()}}{
 Recover a previously \code{$drop()}ped organism (see above). All fields
 and methods will start to behave considering this organism again.
@@ -220,6 +224,7 @@ are mutable.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-write_pangenome"></a>}}
+\if{latex}{\out{\hypertarget{method-write_pangenome}{}}}
 \subsection{Method \code{write_pangenome()}}{
 Write the pangenome data as flat tables (text). Is not the most recomended way
 to save a pangenome, since you can loose information as numeric precision,
@@ -254,6 +259,7 @@ was provided.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-save_pangenomeRDS"></a>}}
+\if{latex}{\out{\hypertarget{method-save_pangenomeRDS}{}}}
 \subsection{Method \code{save_pangenomeRDS()}}{
 Save a pagoo pangenome object. This function provides a method for saving a pagoo
 object and its state into a "RDS" file. To load the pangenome, use the
@@ -263,13 +269,16 @@ pagoo versions, so you could update pagoo and still recover the same pangenome. 
 arguments in \code{load_pangenomeRDS}. \code{dropped} organisms also kept hidden, as
 you where working with the original object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PgR6$save_pangenomeRDS(file = "pangenome.rds")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PgR6$save_pangenomeRDS(file = "pangenome.rds", seqs.if.avail = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{file}}{The name of the file to save. Default: "pangenome.rds".}
+
+\item{\code{seqs.if.avail}}{\code{logical}. Whether to save sequences in the rds file or not,
+if they are available. Only relevant if class is PgR6MS, otherwise ignored.}
 }
 \if{html}{\out{</div>}}
 }
@@ -280,6 +289,7 @@ using the load_pangenomeRDS function, into an RDS (binary) file.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

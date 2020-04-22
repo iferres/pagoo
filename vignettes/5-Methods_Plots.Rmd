@@ -1,0 +1,163 @@
+---
+title: "5 - Methods and Plots"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+We implemented `pagoo` to provide basic but fundamental statistical analyses and visualizations out-of-the-box. Some of them are just wrappers of other packages functions (see `vegan` and `micropan` R packages; cite them also if you use `pagoo`), and graphics are made by `ggplot2` and `plotly` packages. All these are very useful for initial data exploration, but also provide a lot of flexibility to interact with other R packages in order to make more complex plots and more robust analyses. Also an interactive `Shiny App` can be easily deployed with a single funtion call, useful specially for those users that not very used to work with R code and prefer a UI, but also powerful for experienced users since it gives a general view of the data.
+
+All this methods are embebbed to the `pagoo` object, so is very easy to start working with pangenome data.
+
+Start by loading the example dataset.
+
+```{r, warning=FALSE, message=FALSE}
+library(pagoo) # Load package
+toy_rds <- system.file('extdata', 'campylobacter.RDS', package = 'pagoo')
+p <- load_pangenomeRDS(toy_rds)
+```
+
+As you may have already noted, methods and visualization are different than data fields (see previous tutorials) in the way of calling them. As any R function, you must use parentheses to run them. 
+
+# Statistical methods
+In this tutorial some, but not all, methods will be covered. Once you get the idea, just browse the documentation to see other available methods and what arguments they take.
+
+## Gene Abundance Distance
+Pairwise distances between gene abundance can be retieved by using `$dist()` method. By default, Bray-Curtis distance is computed. This is just a wrapper of `vegdist()` from `vegan` package.
+```{r}
+p$dist()
+```
+Other distances available include, for instance, Jaccard distance (see documentation). As this method require presence/absence data, and not abundance, you should use it with `binary = TRUE` argument set.
+
+```{r, eval=FALSE}
+p$dist(method = "jaccard", binary = TRUE)
+```
+
+<!-- ## Rarefaction -->
+<!-- A rarefaction or permutation sampling method is available. By default, it performs 10 permutations sampling from 1 to nth genomes, and getting the resulting number of clusters for each pangenome.  -->
+
+<!-- ```{r} -->
+<!-- p$rarefact() -->
+<!-- ``` -->
+<!-- You can also "rarefact" the coregenome. -->
+<!-- ```{r, eval=FALSE} -->
+<!-- p$rarefact(what = "coregenome") -->
+<!-- ``` -->
+
+<!-- ## Pangenome Power Law Fit -->
+<!-- Using the above `$rarefact()` method, a Power Law function can be fitted. -->
+<!-- ```{r} -->
+<!-- pow_law <- p$pg_power_law_fit()$formula -->
+<!-- ``` -->
+
+<!-- ## Coregenome Exponential Decay Fit -->
+
+<!-- ```{r} -->
+<!-- ``` -->
+
+## Estimation of Core and Pangenome Sizes
+Given a panmatrix, you could predict the number of core clusters and the total number of clusters in a pangenome. Several methods have been developed for this purpose, in this case a binomial mixture model is used to describe the distribution of gene clusters across genomes in a pangenome. 
+The function is just a wrapper of `binomixEstimate()` from `micropan` package, so if you use it cite it acordingly. We recommend looking the `micropan::binomixEstimate()` documentation for model and implementation details.
+
+To use this method, simply call it from the object:
+
+```{r}
+p$binomix_estimate()
+```
+
+Given that we are using a very small toy dataset, results here are not meaningful.
+
+## Fluidity
+Genomic fluidity is a measure of population diversity. Is somehow similar to computing jaccard distances, but genomic fluidity describes the whole population whereas jaccard distances are computed pairwise. This is also a `micropan` wrapper function. Let`s compute it using 100 random samples:
+```{r}
+p$fluidity(n.sim = 100)
+```
+
+## Principal Component Analysis
+A method to compute `prcomp` (`stats` package) over the panmatrix is provided. You can use generic functions to further analyze the results.
+```{r}
+pca <- p$pan_pca()
+summary(pca)
+```
+
+# Visualization methods
+`pagoo` uses `ggplot2` package to produce customizable visualizations. While is not necessary to load `ggplot2` to plot pangenome data, is better since you can fully customize them. Also we will be using `patchwork` to arrange plots in some cases to show, side by side, the default plot and a customized one.
+
+```{r, message=FALSE}
+library(ggplot2)
+library(patchwork) # To arrange plots
+```
+
+## Summary Pie Chart
+The most basic plot is a pie chart to show core, shell, and cloud genome proportions.
+```{r}
+# Basic
+pie1 <- p$gg_pie() + ggtitle("Default")
+
+# Customize with ggplot2
+pie2 <- pie1 + 
+  ggtitle("Customized") + 
+  theme_bw(base_size = 15) + 
+  scale_fill_brewer(palette = "Blues")
+
+# Arrange (patchwork) and plot
+pie1 + pie2
+```
+
+## Gene Frequency BarPlot
+Frequency barplots are one of the basic plots in pangenomics. They show how many clusters are in only 1 genome, how many in 2 genomes, ..and so on, until showing how many clusters are in all genomes (i.e. they are part of the coregenome).
+```{r}
+p$gg_barplot()
+```
+
+<!-- ## Distance HeatMap -->
+
+<!-- ```{r} -->
+<!-- p$gg_dist() -->
+<!-- ``` -->
+
+## Gene Presence/Absence BinMap
+A binary map show gene presence/absence patterns per genome. Each column is a cluster of orthologous genes, and each row an organism. The columns (clusters) are sorted by column sums, so core genes appear to the left, cloud genes to the right, and shell genes in the middle. This plot is useful, for example, to identify strains with abnormal accessory gene patterns which can represent true biological signatures like the presence of extrachromosomal elements or artifacts product of contamination during sequencing.
+```{r}
+p$gg_binmap()
+```
+
+## Rarefaction Curves
+Pangenome curves typically illustrate the number of gene clusters that are subsequently discovered as more genomes are added to the dataset. If the pangenome is open, more and more accessory genes will be discovered as new genomes are added to the analysis and the size of the core genome will tend to decrease. `pagoo` applies the the Power-law distribution to fit the pangenome size and the Exponential decay function to fit the core genome size.
+
+Rarefaction curves are computed by first performing permutations with `$rarefact()`, and then fitting a Power Law to pangenome counts, and an Exponential Decay Law to coregenome counts. The latter two operations are done by using `$pg_power_law_fit()` and `$cg_exp_decay_fit()` methods, respectively (see documentation for more details). `$gg_curves()` combines this methods to facilitate plotting.
+```{r}
+p$gg_curves()
+```
+
+You can add points and facet data by category, and add any other customization:
+
+```{r}
+p$gg_curves() + 
+  ggtitle("Pangenome and Coregenome curves") + 
+  geom_point() + 
+  facet_wrap(~category, scales = 'free_y') + 
+  theme_bw(base_size = 15) + 
+  scale_color_brewer(palette = "Accent")
+```
+
+## PCA Biplot
+A biplot for visualizing the first 2 principal components in a PCA is always useful at early stages of analysis to explore possible association of genomes based on gene content. This method uses `$pan_pca()` method to perform the PCA, and allows you to use organism metadata to colour the points.
+```{r}
+p$organisms
+```
+Since we have metadata asociated to each organism, we will use it to colour the organisms according to the `country` variable.
+
+```{r, warning=FALSE}
+p$gg_pca(colour = 'host', size = 4) + 
+  theme_bw(base_size = 15) +
+  scale_color_brewer(palette = "Set2")
+```
+
+# Shiny App
+Last but not least, you can deploy a `shiny` app by just one line of code. 
+```{r, eval=FALSE}
+p$runShinyApp()
+```

@@ -1,5 +1,5 @@
 Package: pagoo
-Version: 0.2.0
+Version: 0.2.1
 Title: What the Package Does (One Line, Title Case)
 Description: What the package does (one paragraph).
 Authors@R: person("Ignacio", "Ferres", , "iferres@pasteur.edu.uy", c("aut", "cre"))
@@ -32,5 +32,5 @@ License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-RoxygenNote: 7.0.2.9000
+RoxygenNote: 7.1.0
 Roxygen: list(r6 = TRUE)
