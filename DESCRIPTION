@@ -47,13 +47,14 @@ Imports:
   Biostrings,
   GenomicRanges
 Suggests:
-  patchwork,
-  ape,
-  phangorn,
-  pegas,
-  DECIPHER,
-  magrittr,
-  rhierbaps
+    patchwork,
+    ape,
+    phangorn,
+    pegas,
+    DECIPHER,
+    magrittr,
+    rhierbaps,
+    testthat
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
