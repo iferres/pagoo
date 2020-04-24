@@ -6,7 +6,9 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
+```{css, echo=FALSE}
+pre, code {white-space:pre !important; overflow-x:auto;}
+```
 In this section we will start exploring what is stored inside the `pagoo` object and how we can access this information. Keep in mind that this object has its own associated data and methods that can be easily queried with the `$` operator. These methods allow for the rapid subsetting, extraction and visualization of pangenome data.
 
 First of all, we will load a pangenome using a toy dataset included in the package. This is a preloaded set of 10 *Campylobacter spp.* genomes, with metadata associated.
