@@ -4,7 +4,7 @@ rds <- system.file('extdata', 'campylobacter.RDS', package = 'pagoo')
 p <- load_pangenomeRDS(rds)
 
 
-test_that('methods return expected objects'{
+test_that('methods return expected objects', {
   dist <- p$dist()
   expect_is(dist, 'dist')
 
