@@ -179,7 +179,7 @@ PgR6MS <- R6Class('PgR6MS',
                           ogs2fix <- ccl[wma[, 2]]
                           orgs2fix <- rownames(wma)
                           remrw <- apply(cbind(ogs2fix, orgs2fix), 1, function(x){
-                            wh <- which(mcls$group==x[1] & mcls$org==x[2])
+                            wh <- which(mcls$cluster==x[1] & mcls$org==x[2])
                             wh[-seq_len(max_per_org)]
                           })
                           torm <- unlist(remrw)
@@ -201,13 +201,14 @@ PgR6MS <- R6Class('PgR6MS',
                           mcls <- mcols(sqs)
                           mfill <- which(is.na(mcls$org))
                           mcols(sqs)$org[mfill] <- rownames(tofll)
-                          mcols(sqs)$group[mfill] <- ccl[tofll[, 2]]
+                          mcols(sqs)$cluster[mfill] <- ccl[tofll[, 2]]
                           mcls <- mcols(sqs)
                         }
                       }
 
                       ## Order ! ! !
-                      sqs <- sqs[order(mcls$org)]
+                      orgs <- as.character(self$organisms$org)
+                      sqs <- sqs[match(mcls$org, orgs)]
                       mcls <- mcols(sqs)
 
                       # Return
