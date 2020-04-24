@@ -38,6 +38,7 @@ Imports:
   shinydashboard,
   DT,
   plotly, 
+  magrittr,
   heatmaply,
   dendextend,
   ggfortify,
@@ -48,7 +49,6 @@ Suggests:
     phangorn,
     pegas,
     DECIPHER,
-    magrittr,
     rhierbaps,
     testthat,
     covr
