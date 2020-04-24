@@ -208,7 +208,7 @@ PgR6MS <- R6Class('PgR6MS',
 
                       ## Order ! ! !
                       orgs <- as.character(self$organisms$org)
-                      sqs <- sqs[match(mcls$org, orgs)]
+                      sqs <- sqs[order(match(mcls$org, orgs))]
                       mcls <- mcols(sqs)
 
                       # Return
