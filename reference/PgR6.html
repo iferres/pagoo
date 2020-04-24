@@ -152,7 +152,7 @@ instead of this, since is more easy to understand.</p>
 
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
-    <p><div class="r6-active-bindings"></p><dl'>
+    <p><div class="r6-active-bindings"></p><dl>
 <dt><code>pan_matrix</code></dt><dd><p>The panmatrix. Rows are organisms, and
 columns are groups of orthologous. Cells indicates the presence (&gt;=1) or
 absence (0) of a given gene, in a given organism. Cells can have values
@@ -239,7 +239,7 @@ and subset functions to handle a pangenome.</p><h3>Usage</h3>
 )</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>data</code></dt><dd><p>A <code>data.frame</code> or <code><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></code> containing at least the
 following columns: <code>gene</code> (gene name), <code>org</code> (organism name to which the gene belongs to),
 and <code>cluster</code> (group of orthologous to which the gene belongs to). More columns can be added as metadata
@@ -282,7 +282,7 @@ data).</p><h3>Usage</h3>
 <p><div class="r"></p><pre><span class='no'>PgR6</span>$<span class='fu'>add_metadata</span>(<span class='kw'>map</span> <span class='kw'>=</span> <span class='st'>"org"</span>, <span class='no'>data</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>map</code></dt><dd><p><code>character</code> identifiying the metadata to map. Can
 be one of <code>"org"</code>, <code>"group"</code>, or <code>"gid"</code>.</p></dd>
 
@@ -306,7 +306,7 @@ called.</p><h3>Usage</h3>
 <p><div class="r"></p><pre><span class='no'>PgR6</span>$<span class='fu'><a href='https://rdrr.io/r/base/drop.html'>drop</a></span>(<span class='no'>x</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>x</code></dt><dd><p><code>character</code> or <code>numeric</code>. The name of the
 organism wanted to be dropped, or its numeric id as returned in
 <code>$organism</code> field (see below).</p></dd>
@@ -323,7 +323,7 @@ and methods will start to behave considering this organism again.</p><h3>Usage</
 <p><div class="r"></p><pre><span class='no'>PgR6</span>$<span class='fu'><a href='https://rdrr.io/r/utils/recover.html'>recover</a></span>(<span class='no'>x</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>x</code></dt><dd><p><code>character</code> or <code>numeric</code>. The name of the
 organism wanted to be recover, or its numeric id as returned in
 <code>$dropped</code> field (see below).</p></dd>
@@ -345,7 +345,7 @@ the above in mind.</p><h3>Usage</h3>
 <p><div class="r"></p><pre><span class='no'>PgR6</span>$<span class='fu'>write_pangenome</span>(<span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"pangenome"</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>dir</code></dt><dd><p>The unexisting directory name where to put the data files. Default
 is "pangenome".</p></dd>
 
@@ -372,7 +372,7 @@ you where working with the original object.</p><h3>Usage</h3>
 <p><div class="r"></p><pre><span class='no'>PgR6</span>$<span class='fu'>save_pangenomeRDS</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"pangenome.rds"</span>, <span class='kw'>seqs.if.avail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>file</code></dt><dd><p>The name of the file to save. Default: "pangenome.rds".</p></dd>
 
 <dt><code>seqs.if.avail</code></dt><dd><p><code>logical</code>. Whether to save sequences in the rds file or not,
@@ -388,7 +388,7 @@ using the load_pangenomeRDS function, into an RDS (binary) file.</p>
 <p><div class="r"></p><pre><span class='no'>PgR6</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
 </dl><p></div></p>

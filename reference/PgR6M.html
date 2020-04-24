@@ -201,7 +201,7 @@ Inherits: <code><a href='PgR6.html'>PgR6</a></code></p>
 )</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>data</code></dt><dd><p>A <code>data.frame</code> or <code><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></code> containing at least the
 following columns: <code>gene</code> (gene name), <code>org</code> (organism name to which the gene belongs to),
 and <code>cluster</code> (group of orthologous to which the gene belongs to). More columns can be added as metadata
@@ -244,7 +244,7 @@ increasingly bigger sample of genomes.</p><h3>Usage</h3>
 <p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>rarefact</span>(<span class='kw'>what</span> <span class='kw'>=</span> <span class='st'>"pangenome"</span>, <span class='kw'>n.perm</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>what</code></dt><dd><p>One of <code>"pangenome"</code> or <code>"coregenome"</code>.</p></dd>
 
 <dt><code>n.perm</code></dt><dd><p>The number of permutations to compute (default: 10).</p></dd>
@@ -269,7 +269,7 @@ See <code><a href='https://rdrr.io/pkg/vegan/man/vegdist.html'>vegdist</a></code
 )</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>method</code></dt><dd><p>The distance method to use. See <a href='https://rdrr.io/pkg/vegan/man/vegdist.html'>vegdist</a>
 for available methods, and details for each one.</p></dd>
 
@@ -294,7 +294,7 @@ computing dissimilarities.</p></dd>
 <p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>pan_pca</span>(<span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>scale.</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>center</code></dt><dd><p>a logical value indicating whether the variables should be shifted
 to be zero centered. Alternately, a vector of length equal the number of columns of x can be
 supplied. The value is passed to scale.</p></dd>
@@ -313,7 +313,7 @@ to have unit variance before the analysis takes place. The default is TRUE.</p><
 <p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>pg_power_law_fit</span>(<span class='no'>raref</span>, <span class='no'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>raref</code></dt><dd><p>(Optional) A rarefaction matrix, as returned by <code>rarefact()</code>.</p></dd>
 
 <dt><code>...</code></dt><dd><p>Further arguments to be passed to <code>rarefact()</code>. If <code>raref</code>
@@ -330,7 +330,7 @@ with fitted parameters. An attribute <code>"alpha"</code> is also returned (If
 <p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>cg_exp_decay_fit</span>(<span class='no'>raref</span>, <span class='kw'>pcounts</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='no'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>raref</code></dt><dd><p>(Optional) A rarefaction matrix, as returned by <code>rarefact()</code>.</p></dd>
 
 <dt><code>pcounts</code></dt><dd><p>An integer of pseudo-counts. This is used to better fit the function
@@ -352,7 +352,7 @@ diversity. See <code><a href='https://rdrr.io/pkg/micropan/man/fluidity.html'>fl
 <p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>fluidity</span>(<span class='kw'>n.sim</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>n.sim</code></dt><dd><p>An integer specifying the number of random samples
 to use in the computations.</p></dd>
 
@@ -368,7 +368,7 @@ available. See <code><a href='https://rdrr.io/pkg/micropan/man/binomixEstimate.h
 <p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>binomix_estimate</span>(<span class='kw'>K.range</span> <span class='kw'>=</span> <span class='fl'>3</span>:<span class='fl'>5</span>, <span class='kw'>core.detect.prob</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>K.range</code></dt><dd><p>The range of model complexities to explore. The
 vector of integers specify the number of binomial densities to combine in the
 mixture models.</p></dd>
@@ -410,7 +410,7 @@ package) invisibly.</p>
 <p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>gg_dist</span>(<span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"bray"</span>, <span class='no'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>method</code></dt><dd><p>Distance method. One of "Jaccard" (default), or "Manhattan",
 see above.</p></dd>
 
@@ -426,7 +426,7 @@ package) invisibly.</p>
 <p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>gg_pca</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>colour</code></dt><dd><p>The name of the column in <code>$organisms</code> field from which points will take
 colour (if provided). <code>NULL</code> (default) renders black points.</p></dd>
 
@@ -452,7 +452,7 @@ shell, or cloud.</p><h3>Usage</h3>
 <p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>gg_curves</span>(<span class='kw'>what</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pangenome"</span>, <span class='st'>"coregenome"</span>), <span class='no'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>what</code></dt><dd><p>One of <code>"pangenome"</code> or <code>"coregenome"</code>.</p></dd>
 
 <dt><code>...</code></dt><dd><p>????</p></dd>
@@ -492,7 +492,7 @@ leads to a delay in the update of the plots/tables.</p><h3>Usage</h3>
 <p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
 </dl><p></div></p>

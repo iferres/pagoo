@@ -1,6 +1,6 @@
 pandoc: 2.7.3
 pkgdown: 1.5.1.9000
-pkgdown_sha: bf80bb8b2bed7f546c6fb166ac706867e7bc6864
+pkgdown_sha: c181e5c9ac09b28974a97f5e32deddc36690fcf2
 articles:
   1-Quick_Start: 1-Quick_Start.html
   2-Input: 2-Input.html
@@ -8,5 +8,5 @@ articles:
   4-Subseting: 4-Subseting.html
   5-Methods_Plots: 5-Methods_Plots.html
   6-Recipes: 6-Recipes.html
-last_built: 2020-04-22T22:50Z
+last_built: 2020-04-24T01:14Z
 

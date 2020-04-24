@@ -156,7 +156,7 @@ instead of this, since is more easy to understand.</h1>
     <p><code><a href='PgR6.html'>pagoo::PgR6</a></code> -&gt; <code><a href='PgR6M.html'>pagoo::PgR6M</a></code> -&gt; <code>PgR6MS</code></p>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
-    <p><div class="r6-active-bindings"></p><dl'>
+    <p><div class="r6-active-bindings"></p><dl>
 <dt><code>sequences</code></dt><dd><p>A <code><a href='https://rdrr.io/pkg/Biostrings/man/XStringSetList-class.html'>DNAStringSetList</a></code> with the
 set of sequences grouped by cluster. Each group is accessible as were a list. All
 <code>Biostrings</code> methods are available.</p></dd>
@@ -221,7 +221,7 @@ sequences, as defined above.</p></dd>
 )</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>data</code></dt><dd><p>A <code>data.frame</code> or <code><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></code> containing at least the
 following columns: <code>gene</code> (gene name), <code>org</code> (organism name to which the gene belongs to),
 and <code>cluster</code> (group of orthologous to which the gene belongs to). More columns can be added as metadata
@@ -271,7 +271,7 @@ this special function.</p><h3>Usage</h3>
 <p><div class="r"></p><pre><span class='no'>PgR6MS</span>$<span class='fu'>core_seqs_4_phylo</span>(<span class='kw'>max_per_org</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>max_per_org</code></dt><dd><p>Maximum number of sequences of each organism to be taken from each cluster.</p></dd>
 
 <dt><code>fill</code></dt><dd><p><code>logical</code>. If fill <code>DNAStringSet</code> with emphty <code>DNAString</code> in cases where
@@ -287,7 +287,7 @@ to concatenate them into a super-gene suitable for phylogenetic inference.</p>
 <p><div class="r"></p><pre><span class='no'>PgR6MS</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
 </dl><p></div></p>
