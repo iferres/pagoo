@@ -41,8 +41,7 @@ Imports:
   magrittr,
   heatmaply,
   dendextend,
-  ggfortify,
-  GenomicRanges
+  ggfortify
 Suggests:
     patchwork,
     ape,
