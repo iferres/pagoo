@@ -683,7 +683,17 @@ pagoo <- function(data, org_meta, cluster_meta, sequences, core_level = 95, sep 
 
 
 
-
+#' @name load_pangenomeRDS
+#' @title Load A Pagoo Pangenome
+#' @description This function loads a pagoo pangenome from a `.RDS` file generated
+#' by the `$save_pangenomeRDS` method. Objects loaded by this functions keep thier
+#' states, i.e : dropped/recovered organisms are conserved, as well as the
+#' `core_level` setted when the object was originally saved.
+#' @param file The path to the pangenome `.RDS` file.
+#' @param seqs.if.avail \code{logical} Whether to load sequences or not, if they
+#' are available in the rds file.
+#' @return Ethier a \code{PgR6MS} class object, or a \code{PgR6M} object (with or
+#' without sequences, respectively).
 #' @export
 load_pangenomeRDS = function(file, seqs.if.avail = TRUE, ...){
 
