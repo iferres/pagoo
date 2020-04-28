@@ -1,5 +1,5 @@
 Package: pagoo
-Version: 0.3.3.9000
+Version: 0.3.3.9001
 Title: Pagoo: Analyze Bacterial Pangenomes in R
 Description: pagoo is an encapsulated, object-oriented class system for 
   analyzing bacterial pangenomes. It uses the R6 package as backend. It was 
@@ -22,11 +22,10 @@ Maintainer: <iferres@pasteur.edu.uy>
 URL: https://iferres.github.io/pagoo/, https://github.com/iferres/pagoo
 BugReports: https://github.com/iferres/pagoo/issues
 Depends:
+  R (>= 3.5.0),
   S4Vectors,
-  BiocGenerics,
   Biostrings,
-  ggplot2,
-  shiny
+  ggplot2
 biocViews:
 Imports:
   R6,
@@ -34,6 +33,7 @@ Imports:
   vegan,
   micropan,
   GenomicRanges,
+  BiocGenerics,
   shinyWidgets,
   shinydashboard,
   DT,
@@ -41,7 +41,8 @@ Imports:
   magrittr,
   heatmaply,
   dendextend,
-  ggfortify
+  ggfortify,
+  shiny
 Suggests:
     patchwork,
     ape,
