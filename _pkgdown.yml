@@ -2,6 +2,7 @@ destination: docs
 template:
   params:
     bootswatch: flatly
+    ganalytics: UA-164668935-1
 
 home:
   links:

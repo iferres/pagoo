@@ -33,13 +33,13 @@ The `core level` defines the minimum number of genomes (as a percentage) in whic
 
 ```{r}
 p$core_level       
-p$core_level <- 99 # Change value
-p$summary_stats    # Updated object
+p$core_level <- 100 # Change value
+p$summary_stats     # Updated object
 ```
-As you can see, changing the core level from 100% to a less stringent 99% cause in increase in the number of core genes from 1553 to 1623, and a concomitant decrease in shell genes from 511 to 441. This means that 70 genes migrated from shell to core when relaxing the core level to 99%. Now this changes remain in the object for subsequent analysis, or can be reverted by setting the core level again at the original value.
+As you can see, changing the core level from 95% to a more stringent 100% cause in decrease in the number of core genes from 1623 to 1553, and a concomitant increase in shell genes from 441 to 511. This means that 70 genes migrated from core to shell when increasing the threshold to consider a cluster as "core" to 100%. Now this changes remain in the object for subsequent analysis, or can be reverted by setting the core level again at the original value.
 
 ```{r}
-p$core_level <- 100
+p$core_level <- 95
 ```
 
 # Pangenome matrix

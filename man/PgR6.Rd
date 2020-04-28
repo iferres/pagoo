@@ -230,7 +230,7 @@ Write the pangenome data as flat tables (text). Is not the most recomended way
 to save a pangenome, since you can loose information as numeric precision,
 column classes (factor, numeric, integer), and the state of the object itself
 (i.e. dropped organisms, or core_level), loosing reproducibility. Use
-\link{save_pangenomeRDS} for a more precise way of saveing a pagoo object.
+\code{$save_pangenomeRDS} for a more precise way of saveing a pagoo object.
 Still, it is useful if you want to work with the data outside R, just keep
 the above in mind.
 \subsection{Usage}{
@@ -263,7 +263,7 @@ was provided.
 \subsection{Method \code{save_pangenomeRDS()}}{
 Save a pagoo pangenome object. This function provides a method for saving a pagoo
 object and its state into a "RDS" file. To load the pangenome, use the
-\link{load_pangenomeRDS} function in this package. It *should* be compatible between
+\code{load_pangenomeRDS} function in this package. It *should* be compatible between
 pagoo versions, so you could update pagoo and still recover the same pangenome. Even
 \code{sep} and \code{core_level} are restored unless the user provides those
 arguments in \code{load_pangenomeRDS}. \code{dropped} organisms also kept hidden, as
