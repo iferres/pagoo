@@ -242,7 +242,7 @@
 #'                   to save a pangenome, since you can loose information as numeric precision,
 #'                   column classes (factor, numeric, integer), and the state of the object itself
 #'                   (i.e. dropped organisms, or core_level), loosing reproducibility. Use
-#'                   \link{save_pangenomeRDS} for a more precise way of saveing a pagoo object.
+#'                   \code{save_pangenomeRDS} for a more precise way of saveing a pagoo object.
 #'                   Still, it is useful if you want to work with the data outside R, just keep
 #'                   the above in mind.
 #'             }
@@ -274,7 +274,7 @@
 #'             \subsection{Description:}{
 #'                  Save a pagoo pangenome object. This function provides a method for saving a pagoo
 #'                  object and its state into a "RDS" file. To load the pangenome, use the
-#'                  \link{load_pangenomeRDS} function in this package. It *should* be compatible between
+#'                  \code{load_pangenomeRDS} function in this package. It *should* be compatible between
 #'                  pagoo versions, so you could update pagoo and still recover the same pangenome. Even
 #'                  \code{sep} and \code{core_level} are restored unless the user provides those
 #'                  arguments in \code{load_pangenomeRDS}. \code{dropped} organisms also kept hidden, as
@@ -680,7 +680,7 @@ pagoo <- function(data, org_meta, cluster_meta, sequences, core_level = 95, sep 
 #' @name load_pangenomeRDS
 #' @title Load A Pagoo Pangenome
 #' @description This function loads a pagoo pangenome from a `.RDS` file generated
-#' by the `$save_pangenomeRDS` method. Objects loaded by this functions keep thier
+#' by the `save_pangenomeRDS` method. Objects loaded by this functions keep thier
 #' states, i.e : dropped/recovered organisms are conserved, as well as the
 #' `core_level` setted when the object was originally saved.
 #' @param file The path to the pangenome `.RDS` file.
@@ -689,11 +689,10 @@ pagoo <- function(data, org_meta, cluster_meta, sequences, core_level = 95, sep 
 #' @return Ethier a \code{PgR6MS} class object, or a \code{PgR6M} object (with or
 #' without sequences, respectively).
 #' @export
-load_pangenomeRDS = function(file, seqs.if.avail = TRUE, ...){
+load_pangenomeRDS = function(file, seqs.if.avail = TRUE){
 
   args <- readRDS(file)
   atrs <- attributes(args)
-  dots <- list(...)
 
   if (!"package" %in% names(atrs)) stop("Not recognized rds file.")
   if (atrs$package != "pagoo") stop("Not recognized rds file.")
