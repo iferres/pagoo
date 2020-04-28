@@ -101,12 +101,6 @@ once you load a pagoo object.
    \item \href{#field-cloud_sequences}{\code{$cloud_sequences}}
    }
 }
-\subsection{Methods}{
-   \itemize{
-   \item \href{#method-add_metadata}{\code{$add_metadata()}}
-   }
-}
-\subsection{Special Methods}{}
 }
 
 \section{Active bindings}{
