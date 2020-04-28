@@ -2,10 +2,10 @@
 % Please edit documentation in R/PgR6MS.R
 \name{PgR6MS}
 \alias{PgR6MS}
-\title{PgR6 class with Methods and Sequences. Final users should use \code{\link{pagoo}}
-instead of this, since is more easy to understand.}
+\title{PgR6 class with Methods and Sequences.}
 \description{
-PgR6 with Methods and Sequences.
+PgR6 with Methods and Sequences. Final users should use \code{\link{pagoo}}
+instead of this, since is more easy to understand.
  Inherits: \code{\link[pagoo]{PgR6M}}
 }
 \section{Super classes}{

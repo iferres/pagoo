@@ -4,7 +4,7 @@
 \alias{load_pangenomeRDS}
 \title{Load A Pagoo Pangenome}
 \usage{
-load_pangenomeRDS(file, seqs.if.avail = TRUE, ...)
+load_pangenomeRDS(file, seqs.if.avail = TRUE)
 }
 \arguments{
 \item{file}{The path to the pangenome `.RDS` file.}
@@ -18,7 +18,7 @@ without sequences, respectively).
 }
 \description{
 This function loads a pagoo pangenome from a `.RDS` file generated
-by the `$save_pangenomeRDS` method. Objects loaded by this functions keep thier
+by the `save_pangenomeRDS` method. Objects loaded by this functions keep thier
 states, i.e : dropped/recovered organisms are conserved, as well as the
 `core_level` setted when the object was originally saved.
 }
