@@ -4,13 +4,16 @@
 \alias{load_pangenomeRDS}
 \title{Load A Pagoo Pangenome}
 \usage{
-load_pangenomeRDS(file, seqs.if.avail = TRUE)
+load_pangenomeRDS(file, seqs.if.avail = TRUE, ...)
 }
 \arguments{
 \item{file}{The path to the pangenome `.RDS` file.}
 
 \item{seqs.if.avail}{\code{logical} Whether to load sequences or not, if they
 are available in the rds file.}
+
+\item{...}{Arguments to be passed to the pagoo object. \code{sep} and
+\code{core_level} overwrite the values stored in the file.}
 }
 \value{
 Ethier a \code{PgR6MS} class object, or a \code{PgR6M} object (with or

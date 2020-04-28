@@ -686,13 +686,16 @@ pagoo <- function(data, org_meta, cluster_meta, sequences, core_level = 95, sep 
 #' @param file The path to the pangenome `.RDS` file.
 #' @param seqs.if.avail \code{logical} Whether to load sequences or not, if they
 #' are available in the rds file.
+#' @param ... Arguments to be passed to the pagoo object. \code{sep} and
+#' \code{core_level} overwrite the values stored in the file.
 #' @return Ethier a \code{PgR6MS} class object, or a \code{PgR6M} object (with or
 #' without sequences, respectively).
 #' @export
-load_pangenomeRDS = function(file, seqs.if.avail = TRUE){
+load_pangenomeRDS = function(file, seqs.if.avail = TRUE, ...){
 
   args <- readRDS(file)
   atrs <- attributes(args)
+  dots <- list(...)
 
   if (!"package" %in% names(atrs)) stop("Not recognized rds file.")
   if (atrs$package != "pagoo") stop("Not recognized rds file.")
