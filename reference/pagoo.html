@@ -60,6 +60,16 @@ the latter. See below for more details." />
 <![endif]-->
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-164668935-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-164668935-1');
+</script>
+
 
   </head>
 
@@ -77,7 +87,7 @@ the latter. See below for more details." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3.9002</span>
       </span>
     </div>
 
@@ -118,6 +128,9 @@ the latter. See below for more details." />
       <a href="../articles/6-Recipes.html">6 - Recipes</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -261,13 +274,6 @@ once you load a pagoo object.</p>
 <li><p><a href='#field-cloud_sequences'><code>$cloud_sequences</code></a></p></li>
 </ul>
 
-<h3>Methods</h3>
-<p></p><ul>
-<li><p><a href='#method-add_metadata'><code>$add_metadata()</code></a></p></li>
-</ul>
-
-<h3>Special Methods</h3>
-
 
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
@@ -344,7 +350,7 @@ once you load a pagoo object.</p>
                   to save a pangenome, since you can loose information as numeric precision,
                   column classes (factor, numeric, integer), and the state of the object itself
                   (i.e. dropped organisms, or core_level), loosing reproducibility. Use
-                  save_pangenomeRDS for a more precise way of saveing a pagoo object.
+                  <code>save_pangenomeRDS</code> for a more precise way of saveing a pagoo object.
                   Still, it is useful if you want to work with the data outside R, just keep
                   the above in mind.</p>            <h3>Usage:</h3>
 <p><code>                  </code><code>$write_pangenome(dir = "pangenome", force = FALSE)</code></p>            <h3>Arguments:</h3>
@@ -366,7 +372,7 @@ once you load a pagoo object.</p>
     <dt><b>Save a pangenome as a RDS (binary) file.</b></dt><dd><p><h3>Description:</h3>
 <p>Save a pagoo pangenome object. This function provides a method for saving a pagoo
                  object and its state into a "RDS" file. To load the pangenome, use the
-                 load_pangenomeRDS function in this package. It *should* be compatible between
+                 <code>load_pangenomeRDS</code> function in this package. It *should* be compatible between
                  pagoo versions, so you could update pagoo and still recover the same pangenome. Even
                  <code>sep</code> and <code>core_level</code> are restored unless the user provides those
                  arguments in <code>load_pangenomeRDS</code>. <code>dropped</code> organisms also kept hidden, as

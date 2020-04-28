@@ -16,7 +16,13 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-164668935-1"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-164668935-1');
+</script>
 </head>
 <body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
@@ -31,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3.9002</span>
       </span>
     </div>
 
@@ -72,6 +78,9 @@
       <a href="../articles/6-Recipes.html">6 - Recipes</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -114,14 +123,14 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/untar.html">untar</a></span>(<span class="kw">tarfile</span> <span class="kw">=</span> <span class="no">tgz</span>, <span class="kw">exdir</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>()) <span class="co"># Decompress example dataset</span>
 <span class="no">files</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span>(<span class="kw">path</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>(), <span class="kw">full.names</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">pattern</span> <span class="kw">=</span> <span class="st">'tsv$|fasta$'</span>) <span class="co"># List files</span>
 <span class="no">files</span></pre></body></html></div>
-<pre><code>## [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpkWL3Tl/case_clusters_meta.tsv"
-## [2] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpkWL3Tl/case_df.tsv"           
-## [3] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpkWL3Tl/case_orgs_meta.tsv"    
-## [4] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpkWL3Tl/organismA.fasta"       
-## [5] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpkWL3Tl/organismB.fasta"       
-## [6] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpkWL3Tl/organismC.fasta"       
-## [7] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpkWL3Tl/organismD.fasta"       
-## [8] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpkWL3Tl/organismE.fasta"</code></pre>
+<pre><code>## [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpVIEUeW/case_clusters_meta.tsv"
+## [2] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpVIEUeW/case_df.tsv"           
+## [3] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpVIEUeW/case_orgs_meta.tsv"    
+## [4] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpVIEUeW/organismA.fasta"       
+## [5] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpVIEUeW/organismB.fasta"       
+## [6] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpVIEUeW/organismC.fasta"       
+## [7] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpVIEUeW/organismD.fasta"       
+## [8] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpVIEUeW/organismE.fasta"</code></pre>
 <p>The file we need now is <code>case_df.tsv</code>. Lets load it and see what’s its structure:</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">data_file</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span>(<span class="st">"case_df.tsv"</span>, <span class="no">files</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 <span class="no">data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span>(<span class="no">data_file</span>, <span class="kw">header</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">sep</span> <span class="kw">=</span> <span class="st">'\t'</span>, <span class="kw">quote</span> <span class="kw">=</span> <span class="st">''</span>)
@@ -262,7 +271,7 @@
 <p>This creates a directory with 3 text files. The advantage of this approach is that you can analyze it outside R, the disadvantage is that from a reproducibility point of view reading text could be less stable since class or number precision can be lost, and also you can’t save the state of the object in any given time. Only available organisms/genes/clusters are saved, and if you reload the class using the tsv files, any previously dropped organisms/gene/cluster won’t be available any more. (For information about dropping/recovering organisms, see “Subset” tutorial).</p>
 <p>If you want to save the object and continue working with it in other R session, we recommend to save them as R objects with the RDS methods provided:</p>
 <div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">p</span>$<span class="fu">save_pangenomeRDS</span>(<span class="kw">file</span> <span class="kw">=</span> <span class="st">"pangenome.RDS"</span>)
-<span class="no">p2</span> <span class="kw">&lt;-</span> <span class="fu">load_pangenomeRDS</span>(<span class="st">"pangenome.RDS"</span>)</pre></body></html></div>
+<span class="no">p2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/load_pangenomeRDS.html">load_pangenomeRDS</a></span>(<span class="st">"pangenome.RDS"</span>)</pre></body></html></div>
 <p>This method is more stable (compatible between <code>pagoo</code> versions), secure (uses the same metadata classes, and precision isn’t lost), and convinient (the exact state of the object saved is restored, keeping dropped organisms/genes/clusters hidden, available to be recovered, and other object state configuration, e.g. <code>core_level</code>, is also saved).</p>
 </div>
   </div>

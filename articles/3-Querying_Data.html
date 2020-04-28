@@ -16,7 +16,13 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-164668935-1"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-164668935-1');
+</script>
 </head>
 <body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
@@ -31,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3.9002</span>
       </span>
     </div>
 
@@ -73,6 +79,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -111,7 +120,7 @@ pre, code {white-space:pre !important; overflow-x:auto;}
 <p>First of all, we will load a pangenome using a toy dataset included in the package. This is a preloaded set of 10 <em>Campylobacter spp.</em> genomes, with metadata associated.</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">pagoo</span>) <span class="co"># Load package</span>
 <span class="no">rds</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">'extdata'</span>, <span class="st">'campylobacter.RDS'</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">'pagoo'</span>)
-<span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu">load_pangenomeRDS</span>(<span class="no">rds</span>)</pre></body></html></div>
+<span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/load_pangenomeRDS.html">load_pangenomeRDS</a></span>(<span class="no">rds</span>)</pre></body></html></div>
 <div id="summary-statistics" class="section level1">
 <h1 class="hasAnchor">
 <a href="#summary-statistics" class="anchor"></a>Summary statistics</h1>
@@ -130,17 +139,17 @@ pre, code {white-space:pre !important; overflow-x:auto;}
 <p>The <code>core level</code> defines the minimum number of genomes (as a percentage) in which a certain gene should be present to be considered a core gene. By default, <code>pagoo</code> considers as core all genes present in at least 95% of organisms. The core level can be modified to be more or less stringent defining the core genome. This feature exemplifies R6’s reference semantics, since modifying the core level will affect the pangenome object state resulting in different core, shell and cloud sets. Have a look:</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">p</span>$<span class="no">core_level</span></pre></body></html></div>
 <pre><code>## [1] 95</code></pre>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">p</span>$<span class="no">core_level</span> <span class="kw">&lt;-</span> <span class="fl">99</span> <span class="co"># Change value</span>
-<span class="no">p</span>$<span class="no">summary_stats</span>    <span class="co"># Updated object</span></pre></body></html></div>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">p</span>$<span class="no">core_level</span> <span class="kw">&lt;-</span> <span class="fl">100</span> <span class="co"># Change value</span>
+<span class="no">p</span>$<span class="no">summary_stats</span>     <span class="co"># Updated object</span></pre></body></html></div>
 <pre><code>## DataFrame with 4 rows and 2 columns
 ##      Category    Number
 ##   &lt;character&gt; &lt;integer&gt;
 ## 1       Total      2599
-## 2        Core      1623
-## 3       Shell       441
+## 2        Core      1553
+## 3       Shell       511
 ## 4       Cloud       535</code></pre>
-<p>As you can see, changing the core level from 100% to a less stringent 99% cause in increase in the number of core genes from 1553 to 1623, and a concomitant decrease in shell genes from 511 to 441. This means that 70 genes migrated from shell to core when relaxing the core level to 99%. Now this changes remain in the object for subsequent analysis, or can be reverted by setting the core level again at the original value.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">p</span>$<span class="no">core_level</span> <span class="kw">&lt;-</span> <span class="fl">100</span></pre></body></html></div>
+<p>As you can see, changing the core level from 95% to a more stringent 100% cause in decrease in the number of core genes from 1623 to 1553, and a concomitant increase in shell genes from 441 to 511. This means that 70 genes migrated from core to shell when increasing the threshold to consider a cluster as “core” to 100%. Now this changes remain in the object for subsequent analysis, or can be reverted by setting the core level again at the original value.</p>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">p</span>$<span class="no">core_level</span> <span class="kw">&lt;-</span> <span class="fl">95</span></pre></body></html></div>
 </div>
 </div>
 <div id="pangenome-matrix" class="section level1">
