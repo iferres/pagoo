@@ -1,5 +1,5 @@
 Package: pagoo
-Version: 0.3.3.9002
+Version: 0.3.3.9003
 Title: Pagoo: Analyze Bacterial Pangenomes in R
 Description: pagoo is an encapsulated, object-oriented class system for 
   analyzing bacterial pangenomes. It uses the R6 package as backend. It was 
