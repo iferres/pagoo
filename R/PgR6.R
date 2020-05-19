@@ -111,11 +111,12 @@ PgR6 <- R6Class('PgR6',
                     # data[, group := factor(group)]
                     orgs <- unique(data$org)
                     data$org <- factor(data$org, levels = orgs)
+                    data$gene <- factor(data$gene)
                     # data[, org := factor(org, levels = orgs)]
 
                     # Create organism field. Add metadata (if provided)
                     names(orgs) <- seq_along(orgs)
-                    orgs_data <- DataFrame(org=orgs, row.names = seq_along(orgs))
+                    orgs_data <- DataFrame(org=factor(orgs, levels = orgs), row.names = seq_along(orgs))
                     if (!missing(org_meta)){
                       if (verbose) message('Checking provided organism metadata.')
                       if (!class(org_meta)%in%c('data.frame', 'DataFrame', 'DFrame'))
@@ -132,7 +133,8 @@ PgR6 <- R6Class('PgR6',
                     }
 
                     #create group field. Add metadata (if provided)
-                    cluster_data <- DataFrame(cluster=levels(data$cluster))
+                    clus_lvls <- levels(data$cluster)
+                    cluster_data <- DataFrame(cluster=factor(clus_lvls, levels = clus_lvls))
                     if (!missing(cluster_meta)){
                       if (verbose) message('Checking provided cluster metadata.')
                       if (!class(cluster_meta)%in%c('data.frame', 'DataFrame', 'DFrame'))
@@ -571,7 +573,7 @@ PgR6 <- R6Class('PgR6',
                     ogs <- dn[[2]]
                     core <- self$core_clusters$cluster
                     cloud <- self$cloud_clusters$cluster
-                    shell <- ogs[which(!ogs %in% c(core,cloud))]
+                    shell <- ogs[which(!ogs %in% unlist(list(core,cloud)))]
                     act <- which(data$cluster%in%shell & data$org%in%orgs)
                     data <- data[act, ]
                     split(data[, , drop = FALSE], f = data$cluster, drop = TRUE)
@@ -583,7 +585,7 @@ PgR6 <- R6Class('PgR6',
                     ogs <- dimnames(self$pan_matrix)[[2]]
                     core <- self$core_clusters$cluster
                     cloud <- self$cloud_clusters$cluster
-                    wh <- which(!ogs %in% c(core,cloud))
+                    wh <- which(!ogs %in% unlist(list(core,cloud)))
                     self$clusters[wh, , drop = FALSE]
                   },
 
