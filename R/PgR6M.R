@@ -284,6 +284,7 @@ PgR6M <- R6Class('PgR6M',
                      pm <- self$pan_matrix
                      pm[which(pm > 0, arr.ind = TRUE)] <- 1L
                      dd <- as.data.frame(table(colSums(pm)))
+                     dd$Var1 <- as.integer(as.character(dd$Var1))
                      ggplot(dd, aes(x=Var1, y=Freq)) +
                        geom_bar(stat='identity') +
                        ylab('Number of genes') +
@@ -301,10 +302,11 @@ PgR6M <- R6Class('PgR6M',
                      bm <- as.data.frame(tpm)
                      or <- order(rowSums(bm), decreasing = TRUE)
                      lvls <- rownames(bm)[or]
-                     bm$gene <- factor(rownames(bm), levels = lvls)
-                     bm <- melt(bm, 'gene')
+                     bm$Cluster <- factor(rownames(bm), levels = lvls)
+                     bm <- melt(bm, 'Cluster')
                      bm$value <- factor(bm$value, levels = c(1, 0))
-                     ggplot(bm, aes(gene, variable, fill=value)) +
+                     colnames(bm)[which(colnames(bm) == 'variable')] <- "Organism"
+                     ggplot(bm, aes(Cluster, Organism, fill=value)) +
                        geom_raster() +
                        theme(axis.ticks.x = element_blank(),
                              axis.text.x = element_blank()) +
@@ -382,18 +384,18 @@ PgR6M <- R6Class('PgR6M',
                      lrarm <- lapply(lrar, melt)
                      ll <- lapply(what, function(x) {
                        olst <- list(data = NULL, formula = NULL)
-                       lrarm[[x]]$category <- x
+                       lrarm[[x]]$Category <- x
                        lrarm[[x]]
                       })
                      data <- Reduce(rbind, ll)
 
                      #plot
-                     g <- ggplot(data, aes(x=factor(Var1), y=value, colour=category)) +
+                     g <- ggplot(data, aes(x=Var1, y=value, colour=Category)) +
                        xlab('Number of genomes') +
                        ylab('Number of clusters')
                      for (i in seq_along(what)){
                        g <- g +
-                         stat_function(data = data[which(data$category == what[i]), ],
+                         stat_function(data = data[which(data$Category == what[i]), ],
                                        fun = lfun[[what[i]]]$formula)
                      }
                      g

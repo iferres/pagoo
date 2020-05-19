@@ -223,23 +223,16 @@ PgR6MS <- R6Class('PgR6MS',
                     #' set of sequences grouped by cluster. Each group is accessible as were a list. All
                     #' \code{Biostrings} methods are available.
                     sequences = function(){
-                      dn <- dimnames(self$pan_matrix)
-                      ogs <- dn[[2]]
-                      orgs <- dn[[1]]
                       sqs <- private$.sequences
-                      sset <- which(mcols(sqs)$cluster %in% ogs &
-                                      mcols(sqs)$org %in% orgs)
+                      sset <- unlist(self$genes)$gid
                       split(sqs[sset], mcols(sqs[sset])$cluster)
                     },
 
                     #' @field core_sequences Like \code{$sequences}, but only showing core
                     #' sequences.
                     core_sequences = function(){
-                      orgs <- self$organisms$org
-                      ogs <- self$core_clusters$cluster
                       sqs <- private$.sequences
-                      sset <- which(mcols(sqs)$cluster %in% ogs &
-                                      mcols(sqs)$org %in% orgs)
+                      sset <- unlist(self$core_genes)$gid
                       split(sqs[sset], mcols(sqs[sset])$cluster)
 
                     },
@@ -247,22 +240,16 @@ PgR6MS <- R6Class('PgR6MS',
                     #' @field cloud_sequences Like \code{$sequences}, but only showing cloud
                     #' sequences as defined above.
                     cloud_sequences = function(){
-                      orgs <- self$organisms$org
-                      ogs <- self$cloud_clusters$cluster
                       sqs <- private$.sequences
-                      sset <- which(mcols(sqs)$cluster %in% ogs &
-                                      mcols(sqs)$org %in% orgs)
+                      sset <- unlist(self$cloud_genes)$gid
                       split(sqs[sset], mcols(sqs[sset])$cluster)
                     },
 
                     #' @field shell_sequences Like \code{$sequences}, but only showing shell
                     #' sequences, as defined above.
                     shell_sequences = function(){
-                      orgs <- self$organisms$org
-                      ogs <- self$shell_clusters$cluster
                       sqs <- private$.sequences
-                      sset <- which(mcols(sqs)$cluster %in% ogs &
-                                      mcols(sqs)$org %in% orgs)
+                      sset <- unlist(self$shell_genes)$gid
                       split(sqs[sset], mcols(sqs[sset])$cluster)
                     }
 

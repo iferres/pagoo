@@ -103,7 +103,7 @@ roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
     mm <- cbind(mm, mcls[ma, c('seqid', 'type', 'start', 'end', 'strand', 'product')])
 
     message('Loading PgR6MS class object.')
-    pg <- PgR6MS$new(DF = mm,
+    pg <- PgR6MS$new(data = mm,
                      cluster_meta = cluster_meta,
                      sequences = DNAStringSetList(seqs),
                      sep = sep)
@@ -151,11 +151,11 @@ read_gff <- function(in_gff){
   lst <- rev(st)[1]
   en <- c((he - 1)[-1], length(rl_fa))
   toapl <- cbind(st, en)
-  dna <- DNAStringSet(paste0(rl_fa[ toapl[, 1]:toapl[, 2] ],collapse=''))
+  # dna <- DNAStringSet(paste0(rl_fa[ toapl[, 1]:toapl[, 2] ],collapse=''))
 
-  # dna <- DNAStringSet(apply(toapl, 1, function(x){
-  #   paste0(rl_fa[x[1]:x[2]], collapse = '')
-  # }))
+  dna <- DNAStringSet(apply(toapl, 1, function(x){
+    paste0(rl_fa[x[1]:x[2]], collapse = '')
+  }))
   names(dna) <- sub('>', '', rl_fa[he])
 
   sequences <- subseq(dna[mcls$seqid], start = mcls$start, end = mcls$end)
