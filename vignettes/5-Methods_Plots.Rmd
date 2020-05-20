@@ -138,7 +138,7 @@ You can add points and facet data by category, and add any other customization:
 p$gg_curves() + 
   ggtitle("Pangenome and Coregenome curves") + 
   geom_point() + 
-  facet_wrap(~category, scales = 'free_y') + 
+  facet_wrap(~Category, scales = 'free_y') + 
   theme_bw(base_size = 15) + 
   scale_color_brewer(palette = "Accent")
 ```
