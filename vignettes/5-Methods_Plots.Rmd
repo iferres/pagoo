@@ -134,7 +134,7 @@ p$gg_curves()
 
 You can add points and facet data by category, and add any other customization:
 
-```{r}
+```{r, warning=FALSE}
 p$gg_curves() + 
   ggtitle("Pangenome and Coregenome curves") + 
   geom_point() + 
