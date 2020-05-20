@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3.9004</span>
       </span>
     </div>
 
@@ -153,64 +153,64 @@
 <p>As seen in the above table, the notation is quite straightforward. Lets take <code>clusters</code> for instance to illustrate it better.</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">p</span>$<span class="no">clusters</span></pre></body></html></div>
 <pre><code>## DataFrame with 2599 rows and 2 columns
-##          cluster                   Pfam_Arch
-##      &lt;character&gt;                 &lt;character&gt;
-## 1         OG0001                2-Hacid_dh_C
-## 2         OG0002     2-Hacid_dh_C;2-Hacid_dh
-## 3         OG0003 2-Hacid_dh_C;ACT;2-Hacid_dh
-## 4         OG0004             2Fe-2S_thioredx
-## 5         OG0005         4HB_MCP_1;MCPsignal
-## ...          ...                         ...
-## 2595      OG2595                   zf-RING_7
-## 2596      OG2596                    zf-TFIIB
-## 2597      OG2597                        ZinT
-## 2598      OG2598                        ZnuA
-## 2599      OG2599                    ZT_dimer</code></pre>
+##       cluster                   Pfam_Arch
+##      &lt;factor&gt;                 &lt;character&gt;
+## 1      OG0001                2-Hacid_dh_C
+## 2      OG0002     2-Hacid_dh_C;2-Hacid_dh
+## 3      OG0003 2-Hacid_dh_C;ACT;2-Hacid_dh
+## 4      OG0004             2Fe-2S_thioredx
+## 5      OG0005         4HB_MCP_1;MCPsignal
+## ...       ...                         ...
+## 2595   OG2595                   zf-RING_7
+## 2596   OG2596                    zf-TFIIB
+## 2597   OG2597                        ZinT
+## 2598   OG2598                        ZnuA
+## 2599   OG2599                    ZT_dimer</code></pre>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">p</span>$<span class="no">core_clusters</span></pre></body></html></div>
 <pre><code>## DataFrame with 1623 rows and 2 columns
-##          cluster                   Pfam_Arch
-##      &lt;character&gt;                 &lt;character&gt;
-## 1         OG0001                2-Hacid_dh_C
-## 2         OG0002     2-Hacid_dh_C;2-Hacid_dh
-## 3         OG0003 2-Hacid_dh_C;ACT;2-Hacid_dh
-## 4         OG0004             2Fe-2S_thioredx
-## 5         OG0006         4HB_MCP_1;MCPsignal
-## ...          ...                         ...
-## 1619      OG2595                   zf-RING_7
-## 1620      OG2596                    zf-TFIIB
-## 1621      OG2597                        ZinT
-## 1622      OG2598                        ZnuA
-## 1623      OG2599                    ZT_dimer</code></pre>
+##       cluster                   Pfam_Arch
+##      &lt;factor&gt;                 &lt;character&gt;
+## 1      OG0001                2-Hacid_dh_C
+## 2      OG0002     2-Hacid_dh_C;2-Hacid_dh
+## 3      OG0003 2-Hacid_dh_C;ACT;2-Hacid_dh
+## 4      OG0004             2Fe-2S_thioredx
+## 5      OG0006         4HB_MCP_1;MCPsignal
+## ...       ...                         ...
+## 1619   OG2595                   zf-RING_7
+## 1620   OG2596                    zf-TFIIB
+## 1621   OG2597                        ZinT
+## 1622   OG2598                        ZnuA
+## 1623   OG2599                    ZT_dimer</code></pre>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">p</span>$<span class="no">shell_clusters</span></pre></body></html></div>
 <pre><code>## DataFrame with 441 rows and 2 columns
-##         cluster            Pfam_Arch
-##     &lt;character&gt;          &lt;character&gt;
-## 1        OG0005  4HB_MCP_1;MCPsignal
-## 2        OG0009        5_nucleotid_C
-## 3        OG0015                  AAA
-## 4        OG0019               AAA_22
-## 5        OG0021               AAA_22
-## ...         ...                  ...
-## 437      OG2548 VirB3;CagE_TrbE_VirB
-## 438      OG2552                VirB8
-## 439      OG2554                VirB8
-## 440      OG2565               Y1_Tnp
-## 441      OG2568           YafQ_toxin</code></pre>
+##      cluster            Pfam_Arch
+##     &lt;factor&gt;          &lt;character&gt;
+## 1     OG0005  4HB_MCP_1;MCPsignal
+## 2     OG0009        5_nucleotid_C
+## 3     OG0015                  AAA
+## 4     OG0019               AAA_22
+## 5     OG0021               AAA_22
+## ...      ...                  ...
+## 437   OG2548 VirB3;CagE_TrbE_VirB
+## 438   OG2552                VirB8
+## 439   OG2554                VirB8
+## 440   OG2565               Y1_Tnp
+## 441   OG2568           YafQ_toxin</code></pre>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">p</span>$<span class="no">cloud_clusters</span></pre></body></html></div>
 <pre><code>## DataFrame with 535 rows and 2 columns
-##         cluster   Pfam_Arch
-##     &lt;character&gt; &lt;character&gt;
-## 1        OG0018      AAA_22
-## 2        OG0020      AAA_22
-## 3        OG0024      AAA_25
-## 4        OG0025      AAA_25
-## 5        OG0028      AAA_28
-## ...         ...         ...
-## 531      OG2566  YafQ_toxin
-## 532      OG2577      YhcG_C
-## 533      OG2584        YopX
-## 534      OG2589  Zeta_toxin
-## 535      OG2590  Zeta_toxin</code></pre>
+##      cluster   Pfam_Arch
+##     &lt;factor&gt; &lt;character&gt;
+## 1     OG0018      AAA_22
+## 2     OG0020      AAA_22
+## 3     OG0024      AAA_25
+## 4     OG0025      AAA_25
+## 5     OG0028      AAA_28
+## ...      ...         ...
+## 531   OG2566  YafQ_toxin
+## 532   OG2577      YhcG_C
+## 533   OG2584        YopX
+## 534   OG2589  Zeta_toxin
+## 535   OG2590  Zeta_toxin</code></pre>
 </div>
 <div id="the-operator" class="section level1">
 <h1 class="hasAnchor">
@@ -243,8 +243,8 @@
 ## $OG0001
 ## DataFrame with 10 rows and 10 columns
 ##     cluster        org             gene                          gid
-##    &lt;factor&gt;   &lt;factor&gt;      &lt;character&gt;                  &lt;character&gt;
-## 1    OG0001  16244_6_6  16244_6_6_00150   16244_6_6__16244_6_6_00150
+##    &lt;factor&gt;   &lt;factor&gt;         &lt;factor&gt;                  &lt;character&gt;
+## 1    OG0001 16244_6_6  16244_6_6_00150    16244_6_6__16244_6_6_00150
 ## 2    OG0001 16244_6_18 16244_6_18_00172 16244_6_18__16244_6_18_00172
 ## 3    OG0001 16244_6_24 16244_6_24_01512 16244_6_24__16244_6_24_01512
 ## 4    OG0001 16244_6_31 16244_6_31_00173 16244_6_31__16244_6_31_00173
@@ -294,8 +294,8 @@
 ## $OG0005
 ## DataFrame with 7 rows and 10 columns
 ##    cluster        org             gene                          gid    geneName
-##   &lt;factor&gt;   &lt;factor&gt;      &lt;character&gt;                  &lt;character&gt; &lt;character&gt;
-## 1   OG0005  16244_6_6  16244_6_6_00049   16244_6_6__16244_6_6_00049      mcpB_1
+##   &lt;factor&gt;   &lt;factor&gt;         &lt;factor&gt;                  &lt;character&gt; &lt;character&gt;
+## 1   OG0005 16244_6_6  16244_6_6_00049    16244_6_6__16244_6_6_00049      mcpB_1
 ## 2   OG0005 16244_6_18 16244_6_18_00072 16244_6_18__16244_6_18_00072      mcpB_1
 ## 3   OG0005 16244_6_24 16244_6_24_01411 16244_6_24__16244_6_24_01411      mcpB_2
 ## 4   OG0005 16244_6_31 16244_6_31_00072 16244_6_31__16244_6_31_00072      mcpB_1
@@ -324,7 +324,7 @@
 ## $OG0018
 ## DataFrame with 1 row and 10 columns
 ##    cluster        org             gene                          gid    geneName
-##   &lt;factor&gt;   &lt;factor&gt;      &lt;character&gt;                  &lt;character&gt; &lt;character&gt;
+##   &lt;factor&gt;   &lt;factor&gt;         &lt;factor&gt;                  &lt;character&gt; &lt;character&gt;
 ## 1   OG0018 17059_2_42 17059_2_42_00333 17059_2_42__17059_2_42_00333            
 ##                                                              product
 ##                                                          &lt;character&gt;
@@ -334,11 +334,11 @@
 ## 1 ERS739261|SC|contig000001    303996    304949           -</code></pre>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">p</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">18</span>)]$<span class="no">clusters</span></pre></body></html></div>
 <pre><code>## DataFrame with 3 rows and 2 columns
-##       cluster           Pfam_Arch
-##   &lt;character&gt;         &lt;character&gt;
-## 1      OG0001        2-Hacid_dh_C
-## 2      OG0005 4HB_MCP_1;MCPsignal
-## 3      OG0018              AAA_22</code></pre>
+##    cluster           Pfam_Arch
+##   &lt;factor&gt;         &lt;character&gt;
+## 1   OG0001        2-Hacid_dh_C
+## 2   OG0005 4HB_MCP_1;MCPsignal
+## 3   OG0018              AAA_22</code></pre>
 <div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">p</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">18</span>)]$<span class="no">sequences</span></pre></body></html></div>
 <pre><code>## DNAStringSetList of length 3
 ## [["OG0001"]] 16244_6_18__16244_6_18_00172=ATGGCGATAACAGTTTATTACGACAAAGATTGCGA...
@@ -348,7 +348,7 @@
 <pre><code>## DataFrame with 10 rows and 8 columns
 ##           org          id      strain      year     country        host
 ##      &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;
-## 1   16244_6_6        FR15   2008/170h      2008      France       Human
+## 1  16244_6_6         FR15   2008/170h      2008      France       Human
 ## 2  16244_6_18        FR27   2012/185h      2012      France       Human
 ## 3  16244_6_24        FR33    2014/52h      2014      France       Human
 ## 4  16244_6_31        FR40    2009/56h      2009      France       Human
@@ -376,7 +376,7 @@
 <pre><code>## DataFrame with 7 rows and 8 columns
 ##          org          id      strain      year     country        host
 ##     &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;
-## 1  16244_6_6        FR15   2008/170h      2008      France       Human
+## 1 16244_6_6         FR15   2008/170h      2008      France       Human
 ## 2 16244_6_18        FR27   2012/185h      2012      France       Human
 ## 3 16244_6_24        FR33    2014/52h      2014      France       Human
 ## 4 16244_6_31        FR40    2009/56h      2009      France       Human
@@ -414,8 +414,8 @@
 ## $OG0001
 ## DataFrame with 3 rows and 10 columns
 ##    cluster        org             gene                          gid    geneName
-##   &lt;factor&gt;   &lt;factor&gt;      &lt;character&gt;                  &lt;character&gt; &lt;character&gt;
-## 1   OG0001  16244_6_6  16244_6_6_00150   16244_6_6__16244_6_6_00150        ilvC
+##   &lt;factor&gt;   &lt;factor&gt;         &lt;factor&gt;                  &lt;character&gt; &lt;character&gt;
+## 1   OG0001 16244_6_6  16244_6_6_00150    16244_6_6__16244_6_6_00150        ilvC
 ## 2   OG0001 16244_6_18 16244_6_18_00172 16244_6_18__16244_6_18_00172        ilvC
 ## 3   OG0001 16244_6_24 16244_6_24_01512 16244_6_24__16244_6_24_01512        ilvC
 ##                                                                                                                                                                  product
@@ -432,8 +432,8 @@
 ## $OG0005
 ## DataFrame with 3 rows and 10 columns
 ##    cluster        org             gene                          gid    geneName
-##   &lt;factor&gt;   &lt;factor&gt;      &lt;character&gt;                  &lt;character&gt; &lt;character&gt;
-## 1   OG0005  16244_6_6  16244_6_6_00049   16244_6_6__16244_6_6_00049      mcpB_1
+##   &lt;factor&gt;   &lt;factor&gt;         &lt;factor&gt;                  &lt;character&gt; &lt;character&gt;
+## 1   OG0005 16244_6_6  16244_6_6_00049    16244_6_6__16244_6_6_00049      mcpB_1
 ## 2   OG0005 16244_6_18 16244_6_18_00072 16244_6_18__16244_6_18_00072      mcpB_1
 ## 3   OG0005 16244_6_24 16244_6_24_01411 16244_6_24__16244_6_24_01411      mcpB_2
 ##                                                                                                                                                                            product
@@ -448,10 +448,10 @@
 ## 3 ERS672265|SC|contig000005     82728     84389           +</code></pre>
 <div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="no">p</span>[<span class="fl">1</span>:<span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">18</span>)]$<span class="no">clusters</span></pre></body></html></div>
 <pre><code>## DataFrame with 2 rows and 2 columns
-##       cluster           Pfam_Arch
-##   &lt;character&gt;         &lt;character&gt;
-## 1      OG0001        2-Hacid_dh_C
-## 2      OG0005 4HB_MCP_1;MCPsignal</code></pre>
+##    cluster           Pfam_Arch
+##   &lt;factor&gt;         &lt;character&gt;
+## 1   OG0001        2-Hacid_dh_C
+## 2   OG0005 4HB_MCP_1;MCPsignal</code></pre>
 <div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="no">p</span>[<span class="fl">1</span>:<span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">18</span>)]$<span class="no">sequences</span></pre></body></html></div>
 <pre><code>## DNAStringSetList of length 2
 ## [["OG0001"]] 16244_6_18__16244_6_18_00172=ATGGCGATAACAGTTTATTACGACAAAGATTGCGA...
@@ -460,7 +460,7 @@
 <pre><code>## DataFrame with 3 rows and 8 columns
 ##          org          id      strain      year     country        host
 ##     &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;
-## 1  16244_6_6        FR15   2008/170h      2008      France       Human
+## 1 16244_6_6         FR15   2008/170h      2008      France       Human
 ## 2 16244_6_18        FR27   2012/185h      2012      France       Human
 ## 3 16244_6_24        FR33    2014/52h      2014      France       Human
 ##        source   accession
@@ -483,7 +483,7 @@
 <pre><code>## DataFrame with 10 rows and 8 columns
 ##           org          id      strain      year     country        host
 ##      &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;
-## 1   16244_6_6        FR15   2008/170h      2008      France       Human
+## 1  16244_6_6         FR15   2008/170h      2008      France       Human
 ## 2  16244_6_18        FR27   2012/185h      2012      France       Human
 ## 3  16244_6_24        FR33    2014/52h      2014      France       Human
 ## 4  16244_6_31        FR40    2009/56h      2009      France       Human
@@ -556,7 +556,7 @@
 <pre><code>## DataFrame with 10 rows and 8 columns
 ##           org          id      strain      year     country        host
 ##      &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;
-## 1   16244_6_6        FR15   2008/170h      2008      France       Human
+## 1  16244_6_6         FR15   2008/170h      2008      France       Human
 ## 2  16244_6_18        FR27   2012/185h      2012      France       Human
 ## 3  16244_6_24        FR33    2014/52h      2014      France       Human
 ## 4  16244_6_31        FR40    2009/56h      2009      France       Human

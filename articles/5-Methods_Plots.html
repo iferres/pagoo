@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3.9004</span>
       </span>
     </div>
 
@@ -210,7 +210,7 @@
 <p>Genomic fluidity is a measure of population diversity. Is somehow similar to computing jaccard distances, but genomic fluidity describes the whole population whereas jaccard distances are computed pairwise. This is also a <code>micropan</code> wrapper function. Let`s compute it using 100 random samples:</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">p</span>$<span class="fu">fluidity</span>(<span class="kw">n.sim</span> <span class="kw">=</span> <span class="fl">100</span>)</pre></body></html></div>
 <pre><code>##       Mean        Std 
-## 0.08604910 0.03412122</code></pre>
+## 0.08894193 0.02835084</code></pre>
 </div>
 <div id="principal-component-analysis" class="section level2">
 <h2 class="hasAnchor">
@@ -284,23 +284,20 @@
 <div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">p</span>$<span class="fu">gg_curves</span>() +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Pangenome and Coregenome curves"</span>) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(~<span class="no">category</span>, <span class="kw">scales</span> <span class="kw">=</span> <span class="st">'free_y'</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(~<span class="no">Category</span>, <span class="kw">scales</span> <span class="kw">=</span> <span class="st">'free_y'</span>) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>(<span class="kw">base_size</span> <span class="kw">=</span> <span class="fl">15</span>) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span>(<span class="kw">palette</span> <span class="kw">=</span> <span class="st">"Accent"</span>)</pre></body></html></div>
-<pre><code>## Warning: `data` is not used by stat_function()
-
-## Warning: `data` is not used by stat_function()</code></pre>
 <p><img src="5-Methods_Plots_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 </div>
 <div id="pca-biplot" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pca-biplot" class="anchor"></a>PCA Biplot</h2>
 <p>A biplot for visualizing the first 2 principal components in a PCA is always useful at early stages of analysis to explore possible association of genomes based on gene content. This method uses <code>$pan_pca()</code> method to perform the PCA, and allows you to use organism metadata to colour the points.</p>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">p</span>$<span class="no">organisms</span></pre></body></html></div>
+<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">p</span>$<span class="no">organisms</span></pre></body></html></div>
 <pre><code>## DataFrame with 10 rows and 8 columns
 ##           org          id      strain      year     country        host
 ##      &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;
-## 1   16244_6_6        FR15   2008/170h      2008      France       Human
+## 1  16244_6_6         FR15   2008/170h      2008      France       Human
 ## 2  16244_6_18        FR27   2012/185h      2012      France       Human
 ## 3  16244_6_24        FR33    2014/52h      2014      France       Human
 ## 4  16244_6_31        FR40    2009/56h      2009      France       Human
@@ -323,7 +320,7 @@
 ## 9        Blood   ERS739230
 ## 10       Blood   ERS739261</code></pre>
 <p>Since we have metadata asociated to each organism, we will use it to colour the organisms according to the <code>country</code> variable.</p>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">p</span>$<span class="fu">gg_pca</span>(<span class="kw">colour</span> <span class="kw">=</span> <span class="st">'host'</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">4</span>) +
+<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">p</span>$<span class="fu">gg_pca</span>(<span class="kw">colour</span> <span class="kw">=</span> <span class="st">'host'</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">4</span>) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>(<span class="kw">base_size</span> <span class="kw">=</span> <span class="fl">15</span>) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span>(<span class="kw">palette</span> <span class="kw">=</span> <span class="st">"Set2"</span>)</pre></body></html></div>
 <p><img src="5-Methods_Plots_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
@@ -333,7 +330,7 @@
 <h1 class="hasAnchor">
 <a href="#shiny-app" class="anchor"></a>Shiny App</h1>
 <p>Last but not least, you can deploy a <code>shiny</code> app by just one line of code.</p>
-<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">p</span>$<span class="fu">runShinyApp</span>()</pre></body></html></div>
+<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">p</span>$<span class="fu">runShinyApp</span>()</pre></body></html></div>
 </div>
   </div>
 
