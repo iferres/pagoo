@@ -20,8 +20,6 @@ Inherits: \code{\link[pagoo]{PgR6}}
 \item \href{#method-pan_pca}{\code{PgR6M$pan_pca()}}
 \item \href{#method-pg_power_law_fit}{\code{PgR6M$pg_power_law_fit()}}
 \item \href{#method-cg_exp_decay_fit}{\code{PgR6M$cg_exp_decay_fit()}}
-\item \href{#method-fluidity}{\code{PgR6M$fluidity()}}
-\item \href{#method-binomix_estimate}{\code{PgR6M$binomix_estimate()}}
 \item \href{#method-gg_barplot}{\code{PgR6M$gg_barplot()}}
 \item \href{#method-gg_binmap}{\code{PgR6M$gg_binmap()}}
 \item \href{#method-gg_dist}{\code{PgR6M$gg_dist()}}
@@ -248,64 +246,6 @@ is missing, it will be computed with default arguments, or with the ones provide
 \subsection{Returns}{
 A \code{list} of two elements: \code{$formula} with a fitted function, and \code{$params}
 with fitted intercept and decay parameters.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fluidity"></a>}}
-\if{latex}{\out{\hypertarget{method-fluidity}{}}}
-\subsection{Method \code{fluidity()}}{
-Computes the genomic fluidity, which is a measure of population
-diversity. See \code{\link[micropan]{fluidity}} for more details.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PgR6M$fluidity(n.sim = 10)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{n.sim}}{An integer specifying the number of random samples
-to use in the computations.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A list with two elements, the mean fluidity and its sample standard
-deviation over the n.sim computed values.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-binomix_estimate"></a>}}
-\if{latex}{\out{\hypertarget{method-binomix_estimate}{}}}
-\subsection{Method \code{binomix_estimate()}}{
-Fits binomial mixture models to the data given as a pan-matrix. From the
-fitted models both estimates of pan-genome size and core-genome size are
-available. See \code{\link[micropan]{binomixEstimate}} for more details.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PgR6M$binomix_estimate(K.range = 3:5, core.detect.prob = 1, verbose = TRUE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{K.range}}{The range of model complexities to explore. The
-vector of integers specify the number of binomial densities to combine in the
-mixture models.}
-
-\item{\code{core.detect.prob}}{The detection probability of core genes.
-This should almost always be 1.0, since a core gene is by definition always
-present in all genomes, but can be set fractionally smaller.}
-
-\item{\code{verbose}}{Logical indicating if textual output should be
-given to monitor the progress of the computations.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{Binomix} object (\code{micropan} package), which is a small (S3)
-extension of a \code{list} with two components. These two components are named
-\code{BIC.table} and \code{Mix.list}. Refer to the \code{micropan} function
-\code{\link[micropan]{binomixEstimate}} for a detailed explanation of this
-method.
 }
 }
 \if{html}{\out{<hr>}}

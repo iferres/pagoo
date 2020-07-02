@@ -45,10 +45,8 @@ sequences, as defined above.}
 \item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="recover">}\href{../../pagoo/html/PgR6.html#method-recover}{\code{pagoo::PgR6$recover()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="save_pangenomeRDS">}\href{../../pagoo/html/PgR6.html#method-save_pangenomeRDS}{\code{pagoo::PgR6$save_pangenomeRDS()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="write_pangenome">}\href{../../pagoo/html/PgR6.html#method-write_pangenome}{\code{pagoo::PgR6$write_pangenome()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="binomix_estimate">}\href{../../pagoo/html/PgR6M.html#method-binomix_estimate}{\code{pagoo::PgR6M$binomix_estimate()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="cg_exp_decay_fit">}\href{../../pagoo/html/PgR6M.html#method-cg_exp_decay_fit}{\code{pagoo::PgR6M$cg_exp_decay_fit()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="dist">}\href{../../pagoo/html/PgR6M.html#method-dist}{\code{pagoo::PgR6M$dist()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="fluidity">}\href{../../pagoo/html/PgR6M.html#method-fluidity}{\code{pagoo::PgR6M$fluidity()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="gg_barplot">}\href{../../pagoo/html/PgR6M.html#method-gg_barplot}{\code{pagoo::PgR6M$gg_barplot()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="gg_binmap">}\href{../../pagoo/html/PgR6M.html#method-gg_binmap}{\code{pagoo::PgR6M$gg_binmap()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="gg_curves">}\href{../../pagoo/html/PgR6M.html#method-gg_curves}{\code{pagoo::PgR6M$gg_curves()}}\out{</span>}
