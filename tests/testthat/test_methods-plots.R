@@ -8,10 +8,6 @@ test_that('methods return expected objects', {
   dist <- p$dist()
   expect_is(dist, 'dist')
 
-  flui <- p$fluidity()
-  expect_is(flui, "numeric")
-  expect_named(flui, expected = c("Mean", "Std"))
-
   rare <- p$rarefact()
   expect_is(rare, "matrix")
   expect(all(apply(rare, 1, class) == "numeric"), "Matrix class is not numeric")
