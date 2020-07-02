@@ -157,8 +157,9 @@ p$gg_pca(colour = 'host', size = 4) +
 ```
 
 # Shiny App
-Last but not least, you can deploy a `shiny` app by just one line of code. 
+Last but not least, you can deploy a local `shiny` app by just one line of code. 
 ```{r, eval=FALSE}
 p$runShinyApp()
 ```
-You can explore an example pagoo shiny app for a complete set of 69 _Campylobacter fetus_ genomes at the following url: https://microgenlab.shinyapps.io/pagoo_campylobacter/
+You can explore an online example of pagoo `shiny` app for a complete set of 69 _Campylobacter fetus_ genomes at the following url: https://microgenlab.shinyapps.io/pagoo_campylobacter/ .
+This method is currently not intended for very large and complex datasets, as it may render slow. To work with big pangenomes we recommend the use of the R command line, but for tens or few hundred of genomes it works fairly good if you have patience.
