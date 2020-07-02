@@ -57,24 +57,6 @@ p$dist(method = "jaccard", binary = TRUE)
 <!-- ```{r} -->
 <!-- ``` -->
 
-## Estimation of Core and Pangenome Sizes
-Given a panmatrix, you could predict the number of core clusters and the total number of clusters in a pangenome. Several methods have been developed for this purpose, in this case a binomial mixture model is used to describe the distribution of gene clusters across genomes in a pangenome. 
-The function is just a wrapper of `binomixEstimate()` from `micropan` package, so if you use it cite it acordingly. We recommend looking the `micropan::binomixEstimate()` documentation for model and implementation details.
-
-To use this method, simply call it from the object:
-
-```{r}
-p$binomix_estimate()
-```
-
-Given that we are using a very small toy dataset, results here are not meaningful.
-
-## Fluidity
-Genomic fluidity is a measure of population diversity. Is somehow similar to computing jaccard distances, but genomic fluidity describes the whole population whereas jaccard distances are computed pairwise. This is also a `micropan` wrapper function. Let`s compute it using 100 random samples:
-```{r}
-p$fluidity(n.sim = 100)
-```
-
 ## Principal Component Analysis
 A method to compute `prcomp` (`stats` package) over the panmatrix is provided. You can use generic functions to further analyze the results.
 ```{r}

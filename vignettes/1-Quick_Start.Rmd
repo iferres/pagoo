@@ -51,7 +51,7 @@ Another useful field is `$pan_matrix`, which returns a `matrix` with gene abunda
 For example:
 
 ```{r}
-campy$fluidity(n.sim = 10)
+campy$dist(method = "bray")
 ```
 Or:
 ```{r}
