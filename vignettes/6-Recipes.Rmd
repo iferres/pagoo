@@ -88,7 +88,8 @@ Given that we are using a very small toy dataset, results here are not really me
 
 ### Fluidity
 Genomic fluidity is a measure of population diversity. It's somehow similar to computing jaccard distances, but genomic fluidity describes the whole population whereas jaccard distances are computed pairwise. As above, we are passing the object's pan-matrix to the `micropan::fluidity` function. In this case, lets use `magrittr` `%>%` operator to pipe it, and compute fluidity using 100 random samples:
-```{r}
+
+```{r, eval=FALSE}
 library(micropan)
 library(magrittr)
 
