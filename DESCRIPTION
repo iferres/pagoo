@@ -50,6 +50,8 @@ Suggests:
     pegas,
     DECIPHER,
     rhierbaps,
+    knitr,
+    rmarkdown,
     testthat,
     covr
 License: GPL-3 | file LICENSE
@@ -58,3 +60,4 @@ LazyData: true
 ByteCompile: true
 RoxygenNote: 7.1.1
 Roxygen: list(r6 = TRUE)
+VignetteBuilder: knitr
