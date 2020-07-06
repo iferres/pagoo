@@ -1,6 +1,10 @@
 ---
-title: "6 - Recipes"
+title: "Recipes"
 output: html_document
+vignette: >
+  %\VignetteIndexEntry{Recipes}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r setup, include=FALSE}
@@ -23,7 +27,6 @@ In the section **5 - Methods and Plots** we introduced a set of several plots th
 
 ```{r, warning=FALSE, message=FALSE}
 library(ggplot2)
-library(scales)
 library(patchwork)
 
 # 1. Pangenome curves
@@ -70,6 +73,32 @@ pie <- p$gg_pie() +                                         # Plot pie chart
 # 5. Use patchwork to arrange plots using math operators
 (curves + bars) / (pca + pie)
 ```
+
+## Using `micropan` Methods
+
+### Estimation of Core and Pangenome Sizes
+Given a panmatrix, you could predict the number of core clusters and the total number of clusters in a pangenome. Several methods have been developed for this purpose, in this case a binomial mixture model implemented by `micropan` package is used to describe the distribution of gene clusters across genomes in a pangenome. 
+
+To use this method, simply pass the object's pan-matrix to the `micropan::binomixEstimate` function:
+
+```{r}
+library(micropan)
+
+micropan::binomixEstimate(p$pan_matrix)
+```
+
+Given that we are using a very small toy dataset, results here are not really meaningful.
+
+### Fluidity
+Genomic fluidity is a measure of population diversity. It's somehow similar to computing jaccard distances, but genomic fluidity describes the whole population whereas jaccard distances are computed pairwise. As above, we are passing the object's pan-matrix to the `micropan::fluidity` function. In this case, lets use `magrittr` `%>%` operator to pipe it, and compute fluidity using 100 random samples:
+
+```{r, eval=FALSE}
+library(micropan)
+library(magrittr)
+
+p$pan_matrix %>% micropan::fluidity(n.sim = 100)
+```
+
 
 # Blastp
 After you have reconstructed the pangenome, it's a common practice to use a single representative gene from each cluster to annotate them using a curated database such as COG, EggNOG or KEGG. After doing that, you probably want to add any new information to the `pagoo` object as cluster's metadata. In this recipe we show how to extract one representative sequence from each cluster, translate each of them, and use [rBLAST](https://github.com/mhahsler/rBLAST) package to query a hypothetical blastp database. **NOTE:** we didn't include any blast database in the package, the code here is just to illustrate the general idea. Running the following chunk will throw an error.

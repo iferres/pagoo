@@ -6,7 +6,6 @@
 #' instead of this, since is more easy to understand.
 #' Inherits: \code{\link[pagoo]{PgR6}}
 #' @importFrom R6 R6Class
-#' @importFrom micropan fluidity binomixEstimate
 #' @import ggplot2
 #' @import ggfortify
 #' @import shiny
@@ -235,44 +234,44 @@ PgR6M <- R6Class('PgR6M',
                      ret
                    },
 
-                   #' @description
-                   #' Computes the genomic fluidity, which is a measure of population
-                   #' diversity. See \code{\link[micropan]{fluidity}} for more details.
-                   #' @param n.sim An integer specifying the number of random samples
-                   #' to use in the computations.
-                   #' @return A list with two elements, the mean fluidity and its sample standard
-                   #' deviation over the n.sim computed values.
-                   fluidity = function(n.sim = 10){
-                     #micropan::fluidity()
-                     fluidity(self$pan_matrix, n.sim = n.sim)
-                   },
+                   # @description
+                   # Computes the genomic fluidity, which is a measure of population
+                   # diversity. See \code{\link[micropan]{fluidity}} for more details.
+                   # @param n.sim An integer specifying the number of random samples
+                   # to use in the computations.
+                   # @return A list with two elements, the mean fluidity and its sample standard
+                   # deviation over the n.sim computed values.
+                   # fluidity = function(n.sim = 10){
+                   #   #micropan::fluidity()
+                   #   fluidity(self$pan_matrix, n.sim = n.sim)
+                   # },
 
-                   #' @description
-                   #' Fits binomial mixture models to the data given as a pan-matrix. From the
-                   #' fitted models both estimates of pan-genome size and core-genome size are
-                   #' available. See \code{\link[micropan]{binomixEstimate}} for more details.
-                   #' @param K.range The range of model complexities to explore. The
-                   #' vector of integers specify the number of binomial densities to combine in the
-                   #' mixture models.
-                   #' @param core.detect.prob The detection probability of core genes.
-                   #' This should almost always be 1.0, since a core gene is by definition always
-                   #' present in all genomes, but can be set fractionally smaller.
-                   #' @param verbose  Logical indicating if textual output should be
-                   #' given to monitor the progress of the computations.
-                   #' @return A \code{Binomix} object (\code{micropan} package), which is a small (S3)
-                   #' extension of a \code{list} with two components. These two components are named
-                   #' \code{BIC.table} and \code{Mix.list}. Refer to the \code{micropan} function
-                   #' \code{\link[micropan]{binomixEstimate}} for a detailed explanation of this
-                   #' method.
-                   binomix_estimate = function(K.range = 3:5,
-                                               core.detect.prob = 1,
-                                               verbose = TRUE){
-                     # micropan::binomxEstimate()
-                     binomixEstimate(pan.matrix = self$pan_matrix,
-                                     K.range = K.range,
-                                     core.detect.prob = core.detect.prob,
-                                     verbose = verbose)
-                   },
+                   # @description
+                   # Fits binomial mixture models to the data given as a pan-matrix. From the
+                   # fitted models both estimates of pan-genome size and core-genome size are
+                   # available. See \code{\link[micropan]{binomixEstimate}} for more details.
+                   # @param K.range The range of model complexities to explore. The
+                   # vector of integers specify the number of binomial densities to combine in the
+                   # mixture models.
+                   # @param core.detect.prob The detection probability of core genes.
+                   # This should almost always be 1.0, since a core gene is by definition always
+                   # present in all genomes, but can be set fractionally smaller.
+                   # @param verbose  Logical indicating if textual output should be
+                   # given to monitor the progress of the computations.
+                   # @return A \code{Binomix} object (\code{micropan} package), which is a small (S3)
+                   # extension of a \code{list} with two components. These two components are named
+                   # \code{BIC.table} and \code{Mix.list}. Refer to the \code{micropan} function
+                   # \code{\link[micropan]{binomixEstimate}} for a detailed explanation of this
+                   # method.
+                   # binomix_estimate = function(K.range = 3:5,
+                   #                             core.detect.prob = 1,
+                   #                             verbose = TRUE){
+                   #   # micropan::binomxEstimate()
+                   #   binomixEstimate(pan.matrix = self$pan_matrix,
+                   #                   K.range = K.range,
+                   #                   core.detect.prob = core.detect.prob,
+                   #                   verbose = verbose)
+                   # },
 
 
                    #Plot Methods

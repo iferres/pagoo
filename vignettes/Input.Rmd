@@ -1,6 +1,10 @@
 ---
-title: "2 - Input"
+title: "Input"
 output: html_document
+vignette: >
+  %\VignetteIndexEntry{Input}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r setup, include=FALSE}
