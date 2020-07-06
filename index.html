@@ -5,15 +5,15 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pagoo: Analyze Bacterial Pangenomes in R • pagoo</title>
+<title>Analyze Bacterial Pangenomes in R with Pagoo • pagoo</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Pagoo: Analyze Bacterial Pangenomes in R">
-<meta property="og:description" content="pagoo is an encapsulated, object-oriented class system for 
-  analyzing bacterial pangenomes. It uses the R6 package as backend. It was 
+<script src="pkgdown.js"></script><meta property="og:title" content="Analyze Bacterial Pangenomes in R with Pagoo">
+<meta property="og:description" content="This package provides an encapsulated, object-oriented class system 
+  for analyzing bacterial pangenomes. It uses the R6 package as backend. It was 
   designed in order to facilitate and speed-up the comparative analysis of 
   multiple bacterial genomes, standardizing and optimizing routine tasks 
   performed everyday. There are a handful of things done everyday when working 
@@ -43,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4.9002</span>
       </span>
     </div>
 
@@ -56,32 +56,32 @@
   </a>
 </li>
 <li>
+  <a href="articles/pagoo.html">Get started</a>
+</li>
+<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Tutorials
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/1-Quick_Start.html">1 - Quick Start</a>
+      <a href="articles/Input.html">1 - Input</a>
     </li>
     <li>
-      <a href="articles/2-Input.html">2 - Input</a>
+      <a href="articles/Querying_Data.html">2 - Querying Data</a>
     </li>
     <li>
-      <a href="articles/3-Querying_Data.html">3 - Querying Data</a>
+      <a href="articles/Subseting.html">3 - Subseting</a>
     </li>
     <li>
-      <a href="articles/4-Subseting.html">4 - Subseting</a>
+      <a href="articles/Methods_Plots.html">4 - Methods and Plots</a>
     </li>
     <li>
-      <a href="articles/5-Methods_Plots.html">5 - Methods and Plots</a>
-    </li>
-    <li>
-      <a href="articles/6-Recipes.html">6 - Recipes</a>
+      <a href="articles/Recipes.html">5 - Recipes</a>
     </li>
   </ul>
 </li>
@@ -126,59 +126,59 @@
 <p>This idea is common in other object-oriented programming languages, but not in R for final users. We have exploited R6 package to take advantage of this kind of programming and make it available to the R pangenomics community.</p>
 <p><code>pagoo</code> is composed by three <code>R6</code> classes, each one more complex than the other, and that the more basic are inherited by the more complex ones. The most basic one, <code>PgR6</code>, contains basic subset methods and data manipulation functions. The second one, <code>PgR6M</code> inherits all the methods and fields from the previous one, and incorporates statistical and visualization methods. The last one, <code>PgR6MS</code>, inherits from <code>PgR6M</code> all its capabilities, and adds methods to manipulate DNA sequences.</p>
 <p>A quick look to a <code>pagoo</code> object print can give us some clues of how is it composed:</p>
-<div class="sourceCode" id="cb1"><pre class="r">&lt;PgR6MS&gt;
-  Inherits from: &lt;PgR6M&gt;
-  Public:
-    add_metadata: function (map = "org", data) 
-    binomix_estimate: function (K.range = 3:5, core.detect.prob = 1, verbose = TRUE) 
-    cg_exp_decay_fit: function (raref, pcounts = 10, ...) 
-    clone: function (deep = FALSE) 
-    cloud_clusters: active binding
-    cloud_genes: active binding
-    cloud_sequences: active binding
-    clusters: active binding
-    core_clusters: active binding
-    core_genes: active binding
-    core_level: active binding
-    core_seqs_4_phylo: function (max_per_org = 1, fill = TRUE) 
-    core_sequences: active binding
-    dist: function (method = "bray", binary = FALSE, diag = FALSE, upper = FALSE, 
-    drop: function (x) 
-    dropped: active binding
-    fluidity: function (n.sim = 10) 
-    genes: active binding
-    gg_barplot: function () 
-    gg_binmap: function () 
-    gg_curves: function (what = c("pangenome", "coregenome"), ...) 
-    gg_dist: function (method = "bray", ...) 
-    gg_pca: function (colour = NULL, ...) 
-    gg_pie: function () 
-    initialize: function (data, org_meta, cluster_meta, core_level = 95, sep = "__", 
-    organisms: active binding
-    pan_matrix: active binding
-    pan_pca: function (center = TRUE, scale. = FALSE, ...) 
-    pg_power_law_fit: function (raref, ...) 
-    random_seed: active binding
-    rarefact: function (what = "pangenome", n.perm = 10) 
-    recover: function (x) 
-    runShinyApp: function () 
-    save_pangenomeRDS: function (file = "pangenome.rds", seqs.if.avail = TRUE) 
-    sequences: active binding
-    shell_clusters: active binding
-    shell_genes: active binding
-    shell_sequences: active binding
-    summary_stats: active binding
-    write_pangenome: function (dir = "pangenome", force = FALSE) 
-  Private:
-    .clusters: DataFrame
-    .data: DataFrame
-    .dropped: NULL
-    .level: 95
-    .organisms: DataFrame
-    .panmatrix: 1 1 1 1 1 1 1 1 1 0 1 0 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1  ...
-    .sep: __
-    .sequences: DNAStringSet
-    version: package_version, numeric_version</pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="op">&lt;</span>PgR6MS<span class="op">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="st">  </span>Inherits from<span class="op">:</span><span class="st"> </span><span class="er">&lt;</span>PgR6M<span class="op">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="st">  </span>Public<span class="op">:</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="st">    </span>add_metadata<span class="op">:</span><span class="st"> </span><span class="cf">function</span> (<span class="dt">map =</span> <span class="st">"org"</span>, data) </span>
+<span id="cb1-5"><a href="#cb1-5"></a>    binomix_estimate<span class="op">:</span><span class="st"> </span><span class="cf">function</span> (<span class="dt">K.range =</span> <span class="dv">3</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">core.detect.prob =</span> <span class="dv">1</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>) </span>
+<span id="cb1-6"><a href="#cb1-6"></a>    cg_exp_decay_fit<span class="op">:</span><span class="st"> </span><span class="cf">function</span> (raref, <span class="dt">pcounts =</span> <span class="dv">10</span>, ...) </span>
+<span id="cb1-7"><a href="#cb1-7"></a>    clone<span class="op">:</span><span class="st"> </span><span class="cf">function</span> (<span class="dt">deep =</span> <span class="ot">FALSE</span>) </span>
+<span id="cb1-8"><a href="#cb1-8"></a>    cloud_clusters<span class="op">:</span><span class="st"> </span>active binding</span>
+<span id="cb1-9"><a href="#cb1-9"></a>    cloud_genes<span class="op">:</span><span class="st"> </span>active binding</span>
+<span id="cb1-10"><a href="#cb1-10"></a>    cloud_sequences<span class="op">:</span><span class="st"> </span>active binding</span>
+<span id="cb1-11"><a href="#cb1-11"></a>    clusters<span class="op">:</span><span class="st"> </span>active binding</span>
+<span id="cb1-12"><a href="#cb1-12"></a>    core_clusters<span class="op">:</span><span class="st"> </span>active binding</span>
+<span id="cb1-13"><a href="#cb1-13"></a>    core_genes<span class="op">:</span><span class="st"> </span>active binding</span>
+<span id="cb1-14"><a href="#cb1-14"></a>    core_level<span class="op">:</span><span class="st"> </span>active binding</span>
+<span id="cb1-15"><a href="#cb1-15"></a>    core_seqs_<span class="dv">4</span>_phylo<span class="op">:</span><span class="st"> </span><span class="cf">function</span> (<span class="dt">max_per_org =</span> <span class="dv">1</span>, <span class="dt">fill =</span> <span class="ot">TRUE</span>) </span>
+<span id="cb1-16"><a href="#cb1-16"></a>    core_sequences<span class="op">:</span><span class="st"> </span>active binding</span>
+<span id="cb1-17"><a href="#cb1-17"></a>    dist<span class="op">:</span><span class="st"> </span><span class="cf">function</span> (<span class="dt">method =</span> <span class="st">"bray"</span>, <span class="dt">binary =</span> <span class="ot">FALSE</span>, <span class="dt">diag =</span> <span class="ot">FALSE</span>, <span class="dt">upper =</span> <span class="ot">FALSE</span>, </span>
+<span id="cb1-18"><a href="#cb1-18"></a>    drop<span class="op">:</span><span class="st"> </span><span class="cf">function</span> (x) </span>
+<span id="cb1-19"><a href="#cb1-19"></a>    dropped<span class="op">:</span><span class="st"> </span>active binding</span>
+<span id="cb1-20"><a href="#cb1-20"></a>    fluidity<span class="op">:</span><span class="st"> </span><span class="cf">function</span> (<span class="dt">n.sim =</span> <span class="dv">10</span>) </span>
+<span id="cb1-21"><a href="#cb1-21"></a>    genes<span class="op">:</span><span class="st"> </span>active binding</span>
+<span id="cb1-22"><a href="#cb1-22"></a>    gg_barplot<span class="op">:</span><span class="st"> </span><span class="cf">function</span> () </span>
+<span id="cb1-23"><a href="#cb1-23"></a>    gg_binmap<span class="op">:</span><span class="st"> </span><span class="cf">function</span> () </span>
+<span id="cb1-24"><a href="#cb1-24"></a>    gg_curves<span class="op">:</span><span class="st"> </span><span class="cf">function</span> (<span class="dt">what =</span> <span class="kw">c</span>(<span class="st">"pangenome"</span>, <span class="st">"coregenome"</span>), ...) </span>
+<span id="cb1-25"><a href="#cb1-25"></a>    gg_dist<span class="op">:</span><span class="st"> </span><span class="cf">function</span> (<span class="dt">method =</span> <span class="st">"bray"</span>, ...) </span>
+<span id="cb1-26"><a href="#cb1-26"></a>    gg_pca<span class="op">:</span><span class="st"> </span><span class="cf">function</span> (<span class="dt">colour =</span> <span class="ot">NULL</span>, ...) </span>
+<span id="cb1-27"><a href="#cb1-27"></a>    gg_pie<span class="op">:</span><span class="st"> </span><span class="cf">function</span> () </span>
+<span id="cb1-28"><a href="#cb1-28"></a>    initialize<span class="op">:</span><span class="st"> </span><span class="cf">function</span> (data, org_meta, cluster_meta, <span class="dt">core_level =</span> <span class="dv">95</span>, <span class="dt">sep =</span> <span class="st">"__"</span>, </span>
+<span id="cb1-29"><a href="#cb1-29"></a>    organisms<span class="op">:</span><span class="st"> </span>active binding</span>
+<span id="cb1-30"><a href="#cb1-30"></a>    pan_matrix<span class="op">:</span><span class="st"> </span>active binding</span>
+<span id="cb1-31"><a href="#cb1-31"></a>    pan_pca<span class="op">:</span><span class="st"> </span><span class="cf">function</span> (<span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale. =</span> <span class="ot">FALSE</span>, ...) </span>
+<span id="cb1-32"><a href="#cb1-32"></a>    pg_power_law_fit<span class="op">:</span><span class="st"> </span><span class="cf">function</span> (raref, ...) </span>
+<span id="cb1-33"><a href="#cb1-33"></a>    random_seed<span class="op">:</span><span class="st"> </span>active binding</span>
+<span id="cb1-34"><a href="#cb1-34"></a>    rarefact<span class="op">:</span><span class="st"> </span><span class="cf">function</span> (<span class="dt">what =</span> <span class="st">"pangenome"</span>, <span class="dt">n.perm =</span> <span class="dv">10</span>) </span>
+<span id="cb1-35"><a href="#cb1-35"></a>    recover<span class="op">:</span><span class="st"> </span><span class="cf">function</span> (x) </span>
+<span id="cb1-36"><a href="#cb1-36"></a>    runShinyApp<span class="op">:</span><span class="st"> </span><span class="cf">function</span> () </span>
+<span id="cb1-37"><a href="#cb1-37"></a>    save_pangenomeRDS<span class="op">:</span><span class="st"> </span><span class="cf">function</span> (<span class="dt">file =</span> <span class="st">"pangenome.rds"</span>, <span class="dt">seqs.if.avail =</span> <span class="ot">TRUE</span>) </span>
+<span id="cb1-38"><a href="#cb1-38"></a>    sequences<span class="op">:</span><span class="st"> </span>active binding</span>
+<span id="cb1-39"><a href="#cb1-39"></a>    shell_clusters<span class="op">:</span><span class="st"> </span>active binding</span>
+<span id="cb1-40"><a href="#cb1-40"></a>    shell_genes<span class="op">:</span><span class="st"> </span>active binding</span>
+<span id="cb1-41"><a href="#cb1-41"></a>    shell_sequences<span class="op">:</span><span class="st"> </span>active binding</span>
+<span id="cb1-42"><a href="#cb1-42"></a>    summary_stats<span class="op">:</span><span class="st"> </span>active binding</span>
+<span id="cb1-43"><a href="#cb1-43"></a>    write_pangenome<span class="op">:</span><span class="st"> </span><span class="cf">function</span> (<span class="dt">dir =</span> <span class="st">"pangenome"</span>, <span class="dt">force =</span> <span class="ot">FALSE</span>) </span>
+<span id="cb1-44"><a href="#cb1-44"></a>  Private<span class="op">:</span></span>
+<span id="cb1-45"><a href="#cb1-45"></a><span class="st">    </span>.clusters<span class="op">:</span><span class="st"> </span>DataFrame</span>
+<span id="cb1-46"><a href="#cb1-46"></a>    .data<span class="op">:</span><span class="st"> </span>DataFrame</span>
+<span id="cb1-47"><a href="#cb1-47"></a>    .dropped<span class="op">:</span><span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb1-48"><a href="#cb1-48"></a>    .level<span class="op">:</span><span class="st"> </span><span class="dv">95</span></span>
+<span id="cb1-49"><a href="#cb1-49"></a>    .organisms<span class="op">:</span><span class="st"> </span>DataFrame</span>
+<span id="cb1-50"><a href="#cb1-50"></a>    .panmatrix<span class="op">:</span><span class="st"> </span><span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span>  ...</span>
+<span id="cb1-51"><a href="#cb1-51"></a>    .sep<span class="op">:</span><span class="st"> </span>__</span>
+<span id="cb1-52"><a href="#cb1-52"></a>    .sequences<span class="op">:</span><span class="st"> </span>DNAStringSet</span>
+<span id="cb1-53"><a href="#cb1-53"></a>    version<span class="op">:</span><span class="st"> </span>package_version, numeric_version</span></code></pre></div>
 <p>You can see that basically there are public and private fields/methods. In private, all raw data is stored. You will not have easy access to it. Instead, you will be able to access public functions and active bindings. Active bindings are functions that behave as it were variables, in this case they are querying private information and returning it to the user in a convinient way. Public methods</p>
 </div>
 <div id="pangenome-reconstruction" class="section level3">
@@ -190,19 +190,25 @@
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
 <p>Currently, <code>pagoo</code> is only available at GitHub. The easiest way to install this package is by using <code>devtools</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="st">"devtools"</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">'iferres/pagoo'</span>)</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="co">if</span> (<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="st">"devtools"</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)
+<span class="kw">devtools</span>::<span class="fu">install_github</span>(<span class="st">'iferres/pagoo'</span>)
+</pre></div>
 <p>We have tested <code>pagoo</code> in UNIX operating systems. However it should, we cannot warrant it fully works on Windows. Also, in the future we plan to put the code in CRAN and/or Bioconductor repositries.</p>
 </div>
 <div id="help" class="section level3">
 <h3 class="hasAnchor">
 <a href="#help" class="anchor"></a>Help</h3>
 <p>All three classes are documented. You can access R help pages as with any other function:</p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">pagoo</span>)
-?<span class="no">PgR6</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/help.html">help</a></span>(<span class="st">'PgR6MS'</span>)</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://iferres.github.io/pagoo">pagoo</a></span>)
+<span class="op">?</span><span class="kw">PgR6</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/help.html">help</a></span>(<span class="st">'PgR6MS'</span>)
+</pre></div>
 <p>but as R6 classes documentation is still not standarized, we recomend you to use the <code><a href="reference/pagoo.html">pagoo::pagoo()</a></code> function to read the documentation from, and to to use it also instead of the raw classes.</p>
-<div class="sourceCode" id="cb4"><pre class="r">?<span class="no">pagoo</span></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="op">?</span><span class="kw">pagoo</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -217,7 +223,7 @@
 </li>
 <li>Report a bug at <br><a href="https://github.com/iferres/pagoo/issues">https://​github.com/​iferres/​pagoo/​issues</a>
 </li>
-<li>Who we are at <br><a href="http://pasteur.uy/en/research/g4-labs/microbial-genomics-laboratory/">http://​pasteur.uy/​en/​research/​g4-labs/​microbial-genomics-laboratory/​</a>
+<li>Who we are at <br><a href="https://iraola-lab.com/">https://​iraola-lab.com/​</a>
 </li>
 </ul>
 </div>

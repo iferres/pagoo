@@ -87,7 +87,7 @@ the latter. See below for more details." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4.9002</span>
       </span>
     </div>
 
@@ -100,32 +100,32 @@ the latter. See below for more details." />
   </a>
 </li>
 <li>
+  <a href="../articles/pagoo.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Tutorials
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/1-Quick_Start.html">1 - Quick Start</a>
+      <a href="../articles/Input.html">1 - Input</a>
     </li>
     <li>
-      <a href="../articles/2-Input.html">2 - Input</a>
+      <a href="../articles/Querying_Data.html">2 - Querying Data</a>
     </li>
     <li>
-      <a href="../articles/3-Querying_Data.html">3 - Querying Data</a>
+      <a href="../articles/Subseting.html">3 - Subseting</a>
     </li>
     <li>
-      <a href="../articles/4-Subseting.html">4 - Subseting</a>
+      <a href="../articles/Methods_Plots.html">4 - Methods and Plots</a>
     </li>
     <li>
-      <a href="../articles/5-Methods_Plots.html">5 - Methods and Plots</a>
-    </li>
-    <li>
-      <a href="../articles/6-Recipes.html">6 - Recipes</a>
+      <a href="../articles/Recipes.html">5 - Recipes</a>
     </li>
   </ul>
 </li>
@@ -160,21 +160,21 @@ the latter. See below for more details." />
 
     <div class="ref-description">
     <p>This is the main function to load a pagoo object. It's safer and
-more friendly than using pagoo's class constructors (<a href='PgR6.html'>PgR6</a>,
-<a href='PgR6M.html'>PgR6M</a>, and <a href='PgR6MS.html'>PgR6MS</a>). This function returns either a
-<code><a href='PgR6M.html'>PgR6M</a></code> class object, or a <code><a href='PgR6MS.html'>PgR6MS</a></code> class object,
+more friendly than using pagoo's class constructors (<a href='https://rdrr.io/pkg/pagoo/man/PgR6.html'>PgR6</a>,
+<a href='https://rdrr.io/pkg/pagoo/man/PgR6M.html'>PgR6M</a>, and <a href='https://rdrr.io/pkg/pagoo/man/PgR6MS.html'>PgR6MS</a>). This function returns either a
+<code><a href='https://rdrr.io/pkg/pagoo/man/PgR6M.html'>PgR6M</a></code> class object, or a <code><a href='https://rdrr.io/pkg/pagoo/man/PgR6MS.html'>PgR6MS</a></code> class object,
 depending on the parameters provided. If sequences are provided, it returns
 the latter. See below for more details.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pagoo</span>(
-  <span class='no'>data</span>,
-  <span class='no'>org_meta</span>,
-  <span class='no'>cluster_meta</span>,
-  <span class='no'>sequences</span>,
-  <span class='kw'>core_level</span> <span class='kw'>=</span> <span class='fl'>95</span>,
-  <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"__"</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/pagoo/man/pagoo.html'>pagoo</a></span>(
+  <span class='kw'>data</span>,
+  <span class='kw'>org_meta</span>,
+  <span class='kw'>cluster_meta</span>,
+  <span class='kw'>sequences</span>,
+  core_level = <span class='fl'>95</span>,
+  sep = <span class='st'>"__"</span>,
+  verbose = <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -216,7 +216,7 @@ character vector are gene names; or 2) a named <code>list</code> of
 requirements as (1), but with BStringSet names as gene names); or 3) a
 <code><a href='https://rdrr.io/pkg/Biostrings/man/XStringSetList-class.html'>DNAStringSetList</a></code> (same
 requirements as (2) but <code>DNAStringSetList</code> names are organisms names).
-If this parameter is used, then a <code><a href='PgR6MS.html'>PgR6MS</a></code> class object is
+If this parameter is used, then a <code><a href='https://rdrr.io/pkg/pagoo/man/PgR6MS.html'>PgR6MS</a></code> class object is
 returned.</p></td>
     </tr>
     <tr>

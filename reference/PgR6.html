@@ -84,7 +84,7 @@ instead of this, since is more easy to understand." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4.9002</span>
       </span>
     </div>
 
@@ -97,32 +97,32 @@ instead of this, since is more easy to understand." />
   </a>
 </li>
 <li>
+  <a href="../articles/pagoo.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Tutorials
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/1-Quick_Start.html">1 - Quick Start</a>
+      <a href="../articles/Input.html">1 - Input</a>
     </li>
     <li>
-      <a href="../articles/2-Input.html">2 - Input</a>
+      <a href="../articles/Querying_Data.html">2 - Querying Data</a>
     </li>
     <li>
-      <a href="../articles/3-Querying_Data.html">3 - Querying Data</a>
+      <a href="../articles/Subseting.html">3 - Subseting</a>
     </li>
     <li>
-      <a href="../articles/4-Subseting.html">4 - Subseting</a>
+      <a href="../articles/Methods_Plots.html">4 - Methods and Plots</a>
     </li>
     <li>
-      <a href="../articles/5-Methods_Plots.html">5 - Methods and Plots</a>
-    </li>
-    <li>
-      <a href="../articles/6-Recipes.html">6 - Recipes</a>
+      <a href="../articles/Recipes.html">5 - Recipes</a>
     </li>
   </ul>
 </li>
@@ -157,7 +157,7 @@ instead of this, since is more easy to understand." />
 
     <div class="ref-description">
     <p>A basic <code>PgR6</code> class constructor. It contains basic fields
-and subset functions to handle a pangenome. Final users should use <code><a href='pagoo.html'>pagoo</a></code>
+and subset functions to handle a pangenome. Final users should use <code><a href='https://rdrr.io/pkg/pagoo/man/pagoo.html'>pagoo</a></code>
 instead of this, since is more easy to understand.</p>
     </div>
 
@@ -240,15 +240,15 @@ names, and organism number identifier as <code><a href='https://rdrr.io/r/base/n
 <a id="method-new"></a></p><h3>Method <code>new()</code></h3>
 <p>A basic <code>PgR6</code> class constructor. It contains basic fields
 and subset functions to handle a pangenome.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6</span>$<span class='fu'>new</span>(
-  <span class='no'>data</span>,
-  <span class='no'>org_meta</span>,
-  <span class='no'>cluster_meta</span>,
-  <span class='kw'>core_level</span> <span class='kw'>=</span> <span class='fl'>95</span>,
-  <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"__"</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>DF</span>,
-  <span class='no'>group_meta</span>
+<p><div class="r"></p><pre><span class='kw'>PgR6</span><span class='op'>$</span><span class='fu'>new</span>(
+  <span class='kw'>data</span>,
+  <span class='kw'>org_meta</span>,
+  <span class='kw'>cluster_meta</span>,
+  core_level = <span class='fl'>95</span>,
+  sep = <span class='st'>"__"</span>,
+  verbose = <span class='fl'>TRUE</span>,
+  <span class='kw'>DF</span>,
+  <span class='kw'>group_meta</span>
 )</pre><p></div></p>
 
 <h3>Arguments</h3>
@@ -292,7 +292,7 @@ analyzing a pangenome.</p>
 group of orthologous, or to each gene. Elements with missing data should be filled
 by <code>NA</code> (dimensions of the provided data.frame must be coherent with object
 data).</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6</span>$<span class='fu'>add_metadata</span>(<span class='kw'>map</span> <span class='kw'>=</span> <span class='st'>"org"</span>, <span class='no'>data</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='kw'>PgR6</span><span class='op'>$</span><span class='fu'>add_metadata</span>(map = <span class='st'>"org"</span>, <span class='kw'>data</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl>
@@ -316,7 +316,7 @@ from the real dataset, ignoring it in downstream analyses. All the fields and
 methods will behave as it doesn't exist. For instance, if you decide to drop
 organism 1, the <code>$pan_matrix</code> field (see below) would not show it when
 called.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6</span>$<span class='fu'><a href='https://rdrr.io/r/base/drop.html'>drop</a></span>(<span class='no'>x</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='kw'>PgR6</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/drop.html'>drop</a></span>(<span class='kw'>x</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl>
@@ -333,7 +333,7 @@ are mutable.</p>
 <a id="method-recover"></a></p><h3>Method <code><a href='https://rdrr.io/r/utils/recover.html'>recover()</a></code></h3>
 <p>Recover a previously <code>$drop()</code>ped organism (see above). All fields
 and methods will start to behave considering this organism again.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6</span>$<span class='fu'><a href='https://rdrr.io/r/utils/recover.html'>recover</a></span>(<span class='no'>x</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='kw'>PgR6</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/utils/recover.html'>recover</a></span>(<span class='kw'>x</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl>
@@ -355,7 +355,7 @@ column classes (factor, numeric, integer), and the state of the object itself
 <code>$save_pangenomeRDS</code> for a more precise way of saveing a pagoo object.
 Still, it is useful if you want to work with the data outside R, just keep
 the above in mind.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6</span>$<span class='fu'>write_pangenome</span>(<span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"pangenome"</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='kw'>PgR6</span><span class='op'>$</span><span class='fu'>write_pangenome</span>(dir = <span class='st'>"pangenome"</span>, force = <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl>
@@ -382,7 +382,7 @@ pagoo versions, so you could update pagoo and still recover the same pangenome. 
 <code>sep</code> and <code>core_level</code> are restored unless the user provides those
 arguments in <code>load_pangenomeRDS</code>. <code>dropped</code> organisms also kept hidden, as
 you where working with the original object.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6</span>$<span class='fu'>save_pangenomeRDS</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"pangenome.rds"</span>, <span class='kw'>seqs.if.avail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='kw'>PgR6</span><span class='op'>$</span><span class='fu'>save_pangenomeRDS</span>(file = <span class='st'>"pangenome.rds"</span>, seqs.if.avail = <span class='fl'>TRUE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl>
@@ -398,7 +398,7 @@ using the load_pangenomeRDS function, into an RDS (binary) file.</p>
 <p><hr>
 <a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='kw'>PgR6</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl>

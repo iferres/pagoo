@@ -84,7 +84,7 @@ Inherits: PgR6" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4.9002</span>
       </span>
     </div>
 
@@ -97,32 +97,32 @@ Inherits: PgR6" />
   </a>
 </li>
 <li>
+  <a href="../articles/pagoo.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Tutorials
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/1-Quick_Start.html">1 - Quick Start</a>
+      <a href="../articles/Input.html">1 - Input</a>
     </li>
     <li>
-      <a href="../articles/2-Input.html">2 - Input</a>
+      <a href="../articles/Querying_Data.html">2 - Querying Data</a>
     </li>
     <li>
-      <a href="../articles/3-Querying_Data.html">3 - Querying Data</a>
+      <a href="../articles/Subseting.html">3 - Subseting</a>
     </li>
     <li>
-      <a href="../articles/4-Subseting.html">4 - Subseting</a>
+      <a href="../articles/Methods_Plots.html">4 - Methods and Plots</a>
     </li>
     <li>
-      <a href="../articles/5-Methods_Plots.html">5 - Methods and Plots</a>
-    </li>
-    <li>
-      <a href="../articles/6-Recipes.html">6 - Recipes</a>
+      <a href="../articles/Recipes.html">5 - Recipes</a>
     </li>
   </ul>
 </li>
@@ -156,16 +156,16 @@ Inherits: PgR6" />
     </div>
 
     <div class="ref-description">
-    <p>PgR6 with Methods. Final users should use <code><a href='pagoo.html'>pagoo</a></code>
+    <p>PgR6 with Methods. Final users should use <code><a href='https://rdrr.io/pkg/pagoo/man/pagoo.html'>pagoo</a></code>
 instead of this, since is more easy to understand.
-Inherits: <code><a href='PgR6.html'>PgR6</a></code></p>
+Inherits: <code><a href='https://rdrr.io/pkg/pagoo/man/PgR6.html'>PgR6</a></code></p>
     </div>
 
 
 
     <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
 
-    <p><code><a href='PgR6.html'>pagoo::PgR6</a></code> -&gt; <code>PgR6M</code></p>
+    <p><code><a href='https://rdrr.io/pkg/pagoo/man/PgR6.html'>pagoo::PgR6</a></code> -&gt; <code>PgR6M</code></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
@@ -178,8 +178,6 @@ Inherits: <code><a href='PgR6.html'>PgR6</a></code></p>
 <li><p><a href='#method-pan_pca'><code>PgR6M$pan_pca()</code></a></p></li>
 <li><p><a href='#method-pg_power_law_fit'><code>PgR6M$pg_power_law_fit()</code></a></p></li>
 <li><p><a href='#method-cg_exp_decay_fit'><code>PgR6M$cg_exp_decay_fit()</code></a></p></li>
-<li><p><a href='#method-fluidity'><code>PgR6M$fluidity()</code></a></p></li>
-<li><p><a href='#method-binomix_estimate'><code>PgR6M$binomix_estimate()</code></a></p></li>
 <li><p><a href='#method-gg_barplot'><code>PgR6M$gg_barplot()</code></a></p></li>
 <li><p><a href='#method-gg_binmap'><code>PgR6M$gg_binmap()</code></a></p></li>
 <li><p><a href='#method-gg_dist'><code>PgR6M$gg_dist()</code></a></p></li>
@@ -202,15 +200,15 @@ Inherits: <code><a href='PgR6.html'>PgR6</a></code></p>
 <hr>
 <a id="method-new"></a></p><h3>Method <code>new()</code></h3>
 <p>Create a <code>PgR6M</code> object.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>new</span>(
-  <span class='no'>data</span>,
-  <span class='no'>org_meta</span>,
-  <span class='no'>cluster_meta</span>,
-  <span class='kw'>core_level</span> <span class='kw'>=</span> <span class='fl'>95</span>,
-  <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"__"</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>DF</span>,
-  <span class='no'>group_meta</span>
+<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>new</span>(
+  <span class='kw'>data</span>,
+  <span class='kw'>org_meta</span>,
+  <span class='kw'>cluster_meta</span>,
+  core_level = <span class='fl'>95</span>,
+  sep = <span class='st'>"__"</span>,
+  verbose = <span class='fl'>TRUE</span>,
+  <span class='kw'>DF</span>,
+  <span class='kw'>group_meta</span>
 )</pre><p></div></p>
 
 <h3>Arguments</h3>
@@ -254,7 +252,7 @@ exploratory plots.</p>
 <p>Rarefact pangenome or corgenome. Compute the number of genes which belong to
 the pangenome or to the coregenome, for a number of random permutations of
 increasingly bigger sample of genomes.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>rarefact</span>(<span class='kw'>what</span> <span class='kw'>=</span> <span class='st'>"pangenome"</span>, <span class='kw'>n.perm</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>rarefact</span>(what = <span class='st'>"pangenome"</span>, n.perm = <span class='fl'>10</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl>
@@ -272,13 +270,13 @@ permutations, and the cell number is the number of genes in ethier category.</p>
 <code>"bray"</code> (Bray-Curtis distance). Annother used distance method is <code>"jaccard"</code>,
 but you should set <code>binary = FALSE</code> (see below) to obtain a meaningful result.
 See <code><a href='https://rdrr.io/pkg/vegan/man/vegdist.html'>vegdist</a></code> for details, this is just a wrapper function.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'><a href='https://rdrr.io/r/stats/dist.html'>dist</a></span>(
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"bray"</span>,
-  <span class='kw'>binary</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>diag</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
+<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/stats/dist.html'>dist</a></span>(
+  method = <span class='st'>"bray"</span>,
+  binary = <span class='fl'>FALSE</span>,
+  diag = <span class='fl'>FALSE</span>,
+  upper = <span class='fl'>FALSE</span>,
+  na.rm = <span class='fl'>FALSE</span>,
+  <span class='kw'>...</span>
 )</pre><p></div></p>
 
 <h3>Arguments</h3>
@@ -304,7 +302,7 @@ computing dissimilarities.</p></dd>
 <p><hr>
 <a id="method-pan_pca"></a></p><h3>Method <code>pan_pca()</code></h3>
 <p>Performs a principal components analysis on the panmatrix</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>pan_pca</span>(<span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>scale.</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>pan_pca</span>(center = <span class='fl'>TRUE</span>, scale. = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl>
@@ -323,7 +321,7 @@ to have unit variance before the analysis takes place. The default is TRUE.</p><
 <p><hr>
 <a id="method-pg_power_law_fit"></a></p><h3>Method <code>pg_power_law_fit()</code></h3>
 <p>Fits a power law curve for the pangenome rarefaction simulation.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>pg_power_law_fit</span>(<span class='no'>raref</span>, <span class='no'>...</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>pg_power_law_fit</span>(<span class='kw'>raref</span>, <span class='kw'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl>
@@ -340,7 +338,7 @@ with fitted parameters. An attribute <code>"alpha"</code> is also returned (If
 <p><hr>
 <a id="method-cg_exp_decay_fit"></a></p><h3>Method <code>cg_exp_decay_fit()</code></h3>
 <p>Fits an exponential decay curve for the coregenome rarefaction simulation.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>cg_exp_decay_fit</span>(<span class='no'>raref</span>, <span class='kw'>pcounts</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='no'>...</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>cg_exp_decay_fit</span>(<span class='kw'>raref</span>, pcounts = <span class='fl'>10</span>, <span class='kw'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl>
@@ -359,52 +357,10 @@ is missing, it will be computed with default arguments, or with the ones provide
 <p>A <code>list</code> of two elements: <code>$formula</code> with a fitted function, and <code>$params</code>
 with fitted intercept and decay parameters.</p>
 <p><hr>
-<a id="method-fluidity"></a></p><h3>Method <code>fluidity()</code></h3>
-<p>Computes the genomic fluidity, which is a measure of population
-diversity. See <code><a href='https://rdrr.io/pkg/micropan/man/fluidity.html'>fluidity</a></code> for more details.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>fluidity</span>(<span class='kw'>n.sim</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre><p></div></p>
-
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl>
-<dt><code>n.sim</code></dt><dd><p>An integer specifying the number of random samples
-to use in the computations.</p></dd>
-
-</dl><p></div></p>
-<h3>Returns</h3>
-<p>A list with two elements, the mean fluidity and its sample standard
-deviation over the n.sim computed values.</p>
-<p><hr>
-<a id="method-binomix_estimate"></a></p><h3>Method <code>binomix_estimate()</code></h3>
-<p>Fits binomial mixture models to the data given as a pan-matrix. From the
-fitted models both estimates of pan-genome size and core-genome size are
-available. See <code><a href='https://rdrr.io/pkg/micropan/man/binomixEstimate.html'>binomixEstimate</a></code> for more details.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>binomix_estimate</span>(<span class='kw'>K.range</span> <span class='kw'>=</span> <span class='fl'>3</span>:<span class='fl'>5</span>, <span class='kw'>core.detect.prob</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
-
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl>
-<dt><code>K.range</code></dt><dd><p>The range of model complexities to explore. The
-vector of integers specify the number of binomial densities to combine in the
-mixture models.</p></dd>
-
-<dt><code>core.detect.prob</code></dt><dd><p>The detection probability of core genes.
-This should almost always be 1.0, since a core gene is by definition always
-present in all genomes, but can be set fractionally smaller.</p></dd>
-
-<dt><code>verbose</code></dt><dd><p>Logical indicating if textual output should be
-given to monitor the progress of the computations.</p></dd>
-
-</dl><p></div></p>
-<h3>Returns</h3>
-<p>A <code>Binomix</code> object (<code>micropan</code> package), which is a small (S3)
-extension of a <code>list</code> with two components. These two components are named
-<code>BIC.table</code> and <code>Mix.list</code>. Refer to the <code>micropan</code> function
-<code><a href='https://rdrr.io/pkg/micropan/man/binomixEstimate.html'>binomixEstimate</a></code> for a detailed explanation of this
-method.</p>
-<p><hr>
 <a id="method-gg_barplot"></a></p><h3>Method <code>gg_barplot()</code></h3>
 <p>Plot a barplot with the frequency of genes within the total number of
 genomes.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>gg_barplot</span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>gg_barplot</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>A barplot, and a <code>gg</code> object (<code>ggplot2</code> package) invisibly.</p>
@@ -412,7 +368,7 @@ genomes.</p><h3>Usage</h3>
 <a id="method-gg_binmap"></a></p><h3>Method <code>gg_binmap()</code></h3>
 <p>Plot a pangenome binary map representing the presence/absence of each
 gene within each organism.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>gg_binmap</span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>gg_binmap</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>A binary map (<code><a href='https://ggplot2.tidyverse.org/reference/geom_tile.html'>ggplot2::geom_raster()</a></code>), and a <code>gg</code> object (<code>ggplot2</code>
@@ -420,7 +376,7 @@ package) invisibly.</p>
 <p><hr>
 <a id="method-gg_dist"></a></p><h3>Method <code>gg_dist()</code></h3>
 <p>Plot a heatmap showing the computed distance between all pairs of organisms.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>gg_dist</span>(<span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"bray"</span>, <span class='no'>...</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>gg_dist</span>(method = <span class='st'>"bray"</span>, <span class='kw'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl>
@@ -436,7 +392,7 @@ package) invisibly.</p>
 <p><hr>
 <a id="method-gg_pca"></a></p><h3>Method <code>gg_pca()</code></h3>
 <p>Plot a scatter plot of a Principal Components Analysis.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>gg_pca</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>gg_pca</span>(colour = <span class='kw'>NULL</span>, <span class='kw'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl>
@@ -453,7 +409,7 @@ package) invisibly.</p>
 <a id="method-gg_pie"></a></p><h3>Method <code>gg_pie()</code></h3>
 <p>Plot a pie chart showing the number of clusters of each pangenome category: core,
 shell, or cloud.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>gg_pie</span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>gg_pie</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>A pie chart (<code>ggplot2::geom_bar() + coord_polar()</code>), and a <code>gg</code> object
@@ -462,7 +418,7 @@ shell, or cloud.</p><h3>Usage</h3>
 <a id="method-gg_curves"></a></p><h3>Method <code>gg_curves()</code></h3>
 <p>Plot pangenome and/or coregenome curves with the fitted functions returned by <code>pg_power_law_fit()</code>
  and <code>cg_exp_decay_fit()</code>. You can add points by adding <code>+ geom_points()</code>, of ggplot2 package</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>gg_curves</span>(<span class='kw'>what</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pangenome"</span>, <span class='st'>"coregenome"</span>), <span class='no'>...</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>gg_curves</span>(what = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pangenome"</span>, <span class='st'>"coregenome"</span>), <span class='kw'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl>
@@ -497,12 +453,12 @@ frequency range to display.</p>
 <p>Take into account that big pangenomes can slow down the
 performance of the app. More than 50-70 organisms often
 leads to a delay in the update of the plots/tables.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>runShinyApp</span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>runShinyApp</span>()</pre><p></div></p>
 
 <p><hr>
 <a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>PgR6M</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl>
