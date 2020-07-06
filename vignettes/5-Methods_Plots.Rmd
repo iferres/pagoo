@@ -1,6 +1,10 @@
 ---
 title: "5 - Methods and Plots"
 output: html_document
+vignette: >
+  %\VignetteIndexEntry{5 - Methods and Plots}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r setup, include=FALSE}

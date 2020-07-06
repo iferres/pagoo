@@ -1,6 +1,10 @@
 ---
 title: "4 - Subseting"
 output: html_document
+vignette: >
+  %\VignetteIndexEntry{4 - Subseting}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r setup, include=FALSE}

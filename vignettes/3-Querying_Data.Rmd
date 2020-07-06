@@ -1,6 +1,10 @@
 ---
 title: "3 - Querying Data"
 output: html_document
+vignette: >
+  %\VignetteIndexEntry{3 - Querying Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r setup, include=FALSE}

@@ -1,6 +1,10 @@
 ---
 title: "6 - Recipes"
 output: html_document
+vignette: >
+  %\VignetteIndexEntry{6 - Recipes}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r setup, include=FALSE}
@@ -23,7 +27,6 @@ In the section **5 - Methods and Plots** we introduced a set of several plots th
 
 ```{r, warning=FALSE, message=FALSE}
 library(ggplot2)
-library(scales)
 library(patchwork)
 
 # 1. Pangenome curves

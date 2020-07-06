@@ -1,6 +1,10 @@
 ---
 title: "1 - Quick Start"
 output: html_document
+vignette: >
+  %\VignetteIndexEntry{1 - Quick Start}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r setup, include=FALSE}
