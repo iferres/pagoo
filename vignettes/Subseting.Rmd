@@ -1,8 +1,8 @@
 ---
-title: "4 - Subseting"
+title: "Subseting"
 output: html_document
 vignette: >
-  %\VignetteIndexEntry{4 - Subseting}
+  %\VignetteIndexEntry{Subseting}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---

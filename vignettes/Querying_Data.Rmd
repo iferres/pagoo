@@ -1,8 +1,8 @@
 ---
-title: "3 - Querying Data"
+title: "Querying Data"
 output: html_document
 vignette: >
-  %\VignetteIndexEntry{3 - Querying Data}
+  %\VignetteIndexEntry{Querying Data}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---

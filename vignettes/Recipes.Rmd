@@ -1,8 +1,8 @@
 ---
-title: "6 - Recipes"
+title: "Recipes"
 output: html_document
 vignette: >
-  %\VignetteIndexEntry{6 - Recipes}
+  %\VignetteIndexEntry{Recipes}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
