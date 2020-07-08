@@ -81,7 +81,7 @@ Given a panmatrix, you could predict the number of core clusters and the total n
 
 To use this method, simply pass the object's pan-matrix to the `micropan::binomixEstimate` function:
 
-```{r}
+```{r, eval=FALSE}
 library(micropan)
 
 micropan::binomixEstimate(p$pan_matrix)
@@ -90,7 +90,7 @@ micropan::binomixEstimate(p$pan_matrix)
 Given that we are using a very small toy dataset, results here are not really meaningful.
 
 ### Fluidity
-Genomic fluidity is a measure of population diversity. It's somehow similar to computing jaccard distances, but genomic fluidity describes the whole population whereas jaccard distances are computed pairwise. As above, we are passing the object's pan-matrix to the `micropan::fluidity` function. In this case, lets use `magrittr` `%>%` operator to pipe it, and compute fluidity using 100 random samples:
+Genomic fluidity is a measure of population diversity. It's somehow similar to computing jaccard distances, but genomic fluidity describes the whole population whereas jaccard distances are computed pairwise. As above, we are passing the object's pan-matrix to the `micropan::fluidity` function. In this case, lets use `magrittr`'s `%>%` operator to pipe it, and compute fluidity using 100 random samples:
 
 ```{r, eval=FALSE}
 library(micropan)
@@ -147,7 +147,7 @@ which(tajimaD <= 0.2 & tajimaD >= -0.2)
 ```
 
 # Quick dirty phylogeny
-The best practices on how to build a phylogeny from core genomes is a topic of debate. In this first example we provide a one-liner to align individual core genes (like in the previous case), produce a concatenated core genome alignment, calculate a core genome phylogeny using the Neighbor-Joining method as implemented by `phangorn` (Schliep, 2011), and visualize it using host metadata to colour tree tips using `ggtree` (Yu et al., 2017).
+The best practices on how to build a phylogeny from core genomes is a topic of debate. In this first example we provide a one-liner to align individual core genes (like in the previous case), produce a concatenated core genome alignment, calculate a core genome phylogeny using the Neighbor-Joining method as implemented by `phangorn` (Schliep, 2011), and visualize it using host metadata to colour tree tips using `ggtree` (Yu et al., 2017). Phylogenetic tree is assigned to the `phy` variable, and plotted as side effect by using magrittr's `%T>%` operator.
 ```{r, eval=FALSE}
 # Load required packages
 library(magrittr)
@@ -156,19 +156,60 @@ library(Biostrings)
 library(phangorn)
 library(ggtree)
 
-phy <- p$core_seqs_4_phylo() %>%                    # Core genome sequences
-  lapply(DECIPHER::AlignSeqs) %>%                   # Align
-  do.call(Biostrings::xscat, .) %>%                 # Concatenate alignments
-  setNames(p$organisms$org) %>%                     # Set sequence names
-  as('matrix') %>%                                  # Transform to matrix
-  phangorn::phyDat(type = 'DNA') %>%                # Transform to phangorn's phyDat
-  phangorn::dist.ml() %>%                           # Compute distance
-  phangorn::NJ() %>%                                # Compute NJ
-  ggtree::ggtree() %<+%                             # Create ggtree
-     as.data.frame(p$organisms) +                   # Get organisms metadata
-     ggtree::geom_tippoint(aes(colour = host))      # Add coloured tip points
+phy <- p$core_seqs_4_phylo() %>%                 # Core genome sequences
+  lapply(DECIPHER::AlignSeqs) %>%                # Align
+  do.call(Biostrings::xscat, .) %>%              # Concatenate alignments
+  setNames(p$organisms$org) %>%                  # Set sequence names
+  as('matrix') %>%                               # Transform to matrix
+  phangorn::phyDat(type = 'DNA') %>%             # Transform to phangorn's phyDat
+  phangorn::dist.ml() %>%                        # Compute distance
+  phangorn::NJ() %T>% {                          # Compute NJ, and assign "phy"
+    {
+      ggtree::ggtree(.) %<+%                        # Create ggtree
+        as.data.frame(p$organisms) +                # Get organisms metadata
+        ggtree::geom_tippoint(aes(colour = host)) + # Add coloured tip points
+        scale_color_brewer(palette = 'Set1')        # Set color palette
+    } %>%
+      print()
+}
 ```
 
+# Maximum Likelihood phylogeny
+The following method is simmilar to the previous, but in this case we are optimizing the topology and branch lengths by maximum likelihood method implemented in `phangorn` package. Although this is a fully working example, its purpose is just to illustrate the idea. You should consider tuning the parameters to better fit your dataset (e.g.: just 4 discrete gamma distributions for a whole coregenome alignment may be too low).
+```{r, eval=FALSE}
+# Load required packages
+library(magrittr)
+library(DECIPHER)
+library(Biostrings)
+library(phangorn)
+library(ggtree)
+
+phy <- p$core_seqs_4_phylo() %>%                 # Core genome sequences
+  lapply(DECIPHER::AlignSeqs) %>%                # Align
+  do.call(Biostrings::xscat, .) %>%              # Concatenate alignments
+  setNames(p$organisms$org) %>%                  # Set sequence names
+  as('matrix') %>%                               # Transform to matrix
+  phangorn::phyDat(type = 'DNA') %T>%            # Transform to phangorn's phyDat
+  assign('dat', ., .GlobalEnv) %>%               # Assign to "dat" in .GlobalEnv
+  phangorn::dist.ml() %>%                        # Compute distance
+  phangorn::NJ() %>%                             # Compute NJ (initial tree)
+  phangorn::pml(data = dat, k = 4) %>%           # Compute likelihood with 4 discrete
+                                                 #  gamma distributions. 
+  phangorn::optim.pml(rearrangement = "stochastic", # Optimize likelihood with
+                                                 # stochastic rearrangements,
+                      optGamma = TRUE,           # optimize gamma rate parameter,
+                      optInv = TRUE,             # optimize prop of variable size,
+                      model ="GTR") %>%          # and use "GTR" model.
+  magrittr::extract2("tree") %T>% {              # Extract the tree only, and pass
+    {                                            #  it to ggtree.
+      ggtree::ggtree(.) %<+%                        # Create ggtree
+        as.data.frame(p$organisms) +                # Get organisms metadata
+        ggtree::geom_tippoint(aes(colour = host)) + # Add coloured tip points
+        scale_color_brewer(palette = 'Set1')        # Set color palette
+    } %>%
+    print()
+  }
+```
 
 # Population structure
 Identifying population structure from genomic information is a common problem in microbial ecology. This aims to identify discrete sub-populations within a more heterogeneous population, which is helpful to detect associations with particular phenotypes, geographic origin, host-association, etc. There are various methods for doing this, but probably the most used in microbial genomics is [hierBAPS](https://academic.oup.com/mbe/article/30/5/1224/998212) (Cheng et al., 2013) which has been re-implemented in `R` as [rhierBAPS](https://wellcomeopenresearch.org/articles/3-93/v1) (Tonkin-Hill et al., 2018). In the following recipe we will combine previous examples to 1) align core clusters; 2) compute Tajima's D statistic over aligned core clusters to identify the ones that are likely to be evolving neutrally; 3) concatenate selected neutral clusters; 4) Run the herBAPS algorithm; 5) extract lineage information and add it to the `pagoo` object as organism's metadata; and 6) compute and plot a tree with lineage information as colour tips.
@@ -218,6 +259,85 @@ concat_neu %>%
   ggtree::ggtree() %<+%                             # Create ggtree
      as.data.frame(p$organisms) +                   # Get organisms metadata
      ggtree::geom_tippoint(aes(colour = lineage))   # Colour tips with lineage info
+```
+
+# Pairwise distance vs pairwise nucleotide diversity
+The following recipe computes accessory genome jaccard's distance and nucleotide diversity of synonym sites for each pair of genomes, and then plot it with a linear regression curve. This method provides insights of accessory genome adaptative evolution. If both magnitudes are not correlated, it could mean that there are some selective pressures shaping clade's evolution.
+It first sets the `core_level` threshold to 100%, then creates a matrix to store pairwise distances and synonym nucleotide diversities. Accessory genome Jaccard distance between each pair of organisms is computed by a `pagoo` method which is basically a wrapper of `vegan::vegdist` function. Then there is a long code block with the method to align each core gene and select their polymorphic synonym sites. With this input, pairwise nucleotide diversity is computed with `pegas::nuc.div` function. At the end, a correlation between both magnitudes is plotted.
+
+```{r, eval=FALSE}
+library(magrittr)
+library(IRanges)
+library(Biostrings)
+library(DECIPHER)
+library(ape)
+library(pegas)
+
+# Set core level to 100%. This recipe only works if this is set to 100%.
+p$core_level <- 100
+
+# Create pairs matrix
+pairs <- data.frame(t(combn(nrow(p$organisms), 2)))
+colnames(pairs) <- c('org1', 'org2')
+
+# Compute paired jaccard similarity, transform to matrix
+jaccard_sim <- as.matrix(p$dist(method = "jaccard", binary = TRUE))
+# Fill results matrix
+pairs$jaccard_sim <- apply(pairs, 1, function(i){
+  ii <- i[1]
+  jj <- i[2]
+  jaccard_sim[ii, jj]
+})
+
+# Return only synonymous polymorphic sites.
+# First, it removes non-synonymous codons, and then retains only
+# polymorphyc sites.
+syn_poly_sites <- p$core_seqs_4_phylo() %>%
+  lapply(function(x){
+    lns <- elementNROWS(x)                              # Align translatation filtering
+    tali <- x[which(lns != 0)] %>%                      #  truncated codons and returning
+      Biostrings::subseq(1L, lns %/% 3 * 3) %>%         #  both DNA and AA alignments.
+      DECIPHER::AlignTranslation(type = "both")
+    syno <-  tali[[2]] %>%                              # Identify non-synonymous
+      Biostrings::consensusMatrix() %>%                 #  codons.
+      magrittr::equals(0) %>%
+      magrittr::not() %>%
+      colSums() %>%
+      magrittr::equals(1) %>%
+      which()
+    neut <- tali[[1]] %>%                               # Remove non-synonymous codons.
+      lapply(function(x){
+        IRanges::successiveViews(
+          x, rep.int(3L, length(x) %/% 3L))
+      }) %>%
+      lapply('[', syno) %>%
+      lapply(unlist) %>%
+      Biostrings::DNAStringSet()
+    poly <- neut %>%                                   # Identify polymorphic sites.
+      Biostrings::consensusMatrix() %>%
+      magrittr::equals(0) %>%
+      magrittr::not() %>%
+      colSums() %>%
+      magrittr::is_greater_than(1) %>%
+      which()
+    lapply(neut, '[', poly) %>%                        # Retain only polymorphic
+      Biostrings::DNAStringSet()                       #  sites
+  }) %>%
+  do.call(Biostrings::xscat, .) %>%                    # Concatenate.
+  setNames(p$organisms$org) %>%                        # Set names.
+  ape::as.DNAbin()                                     # Convert to DNAbin class.
+
+# Compute paired nucleotide diversity, and fill results matrix
+pairs$nuc_div <- apply(pairs, 1, function(i){
+  ii <- i[1]
+  jj <- i[2]
+  pair <- c(syn_poly_sites[ii], syn_poly_sites[jj])
+  pegas::nuc.div(pair)
+})
+
+# Plot correlation with R-base graphics
+plot(jaccard_sim ~ nuc_div, pairs)
+abline(lm(jaccard_sim ~ nuc_div, pairs))
 ```
 
 
