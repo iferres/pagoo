@@ -125,14 +125,14 @@
 <span class="kw">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span>(path = <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>(), full.names = <span class="fl">TRUE</span>, pattern = <span class="st">'tsv$|fasta$'</span>) <span class="co"># List files</span>
 <span class="kw">files</span>
 </pre></div>
-<pre><code>## [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmptJto7l/case_clusters_meta.tsv"
-## [2] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmptJto7l/case_df.tsv"           
-## [3] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmptJto7l/case_orgs_meta.tsv"    
-## [4] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmptJto7l/organismA.fasta"       
-## [5] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmptJto7l/organismB.fasta"       
-## [6] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmptJto7l/organismC.fasta"       
-## [7] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmptJto7l/organismD.fasta"       
-## [8] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmptJto7l/organismE.fasta"</code></pre>
+<pre><code>## [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp70ICkE/case_clusters_meta.tsv"
+## [2] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp70ICkE/case_df.tsv"           
+## [3] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp70ICkE/case_orgs_meta.tsv"    
+## [4] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp70ICkE/organismA.fasta"       
+## [5] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp70ICkE/organismB.fasta"       
+## [6] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp70ICkE/organismC.fasta"       
+## [7] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp70ICkE/organismD.fasta"       
+## [8] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp70ICkE/organismE.fasta"</code></pre>
 <p>The file we need now is <code>case_df.tsv</code>. Lets load it and see what’s its structure:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="kw">data_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span>(<span class="st">"case_df.tsv"</span>, <span class="kw">files</span>, value = <span class="fl">TRUE</span>)
