@@ -30,7 +30,6 @@ A quick look to a `pagoo` object print can give us some clues of how is it compo
   Inherits from: <PgR6M>
   Public:
     add_metadata: function (map = "org", data) 
-    binomix_estimate: function (K.range = 3:5, core.detect.prob = 1, verbose = TRUE) 
     cg_exp_decay_fit: function (raref, pcounts = 10, ...) 
     clone: function (deep = FALSE) 
     cloud_clusters: active binding
@@ -45,7 +44,6 @@ A quick look to a `pagoo` object print can give us some clues of how is it compo
     dist: function (method = "bray", binary = FALSE, diag = FALSE, upper = FALSE, 
     drop: function (x) 
     dropped: active binding
-    fluidity: function (n.sim = 10) 
     genes: active binding
     gg_barplot: function () 
     gg_binmap: function () 
