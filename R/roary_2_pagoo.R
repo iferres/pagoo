@@ -36,7 +36,6 @@
 #'                     gffs = gffs)
 #' }
 #' @importFrom utils read.csv
-#' @importFrom reshape2 melt
 #' @importFrom Biostrings DNAStringSetList
 #' @importFrom S4Vectors mcols
 #' @importFrom stats setNames
@@ -59,7 +58,16 @@ roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
   lp <- lapply(df, strsplit, '\t')
   lp <- lapply(lp, setNames, cluster_meta$cluster)
 
-  mm <- melt(lp)
+  lths <- lapply(lp, sapply, length)
+  sums <- sapply(lths_g, sum)
+  mm <- cbind(
+    unlist(lp, use.names = FALSE),
+    unlist(lapply(lths_g, function(x){
+      unlist(rep(names(x), x), use.names = FALSE)
+      }), use.names = FALSE),
+    rep(names(sums), sums)
+  )
+  mm <- as.data.frame(mm)
   colnames(mm) <- c('gene', 'cluster', 'org')
 
 
