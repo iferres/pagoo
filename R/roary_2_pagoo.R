@@ -59,10 +59,10 @@ roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
   lp <- lapply(lp, setNames, cluster_meta$cluster)
 
   lths <- lapply(lp, sapply, length)
-  sums <- sapply(lths_g, sum)
+  sums <- sapply(lths, sum)
   mm <- cbind(
     unlist(lp, use.names = FALSE),
-    unlist(lapply(lths_g, function(x){
+    unlist(lapply(lths, function(x){
       unlist(rep(names(x), x), use.names = FALSE)
       }), use.names = FALSE),
     rep(names(sums), sums)
