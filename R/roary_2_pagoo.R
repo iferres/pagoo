@@ -145,9 +145,11 @@ read_gff <- function(in_gff){
     nam <- vapply(spl, '[', 1, FUN.VALUE = NA_character_)
     setNames(val, nam)
   })
+  retain <- vapply(lp, function(x) "locus_tag" %in% names(x), FUN.VALUE = NA)
+  lp <- lp[retain]
   una <- unique(names(unlist(lp, use.names = T)))
   df2 <- as.data.frame(do.call(rbind, lapply(lp, '[', una)), stringsAsFactors = FALSE)
-  mcls <- cbind(df[, -9], df2)
+  mcls <- cbind(df[retain, -9], df2)
   colnames(mcls)[1:8] <- c('seqid', 'source', 'type', 'start',
                            'end', 'score', 'strand', 'phase')
   mcls$start <- as.integer(mcls$start)
