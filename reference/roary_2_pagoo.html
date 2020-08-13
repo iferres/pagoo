@@ -86,7 +86,7 @@ empthy the gffs argument)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4.9004</span>
       </span>
     </div>
 
@@ -161,11 +161,11 @@ empthy the gffs argument)." />
     <p>This function handle conversion of <a href='https://sanger-pathogens.github.io/Roary/'>roary</a>'s output files into
 a pagoo R6 class object. It takes the "gene_presence_absence.csv" file and
 (optionally but recommended) gff input file paths, and returns an object of
-class <code><a href='https://rdrr.io/pkg/pagoo/man/PgR6MS.html'>PgR6MS</a></code> (or <code><a href='https://rdrr.io/pkg/pagoo/man/PgR6M.html'>PgR6M</a></code> if left
+class <code><a href='PgR6MS.html'>PgR6MS</a></code> (or <code><a href='PgR6M.html'>PgR6M</a></code> if left
 empthy the <code>gffs</code> argument).</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/pagoo/man/roary_2_pagoo.html'>roary_2_pagoo</a></span>(<span class='kw'>gene_presence_absence_csv</span>, <span class='kw'>gffs</span>, sep = <span class='st'>"__"</span>)</pre>
+    <pre class="usage"><span class='fu'>roary_2_pagoo</span>(<span class='kw'>gene_presence_absence_csv</span>, <span class='kw'>gffs</span>, sep = <span class='st'>"__"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -186,14 +186,14 @@ sequences.</p></td>
     <tr>
       <th>sep</th>
       <td><p><code>character</code>. Default: <code>"__"</code> (two underscores). See
-<a href='https://rdrr.io/pkg/pagoo/man/PgR6MS.html'>PgR6MS</a> for a more detail argument description.</p></td>
+<a href='PgR6MS.html'>PgR6MS</a> for a more detail argument description.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A pagoo's R6 class object. Ethier <a href='https://rdrr.io/pkg/pagoo/man/PgR6M.html'>PgR6M</a>, if <code>gffs</code>
-argument is left empthy, or <a href='https://rdrr.io/pkg/pagoo/man/PgR6MS.html'>PgR6MS</a> if path to gff files is
+    <p>A pagoo's R6 class object. Ethier <a href='PgR6M.html'>PgR6M</a>, if <code>gffs</code>
+argument is left empthy, or <a href='PgR6MS.html'>PgR6MS</a> if path to gff files is
 provided.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -210,7 +210,7 @@ provided.</p>
 <span class='kw'>gpa_csv</span> <span class='op'>&lt;-</span> <span class='st'>"path/to/gene_presence_absence.csv"</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://iferres.github.io/pagoo'>pagoo</a></span>)
-<span class='kw'>pg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pagoo/man/roary_2_pagoo.html'>roary_2_pagoo</a></span>(gene_presence_absence_csv = <span class='kw'>gpa_csv</span>,
+<span class='kw'>pg</span> <span class='op'>&lt;-</span> <span class='fu'>roary_2_pagoo</span>(gene_presence_absence_csv = <span class='kw'>gpa_csv</span>,
                     gffs = <span class='kw'>gffs</span>)
 }</div></pre>
   </div>
