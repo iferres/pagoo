@@ -136,6 +136,9 @@ library(DECIPHER)
 library(pegas)
 library(ape)
 
+p$core_level <- 100                       # Set core_level to 100% to avoid 
+                                          #  AlignTranslation() errors.
+
 tajimaD <- p$core_seqs_4_phylo() %>%      # Core genome sequences
   lapply(DECIPHER::AlignTranslation) %>%  # Align translation
   lapply(ape::as.DNAbin) %>%              # Transform class to DNAbin
@@ -220,6 +223,9 @@ library(DECIPHER)
 library(rhierbaps)
 library(ape)
 library(phangorn)
+
+# 0. Always use core_level at 100% when using DECIPHER::AlignTranslation()
+p$core_level <- 100
 
 # 1. Align translation of core genes
 ali <- p$core_seqs_4_phylo() %>%           # Core genome sequences
