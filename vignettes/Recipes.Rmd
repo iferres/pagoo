@@ -236,7 +236,7 @@ tajD <- ali %>%
   lapply(ape::as.DNAbin) %>%              # Transform class to DNAbin
   lapply(pegas::tajima.test) %>%          # Compute Tajima's test
   sapply('[[', 'D')                       # Subset D statistic 
-neutral <- which(tajD <= 0.2 & tajD >= -0.2)
+neutral <- which(tajD <= 2 & tajD >= -2)
 
 # 3. Concatenate neutral core clusters
 concat_neu <- ali[neutral] %>%            # Select neutral clusters
