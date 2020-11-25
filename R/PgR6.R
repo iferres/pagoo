@@ -375,7 +375,7 @@ PgR6 <- R6Class('PgR6',
                   #' @param file The name of the file to save. Default: "pangenome.rds".
                   #' @return Writes a list with all the information needed to restore the object by
                   #' using the load_pangenomeRDS function, into an RDS (binary) file.
-                  save_pangenomeRDS = function(file = "pangenome.rds", seqs.if.avail = TRUE){
+                  save_pangenomeRDS = function(file = "pangenome.rds"){
                     clss <- class(self)
                     dn <- dimnames(self$pan_matrix)
                     ogs <- dn[[2]]
