@@ -84,19 +84,13 @@ Inherits: PgR6" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/pagoo.html">Get started</a>
 </li>
 <li>
@@ -169,7 +163,7 @@ Inherits: <code><a href='PgR6.html'>PgR6</a></code></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-<h3>Public methods</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
 <li><p><a href='#method-new'><code>PgR6M$new()</code></a></p></li>
@@ -198,20 +192,20 @@ Inherits: <code><a href='PgR6.html'>PgR6</a></code></p>
 </details>
 
 <hr>
-<a id="method-new"></a></p><h3>Method <code>new()</code></h3>
-<p>Create a <code>PgR6M</code> object.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>new</span>(
-  <span class='kw'>data</span>,
-  <span class='kw'>org_meta</span>,
-  <span class='kw'>cluster_meta</span>,
-  core_level = <span class='fl'>95</span>,
-  sep = <span class='st'>"__"</span>,
-  verbose = <span class='fl'>TRUE</span>,
-  <span class='kw'>DF</span>,
-  <span class='kw'>group_meta</span>
-)</pre><p></div></p>
+<a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
+<p>Create a <code>PgR6M</code> object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6M</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>org_meta</span>,
+  <span class='va'>cluster_meta</span>,
+  core_level <span class='op'>=</span> <span class='fl'>95</span>,
+  sep <span class='op'>=</span> <span class='st'>"__"</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>DF</span>,
+  <span class='va'>group_meta</span>
+<span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>data</code></dt><dd><p>A <code>data.frame</code> or <code><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></code> containing at least the
 following columns: <code>gene</code> (gene name), <code>org</code> (organism name to which the gene belongs to),
@@ -243,43 +237,43 @@ create a unique <code>gid</code> (gene identifier) for each gene. <code>gid</cod
 <dt><code>group_meta</code></dt><dd><p>Deprecated. Use <code>cluster_meta</code> instead.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>An R6 object of class PgR6M. It contains basic fields and methods for analyzing a pangenome. It also
 contains additional statistical methods for analize it, and methods to make basic
 exploratory plots.</p>
 <p><hr>
-<a id="method-rarefact"></a></p><h3>Method <code>rarefact()</code></h3>
+<a id="method-rarefact"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>rarefact()</code></h3>
 <p>Rarefact pangenome or corgenome. Compute the number of genes which belong to
 the pangenome or to the coregenome, for a number of random permutations of
-increasingly bigger sample of genomes.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>rarefact</span>(what = <span class='st'>"pangenome"</span>, n.perm = <span class='fl'>10</span>)</pre><p></div></p>
+increasingly bigger sample of genomes.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6M</span><span class='op'>$</span><span class='fu'>rarefact</span><span class='op'>(</span>what <span class='op'>=</span> <span class='st'>"pangenome"</span>, n.perm <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>what</code></dt><dd><p>One of <code>"pangenome"</code> or <code>"coregenome"</code>.</p></dd>
 
 <dt><code>n.perm</code></dt><dd><p>The number of permutations to compute (default: 10).</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A <code>matrix</code>, rows are the number of genomes added, columns are
 permutations, and the cell number is the number of genes in ethier category.</p>
 <p><hr>
-<a id="method-dist"></a></p><h3>Method <code><a href='https://rdrr.io/r/stats/dist.html'>dist()</a></code></h3>
+<a id="method-dist"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/stats/dist.html'>dist()</a></code></h3>
 <p>Compute distance between all pairs of genomes. The default dist method is
 <code>"bray"</code> (Bray-Curtis distance). Annother used distance method is <code>"jaccard"</code>,
 but you should set <code>binary = FALSE</code> (see below) to obtain a meaningful result.
-See <code><a href='https://rdrr.io/pkg/vegan/man/vegdist.html'>vegdist</a></code> for details, this is just a wrapper function.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/stats/dist.html'>dist</a></span>(
-  method = <span class='st'>"bray"</span>,
-  binary = <span class='fl'>FALSE</span>,
-  diag = <span class='fl'>FALSE</span>,
-  upper = <span class='fl'>FALSE</span>,
-  na.rm = <span class='fl'>FALSE</span>,
-  <span class='kw'>...</span>
-)</pre><p></div></p>
+See <code><a href='https://rdrr.io/pkg/vegan/man/vegdist.html'>vegdist</a></code> for details, this is just a wrapper function.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6M</span><span class='op'>$</span><span class='fu'>dist</span><span class='op'>(</span>
+  method <span class='op'>=</span> <span class='st'>"bray"</span>,
+  binary <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  diag <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  upper <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>method</code></dt><dd><p>The distance method to use. See <a href='https://rdrr.io/pkg/vegan/man/vegdist.html'>vegdist</a>
 for available methods, and details for each one.</p></dd>
@@ -297,14 +291,14 @@ computing dissimilarities.</p></dd>
 <dt><code>...</code></dt><dd><p>Other parameters. See <a href='https://rdrr.io/pkg/vegan/man/vegdist.html'>vegdist</a> for details.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A <code>dist</code> object containing all pairwise dissimilarities between genomes.</p>
 <p><hr>
-<a id="method-pan_pca"></a></p><h3>Method <code>pan_pca()</code></h3>
-<p>Performs a principal components analysis on the panmatrix</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>pan_pca</span>(center = <span class='fl'>TRUE</span>, scale. = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)</pre><p></div></p>
+<a id="method-pan_pca"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>pan_pca()</code></h3>
+<p>Performs a principal components analysis on the panmatrix</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6M</span><span class='op'>$</span><span class='fu'>pan_pca</span><span class='op'>(</span>center <span class='op'>=</span> <span class='cn'>TRUE</span>, scale. <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>center</code></dt><dd><p>a logical value indicating whether the variables should be shifted
 to be zero centered. Alternately, a vector of length equal the number of columns of x can be
@@ -316,14 +310,14 @@ to have unit variance before the analysis takes place. The default is TRUE.</p><
 <dt><code>...</code></dt><dd><p>Other arguments. See <a href='https://rdrr.io/r/stats/prcomp.html'>prcomp</a></p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>Returns a list with class "prcomp". See <a href='https://rdrr.io/r/stats/prcomp.html'>prcomp</a> for more information.</p>
 <p><hr>
-<a id="method-pg_power_law_fit"></a></p><h3>Method <code>pg_power_law_fit()</code></h3>
-<p>Fits a power law curve for the pangenome rarefaction simulation.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>pg_power_law_fit</span>(<span class='kw'>raref</span>, <span class='kw'>...</span>)</pre><p></div></p>
+<a id="method-pg_power_law_fit"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>pg_power_law_fit()</code></h3>
+<p>Fits a power law curve for the pangenome rarefaction simulation.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6M</span><span class='op'>$</span><span class='fu'>pg_power_law_fit</span><span class='op'>(</span><span class='va'>raref</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>raref</code></dt><dd><p>(Optional) A rarefaction matrix, as returned by <code>rarefact()</code>.</p></dd>
 
@@ -331,16 +325,16 @@ to have unit variance before the analysis takes place. The default is TRUE.</p><
 is missing, it will be computed with default arguments, or with the ones provided here.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A <code>list</code> of two elements: <code>$formula</code> with a fitted function, and <code>$params</code>
 with fitted parameters. An attribute <code>"alpha"</code> is also returned (If
 <code>alpha&gt;1</code>, then the pangenome is closed, otherwise is open.</p>
 <p><hr>
-<a id="method-cg_exp_decay_fit"></a></p><h3>Method <code>cg_exp_decay_fit()</code></h3>
-<p>Fits an exponential decay curve for the coregenome rarefaction simulation.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>cg_exp_decay_fit</span>(<span class='kw'>raref</span>, pcounts = <span class='fl'>10</span>, <span class='kw'>...</span>)</pre><p></div></p>
+<a id="method-cg_exp_decay_fit"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>cg_exp_decay_fit()</code></h3>
+<p>Fits an exponential decay curve for the coregenome rarefaction simulation.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6M</span><span class='op'>$</span><span class='fu'>cg_exp_decay_fit</span><span class='op'>(</span><span class='va'>raref</span>, pcounts <span class='op'>=</span> <span class='fl'>10</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>raref</code></dt><dd><p>(Optional) A rarefaction matrix, as returned by <code>rarefact()</code>.</p></dd>
 
@@ -353,32 +347,32 @@ tends to 0, and its logarithm goes crazy. By default <code>pcounts=10</code>.</p
 is missing, it will be computed with default arguments, or with the ones provided here.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A <code>list</code> of two elements: <code>$formula</code> with a fitted function, and <code>$params</code>
 with fitted intercept and decay parameters.</p>
 <p><hr>
-<a id="method-gg_barplot"></a></p><h3>Method <code>gg_barplot()</code></h3>
+<a id="method-gg_barplot"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>gg_barplot()</code></h3>
 <p>Plot a barplot with the frequency of genes within the total number of
-genomes.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>gg_barplot</span>()</pre><p></div></p>
+genomes.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6M</span><span class='op'>$</span><span class='fu'>gg_barplot</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A barplot, and a <code>gg</code> object (<code>ggplot2</code> package) invisibly.</p>
 <p><hr>
-<a id="method-gg_binmap"></a></p><h3>Method <code>gg_binmap()</code></h3>
+<a id="method-gg_binmap"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>gg_binmap()</code></h3>
 <p>Plot a pangenome binary map representing the presence/absence of each
-gene within each organism.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>gg_binmap</span>()</pre><p></div></p>
+gene within each organism.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6M</span><span class='op'>$</span><span class='fu'>gg_binmap</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A binary map (<code><a href='https://ggplot2.tidyverse.org/reference/geom_tile.html'>ggplot2::geom_raster()</a></code>), and a <code>gg</code> object (<code>ggplot2</code>
 package) invisibly.</p>
 <p><hr>
-<a id="method-gg_dist"></a></p><h3>Method <code>gg_dist()</code></h3>
-<p>Plot a heatmap showing the computed distance between all pairs of organisms.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>gg_dist</span>(method = <span class='st'>"bray"</span>, <span class='kw'>...</span>)</pre><p></div></p>
+<a id="method-gg_dist"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>gg_dist()</code></h3>
+<p>Plot a heatmap showing the computed distance between all pairs of organisms.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6M</span><span class='op'>$</span><span class='fu'>gg_dist</span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"bray"</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>method</code></dt><dd><p>Distance method. One of "Jaccard" (default), or "Manhattan",
 see above.</p></dd>
@@ -386,15 +380,15 @@ see above.</p></dd>
 <dt><code>...</code></dt><dd><p>More arguments to be passed to <code><a href='https://rdrr.io/pkg/micropan/man/distManhattan.html'>distManhattan</a></code>.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A heatmap (<code><a href='https://ggplot2.tidyverse.org/reference/geom_tile.html'>ggplot2::geom_tile()</a></code>), and a <code>gg</code> object (<code>ggplot2</code>
 package) invisibly.</p>
 <p><hr>
-<a id="method-gg_pca"></a></p><h3>Method <code>gg_pca()</code></h3>
-<p>Plot a scatter plot of a Principal Components Analysis.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>gg_pca</span>(colour = <span class='kw'>NULL</span>, <span class='kw'>...</span>)</pre><p></div></p>
+<a id="method-gg_pca"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>gg_pca()</code></h3>
+<p>Plot a scatter plot of a Principal Components Analysis.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6M</span><span class='op'>$</span><span class='fu'>gg_pca</span><span class='op'>(</span>colour <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>colour</code></dt><dd><p>The name of the column in <code>$organisms</code> field from which points will take
 colour (if provided). <code>NULL</code> (default) renders black points.</p></dd>
@@ -402,35 +396,35 @@ colour (if provided). <code>NULL</code> (default) renders black points.</p></dd>
 <dt><code>...</code></dt><dd><p>More arguments to be passed to <code><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>ggplot2::autoplot()</a></code>.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A scatter plot (<code><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>ggplot2::autoplot()</a></code>), and a <code>gg</code> object (<code>ggplot2</code>
 package) invisibly.</p>
 <p><hr>
-<a id="method-gg_pie"></a></p><h3>Method <code>gg_pie()</code></h3>
+<a id="method-gg_pie"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>gg_pie()</code></h3>
 <p>Plot a pie chart showing the number of clusters of each pangenome category: core,
-shell, or cloud.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>gg_pie</span>()</pre><p></div></p>
+shell, or cloud.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6M</span><span class='op'>$</span><span class='fu'>gg_pie</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A pie chart (<code>ggplot2::geom_bar() + coord_polar()</code>), and a <code>gg</code> object
 (<code>ggplot2</code> package) invisibly.</p>
 <p><hr>
-<a id="method-gg_curves"></a></p><h3>Method <code>gg_curves()</code></h3>
+<a id="method-gg_curves"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>gg_curves()</code></h3>
 <p>Plot pangenome and/or coregenome curves with the fitted functions returned by <code>pg_power_law_fit()</code>
- and <code>cg_exp_decay_fit()</code>. You can add points by adding <code>+ geom_points()</code>, of ggplot2 package</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>gg_curves</span>(what = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pangenome"</span>, <span class='st'>"coregenome"</span>), <span class='kw'>...</span>)</pre><p></div></p>
+ and <code>cg_exp_decay_fit()</code>. You can add points by adding <code>+ geom_points()</code>, of ggplot2 package</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6M</span><span class='op'>$</span><span class='fu'>gg_curves</span><span class='op'>(</span>what <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pangenome"</span>, <span class='st'>"coregenome"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>what</code></dt><dd><p>One of <code>"pangenome"</code> or <code>"coregenome"</code>.</p></dd>
 
 <dt><code>...</code></dt><dd><p>????</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A scatter plot, and a <code>gg</code> object (<code>ggplot2</code> package) invisibly.</p>
 <p><hr>
-<a id="method-runShinyApp"></a></p><h3>Method <code>runShinyApp()</code></h3>
+<a id="method-runShinyApp"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>runShinyApp()</code></h3>
 <p>Launch an interactive shiny app. It contains a sidebar
 with controls and switches to interact with the pagoo
 object. You can drop/recover organisms from the dataset,
@@ -452,15 +446,15 @@ frequency range to display.</p>
 <p>Give it a try!</p>
 <p>Take into account that big pangenomes can slow down the
 performance of the app. More than 50-70 organisms often
-leads to a delay in the update of the plots/tables.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>runShinyApp</span>()</pre><p></div></p>
+leads to a delay in the update of the plots/tables.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6M</span><span class='op'>$</span><span class='fu'>runShinyApp</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <p><hr>
-<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6M</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6M</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
@@ -483,7 +477,7 @@ leads to a delay in the update of the plots/tables.</p><h3>Usage</h3>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

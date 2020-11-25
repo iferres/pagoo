@@ -84,19 +84,13 @@ instead of this, since is more easy to understand." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/pagoo.html">Get started</a>
 </li>
 <li>
@@ -225,7 +219,7 @@ names, and organism number identifier as <code><a href='https://rdrr.io/r/base/n
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-<h3>Public methods</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
 <li><p><a href='#method-new'><code>PgR6$new()</code></a></p></li>
@@ -237,21 +231,21 @@ names, and organism number identifier as <code><a href='https://rdrr.io/r/base/n
 <li><p><a href='#method-clone'><code>PgR6$clone()</code></a></p></li>
 </ul>
 <p><hr>
-<a id="method-new"></a></p><h3>Method <code>new()</code></h3>
+<a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>A basic <code>PgR6</code> class constructor. It contains basic fields
-and subset functions to handle a pangenome.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6</span><span class='op'>$</span><span class='fu'>new</span>(
-  <span class='kw'>data</span>,
-  <span class='kw'>org_meta</span>,
-  <span class='kw'>cluster_meta</span>,
-  core_level = <span class='fl'>95</span>,
-  sep = <span class='st'>"__"</span>,
-  verbose = <span class='fl'>TRUE</span>,
-  <span class='kw'>DF</span>,
-  <span class='kw'>group_meta</span>
-)</pre><p></div></p>
+and subset functions to handle a pangenome.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>org_meta</span>,
+  <span class='va'>cluster_meta</span>,
+  core_level <span class='op'>=</span> <span class='fl'>95</span>,
+  sep <span class='op'>=</span> <span class='st'>"__"</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>DF</span>,
+  <span class='va'>group_meta</span>
+<span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>data</code></dt><dd><p>A <code>data.frame</code> or <code><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></code> containing at least the
 following columns: <code>gene</code> (gene name), <code>org</code> (organism name to which the gene belongs to),
@@ -283,18 +277,18 @@ create a unique <code>gid</code> (gene identifier) for each gene. <code>gid</cod
 <dt><code>group_meta</code></dt><dd><p>Deprecated. Use <code>cluster_meta</code> instead.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>An R6 object of class PgR6. It contains basic fields and methods for
 analyzing a pangenome.</p>
 <p><hr>
-<a id="method-add_metadata"></a></p><h3>Method <code>add_metadata()</code></h3>
+<a id="method-add_metadata"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>add_metadata()</code></h3>
 <p>Add metadata to the object. You can add metadata to each organism, to each
 group of orthologous, or to each gene. Elements with missing data should be filled
 by <code>NA</code> (dimensions of the provided data.frame must be coherent with object
-data).</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6</span><span class='op'>$</span><span class='fu'>add_metadata</span>(map = <span class='st'>"org"</span>, <span class='kw'>data</span>)</pre><p></div></p>
+data).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>add_metadata</span><span class='op'>(</span>map <span class='op'>=</span> <span class='st'>"org"</span>, <span class='va'>data</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>map</code></dt><dd><p><code>character</code> identifiying the metadata to map. Can
 be one of <code>"org"</code>, <code>"group"</code>, or <code>"gid"</code>.</p></dd>
@@ -307,57 +301,57 @@ of the gene as provided in the <code>"data"</code> data.frame, separated by the
  <code>"sep"</code> argument.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p><code>self</code> invisibly, but with additional metadata.</p>
 <p><hr>
-<a id="method-drop"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/drop.html'>drop()</a></code></h3>
+<a id="method-drop"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/drop.html'>drop()</a></code></h3>
 <p>Drop an organism from the dataset. This method allows to hide an organism
 from the real dataset, ignoring it in downstream analyses. All the fields and
 methods will behave as it doesn't exist. For instance, if you decide to drop
 organism 1, the <code>$pan_matrix</code> field (see below) would not show it when
-called.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/drop.html'>drop</a></span>(<span class='kw'>x</span>)</pre><p></div></p>
+called.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>drop</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>x</code></dt><dd><p><code>character</code> or <code>numeric</code>. The name of the
 organism wanted to be dropped, or its numeric id as returned in
 <code>$organism</code> field (see below).</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p><code>self</code> invisibly, but with <code>x</code> dropped. It isn't necessary
 to assign the function call to a new object, nor to re-write it as R6 objects
 are mutable.</p>
 <p><hr>
-<a id="method-recover"></a></p><h3>Method <code><a href='https://rdrr.io/r/utils/recover.html'>recover()</a></code></h3>
+<a id="method-recover"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/utils/recover.html'>recover()</a></code></h3>
 <p>Recover a previously <code>$drop()</code>ped organism (see above). All fields
-and methods will start to behave considering this organism again.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/utils/recover.html'>recover</a></span>(<span class='kw'>x</span>)</pre><p></div></p>
+and methods will start to behave considering this organism again.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>recover</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>x</code></dt><dd><p><code>character</code> or <code>numeric</code>. The name of the
 organism wanted to be recover, or its numeric id as returned in
 <code>$dropped</code> field (see below).</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p><code>self</code> invisibly, but with <code>x</code> recovered. It isn't necessary
 to assign the function call to a new object, nor to re-write it as R6 objects
 are mutable.</p>
 <p><hr>
-<a id="method-write_pangenome"></a></p><h3>Method <code>write_pangenome()</code></h3>
+<a id="method-write_pangenome"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>write_pangenome()</code></h3>
 <p>Write the pangenome data as flat tables (text). Is not the most recomended way
 to save a pangenome, since you can loose information as numeric precision,
 column classes (factor, numeric, integer), and the state of the object itself
 (i.e. dropped organisms, or core_level), loosing reproducibility. Use
 <code>$save_pangenomeRDS</code> for a more precise way of saveing a pagoo object.
 Still, it is useful if you want to work with the data outside R, just keep
-the above in mind.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6</span><span class='op'>$</span><span class='fu'>write_pangenome</span>(dir = <span class='st'>"pangenome"</span>, force = <span class='fl'>FALSE</span>)</pre><p></div></p>
+the above in mind.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>write_pangenome</span><span class='op'>(</span>dir <span class='op'>=</span> <span class='st'>"pangenome"</span>, force <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>dir</code></dt><dd><p>The unexisting directory name where to put the data files. Default
 is "pangenome".</p></dd>
@@ -366,7 +360,7 @@ is "pangenome".</p></dd>
 exists. Default: <code>FALSE</code>.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A directory with at least 3 files. "data.tsv" contain the basic
 pangenome data as it is provided to the <code>data</code> argumnet in the
 initialization method (<code>$new(...)</code>). "clusters.tsv" contain any metadata
@@ -374,17 +368,17 @@ asociated to the clusters. "organisms.tsv" contain any metadata asociated to
 the organisms. The latter 2 files will contain a single column if no metadata
 was provided.</p>
 <p><hr>
-<a id="method-save_pangenomeRDS"></a></p><h3>Method <code>save_pangenomeRDS()</code></h3>
+<a id="method-save_pangenomeRDS"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>save_pangenomeRDS()</code></h3>
 <p>Save a pagoo pangenome object. This function provides a method for saving a pagoo
 object and its state into a "RDS" file. To load the pangenome, use the
 <code>load_pangenomeRDS</code> function in this package. It *should* be compatible between
 pagoo versions, so you could update pagoo and still recover the same pangenome. Even
 <code>sep</code> and <code>core_level</code> are restored unless the user provides those
 arguments in <code>load_pangenomeRDS</code>. <code>dropped</code> organisms also kept hidden, as
-you where working with the original object.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6</span><span class='op'>$</span><span class='fu'>save_pangenomeRDS</span>(file = <span class='st'>"pangenome.rds"</span>, seqs.if.avail = <span class='fl'>TRUE</span>)</pre><p></div></p>
+you where working with the original object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>save_pangenomeRDS</span><span class='op'>(</span>file <span class='op'>=</span> <span class='st'>"pangenome.rds"</span>, seqs.if.avail <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>file</code></dt><dd><p>The name of the file to save. Default: "pangenome.rds".</p></dd>
 
@@ -392,15 +386,15 @@ you where working with the original object.</p><h3>Usage</h3>
 if they are available. Only relevant if class is PgR6MS, otherwise ignored.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>Writes a list with all the information needed to restore the object by
 using the load_pangenomeRDS function, into an RDS (binary) file.</p>
 <p><hr>
-<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='kw'>PgR6</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
@@ -423,7 +417,7 @@ using the load_pangenomeRDS function, into an RDS (binary) file.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
