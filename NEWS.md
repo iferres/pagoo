@@ -1,3 +1,7 @@
+# pagoo 0.3.6
+
+* Bugfix, adds compatibility between previous save/load_pangenomeRDS methods
+
 # pagoo 0.3.5
 
 * Faster roary_2_pagoo()
