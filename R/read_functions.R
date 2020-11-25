@@ -688,6 +688,7 @@ pagoo <- function(data, org_meta, cluster_meta, sequences, core_level = 95, sep 
 #' \code{core_level} overwrite the values stored in the file.
 #' @return Ethier a \code{PgR6MS} class object, or a \code{PgR6M} object (with or
 #' without sequences, respectively).
+#' @importFrom utils installed.packages
 #' @export
 load_pangenomeRDS = function(file, ...){
 
