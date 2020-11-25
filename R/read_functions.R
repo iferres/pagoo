@@ -695,9 +695,10 @@ load_pangenomeRDS = function(file, ...){
   atrs <- attributes(args)
   dots <- list(...)
 
-  if (!"parent_package" %in% names(atrs)) stop("Not recognized rds file.")
-  if (atrs$parent_package != "pagoo") stop("Not recognized rds file.")
-  pkg <- atrs$package
+  if (!"package" %in% names(atrs)) stop("Not recognized rds file.")
+  if (atrs$package != "pagoo") stop("Not recognized rds file.")
+  pkg <- atrs$parent_package
+  if (is.null(pkg)) pkg <- "pagoo"
   if (! pkg %in% rownames(installed.packages())) stop(paste(pkg, "not installed."))
   clss <- atrs$class
 

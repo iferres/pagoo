@@ -413,8 +413,8 @@ PgR6 <- R6Class('PgR6',
                       has_seqs <- FALSE
                     }
                     # attr(pg_data, "package") <- eval(parse(text=paste0(clss[1], "$parent_env$.packageName")))
-                    attr(pg_data, "package") <- environmentName(parent.env(self$.__enclos_env__))
-                    attr(pg_data, "parent_package") <- "pagoo"
+                    attr(pg_data, "package") <- "pagoo"
+                    attr(pg_data, "parent_package") <- environmentName(parent.env(self$.__enclos_env__))
                     attr(pg_data, "has_seqs") <- has_seqs
                     attr(pg_data, "class") <- clss
                     attr(pg_data, "version") <- version
