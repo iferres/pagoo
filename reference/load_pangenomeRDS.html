@@ -157,7 +157,7 @@ states, i.e : dropped/recovered organisms are conserved, as well as the
 `core_level` setted when the object was originally saved.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>load_pangenomeRDS</span><span class='op'>(</span><span class='va'>file</span>, seqs.if.avail <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>load_pangenomeRDS</span><span class='op'>(</span><span class='va'>file</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,11 +165,6 @@ states, i.e : dropped/recovered organisms are conserved, as well as the
     <tr>
       <th>file</th>
       <td><p>The path to the pangenome `.RDS` file.</p></td>
-    </tr>
-    <tr>
-      <th>seqs.if.avail</th>
-      <td><p><code>logical</code> Whether to load sequences or not, if they
-are available in the rds file.</p></td>
     </tr>
     <tr>
       <th>...</th>
