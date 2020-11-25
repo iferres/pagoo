@@ -373,8 +373,6 @@ PgR6 <- R6Class('PgR6',
                   #' arguments in \code{load_pangenomeRDS}. \code{dropped} organisms also kept hidden, as
                   #' you where working with the original object.
                   #' @param file The name of the file to save. Default: "pangenome.rds".
-                  #' @param seqs.if.avail \code{logical}. Whether to save sequences in the rds file or not,
-                  #' if they are available. Only relevant if class is PgR6MS, otherwise ignored.
                   #' @return Writes a list with all the information needed to restore the object by
                   #' using the load_pangenomeRDS function, into an RDS (binary) file.
                   save_pangenomeRDS = function(file = "pangenome.rds", seqs.if.avail = TRUE){
@@ -402,12 +400,7 @@ PgR6 <- R6Class('PgR6',
                     if (dim(org_meta)[2] > 1){
                       pg_data$org_meta <- org_meta
                     }
-                    attr(pg_data, "package") <- "pagoo"
-                    attr(pg_data, "has_seqs") <- FALSE
-                    attr(pg_data, "class") <- clss
-                    attr(pg_data, "version") <- version
-
-                    if ("PgR6MS" %in% clss & seqs.if.avail){
+                    if (!is.null(private$.sequences)){
                       sqs <- private$.sequences
                       spl <- split(sqs, mcols(sqs)$org)
                       pg_data$sequences <- lapply(spl, function(x) {
@@ -415,9 +408,16 @@ PgR6 <- R6Class('PgR6',
                         names(x) <- sub(patt, "", names(x))
                         as.character(x)
                       })
-                      attr(pg_data, "has_seqs") <- TRUE
+                      has_seqs <- TRUE
+                    } else {
+                      has_seqs <- FALSE
                     }
-
+                    # attr(pg_data, "package") <- eval(parse(text=paste0(clss[1], "$parent_env$.packageName")))
+                    attr(pg_data, "package") <- environmentName(parent.env(self$.__enclos_env__))
+                    attr(pg_data, "parent_package") <- "pagoo"
+                    attr(pg_data, "has_seqs") <- has_seqs
+                    attr(pg_data, "class") <- clss
+                    attr(pg_data, "version") <- version
                     saveRDS(pg_data, file = file)
                   }
 

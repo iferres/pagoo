@@ -684,21 +684,22 @@ pagoo <- function(data, org_meta, cluster_meta, sequences, core_level = 95, sep 
 #' states, i.e : dropped/recovered organisms are conserved, as well as the
 #' `core_level` setted when the object was originally saved.
 #' @param file The path to the pangenome `.RDS` file.
-#' @param seqs.if.avail \code{logical} Whether to load sequences or not, if they
-#' are available in the rds file.
 #' @param ... Arguments to be passed to the pagoo object. \code{sep} and
 #' \code{core_level} overwrite the values stored in the file.
 #' @return Ethier a \code{PgR6MS} class object, or a \code{PgR6M} object (with or
 #' without sequences, respectively).
 #' @export
-load_pangenomeRDS = function(file, seqs.if.avail = TRUE, ...){
+load_pangenomeRDS = function(file, ...){
 
   args <- readRDS(file)
   atrs <- attributes(args)
   dots <- list(...)
 
-  if (!"package" %in% names(atrs)) stop("Not recognized rds file.")
-  if (atrs$package != "pagoo") stop("Not recognized rds file.")
+  if (!"parent_package" %in% names(atrs)) stop("Not recognized rds file.")
+  if (atrs$parent_package != "pagoo") stop("Not recognized rds file.")
+  pkg <- atrs$package
+  if (! pkg %in% rownames(installed.packages())) stop(paste(pkg, "not installed."))
+  clss <- atrs$class
 
   dropped <- args$dropped
   args$dropped <- NULL
@@ -717,12 +718,7 @@ load_pangenomeRDS = function(file, seqs.if.avail = TRUE, ...){
     args$core_level <- core_level2
   }
 
-  if (attr(args, "has_seqs") & !seqs.if.avail){
-    message("RDS file has sequences available but 'seq.if.avail = FALSE', so not loading them.")
-    args$sequences <- NULL
-  }
-
-  p <- do.call("pagoo", args)
+  p <- do.call(eval(parse(text = paste0(pkg, ":::", clss[1], "$new"))), args)
 
   if (!is.null(dropped)){
     message(paste("Dropping the following organisms:", paste0(dropped, collapse = " "), collapse = " "))
