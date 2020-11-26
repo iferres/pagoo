@@ -50,10 +50,7 @@
 #' explore, and to use in harmony with the already existing and extensive list of R
 #' packages available created for comparative genomics and genetics.
 #'
-#' For more information, tutorials, and resources, please visit XXXXXXXXXXXXXXXX.
-#'
-#' Above you will find a detailed description of each method/field provided
-#' once you load a pagoo object.
+#' For more information, tutorials, and resources, please visit https://iferres.github.io/pagoo/ .
 #'
 #' @section Index:
 #' \subsection{Active Bindings}{
