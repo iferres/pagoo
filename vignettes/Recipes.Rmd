@@ -1,6 +1,6 @@
 ---
 title: "Recipes"
-output: html_document
+output: html_vignette
 vignette: >
   %\VignetteIndexEntry{Recipes}
   %\VignetteEngine{knitr::rmarkdown}

@@ -1,6 +1,6 @@
 ---
 title: "Querying Data"
-output: html_document
+output: html_vignette
 vignette: >
   %\VignetteIndexEntry{Querying Data}
   %\VignetteEngine{knitr::rmarkdown}

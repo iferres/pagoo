@@ -5,4 +5,5 @@
 ^pkgdown$
 ^\.github$
 ^index.md
-^man/figures*$
+^cran-comments\.md$
+^man/figures/readmegif\.gif$

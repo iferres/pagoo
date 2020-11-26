@@ -1,6 +1,6 @@
 ---
 title: "Methods and Plots"
-output: html_document
+output: html_vignette
 vignette: >
   %\VignetteIndexEntry{Methods and Plots}
   %\VignetteEngine{knitr::rmarkdown}
