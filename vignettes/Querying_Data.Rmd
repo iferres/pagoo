@@ -40,7 +40,7 @@ p$core_level
 p$core_level <- 100 # Change value
 p$summary_stats     # Updated object
 ```
-As you can see, changing the core level from 95% to a more stringent 100% cause in decrease in the number of core genes from 1623 to 1553, and a concomitant increase in shell genes from 441 to 511. This means that 70 genes migrated from core to shell when increasing the threshold to consider a cluster as "core" to 100%. Now this changes remain in the object for subsequent analysis, or can be reverted by setting the core level again at the original value.
+As you can see, changing the core level from 95% to a more stringent 100% cause in decrease in the number of core genes from 1627 to 1554, and a concomitant increase in shell genes from 413 to 486. This means that 73 genes migrated from core to shell when increasing the threshold to consider a cluster as "core" to 100%. Now this changes remain in the object for subsequent analysis, or can be reverted by setting the core level again at the original value.
 
 ```{r}
 p$core_level <- 95
@@ -56,7 +56,7 @@ p$pan_matrix[, 1:5]
 
 # Gene metadata
 
-Individual gene metadata can be accessed by using the `$genes` suffix. It always contains the gene name, the organism to which it belongs, the cluster to where it was assigned, and a gene identifier (`gid`) that is mainly used internally to organize the data. Also, it may typically include annotation data, genomic coordinates, etc, but this other metadata is optional. Gene metadata is splited by cluster, so it consist in a `List` of `DataFrame`s.
+Individual gene metadata can be accessed by using the `$genes` suffix. It always contains the gene name, the organism to which it belongs, the cluster to where it was assigned, and a gene identifier (`gid`) that is mainly used internally to organize the data. Also, it may typically include annotation data, genomic coordinates, etc, but this other metadata is optional. Gene metadata is spitted by cluster, so it consist in a `List` of `DataFrame`s.
 
 ```{r}
 p$genes
@@ -85,9 +85,9 @@ Although is an optional field (it exists only if user provide this data as an ar
 
 ```{r}
 p$sequences             # List all sequences grouped by cluster
-p$sequences[["OG0001"]]  # List first cluster
+p$sequences[["group0001"]]  # List first cluster
 ```
-Note that sequence names are created by pasteing organism names and gene names, separated by a string that by default is `sep = '__'` (two underscores). This are the same as the `gid` column in the `$genes` field, and are initially set when `pagoo` object is created. If you think your dataset contain names with this separator, then you should set this parameter to other string to avoid conflicts. 
+Note that sequence names are created by pasting organism names and gene names, separated by a string that by default is `sep = '__'` (two underscores). This are the same as the `gid` column in the `$genes` field, and are initially set when `pagoo` object is created. If you think your dataset contain names with this separator, then you should set this parameter to other string to avoid conflicts. 
 `$sequences` field also has predefied subsets: `$core_sequences`, `$shell_sequences`, and `$cloud_sequences`.
 
 # Organism metadata

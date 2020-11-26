@@ -30,7 +30,7 @@ campy$organisms
 ```
 *(Tip: To see all fields and methods, in any R console type `campy$` and press the [TAB] key two times.)*
 
-This dataset consist in 69 _Campylobacter spp_ genomes. For each organism, you have a row with associated metadata. The first column, `org`, indicates the organism.
+This dataset consist in 7 _Campylobacter spp_ genomes. For each organism, you have a row with associated metadata. The first column, `org`, indicates the organism.
 
 ```{r}
 campy$clusters
