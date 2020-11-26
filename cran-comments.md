@@ -1,10 +1,9 @@
-## Test environments
-* local R installation, R 4.0.1
-* ubuntu 16.04 (on travis-ci), R 4.0.1
-* win-builder (devel)
+## Test environments (GitHub Actions)
+* MacOS Catalina, R 4.0.3
+* Ubuntu 16.04, R 4.0.3
+* Windows Server 2019, R 4.0.3
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 0 note
 
-* This is a new release.
