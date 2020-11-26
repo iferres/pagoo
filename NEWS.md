@@ -1,3 +1,8 @@
+# pagoo 0.3.7
+
+* Fixed missing link in documentation.
+* Smaller toy dataset to comply with CRAN policies.
+
 # pagoo 0.3.6
 
 * Bugfix, adds compatibility between previous save/load_pangenomeRDS methods
