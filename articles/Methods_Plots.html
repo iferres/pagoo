@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.7</span>
       </span>
     </div>
 
@@ -125,26 +125,13 @@
 <p>Pairwise distances between gene abundance can be retieved by using <code>$dist()</code> method. By default, Bray-Curtis distance is computed. This is just a wrapper of <code>vegdist()</code> from <code>vegan</code> package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="fu">dist</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>##              16244_6_6  16244_6_18  16244_6_24  16244_6_31  17059_2_16
-## 16244_6_18 0.065946561                                                
-## 16244_6_24 0.020662327 0.052783386                                    
-## 16244_6_31 0.020650636 0.052752955 0.006314581                        
-## 17059_2_16 0.121228163 0.125000000 0.112422860 0.110753553            
-## 17059_2_23 0.096227447 0.096325167 0.085112282 0.085065115 0.076323988
-## 17059_2_27 0.092459366 0.113100081 0.100486224 0.099892009 0.103116291
-## 17150_1_73 0.082039911 0.090344438 0.071127355 0.070525428 0.136244082
-## 17059_2_11 0.023769100 0.053633218 0.007751938 0.008321377 0.114270386
-## 17059_2_42 0.089207048 0.099270892 0.076794192 0.077309517 0.145321485
-##             17059_2_23  17059_2_27  17150_1_73  17059_2_11
-## 16244_6_18                                                
-## 16244_6_24                                                
-## 16244_6_31                                                
-## 17059_2_16                                                
-## 17059_2_23                                                
-## 17059_2_27 0.082309903                                    
-## 17150_1_73 0.122759370 0.129997352                        
-## 17059_2_11 0.084257206 0.100729139 0.073074761            
-## 17059_2_42 0.126821371 0.137069192 0.095185996 0.076493579</code></pre>
+<pre><code>##             16244_6_6 16244_6_18 17059_2_16 17059_2_23 17059_2_27 17150_1_73
+## 16244_6_18 0.06594656                                                       
+## 17059_2_16 0.12122816 0.12500000                                            
+## 17059_2_23 0.09622745 0.09632517 0.07632399                                 
+## 17059_2_27 0.09245937 0.11310008 0.10311629 0.08230990                      
+## 17150_1_73 0.08203991 0.09034444 0.13624408 0.12275937 0.12999735           
+## 17059_2_42 0.08920705 0.09927089 0.14532148 0.12682137 0.13706919 0.09518600</code></pre>
 <p>Other distances available include, for instance, Jaccard distance (see documentation). As this method require presence/absence data, and not abundance, you should use it with <code>binary = TRUE</code> argument set.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="fu">dist</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"jaccard"</span>, binary <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
@@ -174,14 +161,10 @@
 <code class="sourceCode R"><span class="va">pca</span> <span class="op">&lt;-</span> <span class="va">p</span><span class="op">$</span><span class="fu">pan_pca</span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></code></pre></div>
 <pre><code>## Importance of components:
-##                           PC1    PC2    PC3    PC4    PC5     PC6     PC7
-## Standard deviation     7.2247 5.3474 4.7343 4.4424 4.0904 3.73292 2.25443
-## Proportion of Variance 0.3231 0.1770 0.1388 0.1222 0.1036 0.08627 0.03147
-## Cumulative Proportion  0.3231 0.5002 0.6390 0.7611 0.8647 0.95099 0.98245
-##                            PC8     PC9      PC10
-## Standard deviation     1.27427 1.10023 1.531e-14
-## Proportion of Variance 0.01005 0.00749 0.000e+00
-## Cumulative Proportion  0.99251 1.00000 1.000e+00</code></pre>
+##                           PC1    PC2    PC3    PC4    PC5     PC6       PC7
+## Standard deviation     8.1626 6.1103 5.5458 5.2924 4.6981 4.29398 2.779e-14
+## Proportion of Variance 0.3278 0.1837 0.1513 0.1378 0.1086 0.09072 0.000e+00
+## Cumulative Proportion  0.3278 0.5115 0.6629 0.8007 0.9093 1.00000 1.000e+00</code></pre>
 </div>
 </div>
 <div id="visualization-methods" class="section level1">
@@ -253,31 +236,25 @@
 <p>A biplot for visualizing the first 2 principal components in a PCA is always useful at early stages of analysis to explore possible association of genomes based on gene content. This method uses <code>$pan_pca()</code> method to perform the PCA, and allows you to use organism metadata to colour the points.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">organisms</span></code></pre></div>
-<pre><code>## DataFrame with 10 rows and 8 columns
-##           org          id      strain      year     country        host
-##      &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;
-## 1  16244_6_6         FR15   2008/170h      2008      France       Human
-## 2  16244_6_18        FR27   2012/185h      2012      France       Human
-## 3  16244_6_24        FR33    2014/52h      2014      France       Human
-## 4  16244_6_31        FR40    2009/56h      2009      France       Human
-## 5  17059_2_16         AR1      99/801      1999   Argentina      Bovine
-## 6  17059_2_23         AR8      04/875      2004   Argentina      Bovine
-## 7  17059_2_27        AR12      06/195      2006   Argentina      Bovine
-## 8  17150_1_73         CA1   001A-0374      2005      Canada       Human
-## 9  17059_2_11        CA22    ID136207      2014      Canada       Human
-## 10 17059_2_42         TW6        1830      2008      Taiwan       Human
-##         source   accession
-##    &lt;character&gt; &lt;character&gt;
-## 1        Feces   ERS672247
-## 2        Blood   ERS672259
-## 3          CSF   ERS672265
-## 4          CSF   ERS672272
-## 5      Prepuce   ERS739235
-## 6        Fetus   ERS739242
-## 7           VM   ERS739246
-## 8        Blood   ERS686652
-## 9        Blood   ERS739230
-## 10       Blood   ERS739261</code></pre>
+<pre><code>## DataFrame with 7 rows and 8 columns
+##          org          id      strain      year     country        host
+##     &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;
+## 1 16244_6_6         FR15   2008/170h      2008      France       Human
+## 2 16244_6_18        FR27   2012/185h      2012      France       Human
+## 3 17059_2_16         AR1      99/801      1999   Argentina      Bovine
+## 4 17059_2_23         AR8      04/875      2004   Argentina      Bovine
+## 5 17059_2_27        AR12      06/195      2006   Argentina      Bovine
+## 6 17150_1_73         CA1   001A-0374      2005      Canada       Human
+## 7 17059_2_42         TW6        1830      2008      Taiwan       Human
+##        source   accession
+##   &lt;character&gt; &lt;character&gt;
+## 1       Feces   ERS672247
+## 2       Blood   ERS672259
+## 3     Prepuce   ERS739235
+## 4       Fetus   ERS739242
+## 5          VM   ERS739246
+## 6       Blood   ERS686652
+## 7       Blood   ERS739261</code></pre>
 <p>Since we have metadata asociated to each organism, we will use it to colour the organisms according to the <code>country</code> variable.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="fu">gg_pca</span><span class="op">(</span>colour <span class="op">=</span> <span class="st">'host'</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span> 

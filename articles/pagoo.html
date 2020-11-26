@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.7</span>
       </span>
     </div>
 
@@ -119,49 +119,43 @@
 <p>So this 3 variables are 3 separate tables that can be queried:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">campy</span><span class="op">$</span><span class="va">organisms</span></code></pre></div>
-<pre><code>## DataFrame with 10 rows and 8 columns
-##           org          id      strain      year     country        host
-##      &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;
-## 1  16244_6_6         FR15   2008/170h      2008      France       Human
-## 2  16244_6_18        FR27   2012/185h      2012      France       Human
-## 3  16244_6_24        FR33    2014/52h      2014      France       Human
-## 4  16244_6_31        FR40    2009/56h      2009      France       Human
-## 5  17059_2_16         AR1      99/801      1999   Argentina      Bovine
-## 6  17059_2_23         AR8      04/875      2004   Argentina      Bovine
-## 7  17059_2_27        AR12      06/195      2006   Argentina      Bovine
-## 8  17150_1_73         CA1   001A-0374      2005      Canada       Human
-## 9  17059_2_11        CA22    ID136207      2014      Canada       Human
-## 10 17059_2_42         TW6        1830      2008      Taiwan       Human
-##         source   accession
-##    &lt;character&gt; &lt;character&gt;
-## 1        Feces   ERS672247
-## 2        Blood   ERS672259
-## 3          CSF   ERS672265
-## 4          CSF   ERS672272
-## 5      Prepuce   ERS739235
-## 6        Fetus   ERS739242
-## 7           VM   ERS739246
-## 8        Blood   ERS686652
-## 9        Blood   ERS739230
-## 10       Blood   ERS739261</code></pre>
+<pre><code>## DataFrame with 7 rows and 8 columns
+##          org          id      strain      year     country        host
+##     &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;
+## 1 16244_6_6         FR15   2008/170h      2008      France       Human
+## 2 16244_6_18        FR27   2012/185h      2012      France       Human
+## 3 17059_2_16         AR1      99/801      1999   Argentina      Bovine
+## 4 17059_2_23         AR8      04/875      2004   Argentina      Bovine
+## 5 17059_2_27        AR12      06/195      2006   Argentina      Bovine
+## 6 17150_1_73         CA1   001A-0374      2005      Canada       Human
+## 7 17059_2_42         TW6        1830      2008      Taiwan       Human
+##        source   accession
+##   &lt;character&gt; &lt;character&gt;
+## 1       Feces   ERS672247
+## 2       Blood   ERS672259
+## 3     Prepuce   ERS739235
+## 4       Fetus   ERS739242
+## 5          VM   ERS739246
+## 6       Blood   ERS686652
+## 7       Blood   ERS739261</code></pre>
 <p><em>(Tip: To see all fields and methods, in any R console type <code>campy$</code> and press the [TAB] key two times.)</em></p>
-<p>This dataset consist in 69 <em>Campylobacter spp</em> genomes. For each organism, you have a row with associated metadata. The first column, <code>org</code>, indicates the organism.</p>
+<p>This dataset consist in 7 <em>Campylobacter spp</em> genomes. For each organism, you have a row with associated metadata. The first column, <code>org</code>, indicates the organism.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">campy</span><span class="op">$</span><span class="va">clusters</span></code></pre></div>
-<pre><code>## DataFrame with 2599 rows and 2 columns
-##       cluster              Pfam_Arch
-##      &lt;factor&gt;            &lt;character&gt;
-## 1      OG0001           2-Hacid_dh_C
-## 2      OG0002 2-Hacid_dh_C;2-Hacid..
-## 3      OG0003 2-Hacid_dh_C;ACT;2-H..
-## 4      OG0004        2Fe-2S_thioredx
-## 5      OG0005    4HB_MCP_1;MCPsignal
-## ...       ...                    ...
-## 2595   OG2595              zf-RING_7
-## 2596   OG2596               zf-TFIIB
-## 2597   OG2597                   ZinT
-## 2598   OG2598                   ZnuA
-## 2599   OG2599               ZT_dimer</code></pre>
+<pre><code>## DataFrame with 2588 rows and 2 columns
+##        cluster              Pfam_Arch
+##       &lt;factor&gt;            &lt;character&gt;
+## 1    group0001           2-Hacid_dh_C
+## 2    group0002 2-Hacid_dh_C;2-Hacid..
+## 3    group0003 2-Hacid_dh_C;ACT;2-H..
+## 4    group0004        2Fe-2S_thioredx
+## 5    group0005    4HB_MCP_1;MCPsignal
+## ...        ...                    ...
+## 2584 group2584              zf-RING_7
+## 2585 group2585               zf-TFIIB
+## 2586 group2586                   ZinT
+## 2587 group2587                   ZnuA
+## 2588 group2588               ZT_dimer</code></pre>
 <p>The <code>$clusters</code> field returns a table with metadata associated to each group of orthologous, in this case is the Pfam architecture domain (second column).</p>
 <p>The last, and most important field is <code>$genes</code>, which returns a list of <code>DataFrame</code> with information given for each individual gene, grouped by cluster. We let the user to inspect this field by him/herself.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -176,26 +170,13 @@
 <p>For example:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">campy</span><span class="op">$</span><span class="fu">dist</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"bray"</span><span class="op">)</span></code></pre></div>
-<pre><code>##              16244_6_6  16244_6_18  16244_6_24  16244_6_31  17059_2_16
-## 16244_6_18 0.065946561                                                
-## 16244_6_24 0.020662327 0.052783386                                    
-## 16244_6_31 0.020650636 0.052752955 0.006314581                        
-## 17059_2_16 0.121228163 0.125000000 0.112422860 0.110753553            
-## 17059_2_23 0.096227447 0.096325167 0.085112282 0.085065115 0.076323988
-## 17059_2_27 0.092459366 0.113100081 0.100486224 0.099892009 0.103116291
-## 17150_1_73 0.082039911 0.090344438 0.071127355 0.070525428 0.136244082
-## 17059_2_11 0.023769100 0.053633218 0.007751938 0.008321377 0.114270386
-## 17059_2_42 0.089207048 0.099270892 0.076794192 0.077309517 0.145321485
-##             17059_2_23  17059_2_27  17150_1_73  17059_2_11
-## 16244_6_18                                                
-## 16244_6_24                                                
-## 16244_6_31                                                
-## 17059_2_16                                                
-## 17059_2_23                                                
-## 17059_2_27 0.082309903                                    
-## 17150_1_73 0.122759370 0.129997352                        
-## 17059_2_11 0.084257206 0.100729139 0.073074761            
-## 17059_2_42 0.126821371 0.137069192 0.095185996 0.076493579</code></pre>
+<pre><code>##             16244_6_6 16244_6_18 17059_2_16 17059_2_23 17059_2_27 17150_1_73
+## 16244_6_18 0.06594656                                                       
+## 17059_2_16 0.12122816 0.12500000                                            
+## 17059_2_23 0.09622745 0.09632517 0.07632399                                 
+## 17059_2_27 0.09245937 0.11310008 0.10311629 0.08230990                      
+## 17150_1_73 0.08203991 0.09034444 0.13624408 0.12275937 0.12999735           
+## 17059_2_42 0.08920705 0.09927089 0.14532148 0.12682137 0.13706919 0.09518600</code></pre>
 <p>Or:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">campy</span><span class="op">$</span><span class="fu">gg_barplot</span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -207,19 +188,19 @@
 <p>One of the main advantages of using <code>pagoo</code> is the ability to very easily manipulate sequences. Sequences are stored as a <code>List</code> of <code>DNAStringSet</code> from <code>Biostrings</code> package.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">campy</span><span class="op">$</span><span class="va">sequences</span></code></pre></div>
-<pre><code>## DNAStringSetList of length 2599
-## [["OG0001"]] 16244_6_6__16244_6_6_00150=ATGGCGATAACAGTTTATTACGACAAAGATTGCGATT...
-## [["OG0002"]] 16244_6_6__16244_6_6_01290=ATGAAAATAGTATGCTTAGATGCCGACACGCTTGGAA...
-## [["OG0003"]] 16244_6_6__16244_6_6_01710=ATGAAAACAGTTATAGTTTGCGATGCAATACATCCGG...
-## [["OG0004"]] 16244_6_6__16244_6_6_01754=ATGAAATTCGAATTTACTCATGAGCAATTATCGGCTC...
-## [["OG0005"]] 16244_6_6__16244_6_6_00049=ATGTCAAATTTAACTACTAACTTAACTACCAAAACTA...
-## [["OG0006"]] 16244_6_6__16244_6_6_01069=ATGAATTATTTTGAGAATTTAAAAGTTTCAACAAAAC...
-## [["OG0007"]] 16244_6_6__16244_6_6_01612=ATGCGAATTAGAATTTATTATGAAGATACCGATGCTG...
-## [["OG0008"]] 16244_6_6__16244_6_6_01679=ATGATGAAAGATATGGGCGAGCCACGTATAAAAATTG...
-## [["OG0009"]] 16244_6_18__16244_6_18_01216=ATGGGGCTTACTACGAGTACGACAAAGTATATAAC...
-## [["OG0010"]] 16244_6_6__16244_6_6_00758=ATGAAAAGAGTGGTTATAAAAGTAGGCTCTCACGTGA...
+<pre><code>## DNAStringSetList of length 2588
+## [["group0001"]] 16244_6_6__16244_6_6_00150=ATGGCGATAACAGTTTATTACGACAAAGATTGCG...
+## [["group0002"]] 16244_6_6__16244_6_6_01290=ATGAAAATAGTATGCTTAGATGCCGACACGCTTG...
+## [["group0003"]] 16244_6_6__16244_6_6_01710=ATGAAAACAGTTATAGTTTGCGATGCAATACATC...
+## [["group0004"]] 16244_6_6__16244_6_6_01754=ATGAAATTCGAATTTACTCATGAGCAATTATCGG...
+## [["group0005"]] 16244_6_6__16244_6_6_00049=ATGTCAAATTTAACTACTAACTTAACTACCAAAA...
+## [["group0006"]] 16244_6_6__16244_6_6_01069=ATGAATTATTTTGAGAATTTAAAAGTTTCAACAA...
+## [["group0007"]] 16244_6_6__16244_6_6_01612=ATGCGAATTAGAATTTATTATGAAGATACCGATG...
+## [["group0008"]] 16244_6_6__16244_6_6_01679=ATGATGAAAGATATGGGCGAGCCACGTATAAAAA...
+## [["group0009"]] 16244_6_18__16244_6_18_01216=ATGGGGCTTACTACGAGTACGACAAAGTATAT...
+## [["group0010"]] 16244_6_6__16244_6_6_00758=ATGAAAAGAGTGGTTATAAAAGTAGGCTCTCACG...
 ## ...
-## &lt;2589 more elements&gt;</code></pre>
+## &lt;2578 more elements&gt;</code></pre>
 </div>
   </div>
 

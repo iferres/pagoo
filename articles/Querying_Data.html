@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.7</span>
       </span>
     </div>
 
@@ -125,10 +125,10 @@ pre, code {white-space:pre !important; overflow-x:auto;}
 <pre><code>## DataFrame with 4 rows and 2 columns
 ##      Category    Number
 ##   &lt;character&gt; &lt;integer&gt;
-## 1       Total      2599
-## 2        Core      1623
-## 3       Shell       441
-## 4       Cloud       535</code></pre>
+## 1       Total      2588
+## 2        Core      1627
+## 3       Shell       413
+## 4       Cloud       548</code></pre>
 <div id="core-level" class="section level2">
 <h2 class="hasAnchor">
 <a href="#core-level" class="anchor"></a>Core level</h2>
@@ -142,11 +142,11 @@ pre, code {white-space:pre !important; overflow-x:auto;}
 <pre><code>## DataFrame with 4 rows and 2 columns
 ##      Category    Number
 ##   &lt;character&gt; &lt;integer&gt;
-## 1       Total      2599
-## 2        Core      1553
-## 3       Shell       511
-## 4       Cloud       535</code></pre>
-<p>As you can see, changing the core level from 95% to a more stringent 100% cause in decrease in the number of core genes from 1623 to 1553, and a concomitant increase in shell genes from 441 to 511. This means that 70 genes migrated from core to shell when increasing the threshold to consider a cluster as “core” to 100%. Now this changes remain in the object for subsequent analysis, or can be reverted by setting the core level again at the original value.</p>
+## 1       Total      2588
+## 2        Core      1554
+## 3       Shell       486
+## 4       Cloud       548</code></pre>
+<p>As you can see, changing the core level from 95% to a more stringent 100% cause in decrease in the number of core genes from 1627 to 1554, and a concomitant increase in shell genes from 413 to 486. This means that 73 genes migrated from core to shell when increasing the threshold to consider a cluster as “core” to 100%. Now this changes remain in the object for subsequent analysis, or can be reverted by setting the core level again at the original value.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">core_level</span> <span class="op">&lt;-</span> <span class="fl">95</span></code></pre></div>
 </div>
@@ -157,105 +157,66 @@ pre, code {white-space:pre !important; overflow-x:auto;}
 <p>The pangenome matrix is one of the most useful things when analyzing pangenomes. Typically, it represents organisms in rows and clusters of orthologous in columns informing about gene abundance (considering paralogues). The pangenome matrix looks like this (printing only first 5 columns):</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">pan_matrix</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></code></pre></div>
-<pre><code>##            OG0001 OG0002 OG0003 OG0004 OG0005
-## 16244_6_6       1      1      1      1      1
-## 16244_6_18      1      1      1      1      1
-## 16244_6_24      1      1      1      1      1
-## 16244_6_31      1      1      1      1      1
-## 17059_2_16      1      1      1      1      1
-## 17059_2_23      1      1      1      1      0
-## 17059_2_27      1      1      1      1      1
-## 17150_1_73      1      1      1      1      1
-## 17059_2_11      1      1      1      1      0
-## 17059_2_42      1      1      1      1      0</code></pre>
+<pre><code>##            group0001 group0002 group0003 group0004 group0005
+## 16244_6_6          1         1         1         1         1
+## 16244_6_18         1         1         1         1         1
+## 17059_2_16         1         1         1         1         1
+## 17059_2_23         1         1         1         1         0
+## 17059_2_27         1         1         1         1         1
+## 17150_1_73         1         1         1         1         1
+## 17059_2_42         1         1         1         1         0</code></pre>
 </div>
 <div id="gene-metadata" class="section level1">
 <h1 class="hasAnchor">
 <a href="#gene-metadata" class="anchor"></a>Gene metadata</h1>
-<p>Individual gene metadata can be accessed by using the <code>$genes</code> suffix. It always contains the gene name, the organism to which it belongs, the cluster to where it was assigned, and a gene identifier (<code>gid</code>) that is mainly used internally to organize the data. Also, it may typically include annotation data, genomic coordinates, etc, but this other metadata is optional. Gene metadata is splited by cluster, so it consist in a <code>List</code> of <code>DataFrame</code>s.</p>
+<p>Individual gene metadata can be accessed by using the <code>$genes</code> suffix. It always contains the gene name, the organism to which it belongs, the cluster to where it was assigned, and a gene identifier (<code>gid</code>) that is mainly used internally to organize the data. Also, it may typically include annotation data, genomic coordinates, etc, but this other metadata is optional. Gene metadata is spitted by cluster, so it consist in a <code>List</code> of <code>DataFrame</code>s.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">genes</span></code></pre></div>
-<pre><code>## SplitDataFrameList of length 2599
-## $OG0001
-## DataFrame with 10 rows and 10 columns
+<pre><code>## SplitDataFrameList of length 2588
+## $group0001
+## DataFrame with 7 rows and 10 columns
 ##     cluster        org             gene                    gid    geneName
 ##    &lt;factor&gt;   &lt;factor&gt;         &lt;factor&gt;            &lt;character&gt; &lt;character&gt;
-## 1    OG0001 16244_6_6  16244_6_6_00150  16244_6_6__16244_6_6..        ilvC
-## 2    OG0001 16244_6_18 16244_6_18_00172 16244_6_18__16244_6_..        ilvC
-## 3    OG0001 16244_6_24 16244_6_24_01512 16244_6_24__16244_6_..        ilvC
-## 4    OG0001 16244_6_31 16244_6_31_00173 16244_6_31__16244_6_..        ilvC
-## 5    OG0001 17059_2_16 17059_2_16_01012 17059_2_16__17059_2_..        ilvC
-## 6    OG0001 17059_2_23 17059_2_23_01040 17059_2_23__17059_2_..        ilvC
-## 7    OG0001 17059_2_27 17059_2_27_00492 17059_2_27__17059_2_..        ilvC
-## 8    OG0001 17150_1_73 17150_1_73_00221 17150_1_73__17150_1_..        ilvC
-## 9    OG0001 17059_2_11 17059_2_11_00174 17059_2_11__17059_2_..        ilvC
-## 10   OG0001 17059_2_42 17059_2_42_00176 17059_2_42__17059_2_..        ilvC
-##                   product                 contig      from        to
-##               &lt;character&gt;            &lt;character&gt; &lt;integer&gt; &lt;integer&gt;
-## 1  ketol-acid reductois.. ERS672247|SC|contig0..    137333    138355
-## 2  ketol-acid reductois.. ERS672259|SC|contig0..    173541    174563
-## 3  ketol-acid reductois.. ERS672265|SC|contig0..    173654    174676
-## 4  ketol-acid reductois.. ERS672272|SC|contig0..    173541    174563
-## 5  ketol-acid reductois.. ERS739235|SC|contig0..     43645     44667
-## 6  ketol-acid reductois.. ERS739242|SC|contig0..    173578    174600
-## 7  ketol-acid reductois.. ERS739246|SC|contig0..    184035    185057
-## 8  ketol-acid reductois.. ERS686652|SC|contig0..    207206    208228
-## 9  ketol-acid reductois.. ERS739230|SC|contig0..    173577    174599
-## 10 ketol-acid reductois.. ERS739261|SC|contig0..    173569    174591
-##         strand
-##    &lt;character&gt;
-## 1            +
-## 2            +
-## 3            +
-## 4            +
-## 5            -
-## 6            +
-## 7            -
-## 8            +
-## 9            +
-## 10           +
+## 1 group0001 16244_6_6  16244_6_6_00150  16244_6_6__16244_6_6..        ilvC
+## 2 group0001 16244_6_18 16244_6_18_00172 16244_6_18__16244_6_..        ilvC
+## 3 group0001 17059_2_16 17059_2_16_01012 17059_2_16__17059_2_..        ilvC
+## 4 group0001 17059_2_23 17059_2_23_01040 17059_2_23__17059_2_..        ilvC
+## 5 group0001 17059_2_27 17059_2_27_00492 17059_2_27__17059_2_..        ilvC
+## 6 group0001 17150_1_73 17150_1_73_00221 17150_1_73__17150_1_..        ilvC
+## 7 group0001 17059_2_42 17059_2_42_00176 17059_2_42__17059_2_..        ilvC
+##                  product                 contig      from        to      strand
+##              &lt;character&gt;            &lt;character&gt; &lt;integer&gt; &lt;integer&gt; &lt;character&gt;
+## 1 ketol-acid reductois.. ERS672247|SC|contig0..    137333    138355           +
+## 2 ketol-acid reductois.. ERS672259|SC|contig0..    173541    174563           +
+## 3 ketol-acid reductois.. ERS739235|SC|contig0..     43645     44667           -
+## 4 ketol-acid reductois.. ERS739242|SC|contig0..    173578    174600           +
+## 5 ketol-acid reductois.. ERS739246|SC|contig0..    184035    185057           -
+## 6 ketol-acid reductois.. ERS686652|SC|contig0..    207206    208228           +
+## 7 ketol-acid reductois.. ERS739261|SC|contig0..    173569    174591           +
 ## 
-## $OG0002
-## DataFrame with 10 rows and 10 columns
+## $group0002
+## DataFrame with 7 rows and 10 columns
 ##     cluster        org             gene                    gid    geneName
 ##    &lt;factor&gt;   &lt;factor&gt;         &lt;factor&gt;            &lt;character&gt; &lt;character&gt;
-## 1    OG0002 16244_6_6  16244_6_6_01290  16244_6_6__16244_6_6..        hprA
-## 2    OG0002 16244_6_18 16244_6_18_01307 16244_6_18__16244_6_..        hprA
-## 3    OG0002 16244_6_24 16244_6_24_01054 16244_6_24__16244_6_..        hprA
-## 4    OG0002 16244_6_31 16244_6_31_01312 16244_6_31__16244_6_..        hprA
-## 5    OG0002 17059_2_16 17059_2_16_01627 17059_2_16__17059_2_..        hprA
-## 6    OG0002 17059_2_23 17059_2_23_00348 17059_2_23__17059_2_..        hprA
-## 7    OG0002 17059_2_27 17059_2_27_01208 17059_2_27__17059_2_..        hprA
-## 8    OG0002 17150_1_73 17150_1_73_01398 17150_1_73__17150_1_..        hprA
-## 9    OG0002 17059_2_11 17059_2_11_01048 17059_2_11__17059_2_..        hprA
-## 10   OG0002 17059_2_42 17059_2_42_00751 17059_2_42__17059_2_..        hprA
-##                   product                 contig      from        to
-##               &lt;character&gt;            &lt;character&gt; &lt;integer&gt; &lt;integer&gt;
-## 1  2-hydroxyacid dehydr.. ERS672247|SC|contig0..    274585    275517
-## 2  2-hydroxyacid dehydr.. ERS672259|SC|contig0..    272748    273680
-## 3  2-hydroxyacid dehydr.. ERS672265|SC|contig0..    274698    275630
-## 4  2-hydroxyacid dehydr.. ERS672272|SC|contig0..    274593    275525
-## 5  2-hydroxyacid dehydr.. ERS739235|SC|contig0..     11617     12549
-## 6  2-hydroxyacid dehydr.. ERS739242|SC|contig0..    308107    309039
-## 7  2-hydroxyacid dehydr.. ERS739246|SC|contig0..    114555    115487
-## 8  2-hydroxyacid dehydr.. ERS686652|SC|contig0..    273866    274798
-## 9  2-hydroxyacid dehydr.. ERS739230|SC|contig0..     15410     16342
-## 10 2-hydroxyacid dehydr.. ERS739261|SC|contig0..     15409     16341
-##         strand
-##    &lt;character&gt;
-## 1            -
-## 2            -
-## 3            -
-## 4            -
-## 5            +
-## 6            -
-## 7            -
-## 8            -
-## 9            +
-## 10           +
+## 1 group0002 16244_6_6  16244_6_6_01290  16244_6_6__16244_6_6..        hprA
+## 2 group0002 16244_6_18 16244_6_18_01307 16244_6_18__16244_6_..        hprA
+## 3 group0002 17059_2_16 17059_2_16_01627 17059_2_16__17059_2_..        hprA
+## 4 group0002 17059_2_23 17059_2_23_00348 17059_2_23__17059_2_..        hprA
+## 5 group0002 17059_2_27 17059_2_27_01208 17059_2_27__17059_2_..        hprA
+## 6 group0002 17150_1_73 17150_1_73_01398 17150_1_73__17150_1_..        hprA
+## 7 group0002 17059_2_42 17059_2_42_00751 17059_2_42__17059_2_..        hprA
+##                  product                 contig      from        to      strand
+##              &lt;character&gt;            &lt;character&gt; &lt;integer&gt; &lt;integer&gt; &lt;character&gt;
+## 1 2-hydroxyacid dehydr.. ERS672247|SC|contig0..    274585    275517           -
+## 2 2-hydroxyacid dehydr.. ERS672259|SC|contig0..    272748    273680           -
+## 3 2-hydroxyacid dehydr.. ERS739235|SC|contig0..     11617     12549           +
+## 4 2-hydroxyacid dehydr.. ERS739242|SC|contig0..    308107    309039           -
+## 5 2-hydroxyacid dehydr.. ERS739246|SC|contig0..    114555    115487           -
+## 6 2-hydroxyacid dehydr.. ERS686652|SC|contig0..    273866    274798           -
+## 7 2-hydroxyacid dehydr.. ERS739261|SC|contig0..     15409     16341           +
 ## 
 ## ...
-## &lt;2597 more elements&gt;</code></pre>
+## &lt;2586 more elements&gt;</code></pre>
 <p>If you want to work with this data as a single <code>DataFrame</code>, just <code>unlist</code> it:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">p</span><span class="op">$</span><span class="va">genes</span>, use.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
@@ -267,20 +228,20 @@ pre, code {white-space:pre !important; overflow-x:auto;}
 <p>Groups of orthologues (clusters) are also stored in <code>pagoo</code> objects as a table with a cluster identifier per row, and optional metadata associated as additional columns.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">clusters</span></code></pre></div>
-<pre><code>## DataFrame with 2599 rows and 2 columns
-##       cluster              Pfam_Arch
-##      &lt;factor&gt;            &lt;character&gt;
-## 1      OG0001           2-Hacid_dh_C
-## 2      OG0002 2-Hacid_dh_C;2-Hacid..
-## 3      OG0003 2-Hacid_dh_C;ACT;2-H..
-## 4      OG0004        2Fe-2S_thioredx
-## 5      OG0005    4HB_MCP_1;MCPsignal
-## ...       ...                    ...
-## 2595   OG2595              zf-RING_7
-## 2596   OG2596               zf-TFIIB
-## 2597   OG2597                   ZinT
-## 2598   OG2598                   ZnuA
-## 2599   OG2599               ZT_dimer</code></pre>
+<pre><code>## DataFrame with 2588 rows and 2 columns
+##        cluster              Pfam_Arch
+##       &lt;factor&gt;            &lt;character&gt;
+## 1    group0001           2-Hacid_dh_C
+## 2    group0002 2-Hacid_dh_C;2-Hacid..
+## 3    group0003 2-Hacid_dh_C;ACT;2-H..
+## 4    group0004        2Fe-2S_thioredx
+## 5    group0005    4HB_MCP_1;MCPsignal
+## ...        ...                    ...
+## 2584 group2584              zf-RING_7
+## 2585 group2585               zf-TFIIB
+## 2586 group2586                   ZinT
+## 2587 group2587                   ZnuA
+## 2588 group2588               ZT_dimer</code></pre>
 <p>Subsets also exists for this field: <code>$core_clusters</code>, <code>$shell_clusters</code>, and <code>$cloud_clusters</code>.</p>
 </div>
 <div id="sequences" class="section level1">
@@ -289,34 +250,31 @@ pre, code {white-space:pre !important; overflow-x:auto;}
 <p>Although is an optional field (it exists only if user provide this data as an argument when object is created), <code>$sequences</code> gives access to sequence data. Sequences are stored as a <code>List</code> of <code>DNAStringSet</code> (a.k.a <code>DNAStringSetList</code>, Biostrings package), grouped by cluster.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">sequences</span>             <span class="co"># List all sequences grouped by cluster</span></code></pre></div>
-<pre><code>## DNAStringSetList of length 2599
-## [["OG0001"]] 16244_6_6__16244_6_6_00150=ATGGCGATAACAGTTTATTACGACAAAGATTGCGATT...
-## [["OG0002"]] 16244_6_6__16244_6_6_01290=ATGAAAATAGTATGCTTAGATGCCGACACGCTTGGAA...
-## [["OG0003"]] 16244_6_6__16244_6_6_01710=ATGAAAACAGTTATAGTTTGCGATGCAATACATCCGG...
-## [["OG0004"]] 16244_6_6__16244_6_6_01754=ATGAAATTCGAATTTACTCATGAGCAATTATCGGCTC...
-## [["OG0005"]] 16244_6_6__16244_6_6_00049=ATGTCAAATTTAACTACTAACTTAACTACCAAAACTA...
-## [["OG0006"]] 16244_6_6__16244_6_6_01069=ATGAATTATTTTGAGAATTTAAAAGTTTCAACAAAAC...
-## [["OG0007"]] 16244_6_6__16244_6_6_01612=ATGCGAATTAGAATTTATTATGAAGATACCGATGCTG...
-## [["OG0008"]] 16244_6_6__16244_6_6_01679=ATGATGAAAGATATGGGCGAGCCACGTATAAAAATTG...
-## [["OG0009"]] 16244_6_18__16244_6_18_01216=ATGGGGCTTACTACGAGTACGACAAAGTATATAAC...
-## [["OG0010"]] 16244_6_6__16244_6_6_00758=ATGAAAAGAGTGGTTATAAAAGTAGGCTCTCACGTGA...
+<pre><code>## DNAStringSetList of length 2588
+## [["group0001"]] 16244_6_6__16244_6_6_00150=ATGGCGATAACAGTTTATTACGACAAAGATTGCG...
+## [["group0002"]] 16244_6_6__16244_6_6_01290=ATGAAAATAGTATGCTTAGATGCCGACACGCTTG...
+## [["group0003"]] 16244_6_6__16244_6_6_01710=ATGAAAACAGTTATAGTTTGCGATGCAATACATC...
+## [["group0004"]] 16244_6_6__16244_6_6_01754=ATGAAATTCGAATTTACTCATGAGCAATTATCGG...
+## [["group0005"]] 16244_6_6__16244_6_6_00049=ATGTCAAATTTAACTACTAACTTAACTACCAAAA...
+## [["group0006"]] 16244_6_6__16244_6_6_01069=ATGAATTATTTTGAGAATTTAAAAGTTTCAACAA...
+## [["group0007"]] 16244_6_6__16244_6_6_01612=ATGCGAATTAGAATTTATTATGAAGATACCGATG...
+## [["group0008"]] 16244_6_6__16244_6_6_01679=ATGATGAAAGATATGGGCGAGCCACGTATAAAAA...
+## [["group0009"]] 16244_6_18__16244_6_18_01216=ATGGGGCTTACTACGAGTACGACAAAGTATAT...
+## [["group0010"]] 16244_6_6__16244_6_6_00758=ATGAAAAGAGTGGTTATAAAAGTAGGCTCTCACG...
 ## ...
-## &lt;2589 more elements&gt;</code></pre>
+## &lt;2578 more elements&gt;</code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">sequences</span><span class="op">[[</span><span class="st">"OG0001"</span><span class="op">]</span><span class="op">]</span>  <span class="co"># List first cluster</span></code></pre></div>
-<pre><code>## DNAStringSet object of length 10:
-##      width seq                                              names               
-##  [1]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 16244_6_6__16244_...
-##  [2]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 16244_6_18__16244...
-##  [3]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 16244_6_24__16244...
-##  [4]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 16244_6_31__16244...
-##  [5]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 17059_2_16__17059...
-##  [6]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 17059_2_23__17059...
-##  [7]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 17059_2_27__17059...
-##  [8]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 17150_1_73__17150...
-##  [9]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 17059_2_11__17059...
-## [10]  1023 ATGGCGATAACAGTTTATTACGA...AGTTAATAAAGACAAAAATTAA 17059_2_42__17059...</code></pre>
-<p>Note that sequence names are created by pasteing organism names and gene names, separated by a string that by default is <code>sep = '__'</code> (two underscores). This are the same as the <code>gid</code> column in the <code>$genes</code> field, and are initially set when <code>pagoo</code> object is created. If you think your dataset contain names with this separator, then you should set this parameter to other string to avoid conflicts. <code>$sequences</code> field also has predefied subsets: <code>$core_sequences</code>, <code>$shell_sequences</code>, and <code>$cloud_sequences</code>.</p>
+<code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">sequences</span><span class="op">[[</span><span class="st">"group0001"</span><span class="op">]</span><span class="op">]</span>  <span class="co"># List first cluster</span></code></pre></div>
+<pre><code>## DNAStringSet object of length 7:
+##     width seq                                               names               
+## [1]  1023 ATGGCGATAACAGTTTATTACGA...TAGTTAATAAAGACAAAAATTAA 16244_6_6__16244_...
+## [2]  1023 ATGGCGATAACAGTTTATTACGA...TAGTTAATAAAGACAAAAATTAA 16244_6_18__16244...
+## [3]  1023 ATGGCGATAACAGTTTATTACGA...TAGTTAATAAAGACAAAAATTAA 17059_2_16__17059...
+## [4]  1023 ATGGCGATAACAGTTTATTACGA...TAGTTAATAAAGACAAAAATTAA 17059_2_23__17059...
+## [5]  1023 ATGGCGATAACAGTTTATTACGA...TAGTTAATAAAGACAAAAATTAA 17059_2_27__17059...
+## [6]  1023 ATGGCGATAACAGTTTATTACGA...TAGTTAATAAAGACAAAAATTAA 17150_1_73__17150...
+## [7]  1023 ATGGCGATAACAGTTTATTACGA...TAGTTAATAAAGACAAAAATTAA 17059_2_42__17059...</code></pre>
+<p>Note that sequence names are created by pasting organism names and gene names, separated by a string that by default is <code>sep = '__'</code> (two underscores). This are the same as the <code>gid</code> column in the <code>$genes</code> field, and are initially set when <code>pagoo</code> object is created. If you think your dataset contain names with this separator, then you should set this parameter to other string to avoid conflicts. <code>$sequences</code> field also has predefied subsets: <code>$core_sequences</code>, <code>$shell_sequences</code>, and <code>$cloud_sequences</code>.</p>
 </div>
 <div id="organism-metadata" class="section level1">
 <h1 class="hasAnchor">
@@ -324,31 +282,25 @@ pre, code {white-space:pre !important; overflow-x:auto;}
 <p>The <code>$organisms</code> field contain a table with organisms and metadata as additional columns if provided.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">organisms</span></code></pre></div>
-<pre><code>## DataFrame with 10 rows and 8 columns
-##           org          id      strain      year     country        host
-##      &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;
-## 1  16244_6_6         FR15   2008/170h      2008      France       Human
-## 2  16244_6_18        FR27   2012/185h      2012      France       Human
-## 3  16244_6_24        FR33    2014/52h      2014      France       Human
-## 4  16244_6_31        FR40    2009/56h      2009      France       Human
-## 5  17059_2_16         AR1      99/801      1999   Argentina      Bovine
-## 6  17059_2_23         AR8      04/875      2004   Argentina      Bovine
-## 7  17059_2_27        AR12      06/195      2006   Argentina      Bovine
-## 8  17150_1_73         CA1   001A-0374      2005      Canada       Human
-## 9  17059_2_11        CA22    ID136207      2014      Canada       Human
-## 10 17059_2_42         TW6        1830      2008      Taiwan       Human
-##         source   accession
-##    &lt;character&gt; &lt;character&gt;
-## 1        Feces   ERS672247
-## 2        Blood   ERS672259
-## 3          CSF   ERS672265
-## 4          CSF   ERS672272
-## 5      Prepuce   ERS739235
-## 6        Fetus   ERS739242
-## 7           VM   ERS739246
-## 8        Blood   ERS686652
-## 9        Blood   ERS739230
-## 10       Blood   ERS739261</code></pre>
+<pre><code>## DataFrame with 7 rows and 8 columns
+##          org          id      strain      year     country        host
+##     &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;
+## 1 16244_6_6         FR15   2008/170h      2008      France       Human
+## 2 16244_6_18        FR27   2012/185h      2012      France       Human
+## 3 17059_2_16         AR1      99/801      1999   Argentina      Bovine
+## 4 17059_2_23         AR8      04/875      2004   Argentina      Bovine
+## 5 17059_2_27        AR12      06/195      2006   Argentina      Bovine
+## 6 17150_1_73         CA1   001A-0374      2005      Canada       Human
+## 7 17059_2_42         TW6        1830      2008      Taiwan       Human
+##        source   accession
+##   &lt;character&gt; &lt;character&gt;
+## 1       Feces   ERS672247
+## 2       Blood   ERS672259
+## 3     Prepuce   ERS739235
+## 4       Fetus   ERS739242
+## 5          VM   ERS739246
+## 6       Blood   ERS686652
+## 7       Blood   ERS739261</code></pre>
 </div>
   </div>
 
