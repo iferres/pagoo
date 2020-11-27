@@ -198,7 +198,7 @@ general gene content. Colloquially defined as strain-specific genes.</p></dd>
 clusters as defined above.</p></dd>
 
 <dt><code>shell_genes</code></dt><dd><p>Like <code>genes</code>, but only showing shell genes.
-These are defined as those clusters than don't belong nethier to the core genome,
+These are defined as those clusters than don't belong neither to the core genome,
 nor to cloud genome. Colloquially defined as genes that are present in some but not
 all strains, and that aren't strain-specific.</p></dd>
 
@@ -253,16 +253,16 @@ and <code>cluster</code> (group of orthologous to which the gene belongs to). Mo
 for each gene.</p></dd>
 
 <dt><code>org_meta</code></dt><dd><p>(optional) A <code>data.frame</code> or <code><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></code>
-containging additional metadata for organisms. This <code>data.frame</code> must have a column named "org" with
+containing additional metadata for organisms. This <code>data.frame</code> must have a column named "org" with
 valid organisms names (that is, they should match with those provided in <code>data</code>, column <code>org</code>), and
 additional columns will be used as metadata. Each row should correspond to each organism.</p></dd>
 
 <dt><code>cluster_meta</code></dt><dd><p>(optional) A <code>data.frame</code> or <code><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></code>
-containging additional metadata for clusters. This <code>data.frame</code> must have a column named "cluster" with
+containing additional metadata for clusters. This <code>data.frame</code> must have a column named "cluster" with
 valid organisms names (that is, they should match with those provided in <code>data</code>, column <code>cluster</code>), and
 additional columns will be used as metadata. Each row should correspond to each cluster.</p></dd>
 
-<dt><code>core_level</code></dt><dd><p>The initial core_level (thats the percentage of organisms a core cluster must be in to be
+<dt><code>core_level</code></dt><dd><p>The initial core_level (that's the percentage of organisms a core cluster must be in to be
 considered as part of the core genome). Must be a number between 100 and 85, (default: 95). You can change it
 later by using the <code>$core_level</code> field once the object was created.</p></dd>
 
@@ -290,11 +290,11 @@ data).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#argument
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>map</code></dt><dd><p><code>character</code> identifiying the metadata to map. Can
+<dt><code>map</code></dt><dd><p><code>character</code> identifying the metadata to map. Can
 be one of <code>"org"</code>, <code>"group"</code>, or <code>"gid"</code>.</p></dd>
 
 <dt><code>data</code></dt><dd><p><code>data.frame</code> or <code>DataFrame</code> with the metadata to
-add. For ethier case, a column named as <code>"map"</code> must exists, which should
+add. For each case, a column named as <code>"map"</code> must exists, which should
 contain identifiers for each element. In the case of adding gene (<code>gid</code>)
 metadata,each gene should be referenced by the name of the organism and the name
 of the gene as provided in the <code>"data"</code> data.frame, separated by the
@@ -342,18 +342,18 @@ to assign the function call to a new object, nor to re-write it as R6 objects
 are mutable.</p>
 <p><hr>
 <a id="method-write_pangenome"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>write_pangenome()</code></h3>
-<p>Write the pangenome data as flat tables (text). Is not the most recomended way
+<p>Write the pangenome data as flat tables (text). Is not the most recommended way
 to save a pangenome, since you can loose information as numeric precision,
 column classes (factor, numeric, integer), and the state of the object itself
 (i.e. dropped organisms, or core_level), loosing reproducibility. Use
-<code>$save_pangenomeRDS</code> for a more precise way of saveing a pagoo object.
+<code>$save_pangenomeRDS</code> for a more precise way of saving a pagoo object.
 Still, it is useful if you want to work with the data outside R, just keep
 the above in mind.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>write_pangenome</span><span class='op'>(</span>dir <span class='op'>=</span> <span class='st'>"pangenome"</span>, force <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>dir</code></dt><dd><p>The unexisting directory name where to put the data files. Default
+<dt><code>dir</code></dt><dd><p>The non-existing directory name where to put the data files. Default
 is "pangenome".</p></dd>
 
 <dt><code>force</code></dt><dd><p><code>logical</code>. Whether to overwrite the directory if it already
@@ -362,9 +362,9 @@ exists. Default: <code>FALSE</code>.</p></dd>
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A directory with at least 3 files. "data.tsv" contain the basic
-pangenome data as it is provided to the <code>data</code> argumnet in the
+pangenome data as it is provided to the <code>data</code> argument in the
 initialization method (<code>$new(...)</code>). "clusters.tsv" contain any metadata
-asociated to the clusters. "organisms.tsv" contain any metadata asociated to
+associated to the clusters. "organisms.tsv" contain any metadata associated to
 the organisms. The latter 2 files will contain a single column if no metadata
 was provided.</p>
 <p><hr>

@@ -122,7 +122,7 @@
 <div id="gene-abundance-distance" class="section level2">
 <h2 class="hasAnchor">
 <a href="#gene-abundance-distance" class="anchor"></a>Gene Abundance Distance</h2>
-<p>Pairwise distances between gene abundance can be retieved by using <code>$dist()</code> method. By default, Bray-Curtis distance is computed. This is just a wrapper of <code>vegdist()</code> from <code>vegan</code> package.</p>
+<p>Pairwise distances between gene abundance can be retrieved by using <code>$dist()</code> method. By default, Bray-Curtis distance is computed. This is just a wrapper of <code>vegdist()</code> from <code>vegan</code> package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="fu">dist</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>##             16244_6_6 16244_6_18 17059_2_16 17059_2_23 17059_2_27 17150_1_73
@@ -233,7 +233,7 @@
 <div id="pca-biplot" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pca-biplot" class="anchor"></a>PCA Biplot</h2>
-<p>A biplot for visualizing the first 2 principal components in a PCA is always useful at early stages of analysis to explore possible association of genomes based on gene content. This method uses <code>$pan_pca()</code> method to perform the PCA, and allows you to use organism metadata to colour the points.</p>
+<p>A biplot for visualizing the first 2 principal components in a PCA is always useful at early stages of analysis to explore possible association of genomes based on gene content. This method uses <code>$pan_pca()</code> method to perform the PCA, and allows you to use organism metadata to color the points.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">organisms</span></code></pre></div>
 <pre><code>## DataFrame with 7 rows and 8 columns
@@ -255,7 +255,7 @@
 ## 5          VM   ERS739246
 ## 6       Blood   ERS686652
 ## 7       Blood   ERS739261</code></pre>
-<p>Since we have metadata asociated to each organism, we will use it to colour the organisms according to the <code>country</code> variable.</p>
+<p>Since we have metadata associated to each organism, we will use it to color the organisms according to the <code>country</code> variable.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="fu">gg_pca</span><span class="op">(</span>colour <span class="op">=</span> <span class="st">'host'</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span>

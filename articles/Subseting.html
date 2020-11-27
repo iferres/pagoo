@@ -107,7 +107,7 @@
 
     
     
-<p>One fundamental operation when working with pangenomic data is to subset it in order to better analyze it. <code>pagoo</code> provides three convinent ways that can help in different scenarios. First we will see predefined subsets, then we will understand how to use the classic R’s <code><a href="https://rdrr.io/r/base/Extract.html">[</a></code> operator with <code>pagoo</code> objects, and finally we will see how to temporarily remove one or more organisms from the dataset, and then to recover them.</p>
+<p>One fundamental operation when working with pangenomic data is to subset it in order to better analyze it. <code>pagoo</code> provides three convenient ways that can help in different scenarios. First we will see predefined subsets, then we will understand how to use the classic R’s <code><a href="https://rdrr.io/r/base/Extract.html">[</a></code> operator with <code>pagoo</code> objects, and finally we will see how to temporarily remove one or more organisms from the dataset, and then to recover them.</p>
 <p>Start the tutorial by loading the included <em>Campylobacter</em> pangenome.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://iferres.github.io/pagoo/">pagoo</a></span><span class="op">)</span> <span class="co"># Load package</span>
@@ -223,7 +223,7 @@
 <div id="vectorlist-notation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#vectorlist-notation" class="anchor"></a>Vector/List notation</h2>
-<p>When we subset a vector or list in R we use a single number or a vector of numbers, lets say from <code>i</code> to <code>j</code>, to pick those elements by indexes: <code>x[i:j]</code>. In <code>pagoo</code> we implement a method for this generic function to subset data fields, where indexes represent <strong>clusters</strong>. So instead of subseting directly the final object (which you can of course) you apply this method directly to the object, and then select any of the data fields.</p>
+<p>When we subset a vector or list in R we use a single number or a vector of numbers, lets say from <code>i</code> to <code>j</code>, to pick those elements by indexes: <code>x[i:j]</code>. In <code>pagoo</code> we implement a method for this generic function to subset data fields, where indexes represent <strong>clusters</strong>. So instead of subsetting directly the final object (which you can of course) you apply this method directly to the object, and then select any of the data fields.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># From clusters 1 to 3</span>
 <span class="va">p</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">18</span><span class="op">)</span><span class="op">]</span><span class="op">$</span><span class="va">pan_matrix</span></code></pre></div>
@@ -411,13 +411,13 @@
 ## 2       Blood   ERS672259
 ## 3     Prepuce   ERS739235</code></pre>
 <p>So this selection returns a list of length 2, with 3 elements each for <code>$genes</code> and <code>$sequences</code>, a dataframe showing only the selected clusters in the <code>$clusters</code> field, and a dataframe showing only the selected organisms in the <code>$organisms</code> field.</p>
-<p>We found this implemetation quite useful for both data exploration and fine grained analysis.</p>
+<p>We found this implementation quite useful for both data exploration and fine grained analysis.</p>
 </div>
 </div>
 <div id="dropping-and-recovering-organisms" class="section level1">
 <h1 class="hasAnchor">
 <a href="#dropping-and-recovering-organisms" class="anchor"></a>Dropping and Recovering Organisms</h1>
-<p>One useful feature implemented in <code>pagoo</code> is the possibility of easily removing (hiding) organisms from the dataset. This is useful if during the analysis we identify some genome with weird charactersitics (i.e. potentially contaminated), or if we want to focus just in a subset of genomes of interest given any metadata value, or if we included an outgroup for phylogenetic purposes but we want to remove it from downstream analyses. Let’s see how it works..</p>
+<p>One useful feature implemented in <code>pagoo</code> is the possibility of easily removing (hiding) organisms from the dataset. This is useful if during the analysis we identify some genome with weird characteristics (i.e. potentially contaminated), or if we want to focus just in a subset of genomes of interest given any metadata value, or if we included an outgroup for phylogenetic purposes but we want to remove it from downstream analyses. Let’s see how it works..</p>
 <div id="dropping-organisms" class="section level2">
 <h2 class="hasAnchor">
 <a href="#dropping-organisms" class="anchor"></a>Dropping organisms</h2>
@@ -454,7 +454,7 @@
 <p>We can see that we have 7 organisms, and we have the pangenome summary statistics. Let’s say, for instance, that we want to exclude french isolates (because any reason) from the dataset, which are indexed 1 and 2 (rows) in the above dataframe.</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="fu">drop</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span> 
-<span class="va">p</span><span class="op">$</span><span class="va">organisms</span> <span class="co"># Updated organims !!</span></code></pre></div>
+<span class="va">p</span><span class="op">$</span><span class="va">organisms</span> <span class="co"># Updated organisms !!</span></code></pre></div>
 <pre><code>## DataFrame with 5 rows and 8 columns
 ##          org          id      strain      year     country        host
 ##     &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;

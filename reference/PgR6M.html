@@ -213,16 +213,16 @@ and <code>cluster</code> (group of orthologous to which the gene belongs to). Mo
 for each gene.</p></dd>
 
 <dt><code>org_meta</code></dt><dd><p>(optional) A <code>data.frame</code> or <code><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></code>
-containging additional metadata for organisms. This <code>data.frame</code> must have a column named "org" with
+containing additional metadata for organisms. This <code>data.frame</code> must have a column named "org" with
 valid organisms names (that is, they should match with those provided in <code>data</code>, column <code>org</code>), and
 additional columns will be used as metadata. Each row should correspond to each organism.</p></dd>
 
 <dt><code>cluster_meta</code></dt><dd><p>(optional) A <code>data.frame</code> or <code><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></code>
-containging additional metadata for clusters. This <code>data.frame</code> must have a column named "cluster" with
+containing additional metadata for clusters. This <code>data.frame</code> must have a column named "cluster" with
 valid organisms names (that is, they should match with those provided in <code>data</code>, column <code>cluster</code>), and
 additional columns will be used as metadata. Each row should correspond to each cluster.</p></dd>
 
-<dt><code>core_level</code></dt><dd><p>The initial core_level (thats the percentage of organisms a core cluster must be in to be
+<dt><code>core_level</code></dt><dd><p>The initial core_level (that's the percentage of organisms a core cluster must be in to be
 considered as part of the core genome). Must be a number between 100 and 85, (default: 95). You can change it
 later by using the <code>$core_level</code> field once the object was created.</p></dd>
 
@@ -239,7 +239,7 @@ create a unique <code>gid</code> (gene identifier) for each gene. <code>gid</cod
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>An R6 object of class PgR6M. It contains basic fields and methods for analyzing a pangenome. It also
-contains additional statistical methods for analize it, and methods to make basic
+contains additional statistical methods for analyze it, and methods to make basic
 exploratory plots.</p>
 <p><hr>
 <a id="method-rarefact"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>rarefact()</code></h3>
@@ -257,11 +257,11 @@ increasingly bigger sample of genomes.</p><h4 class='hasAnchor' id='arguments'><
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A <code>matrix</code>, rows are the number of genomes added, columns are
-permutations, and the cell number is the number of genes in ethier category.</p>
+permutations, and the cell number is the number of genes in each category.</p>
 <p><hr>
 <a id="method-dist"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/stats/dist.html'>dist()</a></code></h3>
 <p>Compute distance between all pairs of genomes. The default dist method is
-<code>"bray"</code> (Bray-Curtis distance). Annother used distance method is <code>"jaccard"</code>,
+<code>"bray"</code> (Bray-Curtis distance). Another used distance method is <code>"jaccard"</code>,
 but you should set <code>binary = FALSE</code> (see below) to obtain a meaningful result.
 See <code><a href='https://rdrr.io/pkg/vegan/man/vegdist.html'>vegdist</a></code> for details, this is just a wrapper function.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>PgR6M</span><span class='op'>$</span><span class='fu'>dist</span><span class='op'>(</span>
@@ -339,7 +339,7 @@ with fitted parameters. An attribute <code>"alpha"</code> is also returned (If
 <dt><code>raref</code></dt><dd><p>(Optional) A rarefaction matrix, as returned by <code>rarefact()</code>.</p></dd>
 
 <dt><code>pcounts</code></dt><dd><p>An integer of pseudo-counts. This is used to better fit the function
-at small numbers, as the linearization method requires to substract a constant C, which is the
+at small numbers, as the linearization method requires to subtract a constant C, which is the
 coregenome size, from <code>y</code>. As <code>y</code> becomes closer to the coregenome size, this operation
 tends to 0, and its logarithm goes crazy. By default <code>pcounts=10</code>.</p></dd>
 

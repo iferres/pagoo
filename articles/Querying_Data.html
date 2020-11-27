@@ -220,7 +220,7 @@ pre, code {white-space:pre !important; overflow-x:auto;}
 <p>If you want to work with this data as a single <code>DataFrame</code>, just <code>unlist</code> it:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">p</span><span class="op">$</span><span class="va">genes</span>, use.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p><code>pagoo</code> also includes predefined subsets fields to list only certain pangenome category, these are queried by adding a prefix with the desired category followed by an underscore: <code>$core_genes</code>, <code>$shell_genes</code>, and <code>$cloud_genes</code>. These kind of subsets are better explaied in the ‘4 - Subets’ tutorial, and also apply to other pangenome data described below.</p>
+<p><code>pagoo</code> also includes predefined subsets fields to list only certain pangenome category, these are queried by adding a prefix with the desired category followed by an underscore: <code>$core_genes</code>, <code>$shell_genes</code>, and <code>$cloud_genes</code>. These kind of subsets are better explained in the ‘4 - Subets’ tutorial, and also apply to other pangenome data described below.</p>
 </div>
 <div id="clusters-metadata" class="section level1">
 <h1 class="hasAnchor">
@@ -274,7 +274,7 @@ pre, code {white-space:pre !important; overflow-x:auto;}
 ## [5]  1023 ATGGCGATAACAGTTTATTACGA...TAGTTAATAAAGACAAAAATTAA 17059_2_27__17059...
 ## [6]  1023 ATGGCGATAACAGTTTATTACGA...TAGTTAATAAAGACAAAAATTAA 17150_1_73__17150...
 ## [7]  1023 ATGGCGATAACAGTTTATTACGA...TAGTTAATAAAGACAAAAATTAA 17059_2_42__17059...</code></pre>
-<p>Note that sequence names are created by pasting organism names and gene names, separated by a string that by default is <code>sep = '__'</code> (two underscores). This are the same as the <code>gid</code> column in the <code>$genes</code> field, and are initially set when <code>pagoo</code> object is created. If you think your dataset contain names with this separator, then you should set this parameter to other string to avoid conflicts. <code>$sequences</code> field also has predefied subsets: <code>$core_sequences</code>, <code>$shell_sequences</code>, and <code>$cloud_sequences</code>.</p>
+<p>Note that sequence names are created by pasting organism names and gene names, separated by a string that by default is <code>sep = '__'</code> (two underscores). This are the same as the <code>gid</code> column in the <code>$genes</code> field, and are initially set when <code>pagoo</code> object is created. If you think your dataset contain names with this separator, then you should set this parameter to other string to avoid conflicts. <code>$sequences</code> field also has predefined subsets: <code>$core_sequences</code>, <code>$shell_sequences</code>, and <code>$cloud_sequences</code>.</p>
 </div>
 <div id="organism-metadata" class="section level1">
 <h1 class="hasAnchor">

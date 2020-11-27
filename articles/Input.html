@@ -110,7 +110,7 @@
 <div id="input-from-scratch" class="section level1">
 <h1 class="hasAnchor">
 <a href="#input-from-scratch" class="anchor"></a>Input From Scratch</h1>
-<p>In order to generate a <code>pagoo</code> object, the only mandatory data structure is a <code>data.frame</code> which has to contain 3 basic columns. Let’s ilustrate it with an toy dataset.</p>
+<p>In order to generate a <code>pagoo</code> object, the only mandatory data structure is a <code>data.frame</code> which has to contain 3 basic columns. Let’s illustrate it with an toy dataset.</p>
 <p>First load <code>pagoo</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://iferres.github.io/pagoo/">pagoo</a></span><span class="op">)</span> <span class="co"># Load package</span>
@@ -118,14 +118,14 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/untar.html">untar</a></span><span class="op">(</span>tarfile <span class="op">=</span> <span class="va">tgz</span>, exdir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># Decompress example dataset</span>
 <span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span>, pattern <span class="op">=</span> <span class="st">'tsv$|fasta$'</span><span class="op">)</span> <span class="co"># List files</span>
 <span class="va">files</span></code></pre></div>
-<pre><code>## [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp4w0KOO/case_clusters_meta.tsv"
-## [2] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp4w0KOO/case_df.tsv"           
-## [3] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp4w0KOO/case_orgs_meta.tsv"    
-## [4] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp4w0KOO/organismA.fasta"       
-## [5] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp4w0KOO/organismB.fasta"       
-## [6] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp4w0KOO/organismC.fasta"       
-## [7] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp4w0KOO/organismD.fasta"       
-## [8] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp4w0KOO/organismE.fasta"</code></pre>
+<pre><code>## [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpjeWdYz/case_clusters_meta.tsv"
+## [2] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpjeWdYz/case_df.tsv"           
+## [3] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpjeWdYz/case_orgs_meta.tsv"    
+## [4] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpjeWdYz/organismA.fasta"       
+## [5] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpjeWdYz/organismB.fasta"       
+## [6] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpjeWdYz/organismC.fasta"       
+## [7] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpjeWdYz/organismD.fasta"       
+## [8] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpjeWdYz/organismE.fasta"</code></pre>
 <p>The file we need now is <code>case_df.tsv</code>. Lets load it and see what’s its structure:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"case_df.tsv"</span>, <span class="va">files</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
@@ -158,12 +158,12 @@
 ## 3 organismC    c Westeros
 ## 4 organismD    a    Essos
 ## 5 organismE    b    Essos</code></pre>
-<p>On this <code>data.frame</code> we have a column named <code>org</code> which is mandatory in case you provide this argument. Other columns are metadata asociated to each organism. Beware that organisms provided in this table (<code>orgs_meta$org</code>) must concide with the names provided in the <code>data$org</code> field, in order to correctly map each variables.</p>
+<p>On this <code>data.frame</code> we have a column named <code>org</code> which is mandatory in case you provide this argument. Other columns are metadata associated to each organism. Beware that organisms provided in this table (<code>orgs_meta$org</code>) must coincide with the names provided in the <code>data$org</code> field, in order to correctly map each variables.</p>
 </div>
 <div id="including-cluster-metadata" class="section level2">
 <h2 class="hasAnchor">
 <a href="#including-cluster-metadata" class="anchor"></a>Including cluster metadata</h2>
-<p>Last file contains metadata asociated with each cluster of orthologous:</p>
+<p>Last file contains metadata associated with each cluster of orthologous:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Cluster metadata</span>
 <span class="va">clust_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"case_clusters_meta.tsv"</span>, <span class="va">files</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
@@ -242,7 +242,7 @@
 <div id="input-from-pangenome-reconstruction-software" class="section level1">
 <h1 class="hasAnchor">
 <a href="#input-from-pangenome-reconstruction-software" class="anchor"></a>Input From Pangenome Reconstruction Software</h1>
-<p>All the above stuff with preparing data and loading classes seems difficult and time-consuming, but in real life working datasets this will be rarely needed. We are explaning it here to provide full details about how the software works, but this package also provides functions to automatically read-in output files from pangenome reconstruction softwares into <code>pagoo</code>, avoiding any formating or manipulation of data.</p>
+<p>All the above stuff with preparing data and loading classes seems difficult and time-consuming, but in real life working datasets this will be rarely needed. We are explaining it here to provide full details about how the software works, but this package also provides functions to automatically read-in output files from pangenome reconstruction software into <code>pagoo</code>, avoiding any formatting or manipulation of data.</p>
 <p>Currently <code>pagoo</code> supports input from <a href="https://sanger-pathogens.github.io/Roary/">roary</a> (Page et al., 2015), which has been the standard and most cited software for pangenome reconstruction. To work with <code>roary</code>’s ouput, please refer to <code><a href="../reference/roary_2_pagoo.html">?roary_2_pagoo</a></code> documentation. You will only need the <code>.gff</code> files, and the <code>gene_presence_absence.csv</code> file.</p>
 <p>Also, we have created our own pangenome reconstruction software called <a href="https://github.com/iferres/pewit">pewit</a> (Ferrés et al., still unpublished), which automatically generates a <code>pagoo</code>-like object to perform downstream analyses. This object contain all the methods and fields <code>pagoo</code> provides, plus a set of methods and fields exclusive to this software.</p>
 <p>More recently, other good software has emerged like <a href="http://pangenome.tuebingen.mpg.de">PanX</a> (Ding et al., 2018), <a href="https://github.com/SionBayliss/PIRATE">PRIATE</a> (Bayliss et al., 2019), <a href="https://github.com/cran/micropan">micropan</a> (Snipen &amp; Liland, 2015), <a href="https://github.com/zheminzhou/PEPPA">PEPPA</a> (Zhou &amp; Achtman, 2020), <a href="https://github.com/gtonkinhill/panaroo">panaroo</a> (Tonkin-Hill et al., 2020), among others. We plan to provide support to most of them in the future, although some of them already provide options to output its results as roary’s, so in theory you could use them as <code>pagoo</code>’s input.</p>
@@ -279,7 +279,7 @@
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="fu">save_pangenomeRDS</span><span class="op">(</span>file <span class="op">=</span> <span class="st">"pangenome.RDS"</span><span class="op">)</span>
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_pangenomeRDS.html">load_pangenomeRDS</a></span><span class="op">(</span><span class="st">"pangenome.RDS"</span><span class="op">)</span></code></pre></div>
-<p>This method is more stable (compatible between <code>pagoo</code> versions), secure (uses the same metadata classes, and precision isn’t lost), and convinient (the exact state of the object saved is restored, keeping dropped organisms/genes/clusters hidden, available to be recovered, and other object state configuration, e.g. <code>core_level</code>, is also saved).</p>
+<p>This method is more stable (compatible between <code>pagoo</code> versions), secure (uses the same metadata classes, and precision isn’t lost), and convenient (the exact state of the object saved is restored, keeping dropped organisms/genes/clusters hidden, available to be recovered, and other object state configuration, e.g. <code>core_level</code>, is also saved).</p>
 </div>
   </div>
 

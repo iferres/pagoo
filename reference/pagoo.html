@@ -186,7 +186,7 @@ gene.</p></td>
     <tr>
       <th>org_meta</th>
       <td><p>(optional) A <code>data.frame</code> or
-<code><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></code> containging additional
+<code><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></code> containing additional
 metadata for organisms. This <code>data.frame</code> must have a column named
 "org" with valid organisms names (that is, they should match with those
 provided in <code>data</code>, column <code>org</code>), and additional columns will be
@@ -195,7 +195,7 @@ used as metadata. Each row should correspond to each organism.</p></td>
     <tr>
       <th>cluster_meta</th>
       <td><p>(optional) A <code>data.frame</code> or
-<code><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></code> containging additional
+<code><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></code> containing additional
 metadata for clusters. This <code>data.frame</code> must have a column named
 "cluster" with valid organisms names (that is, they should match with those
 provided in <code>data</code>, column <code>cluster</code>), and additional columns
@@ -215,7 +215,7 @@ returned.</p></td>
     </tr>
     <tr>
       <th>core_level</th>
-      <td><p>The initial core_level (thats the percentage of organisms a
+      <td><p>The initial core_level (that's the percentage of organisms a
 core cluster must be in to be considered as part of the core genome). Must
 be a number between 100 and 85, (default: 95). You can change it later by
 using the <code>$core_level</code> field once the object was created.</p></td>
@@ -237,7 +237,7 @@ loading class.</p></td>
 
     <p>This package uses
 [R6](https://r6.r-lib.org/articles/Introduction.html) classes to provide a
-unified, comprehensive, standarized, but at the same time flexible, way to
+unified, comprehensive, standardized, but at the same time flexible, way to
 analyze a pangenome. The idea is to have a single object which contains both
 the data and the basic methods to analyze them, as well as manipulate fields,
 explore, and to use in harmony with the already existing and extensive list of R
@@ -291,10 +291,10 @@ packages available created for comparative genomics and genetics.</p>
                   data).</p>            <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage:</h3>
 <p><code>                  </code><code>$add_metadata(map = 'org', df)</code></p>            <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments:</h3>
 <p></p><ul>
-<li><p><b><code>map</code></b>: <code>character</code> identifiying the metadata to map. Can
+<li><p><b><code>map</code></b>: <code>character</code> identifying the metadata to map. Can
                     be one of <code>"org"</code>, <code>"group"</code>, or <code>"gid"</code>.</p></li>
 <li><p><b><code>df</code></b>: <code>data.frame</code> or <code>DataFrame</code> with the metadata to
-                    add. For ethier case, a column named as <code>"map"</code> must exists, which should
+                    add. For each case, a column named as <code>"map"</code> must exists, which should
                     contain identifiers for each element. In the case of adding gene (<code>gid</code>)
                     metadata,each gene should be referenced by the name of the organism and the name
                     of the gene as provided in the <code>"data"</code> data.frame, separated by the
@@ -338,11 +338,11 @@ packages available created for comparative genomics and genetics.</p>
 
     html<a id="method-write_pangenome"></a>
     <dt><b>Write a pangenome as flat (text) files.</b></dt><dd><p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Description:</h3>
-<p>Write the pangenome data as flat tables (text). Is not the most recomended way
+<p>Write the pangenome data as flat tables (text). Is not the most recommended way
                   to save a pangenome, since you can loose information as numeric precision,
                   column classes (factor, numeric, integer), and the state of the object itself
                   (i.e. dropped organisms, or core_level), loosing reproducibility. Use
-                  <code>save_pangenomeRDS</code> for a more precise way of saveing a pagoo object.
+                  <code>save_pangenomeRDS</code> for a more precise way of saving a pagoo object.
                   Still, it is useful if you want to work with the data outside R, just keep
                   the above in mind.</p>            <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage:</h3>
 <p><code>                  </code><code>$write_pangenome(dir = "pangenome", force = FALSE)</code></p>            <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments:</h3>
@@ -354,9 +354,9 @@ packages available created for comparative genomics and genetics.</p>
 </ul><p></p>
             <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Return:</h3>
 <p>A directory with at least 3 files. "data.tsv" contain the basic
-                    pangenome data as it is provided to the <code>data</code> argumnet in the
+                    pangenome data as it is provided to the <code>data</code> argument in the
                     initialization method (<code>$new(...)</code>). "clusters.tsv" contain any metadata
-                    asociated to the clusters. "organisms.tsv" contain any metadata asociated to
+                    associated to the clusters. "organisms.tsv" contain any metadata associated to
                     the organisms. The latter 2 files will contain a single column if no metadata
                     was provided.</p></p></dd>
 
@@ -379,10 +379,10 @@ packages available created for comparative genomics and genetics.</p>
 
     html<a id="method-clone"></a>
     <dt><b>Clone a pagoo object.</b></dt><dd><p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Description:</h3>
-<p>The objects of this class are cloneable with this method.</p>            <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage:</h3>
+<p>The objects of this class are clonable with this method.</p>            <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage:</h3>
 <p><code>                  </code><code>$clone(deep = FALSE)</code></p>            <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments:</h3>
 <p></p><ul>
-<li><p><b><code>deep</code></b>: <code>character</code> identifiying the metadata to map. Can
+<li><p><b><code>deep</code></b>: <code>character</code> identifying the metadata to map. Can
                     be one of <code>"org"</code>, <code>"group"</code>, or <code>"gid"</code>.</p></li>
 </ul><p></p>
             <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Return:</h3>
@@ -391,7 +391,7 @@ packages available created for comparative genomics and genetics.</p>
     html<a id="method-dist"></a>
     <dt><b>Compute distances</b></dt><dd><p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Description:</h3>
 <p>Compute distance between all pairs of genomes. The default dist method is
-                  <code>"bray"</code> (Bray-Curtis distance). Annother used distance method is <code>"jaccard"</code>,
+                  <code>"bray"</code> (Bray-Curtis distance). Another used distance method is <code>"jaccard"</code>,
                   but you should set <code>binary = FALSE</code> (see below) to obtain a meaningful result.
                   See <code><a href='https://rdrr.io/pkg/vegan/man/vegdist.html'>vegdist</a></code> for details, this is just a wrapper function.</p>            <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage:</h3>
 <p><code>                  </code><code>$dist(
@@ -452,7 +452,7 @@ packages available created for comparative genomics and genetics.</p>
 <p></p><ul>
 <li><p><b><code>raref</code></b>: (Optional) A rarefaction matrix, as returned by <code>rarefact()</code>.</p></li>
 <li><p><b><code>pcounts</code></b>: An integer of pseudo-counts. This is used to better fit the function
-                    at small numbers, as the linearization method requires to substract a constant C, which is the
+                    at small numbers, as the linearization method requires to subtract a constant C, which is the
                     coregenome size, from <code>y</code>. As <code>y</code> becomes closer to the coregenome size, this operation
                     tends to 0, and its logarithm goes crazy. By default <code>pcounts=10</code>.</p></li>
 <li><p><b><code>...</code></b>: Further arguments to be passed to <code>rarefact()</code>. If <code>raref</code>
@@ -509,7 +509,7 @@ packages available created for comparative genomics and genetics.</p>
 <p><code>                  </code><code>$gg_pca(colour = NULL, ...))</code></p>            <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments:</h3>
 <p></p><ul>
 <li><p><b><code>colour</code></b>:The name of the column in <code>$organisms</code> field
-                    from which points will takecolour (if provided). <code>NULL</code> (default) renders
+                    from which points will take color (if provided). <code>NULL</code> (default) renders
                     black points.</p></li>
 <li><p><b><code>...</code></b>: More arguments to be passed to <code><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>ggplot2::autoplot()</a></code>.</p></li>
 </ul><p></p>
@@ -571,7 +571,7 @@ packages available created for comparative genomics and genetics.</p>
                  but for creating a phylogeny with this sets is useful to: 1) have the
                  possibility of extracting just one sequence of each organism on each
                  cluster, in case paralogues are present, and 2) filling gaps with
-                 empthy sequences in case the core_level was set below 100%, allowing
+                 empty sequences in case the core_level was set below 100%, allowing
                  more genes (some not in 100% of organisms) to be incorporated to the
                  phylogeny. That is the purpose of this special function.</p>            <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage:</h3>
 <p><code>                  </code><code>$core_seqs_4_phylo(max_per_org = 1, fill = TRUE)</code></p>            <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments:</h3>
@@ -579,7 +579,7 @@ packages available created for comparative genomics and genetics.</p>
 <li><p><b><code>max_per_org</code></b>:  Maximum number of sequences of each organism
                     to be taken from each cluster.</p></li>
 <li><p><b><code>fill</code></b>: <code>logical</code>. If fill <code>DNAStringSet</code> with
-                    emphty <code>DNAString</code> in cases where <code>core_level</code> is set below 100%,
+                    empty <code>DNAString</code> in cases where <code>core_level</code> is set below 100%,
                     and some clusters with missing organisms are also considered.</p></li>
 </ul><p></p>            <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Return:</h3>
 <p>A <code>DNAStringSetList</code> with core genes. Order of organisms on each cluster

@@ -107,7 +107,7 @@
 
     
     
-<p>Here we introduce our cookbook which is made of recipes. Each recipe is a customized piece of code to complete different advanced tasks. By using these recipes (or creating new ones) the user can take full profit of functionalities provided by <code>pagoo</code> and easily interact with other <code>R</code> packages to perform a variety of analyses including phylogenetics, pangenome-wide association studies, sequence comparisons, ecological measures, prepare publication-quality figures, among others. If you want to standarize any analysis from your pangenome data that is not covered in this tutorial, we can help you and write a recipe. Contact us!</p>
+<p>Here we introduce our cookbook which is made of recipes. Each recipe is a customized piece of code to complete different advanced tasks. By using these recipes (or creating new ones) the user can take full profit of functionalities provided by <code>pagoo</code> and easily interact with other <code>R</code> packages to perform a variety of analyses including phylogenetics, pangenome-wide association studies, sequence comparisons, ecological measures, prepare publication-quality figures, among others. If you want to standardize any analysis from your pangenome data that is not covered in this tutorial, we can help you and write a recipe. Contact us!</p>
 <p>Start by loading the <code>pagoo</code> object, as in previous tutorials:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://iferres.github.io/pagoo/">pagoo</a></span><span class="op">)</span> <span class="co"># Load package</span>
@@ -218,7 +218,7 @@
 <h1 class="hasAnchor">
 <a href="#neutral-genes" class="anchor"></a>Neutral genes</h1>
 <p>The core genome is composed by those genes that are present in every or almost every genome in the sample. As these genes are present in all genomes, they can be used to extract important biological information like phylogenetic relationships, study recombination or selective pressures. For doing these, core genes need to be aligned. In the next few sections we explain how to do this to perform some of the above mentioned downstream analyses.</p>
-<p>To reveal the vertical evolutionary history of a bacterial population we should take into account the presence of horizontal acquisition of genetic material, like by means of recombination, that is mantained by the action of natural selection. Hence, we can use the Tajima’s D test of neutrality as implemented in <code>pegas</code> ( <a href="https://academic.oup.com/bioinformatics/article/26/3/419/215731">Paradis, 2010</a>) to identify those core genes that are not subjected to strong selective pressures and are likely evolving neutrally.</p>
+<p>To reveal the vertical evolutionary history of a bacterial population we should take into account the presence of horizontal acquisition of genetic material, like by means of recombination, that is maintained by the action of natural selection. Hence, we can use the Tajima’s D test of neutrality as implemented in <code>pegas</code> ( <a href="https://academic.oup.com/bioinformatics/article/26/3/419/215731">Paradis, 2010</a>) to identify those core genes that are not subjected to strong selective pressures and are likely evolving neutrally.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load required packages</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
@@ -241,7 +241,7 @@
 <div id="quick-dirty-phylogeny" class="section level1">
 <h1 class="hasAnchor">
 <a href="#quick-dirty-phylogeny" class="anchor"></a>Quick dirty phylogeny</h1>
-<p>The best practices on how to build a phylogeny from core genomes is a topic of debate. In this first example we provide a one-liner to align individual core genes (like in the previous case), produce a concatenated core genome alignment, calculate a core genome phylogeny using the Neighbor-Joining method as implemented by <code>phangorn</code> (Schliep, 2011), and visualize it using host metadata to colour tree tips using <code>ggtree</code> (Yu et al., 2017). Phylogenetic tree is assigned to the <code>phy</code> variable, and plotted as side effect by using magrittr’s <code><a href="https://magrittr.tidyverse.org/reference/tee.html">%T&gt;%</a></code> operator.</p>
+<p>The best practices on how to build a phylogeny from core genomes is a topic of debate. In this first example we provide a one-liner to align individual core genes (like in the previous case), produce a concatenated core genome alignment, calculate a core genome phylogeny using the Neighbor-Joining method as implemented by <code>phangorn</code> (Schliep, 2011), and visualize it using host metadata to color tree tips using <code>ggtree</code> (Yu et al., 2017). Phylogenetic tree is assigned to the <code>phy</code> variable, and plotted as side effect by using magrittr’s <code><a href="https://magrittr.tidyverse.org/reference/tee.html">%T&gt;%</a></code> operator.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load required packages</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
@@ -270,7 +270,7 @@
 <div id="maximum-likelihood-phylogeny" class="section level1">
 <h1 class="hasAnchor">
 <a href="#maximum-likelihood-phylogeny" class="anchor"></a>Maximum Likelihood phylogeny</h1>
-<p>The following method is simmilar to the previous, but in this case we are optimizing the topology and branch lengths by maximum likelihood method implemented in <code>phangorn</code> package. Although this is a fully working example, its purpose is just to illustrate the idea. You should consider tuning the parameters to better fit your dataset (e.g.: just 4 discrete gamma distributions for a whole coregenome alignment may be too low).</p>
+<p>The following method is similar to the previous, but in this case we are optimizing the topology and branch lengths by maximum likelihood method implemented in <code>phangorn</code> package. Although this is a fully working example, its purpose is just to illustrate the idea. You should consider tuning the parameters to better fit your dataset (e.g.: just 4 discrete gamma distributions for a whole coregenome alignment may be too low).</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load required packages</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
