@@ -116,7 +116,7 @@ Currently `pagoo` supports input from [roary](https://sanger-pathogens.github.io
 
 Also, we have created our own pangenome reconstruction software called [pewit](https://github.com/iferres/pewit) (Ferrés et al., still unpublished), which automatically generates a `pagoo`-like object to perform downstream analyses. This object contain all the methods and fields `pagoo` provides, plus a set of methods and fields exclusive to this software.
 
-More recently, other good software has emerged like [PanX](http://pangenome.tuebingen.mpg.de) (Ding et al., 2018), [PRIATE](https://github.com/SionBayliss/PIRATE) (Bayliss et al., 2019), [micropan](https://github.com/cran/micropan) (Snipen & Liland, 2015), [PEPPA](https://github.com/zheminzhou/PEPPA) (Zhou & Achtman, 2020), [panaroo](https://github.com/gtonkinhill/panaroo) (Tonkin-Hill et al., 2020), among others. We plan to provide support to most of them in the future, although some of them already provide options to output its results as roary's, so in theory you could use them as `pagoo`'s input.
+More recently, other good software has emerged like [PanX](http://pangenome.tuebingen.mpg.de) (Ding et al., 2018), [PRIATE](https://github.com/SionBayliss/PIRATE) (Bayliss et al., 2019), [micropan](https://github.com/cran/micropan) (Snipen & Liland, 2015), [PEPPA](https://github.com/zheminzhou/PEPPAN) (Zhou & Achtman, 2020), [panaroo](https://github.com/gtonkinhill/panaroo) (Tonkin-Hill et al., 2020), among others. We plan to provide support to most of them in the future, although some of them already provide options to output its results as roary's, so in theory you could use them as `pagoo`'s input.
 
 # Adding Metadata After Object Creation
 
