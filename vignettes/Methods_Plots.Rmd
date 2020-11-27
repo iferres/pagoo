@@ -29,7 +29,7 @@ As you may have already noted, methods and visualization are different than data
 In this tutorial some, but not all, methods will be covered. Once you get the idea, just browse the documentation to see other available methods and what arguments they take.
 
 ## Gene Abundance Distance
-Pairwise distances between gene abundance can be retieved by using `$dist()` method. By default, Bray-Curtis distance is computed. This is just a wrapper of `vegdist()` from `vegan` package.
+Pairwise distances between gene abundance can be retrieved by using `$dist()` method. By default, Bray-Curtis distance is computed. This is just a wrapper of `vegdist()` from `vegan` package.
 ```{r}
 p$dist()
 ```
@@ -130,11 +130,11 @@ p$gg_curves() +
 ```
 
 ## PCA Biplot
-A biplot for visualizing the first 2 principal components in a PCA is always useful at early stages of analysis to explore possible association of genomes based on gene content. This method uses `$pan_pca()` method to perform the PCA, and allows you to use organism metadata to colour the points.
+A biplot for visualizing the first 2 principal components in a PCA is always useful at early stages of analysis to explore possible association of genomes based on gene content. This method uses `$pan_pca()` method to perform the PCA, and allows you to use organism metadata to color the points.
 ```{r}
 p$organisms
 ```
-Since we have metadata asociated to each organism, we will use it to colour the organisms according to the `country` variable.
+Since we have metadata associated to each organism, we will use it to color the organisms according to the `country` variable.
 
 ```{r, warning=FALSE}
 p$gg_pca(colour = 'host', size = 4) + 

@@ -88,16 +88,16 @@ and \code{cluster} (group of orthologous to which the gene belongs to). More col
 for each gene.}
 
 \item{\code{org_meta}}{(optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
-containging additional metadata for organisms. This \code{data.frame} must have a column named "org" with
+containing additional metadata for organisms. This \code{data.frame} must have a column named "org" with
 valid organisms names (that is, they should match with those provided in \code{data}, column \code{org}), and
 additional columns will be used as metadata. Each row should correspond to each organism.}
 
 \item{\code{cluster_meta}}{(optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
-containging additional metadata for clusters. This \code{data.frame} must have a column named "cluster" with
+containing additional metadata for clusters. This \code{data.frame} must have a column named "cluster" with
 valid organisms names (that is, they should match with those provided in \code{data}, column \code{cluster}), and
 additional columns will be used as metadata. Each row should correspond to each cluster.}
 
-\item{\code{core_level}}{The initial core_level (thats the percentage of organisms a core cluster must be in to be
+\item{\code{core_level}}{The initial core_level (that's the percentage of organisms a core cluster must be in to be
 considered as part of the core genome). Must be a number between 100 and 85, (default: 95). You can change it
 later by using the \code{$core_level} field once the object was created.}
 
@@ -120,7 +120,7 @@ objects (same requirements as (1), but with BStringSet names as gene names); or 
 }
 \subsection{Returns}{
 An R6 object of class PgR6MS. It contains basic fields and methods for analyzing a pangenome. It also
-contains additional statistical methods for analize it, methods to make basic exploratory plots, and methods
+contains additional statistical methods for analyze it, methods to make basic exploratory plots, and methods
 for sequence manipulation.
 }
 }
@@ -130,7 +130,7 @@ for sequence manipulation.
 \subsection{Method \code{core_seqs_4_phylo()}}{
 A field for obtaining core gene sequences is available (see below), but for creating a phylogeny with this
 sets is useful to: 1) have the possibility of extracting just one sequence of each organism on each cluster, in
-case paralogues are present, and 2) filling gaps with empthy sequences in case the core_level was set below 100\%,
+case paralogues are present, and 2) filling gaps with empty sequences in case the core_level was set below 100\%,
 allowing more genes (some not in 100\% of organisms) to be incorporated to the phylogeny. That is the purpose of
 this special function.
 \subsection{Usage}{
@@ -142,7 +142,7 @@ this special function.
 \describe{
 \item{\code{max_per_org}}{Maximum number of sequences of each organism to be taken from each cluster.}
 
-\item{\code{fill}}{\code{logical}. If fill \code{DNAStringSet} with emphty \code{DNAString} in cases where
+\item{\code{fill}}{\code{logical}. If fill \code{DNAStringSet} with empty \code{DNAString} in cases where
 \code{core_level} is set below 100\%, and some clusters with missing organisms are also considered.}
 }
 \if{html}{\out{</div>}}

@@ -13,12 +13,12 @@ load_pangenomeRDS(file, ...)
 \code{core_level} overwrite the values stored in the file.}
 }
 \value{
-Ethier a \code{PgR6MS} class object, or a \code{PgR6M} object (with or
+A \code{PgR6MS} class object, or a \code{PgR6M} object (with or
 without sequences, respectively).
 }
 \description{
 This function loads a pagoo pangenome from a `.RDS` file generated
-by the `save_pangenomeRDS` method. Objects loaded by this functions keep thier
+by the `save_pangenomeRDS` method. Objects loaded by this functions keep their
 states, i.e : dropped/recovered organisms are conserved, as well as the
 `core_level` setted when the object was originally saved.
 }

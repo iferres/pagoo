@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 Here we introduce our cookbook which is made of recipes. Each recipe is a customized piece of code to complete different advanced tasks. By using these recipes (or creating new ones) the user can take full profit of functionalities provided by `pagoo` and easily interact with other `R` packages to perform a variety of analyses including phylogenetics, pangenome-wide association studies, sequence comparisons, ecological measures, prepare publication-quality figures, among others.
-If you want to standarize any analysis from your pangenome data that is not covered in this tutorial, we can help you and write a recipe. Contact us!
+If you want to standardize any analysis from your pangenome data that is not covered in this tutorial, we can help you and write a recipe. Contact us!
 
 Start by loading the `pagoo` object, as in previous tutorials:
 ```{r, warning=FALSE, message=FALSE}
@@ -127,7 +127,7 @@ blast_result <- p$sequences %>%             # Pangenome sequences
 # Neutral genes
 The core genome is composed by those genes that are present in every or almost every genome in the sample. As these genes are present in all genomes, they can be used to extract important biological information like phylogenetic relationships, study recombination or selective pressures. For doing these, core genes need to be aligned. In the next few sections we explain how to do this to perform some of the above mentioned downstream analyses.
 
-To reveal the vertical evolutionary history of a bacterial population we should take into account the presence of horizontal acquisition of genetic material, like by means of recombination, that is mantained by the action of natural selection. Hence, we can use the Tajima's D test of neutrality as implemented in `pegas` ( [Paradis, 2010](https://academic.oup.com/bioinformatics/article/26/3/419/215731)) to identify those core genes that are not subjected to strong selective pressures and are likely evolving neutrally.
+To reveal the vertical evolutionary history of a bacterial population we should take into account the presence of horizontal acquisition of genetic material, like by means of recombination, that is maintained by the action of natural selection. Hence, we can use the Tajima's D test of neutrality as implemented in `pegas` ( [Paradis, 2010](https://academic.oup.com/bioinformatics/article/26/3/419/215731)) to identify those core genes that are not subjected to strong selective pressures and are likely evolving neutrally.
 
 ```{r, eval=FALSE}
 # Load required packages
@@ -150,7 +150,7 @@ which(tajimaD <= 0.2 & tajimaD >= -0.2)
 ```
 
 # Quick dirty phylogeny
-The best practices on how to build a phylogeny from core genomes is a topic of debate. In this first example we provide a one-liner to align individual core genes (like in the previous case), produce a concatenated core genome alignment, calculate a core genome phylogeny using the Neighbor-Joining method as implemented by `phangorn` (Schliep, 2011), and visualize it using host metadata to colour tree tips using `ggtree` (Yu et al., 2017). Phylogenetic tree is assigned to the `phy` variable, and plotted as side effect by using magrittr's `%T>%` operator.
+The best practices on how to build a phylogeny from core genomes is a topic of debate. In this first example we provide a one-liner to align individual core genes (like in the previous case), produce a concatenated core genome alignment, calculate a core genome phylogeny using the Neighbor-Joining method as implemented by `phangorn` (Schliep, 2011), and visualize it using host metadata to color tree tips using `ggtree` (Yu et al., 2017). Phylogenetic tree is assigned to the `phy` variable, and plotted as side effect by using magrittr's `%T>%` operator.
 ```{r, eval=FALSE}
 # Load required packages
 library(magrittr)
@@ -178,7 +178,7 @@ phy <- p$core_seqs_4_phylo() %>%                 # Core genome sequences
 ```
 
 # Maximum Likelihood phylogeny
-The following method is simmilar to the previous, but in this case we are optimizing the topology and branch lengths by maximum likelihood method implemented in `phangorn` package. Although this is a fully working example, its purpose is just to illustrate the idea. You should consider tuning the parameters to better fit your dataset (e.g.: just 4 discrete gamma distributions for a whole coregenome alignment may be too low).
+The following method is similar to the previous, but in this case we are optimizing the topology and branch lengths by maximum likelihood method implemented in `phangorn` package. Although this is a fully working example, its purpose is just to illustrate the idea. You should consider tuning the parameters to better fit your dataset (e.g.: just 4 discrete gamma distributions for a whole coregenome alignment may be too low).
 ```{r, eval=FALSE}
 # Load required packages
 library(magrittr)

@@ -19,7 +19,7 @@ rds <- system.file('extdata', 'campylobacter.RDS', package = 'pagoo')
 campy <- load_pangenomeRDS(rds) # Load pangenome
 ```
 
-Now that the object (`campy`) is loaded, we can start by querying it. `pagoo` was developed considering that in a pangenome each individual *gene* belongs to a given *organism*, and is assigned to a *cluster* of orthologous. So those variables are interconnected, but each of them can have metadata asociated that is specific to each of them, i.e.: an individual gene can have coordinates inside a genome, but this doesn't apply to a whole cluster, and a given organism has, for instance, a host where it was isolated from, but this information doesn't apply to an individual gene.
+Now that the object (`campy`) is loaded, we can start by querying it. `pagoo` was developed considering that in a pangenome each individual *gene* belongs to a given *organism*, and is assigned to a *cluster* of orthologous. So those variables are interconnected, but each of them can have metadata associated that is specific to each of them, i.e.: an individual gene can have coordinates inside a genome, but this doesn't apply to a whole cluster, and a given organism has, for instance, a host where it was isolated from, but this information doesn't apply to an individual gene.
 
 ## Basic Fields
 
@@ -44,13 +44,13 @@ The last, and most important field is `$genes`, which returns a list of `DataFra
 campy$genes
 ```
 
-The first 3 columns (`cluster`, `org`, and `gene`) are the glue that interconects each of 3 "variables".
+The first 3 columns (`cluster`, `org`, and `gene`) are the glue that interconnects each of 3 "variables".
 
 Another useful field is `$pan_matrix`, which returns a `matrix` with gene abundance for each cluster (columns), and each organism (rows).
 
 ## Basic Methods
 
-`pagoo` objects contain basic methods to analyse the pangenome, from general statistics to some basic plotting capabilities. Some of these methods can also take arguments.
+`pagoo` objects contain basic methods to analyze the pangenome, from general statistics to some basic plotting capabilities. Some of these methods can also take arguments.
 
 For example:
 

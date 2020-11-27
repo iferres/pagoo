@@ -25,4 +25,4 @@ Currently, `pagoo` is only available at GitHub. The easiest way to install this 
 if (!require("devtools")) install.packages("devtools")
 devtools::install_github('iferres/pagoo')
 ```
-We test `pagoo` in the three main operating systems (linux, macOS, and Windows). We plan to put the code in CRAN and/or Bioconductor repositries in the future.
+We test `pagoo` in the three main operating systems (linux, macOS, and Windows). We plan to put the code in CRAN and/or Bioconductor repositories in the future.

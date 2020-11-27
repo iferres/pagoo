@@ -15,7 +15,7 @@
 
 ### Philosophy
 
-The main idea behind pagoo is that, once you have reconstructed a pangenome, all the information and basic methods are embebed into a single object. To query this object, you simply use the `$` symbol as if where a named `list` in R. 
+The main idea behind pagoo is that, once you have reconstructed a pangenome, all the information and basic methods are embedded into a single object. To query this object, you simply use the `$` symbol as if where a named `list` in R. 
 
 ![](man/figures/readmegif.gif)
 
@@ -78,11 +78,11 @@ A quick look to a `pagoo` object print can give us some clues of how is it compo
     .sequences: DNAStringSet
     version: package_version, numeric_version
 ```
-You can see that basically there are public and private fields/methods. In private, all raw data is stored. You will not have easy access to it. Instead, you will be able to access public functions and active bindings. Active bindings are functions that behave as it were variables, in this case they are querying private information and returning it to the user in a convinient way. Public methods 
+You can see that basically there are public and private fields/methods. In private, all raw data is stored. You will not have easy access to it. Instead, you will be able to access public functions and active bindings. Active bindings are functions that behave as it were variables, in this case they are querying private information and returning it to the user in a convenient way. Public methods 
 
 ### Pangenome reconstruction
 
-Pagoo works over the pangenome **after it has been built** with any pangenome reconstruction software. So, you can do it with the software of your preference. Despite we recommend `Pewit`, our own pangenome reconstruction software, `pagoo` can read-in the output of the most popular pangenome reconstruction software, `roary`, and also we are planning to give support to others like `Panaroo`, `PanX` and `PIRATE`. `pagoo` also runs a `Shiny` application that provides reactive interaction with the data and facillitates handling and visualization.
+Pagoo works over the pangenome **after it has been built** with any pangenome reconstruction software. So, you can do it with the software of your preference. Despite we recommend `Pewit`, our own pangenome reconstruction software, `pagoo` can read-in the output of the most popular pangenome reconstruction software, `roary`, and also we are planning to give support to others like `Panaroo`, `PanX` and `PIRATE`. `pagoo` also runs a `Shiny` application that provides reactive interaction with the data and facilitates handling and visualization.
 
 ### Installation
 
@@ -92,7 +92,7 @@ Currently, `pagoo` is only available at GitHub. The easiest way to install this 
 if (!require("devtools")) install.packages("devtools")
 devtools::install_github('iferres/pagoo')
 ```
-We have tested `pagoo` in UNIX operating systems. However it should, we cannot warrant it fully works on Windows. Also, in the future we plan to put the code in CRAN and/or Bioconductor repositries.
+We have tested `pagoo` in UNIX operating systems. However it should, we cannot warrant it fully works on Windows. Also, in the future we plan to put the code in CRAN and/or Bioconductor repositories.
 
 ### Help
 
@@ -102,7 +102,7 @@ library(pagoo)
 ?PgR6
 help('PgR6MS')
 ```
-but as R6 classes documentation is still not standarized, we recomend you to use the `pagoo::pagoo()` function to read the documentation from, and to to use it also instead of the raw classes.
+but as R6 classes documentation is still not standardized, we recommend you to use the `pagoo::pagoo()` function to read the documentation from, and to to use it also instead of the raw classes.
 
 ```r
 ?pagoo

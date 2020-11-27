@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 # Input From Scratch
 
-In order to generate a `pagoo` object, the only mandatory data structure is a `data.frame` which has to contain 3 basic columns. Let's ilustrate it with an toy dataset.
+In order to generate a `pagoo` object, the only mandatory data structure is a `data.frame` which has to contain 3 basic columns. Let's illustrate it with an toy dataset.
 
 First load `pagoo`:
 ```{r, echo=TRUE,  warning=FALSE, message=FALSE}
@@ -46,11 +46,11 @@ orgs_file <- grep("case_orgs_meta.tsv", files, value = TRUE)
 orgs_meta <- read.table(orgs_file, header = TRUE, sep = '\t', quote = '')
 head(orgs_meta)
 ```
-On this `data.frame` we have a column named `org` which is mandatory in case you provide this argument. Other columns are metadata asociated to each organism. Beware that organisms provided in this table (`orgs_meta$org`) must concide with the names provided in the `data$org` field, in order to correctly map each variables.
+On this `data.frame` we have a column named `org` which is mandatory in case you provide this argument. Other columns are metadata associated to each organism. Beware that organisms provided in this table (`orgs_meta$org`) must coincide with the names provided in the `data$org` field, in order to correctly map each variables.
 
 ## Including cluster metadata
 
-Last file contains metadata asociated with each cluster of orthologous:
+Last file contains metadata associated with each cluster of orthologous:
 ```{r}
 # Cluster metadata
 clust_file <- grep("case_clusters_meta.tsv", files, value = TRUE)
@@ -110,7 +110,7 @@ p <- pagoo(data = data, # Required data
 
 # Input From Pangenome Reconstruction Software
 
-All the above stuff with preparing data and loading classes seems difficult and time-consuming, but in real life working datasets this will be rarely needed. We are explaning it here to provide full details about how the software works, but this package also provides functions to automatically read-in output files from pangenome reconstruction softwares into `pagoo`, avoiding any formating or manipulation of data.
+All the above stuff with preparing data and loading classes seems difficult and time-consuming, but in real life working datasets this will be rarely needed. We are explaining it here to provide full details about how the software works, but this package also provides functions to automatically read-in output files from pangenome reconstruction software into `pagoo`, avoiding any formatting or manipulation of data.
 
 Currently `pagoo` supports input from [roary](https://sanger-pathogens.github.io/Roary/) (Page et al., 2015), which has been the standard and most cited software for pangenome reconstruction. To work with `roary`'s ouput, please refer to `?roary_2_pagoo` documentation. You will only need the `.gff` files, and the `gene_presence_absence.csv` file.
 
@@ -150,5 +150,5 @@ If you want to save the object and continue working with it in other R session, 
 p$save_pangenomeRDS(file = "pangenome.RDS")
 p2 <- load_pangenomeRDS("pangenome.RDS")
 ```
-This method is more stable (compatible between `pagoo` versions), secure (uses the same metadata classes, and precision isn't lost), and convinient (the exact state of the object saved is restored, keeping dropped organisms/genes/clusters hidden, available to be recovered, and other object state configuration, e.g. `core_level`, is also saved).
+This method is more stable (compatible between `pagoo` versions), secure (uses the same metadata classes, and precision isn't lost), and convenient (the exact state of the object saved is restored, keeping dropped organisms/genes/clusters hidden, available to be recovered, and other object state configuration, e.g. `core_level`, is also saved).
 

@@ -11,7 +11,7 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-One fundamental operation when working with pangenomic data is to subset it in order to better analyze it. `pagoo` provides three convinent ways that can help in different scenarios. First we will see predefined subsets, then we will understand how to use the classic R's `[` operator with `pagoo` objects, and finally we will see how to temporarily remove one or more organisms from the dataset, and then to recover them.
+One fundamental operation when working with pangenomic data is to subset it in order to better analyze it. `pagoo` provides three convenient ways that can help in different scenarios. First we will see predefined subsets, then we will understand how to use the classic R's `[` operator with `pagoo` objects, and finally we will see how to temporarily remove one or more organisms from the dataset, and then to recover them.
 
 Start the tutorial by loading the included *Campylobacter* pangenome.
 
@@ -51,7 +51,7 @@ In the following subsections we will see how to use them to subset `$pan_matrix`
 
 ## Vector/List notation
 
-When we subset a vector or list in R we use a single number or a vector of numbers, lets say from `i` to `j`, to pick those elements by indexes: `x[i:j]`. In `pagoo` we implement a method for this generic function to subset data fields, where indexes represent **clusters**. So instead of subseting directly the final object (which you can of course) you apply this method directly to the object, and then select any of the data fields.
+When we subset a vector or list in R we use a single number or a vector of numbers, lets say from `i` to `j`, to pick those elements by indexes: `x[i:j]`. In `pagoo` we implement a method for this generic function to subset data fields, where indexes represent **clusters**. So instead of subsetting directly the final object (which you can of course) you apply this method directly to the object, and then select any of the data fields.
 
 ```{r}
 # From clusters 1 to 3
@@ -86,12 +86,12 @@ p[1:3, c(1, 5, 18)]$organisms
 ```
 So this selection returns a list of length 2, with 3 elements each for `$genes` and `$sequences`, a dataframe showing only the selected clusters in the `$clusters` field, and a dataframe showing only the selected organisms in the `$organisms` field.
 
-We found this implemetation quite useful for both data exploration and fine grained analysis.
+We found this implementation quite useful for both data exploration and fine grained analysis.
 
 
 # Dropping and Recovering Organisms
 
-One useful feature implemented in `pagoo` is the possibility of easily removing (hiding) organisms from the dataset. This is useful if during the analysis we identify some genome with weird charactersitics (i.e. potentially contaminated), or if we want to focus just in a subset of genomes of interest given any metadata value, or if we included an outgroup for phylogenetic purposes but we want to remove it from downstream analyses. Let's see how it works..
+One useful feature implemented in `pagoo` is the possibility of easily removing (hiding) organisms from the dataset. This is useful if during the analysis we identify some genome with weird characteristics (i.e. potentially contaminated), or if we want to focus just in a subset of genomes of interest given any metadata value, or if we included an outgroup for phylogenetic purposes but we want to remove it from downstream analyses. Let's see how it works..
 
 ## Dropping organisms
 ```{r}
@@ -102,7 +102,7 @@ We can see that we have 7 organisms, and we have the pangenome summary statistic
 
 ```{r}
 p$drop(1:2) 
-p$organisms # Updated organims !!
+p$organisms # Updated organisms !!
 p$summary_stats # Updated stats !!
 ```
 As you see, not only the french organisms have been removed from the dataset, but also summary statistics have been updated! This is also true for any other data field: `$pan_matrix`, `$genes`, `$clusters`, `$sequences`, and`$organisms` fields are automatically updated. Also any embedded statistical or visualization methods will now only consider available organisms/clusters/genes. When we drop an organisms, we are hiding all features associated to that genomes including genes, sequences, gene clusters and metadata. 

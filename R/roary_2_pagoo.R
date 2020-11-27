@@ -6,7 +6,7 @@
 #' a pagoo R6 class object. It takes the "gene_presence_absence.csv" file and
 #' (optionally but recommended) gff input file paths, and returns an object of
 #' class \code{\link[pagoo]{PgR6MS}} (or \code{\link[pagoo]{PgR6M}} if left
-#' empthy the \code{gffs} argument).
+#' empty the \code{gffs} argument).
 #' @param gene_presence_absence_csv \code{character}, path to the
 #' "gene_presence_absence.csv" file. (Do not confuse with the file with the
 #' same name but with \code{.Rtab} extension).
@@ -17,7 +17,7 @@
 #' @param sep \code{character}. Default: \code{"__"} (two underscores). See
 #' \link[pagoo]{PgR6MS} for a more detail argument description.
 #' @return A pagoo's R6 class object. Ethier \link[pagoo]{PgR6M}, if \code{gffs}
-#' argument is left empthy, or \link[pagoo]{PgR6MS} if path to gff files is
+#' argument is left empty, or \link[pagoo]{PgR6MS} if path to gff files is
 #' provided.
 #' @references
 #' Andrew J. Page, Carla A. Cummins, Martin Hunt, Vanessa K. Wong, Sandra Reuter,

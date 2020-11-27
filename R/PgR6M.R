@@ -32,14 +32,14 @@ PgR6M <- R6Class('PgR6M',
                    #' and \code{cluster} (group of orthologous to which the gene belongs to). More columns can be added as metadata
                    #' for each gene.
                    #' @param org_meta (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
-                   #' containging additional metadata for organisms. This \code{data.frame} must have a column named "org" with
+                   #' containing additional metadata for organisms. This \code{data.frame} must have a column named "org" with
                    #' valid organisms names (that is, they should match with those provided in \code{data}, column \code{org}), and
                    #' additional columns will be used as metadata. Each row should correspond to each organism.
                    #' @param cluster_meta (optional) A \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{DataFrame}}
-                   #' containging additional metadata for clusters. This \code{data.frame} must have a column named "cluster" with
+                   #' containing additional metadata for clusters. This \code{data.frame} must have a column named "cluster" with
                    #' valid organisms names (that is, they should match with those provided in \code{data}, column \code{cluster}), and
                    #' additional columns will be used as metadata. Each row should correspond to each cluster.
-                   #' @param core_level The initial core_level (thats the percentage of organisms a core cluster must be in to be
+                   #' @param core_level The initial core_level (that's the percentage of organisms a core cluster must be in to be
                    #' considered as part of the core genome). Must be a number between 100 and 85, (default: 95). You can change it
                    #' later by using the \code{$core_level} field once the object was created.
                    #' @param sep A separator. By default is '__'(two underscores). It will be used to
@@ -49,7 +49,7 @@ PgR6M <- R6Class('PgR6M',
                    #' @param DF Deprecated. Use \code{data} instead.
                    #' @param group_meta Deprecated. Use \code{cluster_meta} instead.
                    #' @return An R6 object of class PgR6M. It contains basic fields and methods for analyzing a pangenome. It also
-                   #' contains additional statistical methods for analize it, and methods to make basic
+                   #' contains additional statistical methods for analyze it, and methods to make basic
                    #' exploratory plots.
                    initialize = function(data,
                                          org_meta,
@@ -94,7 +94,7 @@ PgR6M <- R6Class('PgR6M',
                    #' @param what One of \code{"pangenome"} or \code{"coregenome"}.
                    #' @param n.perm The number of permutations to compute (default: 10).
                    #' @return A \code{matrix}, rows are the number of genomes added, columns are
-                   #' permutations, and the cell number is the number of genes in ethier category.
+                   #' permutations, and the cell number is the number of genes in each category.
                    rarefact = function(what = 'pangenome', n.perm = 10){
                      what <- match.arg(what, c('pangenome', 'coregenome'))
                      pm <- self$pan_matrix
@@ -121,7 +121,7 @@ PgR6M <- R6Class('PgR6M',
 
                    #' @description
                    #' Compute distance between all pairs of genomes. The default dist method is
-                   #' \code{"bray"} (Bray-Curtis distance). Annother used distance method is \code{"jaccard"},
+                   #' \code{"bray"} (Bray-Curtis distance). Another used distance method is \code{"jaccard"},
                    #' but you should set \code{binary = FALSE} (see below) to obtain a meaningful result.
                    #' See \code{\link[vegan]{vegdist}} for details, this is just a wrapper function.
                    #' @param method The distance method to use. See \link[vegan]{vegdist}
@@ -207,7 +207,7 @@ PgR6M <- R6Class('PgR6M',
                    #' Fits an exponential decay curve for the coregenome rarefaction simulation.
                    #' @param raref (Optional) A rarefaction matrix, as returned by \code{rarefact()}.
                    #' @param pcounts An integer of pseudo-counts. This is used to better fit the function
-                   #' at small numbers, as the linearization method requires to substract a constant C, which is the
+                   #' at small numbers, as the linearization method requires to subtract a constant C, which is the
                    #' coregenome size, from \code{y}. As \code{y} becomes closer to the coregenome size, this operation
                    #' tends to 0, and its logarithm goes crazy. By default \code{pcounts=10}.
                    #' @param ... Further arguments to be passed to \code{rarefact()}. If \code{raref}

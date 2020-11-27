@@ -68,7 +68,7 @@ If you want to work with this data as a single `DataFrame`, just `unlist` it:
 unlist(p$genes, use.names = FALSE)
 ```
 
-`pagoo` also includes predefined subsets fields to list only certain pangenome category, these are queried by adding a prefix with the desired category followed by an underscore: `$core_genes`, `$shell_genes`, and `$cloud_genes`. These kind of subsets are better explaied in the '4 - Subets' tutorial, and also apply to other pangenome data described below.
+`pagoo` also includes predefined subsets fields to list only certain pangenome category, these are queried by adding a prefix with the desired category followed by an underscore: `$core_genes`, `$shell_genes`, and `$cloud_genes`. These kind of subsets are better explained in the '4 - Subets' tutorial, and also apply to other pangenome data described below.
 
 # Clusters metadata
 
@@ -88,7 +88,7 @@ p$sequences             # List all sequences grouped by cluster
 p$sequences[["group0001"]]  # List first cluster
 ```
 Note that sequence names are created by pasting organism names and gene names, separated by a string that by default is `sep = '__'` (two underscores). This are the same as the `gid` column in the `$genes` field, and are initially set when `pagoo` object is created. If you think your dataset contain names with this separator, then you should set this parameter to other string to avoid conflicts. 
-`$sequences` field also has predefied subsets: `$core_sequences`, `$shell_sequences`, and `$cloud_sequences`.
+`$sequences` field also has predefined subsets: `$core_sequences`, `$shell_sequences`, and `$cloud_sequences`.
 
 # Organism metadata
 The `$organisms` field contain a table with organisms and metadata as additional columns if provided.

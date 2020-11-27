@@ -23,14 +23,14 @@ which the gene belongs to). More columns can be added as metadata for each
 gene.}
 
 \item{org_meta}{(optional) A \code{data.frame} or
-\code{\link[S4Vectors:DataFrame-class]{DataFrame}} containging additional
+\code{\link[S4Vectors:DataFrame-class]{DataFrame}} containing additional
 metadata for organisms. This \code{data.frame} must have a column named
 "org" with valid organisms names (that is, they should match with those
 provided in \code{data}, column \code{org}), and additional columns will be
 used as metadata. Each row should correspond to each organism.}
 
 \item{cluster_meta}{(optional) A \code{data.frame} or
-\code{\link[S4Vectors:DataFrame-class]{DataFrame}} containging additional
+\code{\link[S4Vectors:DataFrame-class]{DataFrame}} containing additional
 metadata for clusters. This \code{data.frame} must have a column named
 "cluster" with valid organisms names (that is, they should match with those
 provided in \code{data}, column \code{cluster}), and additional columns
@@ -46,7 +46,7 @@ requirements as (2) but \code{DNAStringSetList} names are organisms names).
 If this parameter is used, then a \code{\link{PgR6MS}} class object is
 returned.}
 
-\item{core_level}{The initial core_level (thats the percentage of organisms a
+\item{core_level}{The initial core_level (that's the percentage of organisms a
 core cluster must be in to be considered as part of the core genome). Must
 be a number between 100 and 85, (default: 95). You can change it later by
 using the \code{$core_level} field once the object was created.}
@@ -69,7 +69,7 @@ the latter. See below for more details.
 \details{
 This package uses
 [R6](https://r6.r-lib.org/articles/Introduction.html) classes to provide a
-unified, comprehensive, standarized, but at the same time flexible, way to
+unified, comprehensive, standardized, but at the same time flexible, way to
 analyze a pangenome. The idea is to have a single object which contains both
 the data and the basic methods to analyze them, as well as manipulate fields,
 explore, and to use in harmony with the already existing and extensive list of R
@@ -152,7 +152,7 @@ For more information, tutorials, and resources, please visit https://iferres.git
     sequences as defined above.}
     \if{html}{\out{<a id="field-shell_genes"></a>}}
     \item{\bold{\code{$shell_genes}}}{ Like \code{genes}, but only showing shell genes.
-    These are defined as those clusters than don't belong nethier to the core genome,
+    These are defined as those clusters than don't belong neither to the core genome,
     nor to cloud genome. Colloquially defined as genes that are present in some but not
     all strains, and that aren't strain-specific.}
     \if{html}{\out{<a id="field-shell_clusters"></a>}}
@@ -195,10 +195,10 @@ For more information, tutorials, and resources, please visit https://iferres.git
 
             \subsection{Arguments:}{
                 \itemize{
-                    \item{\bold{\code{map}}: \code{character} identifiying the metadata to map. Can
+                    \item{\bold{\code{map}}: \code{character} identifying the metadata to map. Can
                     be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
                     \item{\bold{\code{df}}: \code{data.frame} or \code{DataFrame} with the metadata to
-                    add. For ethier case, a column named as \code{"map"} must exists, which should
+                    add. For each case, a column named as \code{"map"} must exists, which should
                     contain identifiers for each element. In the case of adding gene (\code{gid})
                     metadata,each gene should be referenced by the name of the organism and the name
                     of the gene as provided in the \code{"data"} data.frame, separated by the
@@ -266,11 +266,11 @@ For more information, tutorials, and resources, please visit https://iferres.git
     \if{html}{\out{<a id="method-write_pangenome"></a>}}
     \item{\bold{Write a pangenome as flat (text) files.}}{
             \subsection{Description:}{
-                  Write the pangenome data as flat tables (text). Is not the most recomended way
+                  Write the pangenome data as flat tables (text). Is not the most recommended way
                   to save a pangenome, since you can loose information as numeric precision,
                   column classes (factor, numeric, integer), and the state of the object itself
                   (i.e. dropped organisms, or core_level), loosing reproducibility. Use
-                  \code{save_pangenomeRDS} for a more precise way of saveing a pagoo object.
+                  \code{save_pangenomeRDS} for a more precise way of saving a pagoo object.
                   Still, it is useful if you want to work with the data outside R, just keep
                   the above in mind.
             }
@@ -289,9 +289,9 @@ For more information, tutorials, and resources, please visit https://iferres.git
             }
             \subsection{Return:}{
                     A directory with at least 3 files. "data.tsv" contain the basic
-                    pangenome data as it is provided to the \code{data} argumnet in the
+                    pangenome data as it is provided to the \code{data} argument in the
                     initialization method (\code{$new(...)}). "clusters.tsv" contain any metadata
-                    asociated to the clusters. "organisms.tsv" contain any metadata asociated to
+                    associated to the clusters. "organisms.tsv" contain any metadata associated to
                     the organisms. The latter 2 files will contain a single column if no metadata
                     was provided.
             }
@@ -327,7 +327,7 @@ For more information, tutorials, and resources, please visit https://iferres.git
     \if{html}{\out{<a id="method-clone"></a>}}
     \item{\bold{Clone a pagoo object.}}{
             \subsection{Description:}{
-                  The objects of this class are cloneable with this method.
+                  The objects of this class are clonable with this method.
             }
 
             \subsection{Usage:}{
@@ -336,7 +336,7 @@ For more information, tutorials, and resources, please visit https://iferres.git
 
             \subsection{Arguments:}{
                 \itemize{
-                    \item{\bold{\code{deep}}: \code{character} identifiying the metadata to map. Can
+                    \item{\bold{\code{deep}}: \code{character} identifying the metadata to map. Can
                     be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
                 }
             }
@@ -349,7 +349,7 @@ For more information, tutorials, and resources, please visit https://iferres.git
     \item{\bold{Compute distances}}{
             \subsection{Description:}{
                   Compute distance between all pairs of genomes. The default dist method is
-                  \code{"bray"} (Bray-Curtis distance). Annother used distance method is \code{"jaccard"},
+                  \code{"bray"} (Bray-Curtis distance). Another used distance method is \code{"jaccard"},
                   but you should set \code{binary = FALSE} (see below) to obtain a meaningful result.
                   See \code{\link[vegan]{vegdist}} for details, this is just a wrapper function.
             }
@@ -446,7 +446,7 @@ For more information, tutorials, and resources, please visit https://iferres.git
                 \itemize{
                     \item{\bold{\code{raref}}: (Optional) A rarefaction matrix, as returned by \code{rarefact()}.}
                     \item{\bold{\code{pcounts}}: An integer of pseudo-counts. This is used to better fit the function
-                    at small numbers, as the linearization method requires to substract a constant C, which is the
+                    at small numbers, as the linearization method requires to subtract a constant C, which is the
                     coregenome size, from \code{y}. As \code{y} becomes closer to the coregenome size, this operation
                     tends to 0, and its logarithm goes crazy. By default \code{pcounts=10}.}
                     \item{\bold{\code{...}}: Further arguments to be passed to \code{rarefact()}. If \code{raref}
@@ -552,7 +552,7 @@ For more information, tutorials, and resources, please visit https://iferres.git
             \subsection{Arguments:}{
                 \itemize{
                     \item{\bold{\code{colour}}:The name of the column in \code{$organisms} field
-                    from which points will takecolour (if provided). \code{NULL} (default) renders
+                    from which points will take color (if provided). \code{NULL} (default) renders
                     black points.}
                     \item{\bold{\code{...}}: More arguments to be passed to \code{ggplot2::autoplot()}.}
                 }
@@ -649,7 +649,7 @@ For more information, tutorials, and resources, please visit https://iferres.git
                  but for creating a phylogeny with this sets is useful to: 1) have the
                  possibility of extracting just one sequence of each organism on each
                  cluster, in case paralogues are present, and 2) filling gaps with
-                 empthy sequences in case the core_level was set below 100\%, allowing
+                 empty sequences in case the core_level was set below 100\%, allowing
                  more genes (some not in 100\% of organisms) to be incorporated to the
                  phylogeny. That is the purpose of this special function.
             }
@@ -663,7 +663,7 @@ For more information, tutorials, and resources, please visit https://iferres.git
                     \item{\bold{\code{max_per_org}}:  Maximum number of sequences of each organism
                     to be taken from each cluster.}
                     \item{\bold{\code{fill}}: \code{logical}. If fill \code{DNAStringSet} with
-                    emphty \code{DNAString} in cases where \code{core_level} is set below 100\%,
+                    empty \code{DNAString} in cases where \code{core_level} is set below 100\%,
                     and some clusters with missing organisms are also considered.}
                 }
             }
