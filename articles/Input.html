@@ -118,14 +118,14 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/untar.html">untar</a></span><span class="op">(</span>tarfile <span class="op">=</span> <span class="va">tgz</span>, exdir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># Decompress example dataset</span>
 <span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span>, pattern <span class="op">=</span> <span class="st">'tsv$|fasta$'</span><span class="op">)</span> <span class="co"># List files</span>
 <span class="va">files</span></code></pre></div>
-<pre><code>## [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpREDjoG/case_clusters_meta.tsv"
-## [2] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpREDjoG/case_df.tsv"           
-## [3] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpREDjoG/case_orgs_meta.tsv"    
-## [4] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpREDjoG/organismA.fasta"       
-## [5] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpREDjoG/organismB.fasta"       
-## [6] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpREDjoG/organismC.fasta"       
-## [7] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpREDjoG/organismD.fasta"       
-## [8] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpREDjoG/organismE.fasta"</code></pre>
+<pre><code>## [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp4w0KOO/case_clusters_meta.tsv"
+## [2] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp4w0KOO/case_df.tsv"           
+## [3] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp4w0KOO/case_orgs_meta.tsv"    
+## [4] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp4w0KOO/organismA.fasta"       
+## [5] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp4w0KOO/organismB.fasta"       
+## [6] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp4w0KOO/organismC.fasta"       
+## [7] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp4w0KOO/organismD.fasta"       
+## [8] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp4w0KOO/organismE.fasta"</code></pre>
 <p>The file we need now is <code>case_df.tsv</code>. Lets load it and see what’s its structure:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"case_df.tsv"</span>, <span class="va">files</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
