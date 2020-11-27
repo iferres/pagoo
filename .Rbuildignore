@@ -4,6 +4,6 @@
 ^docs$
 ^pkgdown$
 ^\.github$
-^index.md
+^index\.md
 ^cran-comments\.md$
 ^man/figures/readmegif\.gif$
