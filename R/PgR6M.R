@@ -8,9 +8,9 @@
 #' @importFrom R6 R6Class
 #' @import ggplot2
 #' @import ggfortify
-#' @import shiny
-#' @import shinyWidgets
-#' @import shinydashboard
+#' @importFrom shiny uiOutput sliderInput selectInput HTML fluidRow tabPanel splitLayout column renderUI observeEvent reactive eventReactive reactiveVal
+#' @importFrom shinyWidgets pickerInput addSpinner updatePickerInput
+#' @importFrom shinydashboard dashboardSidebar dashboardPage dashboardHeader dashboardBody sidebarMenu infoBoxOutput tabBox box renderInfoBox infoBox
 #' @importFrom DT DTOutput renderDT datatable formatSignif JS
 #' @importFrom plotly plot_ly plotlyOutput renderPlotly layout add_lines subplot
 #' @importFrom heatmaply heatmaply
