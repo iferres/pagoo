@@ -7,3 +7,4 @@
 ^index\.md
 ^cran-comments\.md$
 ^man/figures/readmegif\.gif$
+^CRAN-RELEASE$
