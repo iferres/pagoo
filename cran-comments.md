@@ -7,3 +7,7 @@
 
 0 errors | 0 warnings | 0 note
 
+## Addressed CRAN notes
+* brokken link
+* single quote 'pagoo' on Title and Description
+* provide some references in DESCRIPTION
