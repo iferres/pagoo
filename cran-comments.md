@@ -1,3 +1,6 @@
+## Resubmission
+This is a resubmission. See "Addressed CRAN notes" below for changes.
+
 ## Test environments (GitHub Actions)
 * MacOS Catalina, R 4.0.3
 * Ubuntu 16.04, R 4.0.3
@@ -7,3 +10,7 @@
 
 0 errors | 0 warnings | 0 note
 
+## Addressed CRAN notes
+* fixed brokken link.
+* single quote 'pagoo' on Title and Description.
+* provide some references in DESCRIPTION.
