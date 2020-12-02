@@ -137,8 +137,9 @@ As said, you can add `gene` or `cluster` metadata following the same idea.
 Once loaded, it has two methods for saving and reloading to a new R session. The first one is by saving them as flat (text) files:
 
 ```{r}
-p$write_pangenome(dir = "pangenome")
-list.files("pangenome")
+tmp <- paste(tempdir(), "pangenome", sep = "/")
+p$write_pangenome(dir = tmp)
+list.files(tmp, full.names = TRUE)
 ```
 This creates a directory with 3 text files. The advantage of this approach is that you can analyze it outside R, the disadvantage is that from a reproducibility point of view reading text could be less stable since class or number precision can be lost, and also you can't save the state of the object in any given time. Only available organisms/genes/clusters are saved, and if you reload the class using the tsv files, any previously dropped organisms/gene/cluster won't be available any more. (For information about dropping/recovering organisms, see "Subset" tutorial).
 ```{r, echo=FALSE}
@@ -147,8 +148,9 @@ unlink("pangenome", recursive = TRUE)
 ```
 If you want to save the object and continue working with it in other R session, we recommend to save them as R objects with the RDS methods provided:
 ```{r, eval=FALSE}
-p$save_pangenomeRDS(file = "pangenome.RDS")
-p2 <- load_pangenomeRDS("pangenome.RDS")
+rds <- paste(tempdir(), "pangenome.RDS", sep = "/")
+p$save_pangenomeRDS(file = rds)
+p2 <- load_pangenomeRDS(rds)
 ```
 This method is more stable (compatible between `pagoo` versions), secure (uses the same metadata classes, and precision isn't lost), and convenient (the exact state of the object saved is restored, keeping dropped organisms/genes/clusters hidden, available to be recovered, and other object state configuration, e.g. `core_level`, is also saved).
 
