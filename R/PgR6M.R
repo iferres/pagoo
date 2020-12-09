@@ -8,7 +8,7 @@
 #' @importFrom R6 R6Class
 #' @import ggplot2
 #' @import ggfortify
-#' @importFrom shiny uiOutput sliderInput selectInput HTML fluidRow tabPanel splitLayout column renderUI observeEvent reactive eventReactive reactiveVal
+#' @importFrom shiny uiOutput sliderInput selectInput HTML fluidRow tabPanel splitLayout column renderUI observeEvent reactive eventReactive reactiveVal tags runApp
 #' @importFrom shinyWidgets pickerInput addSpinner updatePickerInput
 #' @importFrom shinydashboard dashboardSidebar dashboardPage dashboardHeader dashboardBody sidebarMenu infoBoxOutput tabBox box renderInfoBox infoBox
 #' @importFrom DT DTOutput renderDT datatable formatSignif JS
