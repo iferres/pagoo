@@ -1,13 +1,17 @@
 .active_subset <- list(
 
   pan_matrix = function(){
-    ii <- as.integer(names(private$.i))
-    jj <- as.integer(names(private$.j))
-    private$
+    ii <- private$.i
+    jj <- private$.j
+    pm <- private$
       .x$
       .__enclos_env__$
       private$
-      .panmatrix[ii, jj, drop=FALSE]
+      .panmatrix
+    dn <- dimnames(pm)
+    whr <- which(dn[[1]]%in%ii)
+    whc <- which(dn[[2]]%in%jj)
+    pm[whr, whc, drop = FALSE]
   },
 
   organisms = function(){
