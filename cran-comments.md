@@ -10,6 +10,7 @@ This is a resubmission. See "Addressed CRAN notes" below for changes.
 
 0 errors | 0 warnings | 0 note
 
+<<<<<<< HEAD
 ## Addressed CRAN notes 1 (28/11/2020)
 * fixed broken link.
 * single quote 'pagoo' on Title and Description.
@@ -18,3 +19,9 @@ This is a resubmission. See "Addressed CRAN notes" below for changes.
 ## Addressed CRAN notes 2 (02/12/2020)
 * fixed 'License' field in DESCRIPTION.
 * vignettes examples no longer read/write from/into user's home filespace.
+=======
+## Addressed CRAN notes
+* brokken link
+* single quote 'pagoo' on Title and Description
+* provide some references in DESCRIPTION
+>>>>>>> develop
