@@ -4,10 +4,13 @@
 \alias{load_pangenomeRDS}
 \title{Load A Pagoo Pangenome}
 \usage{
-load_pangenomeRDS(file, ...)
+load_pangenomeRDS(file, pkg, ...)
 }
 \arguments{
 \item{file}{The path to the pangenome `.RDS` file.}
+
+\item{pkg}{The package to use to load the object. Shouldn't be necessary to
+provide, but may be useful in some cases.}
 
 \item{...}{Arguments to be passed to the pagoo object. \code{sep} and
 \code{core_level} overwrite the values stored in the file.}

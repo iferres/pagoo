@@ -681,13 +681,15 @@ pagoo <- function(data, org_meta, cluster_meta, sequences, core_level = 95, sep 
 #' states, i.e : dropped/recovered organisms are conserved, as well as the
 #' `core_level` setted when the object was originally saved.
 #' @param file The path to the pangenome `.RDS` file.
+#' @param pkg The package to use to load the object. Shouldn't be necessary to
+#' provide, but may be useful in some cases.
 #' @param ... Arguments to be passed to the pagoo object. \code{sep} and
 #' \code{core_level} overwrite the values stored in the file.
 #' @return A \code{PgR6MS} class object, or a \code{PgR6M} object (with or
 #' without sequences, respectively).
 #' @importFrom utils installed.packages
 #' @export
-load_pangenomeRDS = function(file, ...){
+load_pangenomeRDS = function(file, pkg, ...){
 
   args <- readRDS(file)
   atrs <- attributes(args)
@@ -695,8 +697,13 @@ load_pangenomeRDS = function(file, ...){
 
   if (!"package" %in% names(atrs)) stop("Not recognized rds file.")
   if (atrs$package != "pagoo") stop("Not recognized rds file.")
-  pkg <- atrs$parent_package
-  if (is.null(pkg)) pkg <- "pagoo"
+  if (missing(pkg)){
+    pkg <- atrs$parent_package
+    if (is.null(pkg)) {
+      warning("'$parent_package' attribute not found. Setting 'pagoo' as parent package.", immediate. = TRUE)
+      pkg <- "pagoo"
+    }
+  }
   if (! pkg %in% rownames(installed.packages())) stop(paste(pkg, "not installed."))
   clss <- atrs$class
 
@@ -717,7 +724,19 @@ load_pangenomeRDS = function(file, ...){
     args$core_level <- core_level2
   }
 
-  p <- do.call(eval(parse(text = paste0(pkg, ":::", clss[1], "$new"))), args)
+
+  i <- 1L
+  clp <- NA_character_
+  while (! clp[1] %in% clss ) {
+    cmd <- paste0(pkg, ":::", clss[i], "$new")
+    p <- try(do.call(eval(parse(text = cmd)), args), silent = TRUE)
+    clp <- class(p)
+    if ( ! clp[1] %in% clss ){
+      wrn <- paste(clss[i], "not in", pkg, "namespace. Rolling back to", clss[i+1],".")
+      warning(wrn, immediate. = TRUE)
+    }
+    i <- i + 1L
+  }
 
   if (!is.null(dropped)){
     message(paste("Dropping the following organisms:", paste0(dropped, collapse = " "), collapse = " "))

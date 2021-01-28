@@ -1,3 +1,7 @@
+# pagoo 0.3.8
+
+* Improve backward compatibility. Older pagoo objects created by third party packages which depend on pagoo do not have an attribute required to successfully load them into session. Now the approach is to downgrade the object to a base pagoo class, or to provide the namespace using the pkg argument.
+
 # pagoo 0.3.7
 
 * Fixed missing link in documentation.
