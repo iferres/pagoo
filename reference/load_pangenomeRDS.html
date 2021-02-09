@@ -48,6 +48,8 @@ states, i.e : dropped/recovered organisms are conserved, as well as the
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -85,7 +87,7 @@ states, i.e : dropped/recovered organisms are conserved, as well as the
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
       </span>
     </div>
 
@@ -128,7 +130,7 @@ states, i.e : dropped/recovered organisms are conserved, as well as the
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/iferres/pagoo/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -157,7 +159,7 @@ states, i.e : dropped/recovered organisms are conserved, as well as the
 `core_level` setted when the object was originally saved.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>load_pangenomeRDS</span><span class='op'>(</span><span class='va'>file</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>load_pangenomeRDS</span><span class='op'>(</span><span class='va'>file</span>, <span class='va'>pkg</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,6 +167,11 @@ states, i.e : dropped/recovered organisms are conserved, as well as the
     <tr>
       <th>file</th>
       <td><p>The path to the pangenome `.RDS` file.</p></td>
+    </tr>
+    <tr>
+      <th>pkg</th>
+      <td><p>The package to use to load the object. Shouldn't be necessary to
+provide, but may be useful in some cases.</p></td>
     </tr>
     <tr>
       <th>...</th>

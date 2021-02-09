@@ -44,6 +44,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -81,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
       </span>
     </div>
 
@@ -124,7 +126,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/iferres/pagoo/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -145,6 +147,13 @@
       <small>Source: <a href='https://github.com/iferres/pagoo/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="pagoo-038" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.8">
+<a href="#pagoo-038" class="anchor"></a>pagoo 0.3.8</h1>
+<ul>
+<li>Improve backward compatibility. Older pagoo objects created by third party packages which depend on pagoo do not have an attribute required to successfully load them into session. Now the approach is to downgrade the object to a base pagoo class, or to provide the namespace using the pkg argument.</li>
+</ul>
+</div>
     <div id="pagoo-037" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.7">
 <a href="#pagoo-037" class="anchor"></a>pagoo 0.3.7</h1>
