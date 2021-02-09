@@ -18,3 +18,6 @@ This is a resubmission. See "Addressed CRAN notes" below for changes.
 ## Addressed CRAN notes 2 (02/12/2020)
 * fixed 'License' field in DESCRIPTION.
 * vignettes examples no longer read/write from/into user's home filespace.
+
+## Addressed CRAN notes 3 (09/02/2021)
+* Omited the "+ file LICENSE" and the file itself
