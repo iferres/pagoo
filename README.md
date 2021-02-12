@@ -1,4 +1,5 @@
 <!-- badges: start -->
+[![](https://www.r-pkg.org/badges/version/pagoo?color=green)](https://cran.r-project.org/package=pagoo)
 [![R build status](https://github.com/iferres/pagoo/workflows/R-CMD-check/badge.svg)](https://github.com/iferres/pagoo/actions)
 ![pkgdown](https://github.com/iferres/pagoo/workflows/pkgdown/badge.svg)
 [![codecov](https://codecov.io/gh/iferres/pagoo/branch/master/graph/badge.svg)](https://codecov.io/gh/iferres/pagoo)
@@ -19,10 +20,13 @@ Please visit [pagoo webpage](https://iferres.github.io/pagoo/) for more resource
 
 ## Installation
 
-Currently, `pagoo` is only available at GitHub. The easiest way to install this package is by using `devtools`:
+`pagoo` is available at CRAN:
+```r
+install.packages("pagoo")
+```
 
+Alternatively you can install the latest dev version from GitHub using `devtools`:
 ``` r
 if (!require("devtools")) install.packages("devtools")
 devtools::install_github('iferres/pagoo')
 ```
-We test `pagoo` in the three main operating systems (linux, macOS, and Windows). We plan to put the code in CRAN and/or Bioconductor repositories in the future.

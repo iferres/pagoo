@@ -1,4 +1,5 @@
 <!-- badges: start -->
+[![](https://www.r-pkg.org/badges/version/pagoo?color=green)](https://cran.r-project.org/package=pagoo)
 [![R build status](https://github.com/iferres/pagoo/workflows/R-CMD-check/badge.svg)](https://github.com/iferres/pagoo/actions)
 ![pkgdown](https://github.com/iferres/pagoo/workflows/pkgdown/badge.svg)
 [![codecov](https://codecov.io/gh/iferres/pagoo/branch/master/graph/badge.svg)](https://codecov.io/gh/iferres/pagoo)
@@ -78,7 +79,7 @@ A quick look to a `pagoo` object print can give us some clues of how is it compo
     .sequences: DNAStringSet
     version: package_version, numeric_version
 ```
-You can see that basically there are public and private fields/methods. In private, all raw data is stored. You will not have easy access to it. Instead, you will be able to access public functions and active bindings. Active bindings are functions that behave as it were variables, in this case they are querying private information and returning it to the user in a convenient way. Public methods 
+You can see that basically there are public and private fields/methods. In private, all raw data is stored. You will not have easy access to it. Instead, you will be able to access public functions and active bindings. Active bindings are functions that behave as it were variables, in this case they are querying private information and returning it to the user in a convenient way. Public methods only "see" active bindings, so their results depends on the state of the pangenome object. For instance, some organisms can be hidden from the dataset, or thresholds can be set actively, changing the results retrieved by the public methods.
 
 ### Pangenome reconstruction
 
@@ -86,13 +87,15 @@ Pagoo works over the pangenome **after it has been built** with any pangenome re
 
 ### Installation
 
-Currently, `pagoo` is only available at GitHub. The easiest way to install this package is by using `devtools`:
-
+`pagoo` is available at CRAN:
+``` r
+install.packages("pagoo")
+```
+Alternatively you can install the latest dev version from GitHub using `devtools`:
 ``` r
 if (!require("devtools")) install.packages("devtools")
 devtools::install_github('iferres/pagoo')
 ```
-We have tested `pagoo` in UNIX operating systems. However it should, we cannot warrant it fully works on Windows. Also, in the future we plan to put the code in CRAN and/or Bioconductor repositories.
 
 ### Help
 
