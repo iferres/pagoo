@@ -34,6 +34,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -174,7 +176,7 @@
 <span id="cb1-49"><a href="#cb1-49"></a>    .sep<span class="op">:</span><span class="st"> </span>__</span>
 <span id="cb1-50"><a href="#cb1-50"></a>    .sequences<span class="op">:</span><span class="st"> </span>DNAStringSet</span>
 <span id="cb1-51"><a href="#cb1-51"></a>    version<span class="op">:</span><span class="st"> </span>package_version, numeric_version</span></code></pre></div>
-<p>You can see that basically there are public and private fields/methods. In private, all raw data is stored. You will not have easy access to it. Instead, you will be able to access public functions and active bindings. Active bindings are functions that behave as it were variables, in this case they are querying private information and returning it to the user in a convenient way. Public methods</p>
+<p>You can see that basically there are public and private fields/methods. In private, all raw data is stored. You will not have easy access to it. Instead, you will be able to access public functions and active bindings. Active bindings are functions that behave as it were variables, in this case they are querying private information and returning it to the user in a convenient way. Public methods only “see” active bindings, so their results depends on the state of the pangenome object. For instance, some organisms can be hidden from the dataset, or thresholds can be set actively, changing the results retrieved by the public methods.</p>
 </div>
 <div id="pangenome-reconstruction" class="section level3">
 <h3 class="hasAnchor">
@@ -184,22 +186,24 @@
 <div id="installation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
-<p>Currently, <code>pagoo</code> is only available at GitHub. The easiest way to install this package is by using <code>devtools</code>:</p>
+<p><code>pagoo</code> is available at CRAN:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"pagoo"</span><span class="op">)</span></code></pre></div>
+<p>Alternatively you can install the latest dev version from GitHub using <code>devtools</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'iferres/pagoo'</span><span class="op">)</span></code></pre></div>
-<p>We have tested <code>pagoo</code> in UNIX operating systems. However it should, we cannot warrant it fully works on Windows. Also, in the future we plan to put the code in CRAN and/or Bioconductor repositories.</p>
 </div>
 <div id="help" class="section level3">
 <h3 class="hasAnchor">
 <a href="#help" class="anchor"></a>Help</h3>
 <p>All three classes are documented. You can access R help pages as with any other function:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://iferres.github.io/pagoo/">pagoo</a></span><span class="op">)</span>
 <span class="op">?</span><span class="va">PgR6</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/help.html">help</a></span><span class="op">(</span><span class="st">'PgR6MS'</span><span class="op">)</span></code></pre></div>
 <p>but as R6 classes documentation is still not standardized, we recommend you to use the <code><a href="reference/pagoo.html">pagoo::pagoo()</a></code> function to read the documentation from, and to to use it also instead of the raw classes.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">?</span><span class="va">pagoo</span></code></pre></div>
 </div>
 </div>
@@ -211,6 +215,8 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=pagoo">https://​cloud.r-project.org/​package=pagoo</a>
+</li>
 <li>Browse source code at <br><a href="https://github.com/iferres/pagoo/">https://​github.com/​iferres/​pagoo/​</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/iferres/pagoo/issues">https://​github.com/​iferres/​pagoo/​issues</a>
@@ -219,12 +225,15 @@
 </li>
 </ul>
 </div>
+
 <div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
 </ul>
 </div>
+
+
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
@@ -234,14 +243,16 @@
 </ul>
 </div>
 
-  <div class="dev-status">
+<div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="https://cran.r-project.org/package=pagoo"><img src="https://www.r-pkg.org/badges/version/pagoo?color=green"></a></li>
 <li><a href="https://github.com/iferres/pagoo/actions"><img src="https://github.com/iferres/pagoo/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 <li><a href="https://codecov.io/gh/iferres/pagoo"><img src="https://codecov.io/gh/iferres/pagoo/branch/master/graph/badge.svg" alt="codecov"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
@@ -258,6 +269,8 @@
 
   
 
+
+  
 
   </body>
 </html>
