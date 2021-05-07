@@ -181,11 +181,11 @@ PgR6 <- R6Class('PgR6',
                   # },
                   #' @description
                   #' Add metadata to the object. You can add metadata to each organism, to each
-                  #' group of orthologous, or to each gene. Elements with missing data should be filled
+                  #' group of orthologous (cluster), or to each gene. Elements with missing data should be filled
                   #' by \code{NA} (dimensions of the provided data.frame must be coherent with object
                   #' data).
                   #' @param map \code{character} identifying the metadata to map. Can
-                  #' be one of \code{"org"}, \code{"group"}, or \code{"gid"}.
+                  #' be one of \code{"org"}, \code{"cluster"}, or \code{"gid"}.
                   #' @param data \code{data.frame} or \code{DataFrame} with the metadata to
                   #' add. For each case, a column named as \code{"map"} must exists, which should
                   #' contain identifiers for each element. In the case of adding gene (\code{gid})
@@ -201,48 +201,67 @@ PgR6 <- R6Class('PgR6',
                     }
 
                     if (map == 'org'){
+
                       if('org'%in%colnames(data)){
-                        ma <- match(private$.organisms$org, data$org)
+                        ma <- match(data$org, private$.organisms$org)
                         if (any(is.na(ma))) stop('data$org do not match with object organisms.')
-                        if (dim(data)[1]!=dim(private$.organisms)[1]){
-                          stp <- paste('data has', dim(data)[1], 'rows while object require', dim(private$.organisms)[1],'.')
-                          stop(stp)
-                        }
-                        data <- data[ma, ]
                         oc <- which(colnames(data)=='org')
-                        private$.organisms <- cbind(private$.organisms, DataFrame(data[, -oc, drop=F]))
+                        nwcls <- colnames(data)[-oc]
+                        repcol <- nwcls %in% colnames(private$.organisms)
+                        invisible(lapply(which(repcol), function(x){
+                          wr <- paste0("Column '", nwcls[x], "' already exists, overwriting.")
+                          warning(wr, immediate. = TRUE)
+                          private$.organisms[[nwcls[x]]] <- NULL
+                        }))
+                        for (i in seq_along(nwcls)){
+                          private$.organisms[[nwcls[i]]][ma] <- data[[nwcls[i]]]
+                        }
                       }else{
                         stop('"data" should contain an "org" column.')
                       }
+
                     }else if (map == 'cluster'){
+
                       if('cluster'%in%colnames(data)){
-                        ma <- match(private$.clusters$cluster, data$cluster)
+                        ma <- match(data$cluster, private$.clusters$cluster)
                         if (any(is.na(ma))) stop('data$cluster do not match with object "cluster" column.')
-                        if (dim(data)[1]!=dim(private$.clusters)[1]){
-                          stp <- paste('data has', dim(data)[1], 'rows while object require', dim(private$.clusters)[1],'.')
-                          stop(stp)
-                        }
-                        data <- data[ma, ]
                         oc <- which(colnames(data)=='cluster')
-                        private$.clusters <- cbind(private$.clusters, DataFrame(data[, -oc, drop=F]))
-                      }else{
-                        stop('"data" should contain an "cluster" column.')
-                      }
-                    }else{
-                      if('gid'%in%colnames(data)){
-                        ma <- match(private$.data$gid, data$gid)
-                        if (any(is.na(ma))) stop('data$gid do not match with object gid.')
-                        if (dim(data)[1]!=dim(private$.data)[1]){
-                          stp <- paste('data has', dim(data)[1], 'rows while object require', dim(private$.data)[1],'.')
-                          stop(stp)
+                        nwcls <- colnames(data)[-oc]
+                        repcol <- nwcls %in% colnames(private$.clusters)
+                        invisible(lapply(which(repcol), function(x){
+                          wr <- paste0("Column '", nwcls[x], "' already exists, overwriting.")
+                          warning(wr, immediate. = TRUE)
+                          private$.clusters[[nwcls[x]]] <- NULL
+                        }))
+                        for (i in seq_along(nwcls)){
+                          private$.clusters[[nwcls[i]]][ma] <- data[[nwcls[i]]]
                         }
-                        data <- data[ma, ]
-                        oc <- which(colnames(data)=='gid')
-                        private$.data <- cbind(private$.data, DataFrame(data[, -oc, drop=F]))
+                      }else{
+                        stop('"data" should contain a "cluster" column.')
+                      }
+
+                    }else{
+
+                      if('gid'%in%colnames(data)){
+                        ma <- match(data$gid, private$.data$gid)
+                        if (any(is.na(ma))) stop('data$gid do not match with object gid.')
+                        oc <- which(colnames(data) %in% c("cluster", "org", "gene", "gid"))
+                        nwcls <- colnames(data)[-oc]
+                        repcol <- nwcls %in% colnames(private$.data)
+                        invisible(lapply(which(repcol), function(x){
+                          wr <- paste0("Column '", nwcls[x], "' already exists, overwriting.")
+                          warning(wr, immediate. = TRUE)
+                          private$.data[[nwcls[x]]] <- NULL
+                        }))
+                        for (i in seq_along(nwcls)){
+                          private$.data[[nwcls[i]]][ma] <- data[[nwcls[i]]]
+                        }
                       }else{
                         stop('"data" should contain a "gid" column.')
                       }
+
                     }
+
                     invisible(self)
                   },
 

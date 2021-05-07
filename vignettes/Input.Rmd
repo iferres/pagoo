@@ -112,11 +112,11 @@ p <- pagoo(data = data, # Required data
 
 All the above stuff with preparing data and loading classes seems difficult and time-consuming, but in real life working datasets this will be rarely needed. We are explaining it here to provide full details about how the software works, but this package also provides functions to automatically read-in output files from pangenome reconstruction software into `pagoo`, avoiding any formatting or manipulation of data.
 
-Currently `pagoo` supports input from [roary](https://sanger-pathogens.github.io/Roary/) (Page et al., 2015), which has been the standard and most cited software for pangenome reconstruction. To work with `roary`'s ouput, please refer to `?roary_2_pagoo` documentation. You will only need the `.gff` files, and the `gene_presence_absence.csv` file.
+Currently `pagoo` supports input from [roary](https://sanger-pathogens.github.io/Roary/) (Page et al., 2015), which has been the standard and most cited software for pangenome reconstruction, and [panaroo](https://github.com/gtonkinhill/panaroo) (Tonkin-Hill et al., 2020). It is worth noticing that as roary become the most used software in this field, other tools as [PEPPAN](https://github.com/zheminzhou/PEPPAN), [PRIATE](https://github.com/SionBayliss/PIRATE) and panaroo include scripts to convert their output to roary's format. To work with `roary`'s ouput, please refer to `?roary_2_pagoo` documentation. Although panaroo also includes a tool for this, we provide a function to load their native output format, see `?panaroo_2_pagoo`. For both functions you will only need the `.gff` files used as input for roary of panaroo, and the `gene_presence_absence.csv` file.
 
 Also, we have created our own pangenome reconstruction software called [pewit](https://github.com/iferres/pewit) (Ferrés et al., still unpublished), which automatically generates a `pagoo`-like object to perform downstream analyses. This object contain all the methods and fields `pagoo` provides, plus a set of methods and fields exclusive to this software.
 
-More recently, other good software has emerged like [PanX](http://pangenome.tuebingen.mpg.de) (Ding et al., 2018), [PRIATE](https://github.com/SionBayliss/PIRATE) (Bayliss et al., 2019), [micropan](https://github.com/cran/micropan) (Snipen & Liland, 2015), [PEPPA](https://github.com/zheminzhou/PEPPAN) (Zhou & Achtman, 2020), [panaroo](https://github.com/gtonkinhill/panaroo) (Tonkin-Hill et al., 2020), among others. We plan to provide support to most of them in the future, although some of them already provide options to output its results as roary's, so in theory you could use them as `pagoo`'s input.
+Other good pangenome reconstruction software already exists like [PanX](http://pangenome.tuebingen.mpg.de) (Ding et al., 2018), [micropan](https://github.com/cran/micropan) (Snipen & Liland, 2015), [GET_HOMOLOGUES](https://github.com/eead-csic-compbio/get_homologues) (Contreras-Moreira & Vinuesa, 2013), among others. We plan to provide support to some of them in the future.
 
 # Adding Metadata After Object Creation
 
@@ -128,7 +128,7 @@ p$add_metadata(map = "org", host_df)
 p$organisms
 ```
 
-In order to allow `pagoo` correct data mapping, the values in the first column of the metadata table should be the same as `p$organisms$org`, and its column header must also be named `org`.
+In order to allow `pagoo` correct data mapping, the values in the first column of the metadata table should be available at `p$organisms$org`, and its column header must also be named `org`.
 
 As said, you can add `gene` or `cluster` metadata following the same idea.
 
