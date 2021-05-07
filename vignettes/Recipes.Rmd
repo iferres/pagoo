@@ -100,28 +100,62 @@ p$pan_matrix %>% micropan::fluidity(n.sim = 100)
 ```
 
 
-# Blastp
-After you have reconstructed the pangenome, it's a common practice to use a single representative gene from each cluster to annotate them using a curated database such as COG, EggNOG or KEGG. After doing that, you probably want to add any new information to the `pagoo` object as cluster's metadata. In this recipe we show how to extract one representative sequence from each cluster, translate each of them, and use [rBLAST](https://github.com/mhahsler/rBLAST) package to query a hypothetical blastp database. **NOTE:** we didn't include any blast database in the package, the code here is just to illustrate the general idea. Running the following chunk will throw an error.
+# Annotate clusters
+A common practice to improve the annotation quality of the pangenome is to retrieve a single representative sequence of each cluster and to 'blast' it against a given database. The best hits annotation is then transferred to the clusters. The EggNOG database is a very comprehensive and well curated resource which includes annotation from many other databases (e.g. KEGG, COG, CAZy, etc), and the eggnog-mapper tool allows to easily transfer their annotation to any given query sequence. 
 
-**DEVELOPER NOTE: ADDING METADATA STEP MISSING**
+This recipe shows how to write a multi-fasta file containing one representative sequence of each cluster to annotate with the EggNOG-mapper tool, and then it shows how to add this new information to the pangenome object.
+
+The first step is to retrieve a single representative sequence from each cluster, then to translate them, and finally to write them to a multi-fasta file:
 
 ```{r, eval=FALSE}
-# Load required packages
-if (!require(rBlast)) devtools::install_github('mhahsler/rBLAST')
-library(Biostrings)
-library(rBLAST)
+p$sequences %>%                                     # Get the sequences
+  lapply("[[", 1) %>%                               # Select the first one as representative.
+  unlist() %>%                                      # Unlist and..
+  DNAStringSet() %>%                                # ..transform to DNAStringSet.
+  translate(if.fuzzy.codon = "solve") %>%           # Translate.
+  writeXStringSet(filepath = "representatives.fasta") # Write a fasta file.
+```
+
+Now the user has to provide the `representatives.fasta` as input file to the eggnog-mapper. This can be done through the [web server](http://eggnog-mapper.embl.de), or through the command line if it is installed. The command (on your terminal) would look somewhat like this:
+
+```{bash, eval=FALSE}
+emapper.py -i representative.fasta -o representative_emapper
+```
+
+Then we have to read the `*.emapper.annotations` file into the R session, and feed the pangenome object with its information:
+
+```{r, eval=FALSE}
 library(magrittr)
 
-db_path <- 'path/to/custom/blastpdb'        # Path to custom blastp db
-db <- blast(db = db_path, type = 'blastp')  # Set blastdb
+# Read the annotations file
+emap <- read.csv("representatives.emapper.annotations",
+                 sep = "\t",
+                 comment.char = "#",
+                 header = FALSE,
+                 na.strings = "-")
 
-blast_result <- p$sequences %>%             # Pangenome sequences
-  lapply('[[', 1L) %>%                      # Subset 1 sequence from each cluster
-  Biostrings::DNAStringSet() %>%            # Transform list to DNAStringSet
-  Biostrings::translate() %>%               # Translate DNAStringSet
-  rBLAST::predict.BLAST(db, .)              # Run blastp. Returns data.frame
+# Set column names
+colnames(emap) <- c("query", "seed_ortholog", "evalue", "score", "eggNOG_OGs",
+                    "max_annot_lvl", "COG_category", "Description", "Preferred_name",
+                    "GOs", "EC", "KEGG_ko", "KEGG_Pathway", "KEGG_Module", "KE",
+                    "GG_Reaction", "KEGG_rclass", "BRITE", "CAZy",
+                    "BiGG_Reaction", "PFAMs")
 
-### ADD METADATA STEP MISSING
+# Lets take only some of them which I usually find useful. Subset the data.frame:
+cluster_meta <- emap[, c("query", "COG_category", "KEGG_ko", "CAZy")]
+
+# Clean and parse the fields before feeding it to the pangenome
+cluster_meta$COG_category <- cluster_meta$COG_category %>% strsplit("")
+cluster_meta$KEGG_ko <- clusert_meta$KEGG_ko %>%
+  gsub("ko:", "", .) %>%
+  strsplit(",")
+cluster_meta$CAZy <- cluster_meta$CAZy %>% strsplit("")
+
+# Add the metadata to the pangenome clusters
+p$add_metadata("cluster", cluster_meta)
+
+# Now the object contains the new information in the clusters field:
+p$clusters
 ```
 
 # Neutral genes
