@@ -151,6 +151,56 @@ test_that('$save_pangenomeRDS() and load_pangenome() works', {
   file.remove(out_rds)
 })
 
+
+test_that("Adding gene metadata after object creation works.",{
+  sep <- "__"
+  p <- pagoo(data = data[, -4], sep = sep)
+  df <- data.frame(gid = paste(data$org, data$gene, sep = sep),
+                   annot = data[, 4])
+  p$add_metadata(map = "gid", df)
+  # p2 <- pagoo(data, sep = sep)
+
+  expect_is(p, "R6")
+  expect_is(p, "PgR6")
+  expect_is(p, "PgR6M")
+
+  expect_is(p$genes, "DFrameList")
+  expect_length(unlist(p$genes, use.names = FALSE), 5)
+  expect_named(unlist(p$genes, use.names = FALSE),
+               c("cluster", "org", "gene", "gid", "annot"))
+  # expect_equal(p$genes, p2$genes)
+})
+
+test_that("Adding cluster metadata after object creation works.",{
+  sep <- "__"
+  p <- pagoo(data = data, sep = sep)
+  p$add_metadata(map = "cluster", clust_meta)
+
+  expect_is(p, "R6")
+  expect_is(p, "PgR6")
+  expect_is(p, "PgR6M")
+
+  expect_is(p$organisms, "DFrame")
+  expect_length(p$clusters, dim(clust_meta)[2])
+  expect_named(p$clusters, names(clust_meta))
+  # expect_equal(p$clusters, p2$clusters)
+})
+
+test_that("Adding organism metadata after object creation works.",{
+  sep <- "__"
+  p <- pagoo(data = data, sep = sep)
+  p$add_metadata(map = "org", orgs_meta)
+
+  expect_is(p, "R6")
+  expect_is(p, "PgR6")
+  expect_is(p, "PgR6M")
+
+  expect_is(p$organisms, "DFrame")
+  expect_length(p$organisms, dim(orgs_meta)[2])
+  expect_named(p$organisms, names(orgs_meta))
+  # expect_equal(p$organisms, p2$organisms)
+})
+
 ## Input from third party pangenome reconstruction software
 #   MISSING
 
