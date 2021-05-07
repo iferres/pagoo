@@ -143,7 +143,7 @@ analyzing a pangenome.
 \if{latex}{\out{\hypertarget{method-add_metadata}{}}}
 \subsection{Method \code{add_metadata()}}{
 Add metadata to the object. You can add metadata to each organism, to each
-group of orthologous, or to each gene. Elements with missing data should be filled
+group of orthologous (cluster), or to each gene. Elements with missing data should be filled
 by \code{NA} (dimensions of the provided data.frame must be coherent with object
 data).
 \subsection{Usage}{
@@ -154,7 +154,7 @@ data).
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{map}}{\code{character} identifying the metadata to map. Can
-be one of \code{"org"}, \code{"group"}, or \code{"gid"}.}
+be one of \code{"org"}, \code{"cluster"}, or \code{"gid"}.}
 
 \item{\code{data}}{\code{data.frame} or \code{DataFrame} with the metadata to
 add. For each case, a column named as \code{"map"} must exists, which should
