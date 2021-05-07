@@ -81,7 +81,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/iferres/pagoo/">
+  <a href="https://github.com/iferres/pagoo/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -102,7 +102,7 @@
       <h1 data-toc-skip>Querying Data</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/iferres/pagoo/blob/master/vignettes/Querying_Data.Rmd"><code>vignettes/Querying_Data.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/iferres/pagoo/blob/master/vignettes/Querying_Data.Rmd" class="external-link"><code>vignettes/Querying_Data.Rmd</code></a></small>
       <div class="hidden name"><code>Querying_Data.Rmd</code></div>
 
     </div>
@@ -112,15 +112,15 @@
 <style type="text/css">
 pre, code {white-space:pre !important; overflow-x:auto;}
 </style>
-<p>In this section we will start exploring what is stored inside the <code>pagoo</code> object and how we can access this information. Keep in mind that this object has its own associated data and methods that can be easily queried with the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> operator. These methods allow for the rapid subsetting, extraction and visualization of pangenome data.</p>
+<p>In this section we will start exploring what is stored inside the <code>pagoo</code> object and how we can access this information. Keep in mind that this object has its own associated data and methods that can be easily queried with the <code>$</code> operator. These methods allow for the rapid subsetting, extraction and visualization of pangenome data.</p>
 <p>First of all, we will load a pangenome using a toy dataset included in the package. This is a preloaded set of 10 <em>Campylobacter spp.</em> genomes, with metadata associated.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://iferres.github.io/pagoo/">pagoo</a></span><span class="op">)</span> <span class="co"># Load package</span>
-<span class="va">rds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">'extdata'</span>, <span class="st">'campylobacter.RDS'</span>, package <span class="op">=</span> <span class="st">'pagoo'</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://iferres.github.io/pagoo/" class="external-link">pagoo</a></span><span class="op">)</span> <span class="co"># Load package</span>
+<span class="va">rds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'extdata'</span>, <span class="st">'campylobacter.RDS'</span>, package <span class="op">=</span> <span class="st">'pagoo'</span><span class="op">)</span>
 <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_pangenomeRDS.html">load_pangenomeRDS</a></span><span class="op">(</span><span class="va">rds</span><span class="op">)</span></code></pre></div>
 <div id="summary-statistics" class="section level1">
 <h1 class="hasAnchor">
-<a href="#summary-statistics" class="anchor"></a>Summary statistics</h1>
+<a href="#summary-statistics" class="anchor" aria-hidden="true"></a>Summary statistics</h1>
 <p>A pangenome can be stratified in different gene subsets according to their frequency in the dataset. The <code>core genes</code> can be defined as those present in all or almost every genome (typically 95-100%). The remaining genes are defined as the accessory genome, that can be subdivided in <code>cloud genes</code> or singletons (present in one genome or in genomes that are identical) and <code>shell genes</code> which are those in the middle. Let’s see this using <code>pagoo</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">summary_stats</span></code></pre></div>
@@ -133,7 +133,7 @@ pre, code {white-space:pre !important; overflow-x:auto;}
 ## 4       Cloud       548</code></pre>
 <div id="core-level" class="section level2">
 <h2 class="hasAnchor">
-<a href="#core-level" class="anchor"></a>Core level</h2>
+<a href="#core-level" class="anchor" aria-hidden="true"></a>Core level</h2>
 <p>The <code>core level</code> defines the minimum number of genomes (as a percentage) in which a certain gene should be present to be considered a core gene. By default, <code>pagoo</code> considers as core all genes present in at least 95% of organisms. The core level can be modified to be more or less stringent defining the core genome. This feature exemplifies R6’s reference semantics, since modifying the core level will affect the pangenome object state resulting in different core, shell and cloud sets. Have a look:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">core_level</span>       </code></pre></div>
@@ -155,7 +155,7 @@ pre, code {white-space:pre !important; overflow-x:auto;}
 </div>
 <div id="pangenome-matrix" class="section level1">
 <h1 class="hasAnchor">
-<a href="#pangenome-matrix" class="anchor"></a>Pangenome matrix</h1>
+<a href="#pangenome-matrix" class="anchor" aria-hidden="true"></a>Pangenome matrix</h1>
 <p>The pangenome matrix is one of the most useful things when analyzing pangenomes. Typically, it represents organisms in rows and clusters of orthologous in columns informing about gene abundance (considering paralogues). The pangenome matrix looks like this (printing only first 5 columns):</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">pan_matrix</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></code></pre></div>
@@ -170,7 +170,7 @@ pre, code {white-space:pre !important; overflow-x:auto;}
 </div>
 <div id="gene-metadata" class="section level1">
 <h1 class="hasAnchor">
-<a href="#gene-metadata" class="anchor"></a>Gene metadata</h1>
+<a href="#gene-metadata" class="anchor" aria-hidden="true"></a>Gene metadata</h1>
 <p>Individual gene metadata can be accessed by using the <code>$genes</code> suffix. It always contains the gene name, the organism to which it belongs, the cluster to where it was assigned, and a gene identifier (<code>gid</code>) that is mainly used internally to organize the data. Also, it may typically include annotation data, genomic coordinates, etc, but this other metadata is optional. Gene metadata is spitted by cluster, so it consist in a <code>List</code> of <code>DataFrame</code>s.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">genes</span></code></pre></div>
@@ -221,12 +221,12 @@ pre, code {white-space:pre !important; overflow-x:auto;}
 ## &lt;2586 more elements&gt;</code></pre>
 <p>If you want to work with this data as a single <code>DataFrame</code>, just <code>unlist</code> it:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">p</span><span class="op">$</span><span class="va">genes</span>, use.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">p</span><span class="op">$</span><span class="va">genes</span>, use.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p><code>pagoo</code> also includes predefined subsets fields to list only certain pangenome category, these are queried by adding a prefix with the desired category followed by an underscore: <code>$core_genes</code>, <code>$shell_genes</code>, and <code>$cloud_genes</code>. These kind of subsets are better explained in the ‘4 - Subets’ tutorial, and also apply to other pangenome data described below.</p>
 </div>
 <div id="clusters-metadata" class="section level1">
 <h1 class="hasAnchor">
-<a href="#clusters-metadata" class="anchor"></a>Clusters metadata</h1>
+<a href="#clusters-metadata" class="anchor" aria-hidden="true"></a>Clusters metadata</h1>
 <p>Groups of orthologues (clusters) are also stored in <code>pagoo</code> objects as a table with a cluster identifier per row, and optional metadata associated as additional columns.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">clusters</span></code></pre></div>
@@ -248,7 +248,7 @@ pre, code {white-space:pre !important; overflow-x:auto;}
 </div>
 <div id="sequences" class="section level1">
 <h1 class="hasAnchor">
-<a href="#sequences" class="anchor"></a>Sequences</h1>
+<a href="#sequences" class="anchor" aria-hidden="true"></a>Sequences</h1>
 <p>Although is an optional field (it exists only if user provide this data as an argument when object is created), <code>$sequences</code> gives access to sequence data. Sequences are stored as a <code>List</code> of <code>DNAStringSet</code> (a.k.a <code>DNAStringSetList</code>, Biostrings package), grouped by cluster.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">sequences</span>             <span class="co"># List all sequences grouped by cluster</span></code></pre></div>
@@ -280,7 +280,7 @@ pre, code {white-space:pre !important; overflow-x:auto;}
 </div>
 <div id="organism-metadata" class="section level1">
 <h1 class="hasAnchor">
-<a href="#organism-metadata" class="anchor"></a>Organism metadata</h1>
+<a href="#organism-metadata" class="anchor" aria-hidden="true"></a>Organism metadata</h1>
 <p>The <code>$organisms</code> field contain a table with organisms and metadata as additional columns if provided.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">organisms</span></code></pre></div>
@@ -317,11 +317,13 @@ pre, code {white-space:pre !important; overflow-x:auto;}
 
 
       <footer><div class="copyright">
-  <p>Developed by Ignacio Ferres, Gregorio Iraola, Institut Pasteur de Montevideo.</p>
+  <p></p>
+<p>Developed by Ignacio Ferres, Gregorio Iraola, Institut Pasteur de Montevideo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>

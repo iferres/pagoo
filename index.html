@@ -111,16 +111,16 @@
 
 <div id="pagoo-an-encapsulated-oo-class-system-for-analyzing-bacterial-pangenomes-in-r" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#pagoo-an-encapsulated-oo-class-system-for-analyzing-bacterial-pangenomes-in-r" class="anchor"></a>Pagoo: An encapsulated OO class system for analyzing bacterial pangenomes in R</h1></div>
+<a href="#pagoo-an-encapsulated-oo-class-system-for-analyzing-bacterial-pangenomes-in-r" class="anchor" aria-hidden="true"></a>Pagoo: An encapsulated OO class system for analyzing bacterial pangenomes in R</h1></div>
 <p><em>“One object to store them all, one object to find them, one object to query from and with ggplot2 visualize them.” (Lord Sauron)</em></p>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h2>
-<p><code>pagoo</code> is an encapsulated, object-oriented class system for analyzing bacterial pangenomes. It uses the <a href="https://r6.r-lib.org/">R6</a> package as backend. It was designed in order to facilitate and speed-up the comparative analysis of multiple bacterial genomes, standardizing and optimizing routine tasks performed everyday. There are a handful of things done everyday when working with bacterial pangenomes: subset, summarize, extract, visualize and store data. So, <code>pagoo</code> is intended to facilitate these tasks as much as possible.</p>
+<a href="#introduction" class="anchor" aria-hidden="true"></a>Introduction</h2>
+<p><code>pagoo</code> is an encapsulated, object-oriented class system for analyzing bacterial pangenomes. It uses the <a href="https://r6.r-lib.org/" class="external-link">R6</a> package as backend. It was designed in order to facilitate and speed-up the comparative analysis of multiple bacterial genomes, standardizing and optimizing routine tasks performed everyday. There are a handful of things done everyday when working with bacterial pangenomes: subset, summarize, extract, visualize and store data. So, <code>pagoo</code> is intended to facilitate these tasks as much as possible.</p>
 <div id="philosophy" class="section level3">
 <h3 class="hasAnchor">
-<a href="#philosophy" class="anchor"></a>Philosophy</h3>
-<p>The main idea behind pagoo is that, once you have reconstructed a pangenome, all the information and basic methods are embedded into a single object. To query this object, you simply use the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> symbol as if where a named <code>list</code> in R.</p>
+<a href="#philosophy" class="anchor" aria-hidden="true"></a>Philosophy</h3>
+<p>The main idea behind pagoo is that, once you have reconstructed a pangenome, all the information and basic methods are embedded into a single object. To query this object, you simply use the <code>$</code> symbol as if where a named <code>list</code> in R.</p>
 <p><img src="reference/figures/readmegif.gif"></p>
 <p>This idea is common in other object-oriented programming languages, but not in R for final users. We have exploited R6 package to take advantage of this kind of programming and make it available to the R pangenomics community.</p>
 <p><code>pagoo</code> is composed by three <code>R6</code> classes, each one more complex than the other, and that the more basic are inherited by the more complex ones. The most basic one, <code>PgR6</code>, contains basic subset methods and data manipulation functions. The second one, <code>PgR6M</code> inherits all the methods and fields from the previous one, and incorporates statistical and visualization methods. The last one, <code>PgR6MS</code>, inherits from <code>PgR6M</code> all its capabilities, and adds methods to manipulate DNA sequences.</p>
@@ -180,28 +180,28 @@
 </div>
 <div id="pangenome-reconstruction" class="section level3">
 <h3 class="hasAnchor">
-<a href="#pangenome-reconstruction" class="anchor"></a>Pangenome reconstruction</h3>
+<a href="#pangenome-reconstruction" class="anchor" aria-hidden="true"></a>Pangenome reconstruction</h3>
 <p>Pagoo works over the pangenome <strong>after it has been built</strong> with any pangenome reconstruction software. So, you can do it with the software of your preference. Despite we recommend <code>Pewit</code>, our own pangenome reconstruction software, <code>pagoo</code> can read-in the output of the most popular pangenome reconstruction software, <code>roary</code>, and also we are planning to give support to others like <code>Panaroo</code>, <code>PanX</code> and <code>PIRATE</code>. <code>pagoo</code> also runs a <code>Shiny</code> application that provides reactive interaction with the data and facilitates handling and visualization.</p>
 </div>
 <div id="installation" class="section level3">
 <h3 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h3>
+<a href="#installation" class="anchor" aria-hidden="true"></a>Installation</h3>
 <p><code>pagoo</code> is available at CRAN:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"pagoo"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pagoo"</span><span class="op">)</span></code></pre></div>
 <p>Alternatively you can install the latest dev version from GitHub using <code>devtools</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'iferres/pagoo'</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="help" class="section level3">
 <h3 class="hasAnchor">
-<a href="#help" class="anchor"></a>Help</h3>
+<a href="#help" class="anchor" aria-hidden="true"></a>Help</h3>
 <p>All three classes are documented. You can access R help pages as with any other function:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://iferres.github.io/pagoo/">pagoo</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://iferres.github.io/pagoo/" class="external-link">pagoo</a></span><span class="op">)</span>
 <span class="op">?</span><span class="va">PgR6</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/help.html">help</a></span><span class="op">(</span><span class="st">'PgR6MS'</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/help.html" class="external-link">help</a></span><span class="op">(</span><span class="st">'PgR6MS'</span><span class="op">)</span></code></pre></div>
 <p>but as R6 classes documentation is still not standardized, we recommend you to use the <code><a href="reference/pagoo.html">pagoo::pagoo()</a></code> function to read the documentation from, and to to use it also instead of the raw classes.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">?</span><span class="va">pagoo</span></code></pre></div>
@@ -213,7 +213,7 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=pagoo">https://​cloud.r-project.org/​package=pagoo</a>
 </li>
@@ -227,7 +227,7 @@
 </div>
 
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
 </ul>
@@ -235,7 +235,7 @@
 
 
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Ignacio Ferres <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-0910-6568" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Gregorio Iraola <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-6516-3404" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
@@ -244,11 +244,11 @@
 </div>
 
 <div class="dev-status">
-<h2>Dev status</h2>
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=pagoo"><img src="https://www.r-pkg.org/badges/version/pagoo?color=green"></a></li>
-<li><a href="https://github.com/iferres/pagoo/actions"><img src="https://github.com/iferres/pagoo/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://codecov.io/gh/iferres/pagoo"><img src="https://codecov.io/gh/iferres/pagoo/branch/master/graph/badge.svg" alt="codecov"></a></li>
+<li><a href="https://cran.r-project.org/package=pagoo" class="external-link"><img src="https://www.r-pkg.org/badges/version/pagoo?color=green"></a></li>
+<li><a href="https://github.com/iferres/pagoo/actions" class="external-link"><img src="https://github.com/iferres/pagoo/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://codecov.io/gh/iferres/pagoo" class="external-link"><img src="https://codecov.io/gh/iferres/pagoo/branch/master/graph/badge.svg" alt="codecov"></a></li>
 </ul>
 </div>
 
@@ -257,11 +257,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Ignacio Ferres, Gregorio Iraola, Institut Pasteur de Montevideo.</p>
+  <p></p>
+<p>Developed by Ignacio Ferres, Gregorio Iraola, Institut Pasteur de Montevideo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>

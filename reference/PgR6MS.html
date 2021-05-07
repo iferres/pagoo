@@ -70,6 +70,7 @@ instead of this, since is more easy to understand.
 </script>
 
 
+
   
 
   
@@ -188,7 +189,7 @@ sequences, as defined above.</p></dd>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
+<h3 class='hasAnchor' id='public-methods'><a class='anchor' aria-hidden='true' href='#public-methods'></a>Public methods</h3>
 
 <ul>
 <li><p><a href='#method-new'><code>PgR6MS$new()</code></a></p></li>
@@ -218,8 +219,8 @@ sequences, as defined above.</p></dd>
 </details>
 
 <hr>
-<a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-<p>Create a <code>PgR6MS</code> object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-new"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>new()</code></h3>
+<p>Create a <code>PgR6MS</code> object.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>PgR6MS</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
   <span class='va'>data</span>,
   <span class='va'>org_meta</span>,
@@ -232,7 +233,7 @@ sequences, as defined above.</p></dd>
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>data</code></dt><dd><p>A <code>data.frame</code> or <code><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></code> containing at least the
 following columns: <code>gene</code> (gene name), <code>org</code> (organism name to which the gene belongs to),
@@ -269,20 +270,75 @@ objects (same requirements as (1), but with BStringSet names as gene names); or 
 <dt><code>verbose</code></dt><dd><p><code>logical</code>. Whether to display progress messages when loading class.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>An R6 object of class PgR6MS. It contains basic fields and methods for analyzing a pangenome. It also
+contains additional statistical methods for analyze it, methods to make basic exploratory plots, and methods
+for sequence manipulation.</p>
+<h3 class='hasAnchor' id='list-new-'><a class='anchor' aria-hidden='true' href='#list-new-'></a>Method <code>new()</code></h3>
+<p>Create a <code>PgR6MS</code> object.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6MS</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>org_meta</span>,
+  <span class='va'>cluster_meta</span>,
+  core_level <span class='op'>=</span> <span class='fl'>95</span>,
+  sep <span class='op'>=</span> <span class='st'>"__"</span>,
+  <span class='va'>DF</span>,
+  <span class='va'>group_meta</span>,
+  <span class='va'>sequences</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>data</code></dt><dd><p>A <code>data.frame</code> or <code><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></code> containing at least the
+following columns: <code>gene</code> (gene name), <code>org</code> (organism name to which the gene belongs to),
+and <code>cluster</code> (group of orthologous to which the gene belongs to). More columns can be added as metadata
+for each gene.</p></dd>
+
+<dt><code>org_meta</code></dt><dd><p>(optional) A <code>data.frame</code> or <code><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></code>
+containing additional metadata for organisms. This <code>data.frame</code> must have a column named "org" with
+valid organisms names (that is, they should match with those provided in <code>data</code>, column <code>org</code>), and
+additional columns will be used as metadata. Each row should correspond to each organism.</p></dd>
+
+<dt><code>cluster_meta</code></dt><dd><p>(optional) A <code>data.frame</code> or <code><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></code>
+containing additional metadata for clusters. This <code>data.frame</code> must have a column named "cluster" with
+valid organisms names (that is, they should match with those provided in <code>data</code>, column <code>cluster</code>), and
+additional columns will be used as metadata. Each row should correspond to each cluster.</p></dd>
+
+<dt><code>core_level</code></dt><dd><p>The initial core_level (that's the percentage of organisms a core cluster must be in to be
+considered as part of the core genome). Must be a number between 100 and 85, (default: 95). You can change it
+later by using the <code>$core_level</code> field once the object was created.</p></dd>
+
+<dt><code>sep</code></dt><dd><p>A separator. By default is '__'(two underscores). It will be used to
+create a unique <code>gid</code> (gene identifier) for each gene. <code>gid</code>s are created by pasting
+<code>org</code> to <code>gene</code>, separated by <code>sep</code>.</p></dd>
+
+<dt><code>DF</code></dt><dd><p>Deprecated. Use <code>data</code> instead.</p></dd>
+
+<dt><code>group_meta</code></dt><dd><p>Deprecated. Use <code>cluster_meta</code> instead.</p></dd>
+
+<dt><code>sequences</code></dt><dd><p>Can accept: 1) a named <code>list</code> of named <code>character</code> vector. Name of list
+are names of organisms, names of character vector are gene names; or 2) a named <code>list</code> of <code><a href='https://rdrr.io/pkg/Biostrings/man/XStringSet-class.html'>DNAStringSetList</a></code>
+objects (same requirements as (1), but with BStringSet names as gene names); or 3) a <code><a href='https://rdrr.io/pkg/Biostrings/man/XStringSetList-class.html'>DNAStringSetList</a></code>
+(same requirements as (2) but <code>DNAStringSetList</code> names are organisms names).</p></dd>
+
+<dt><code>verbose</code></dt><dd><p><code>logical</code>. Whether to display progress messages when loading class.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>An R6 object of class PgR6MS. It contains basic fields and methods for analyzing a pangenome. It also
 contains additional statistical methods for analyze it, methods to make basic exploratory plots, and methods
 for sequence manipulation.</p>
 <p><hr>
-<a id="method-core_seqs_4_phylo"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>core_seqs_4_phylo()</code></h3>
+<a id="method-core_seqs_4_phylo"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>core_seqs_4_phylo()</code></h3>
 <p>A field for obtaining core gene sequences is available (see below), but for creating a phylogeny with this
 sets is useful to: 1) have the possibility of extracting just one sequence of each organism on each cluster, in
 case paralogues are present, and 2) filling gaps with empty sequences in case the core_level was set below 100%,
 allowing more genes (some not in 100% of organisms) to be incorporated to the phylogeny. That is the purpose of
-this special function.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+this special function.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>PgR6MS</span><span class='op'>$</span><span class='fu'>core_seqs_4_phylo</span><span class='op'>(</span>max_per_org <span class='op'>=</span> <span class='fl'>1</span>, fill <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>max_per_org</code></dt><dd><p>Maximum number of sequences of each organism to be taken from each cluster.</p></dd>
 
@@ -290,15 +346,43 @@ this special function.</p><h4 class='hasAnchor' id='arguments'><a class='anchor'
 <code>core_level</code> is set below 100%, and some clusters with missing organisms are also considered.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A <code>DNAStringSetList</code> with core genes. Order of organisms on each cluster is conserved, so it is easier
+to concatenate them into a super-gene suitable for phylogenetic inference.</p>
+<h3 class='hasAnchor' id='list-core-seqs-phylo-'><a class='anchor' aria-hidden='true' href='#list-core-seqs-phylo-'></a>Method <code>core_seqs_4_phylo()</code></h3>
+<p>A field for obtaining core gene sequences is available (see below), but for creating a phylogeny with this
+sets is useful to: 1) have the possibility of extracting just one sequence of each organism on each cluster, in
+case paralogues are present, and 2) filling gaps with empty sequences in case the core_level was set below 100%,
+allowing more genes (some not in 100% of organisms) to be incorporated to the phylogeny. That is the purpose of
+this special function.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6MS</span><span class='op'>$</span><span class='fu'>core_seqs_4_phylo</span><span class='op'>(</span>max_per_org <span class='op'>=</span> <span class='fl'>1</span>, fill <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>max_per_org</code></dt><dd><p>Maximum number of sequences of each organism to be taken from each cluster.</p></dd>
+
+<dt><code>fill</code></dt><dd><p><code>logical</code>. If fill <code>DNAStringSet</code> with empty <code>DNAString</code> in cases where
+<code>core_level</code> is set below 100%, and some clusters with missing organisms are also considered.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A <code>DNAStringSetList</code> with core genes. Order of organisms on each cluster is conserved, so it is easier
 to concatenate them into a super-gene suitable for phylogenetic inference.</p>
 <p><hr>
-<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-clone"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>PgR6MS</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
+
+</dl><p></div></p>
+<h3 class='hasAnchor' id='list-clone-'><a class='anchor' aria-hidden='true' href='#list-clone-'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>PgR6MS</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
@@ -317,11 +401,11 @@ to concatenate them into a super-gene suitable for phylogenetic inference.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Ignacio Ferres, Gregorio Iraola, Institut Pasteur de Montevideo.</p>
+  <p><p>Developed by Ignacio Ferres, Gregorio Iraola, Institut Pasteur de Montevideo.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
