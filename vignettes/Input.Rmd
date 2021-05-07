@@ -128,7 +128,7 @@ p$add_metadata(map = "org", host_df)
 p$organisms
 ```
 
-In order to allow `pagoo` correct data mapping, the values in the first column of the metadata table should be the same as `p$organisms$org`, and its column header must also be named `org`.
+In order to allow `pagoo` correct data mapping, the values in the first column of the metadata table should be available at `p$organisms$org`, and its column header must also be named `org`.
 
 As said, you can add `gene` or `cluster` metadata following the same idea.
 
