@@ -20,7 +20,7 @@ sequences.}
 \link[pagoo]{PgR6MS} for a more detail argument description.}
 }
 \value{
-A pagoo's R6 class object. Ethier \link[pagoo]{PgR6M}, if \code{gffs}
+A pagoo's R6 class object. Either \link[pagoo]{PgR6M}, if \code{gffs}
 argument is left empty, or \link[pagoo]{PgR6MS} if path to gff files is
 provided.
 }

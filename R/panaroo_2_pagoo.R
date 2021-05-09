@@ -16,7 +16,7 @@
 #' sequences.
 #' @param sep \code{character}. Default: \code{"__"} (two underscores). See
 #' \link[pagoo]{PgR6MS} for a more detail argument description.
-#' @return A pagoo's R6 class object. Ethier \link[pagoo]{PgR6M}, if \code{gffs}
+#' @return A pagoo's R6 class object. Either \link[pagoo]{PgR6M}, if \code{gffs}
 #' argument is left empty, or \link[pagoo]{PgR6MS} if path to gff files is
 #' provided.
 #' @references

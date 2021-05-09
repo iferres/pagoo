@@ -11,7 +11,7 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-We implemented `pagoo` to provide basic but fundamental statistical analyses and visualizations out-of-the-box. Some of them are just wrappers of other packages functions (see `vegan` and `micropan` R packages; cite them also if you use `pagoo`), and graphics are made by `ggplot2` and `plotly` packages. All these are very useful for initial data exploration, but also provide a lot of flexibility to interact with other R packages in order to make more complex plots and more robust analyses. Also an interactive `Shiny App` can be easily deployed with a single funtion call, useful specially for those users that not very used to work with R code and prefer a UI, but also powerful for experienced users since it gives a general view of the data.
+We implemented `pagoo` to provide basic but fundamental statistical analyses and visualizations out-of-the-box. Some of them are just wrappers of other packages functions (see `vegan` and `micropan` R packages; cite them also if you use `pagoo`), and graphics are made by `ggplot2` and `plotly` packages. All these are very useful for initial data exploration, but also provide a lot of flexibility to interact with other R packages in order to make more complex plots and more robust analyses. Also an interactive `Shiny App` can be easily deployed with a single function call, useful specially for those users that not very used to work with R code and prefer a UI, but also powerful for experienced users since it gives a general view of the data.
 
 All this methods are embebbed to the `pagoo` object, so is very easy to start working with pangenome data.
 
