@@ -116,7 +116,7 @@ Currently `pagoo` supports input from [roary](https://sanger-pathogens.github.io
 
 Also, we have created our own pangenome reconstruction software called [pewit](https://github.com/iferres/pewit) (Ferrés et al., still unpublished), which automatically generates a `pagoo`-like object to perform downstream analyses. This object contain all the methods and fields `pagoo` provides, plus a set of methods and fields exclusive to this software.
 
-Other good pangenome reconstruction software already exists like [PanX](http://pangenome.tuebingen.mpg.de) (Ding et al., 2018), [micropan](https://github.com/cran/micropan) (Snipen & Liland, 2015), [GET_HOMOLOGUES](https://github.com/eead-csic-compbio/get_homologues) (Contreras-Moreira & Vinuesa, 2013), among others. We plan to provide support to some of them in the future.
+Other good pangenome reconstruction software already exists like [PanX](https://pangenome.tuebingen.mpg.de) (Ding et al., 2018), [micropan](https://github.com/cran/micropan) (Snipen & Liland, 2015), [GET_HOMOLOGUES](https://github.com/eead-csic-compbio/get_homologues) (Contreras-Moreira & Vinuesa, 2013), among others. We plan to provide support to some of them in the future.
 
 # Adding Metadata After Object Creation
 
