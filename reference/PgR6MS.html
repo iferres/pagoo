@@ -221,7 +221,7 @@ sequences, as defined above.</p></dd>
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>new()</code></h3>
 <p>Create a <code>PgR6MS</code> object.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6MS</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6MS</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
   <span class='va'>data</span>,
   <span class='va'>org_meta</span>,
   <span class='va'>cluster_meta</span>,
@@ -231,7 +231,7 @@ sequences, as defined above.</p></dd>
   <span class='va'>group_meta</span>,
   <span class='va'>sequences</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span></pre><p></div></p>
+<span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -276,7 +276,7 @@ contains additional statistical methods for analyze it, methods to make basic ex
 for sequence manipulation.</p>
 <h3 class='hasAnchor' id='list-new-'><a class='anchor' aria-hidden='true' href='#list-new-'></a>Method <code>new()</code></h3>
 <p>Create a <code>PgR6MS</code> object.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6MS</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6MS</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
   <span class='va'>data</span>,
   <span class='va'>org_meta</span>,
   <span class='va'>cluster_meta</span>,
@@ -286,7 +286,7 @@ for sequence manipulation.</p>
   <span class='va'>group_meta</span>,
   <span class='va'>sequences</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span></pre><p></div></p>
+<span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -336,7 +336,7 @@ sets is useful to: 1) have the possibility of extracting just one sequence of ea
 case paralogues are present, and 2) filling gaps with empty sequences in case the core_level was set below 100%,
 allowing more genes (some not in 100% of organisms) to be incorporated to the phylogeny. That is the purpose of
 this special function.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6MS</span><span class='op'>$</span><span class='fu'>core_seqs_4_phylo</span><span class='op'>(</span>max_per_org <span class='op'>=</span> <span class='fl'>1</span>, fill <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6MS</span><span class='op'>$</span><span class='fu'>core_seqs_4_phylo</span><span class='op'>(</span>max_per_org <span class='op'>=</span> <span class='fl'>1</span>, fill <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -355,7 +355,7 @@ sets is useful to: 1) have the possibility of extracting just one sequence of ea
 case paralogues are present, and 2) filling gaps with empty sequences in case the core_level was set below 100%,
 allowing more genes (some not in 100% of organisms) to be incorporated to the phylogeny. That is the purpose of
 this special function.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6MS</span><span class='op'>$</span><span class='fu'>core_seqs_4_phylo</span><span class='op'>(</span>max_per_org <span class='op'>=</span> <span class='fl'>1</span>, fill <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6MS</span><span class='op'>$</span><span class='fu'>core_seqs_4_phylo</span><span class='op'>(</span>max_per_org <span class='op'>=</span> <span class='fl'>1</span>, fill <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -371,7 +371,7 @@ to concatenate them into a super-gene suitable for phylogenetic inference.</p>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6MS</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6MS</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -380,7 +380,7 @@ to concatenate them into a super-gene suitable for phylogenetic inference.</p>
 </dl><p></div></p>
 <h3 class='hasAnchor' id='list-clone-'><a class='anchor' aria-hidden='true' href='#list-clone-'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6MS</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6MS</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>

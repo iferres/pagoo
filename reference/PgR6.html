@@ -243,7 +243,7 @@ names, and organism number identifier as <code><a href='https://rdrr.io/r/base/n
 <a id="method-new"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>new()</code></h3>
 <p>A basic <code>PgR6</code> class constructor. It contains basic fields
 and subset functions to handle a pangenome.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
   <span class='va'>data</span>,
   <span class='va'>org_meta</span>,
   <span class='va'>cluster_meta</span>,
@@ -252,7 +252,7 @@ and subset functions to handle a pangenome.</p><h4 class='hasAnchor' id='usage'>
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>DF</span>,
   <span class='va'>group_meta</span>
-<span class='op'>)</span></pre><p></div></p>
+<span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -292,7 +292,7 @@ analyzing a pangenome.</p>
 <h3 class='hasAnchor' id='list-new-'><a class='anchor' aria-hidden='true' href='#list-new-'></a>Method <code>new()</code></h3>
 <p>A basic <code>PgR6</code> class constructor. It contains basic fields
 and subset functions to handle a pangenome.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
   <span class='va'>data</span>,
   <span class='va'>org_meta</span>,
   <span class='va'>cluster_meta</span>,
@@ -301,7 +301,7 @@ and subset functions to handle a pangenome.</p><h4 class='hasAnchor' id='usage'>
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>DF</span>,
   <span class='va'>group_meta</span>
-<span class='op'>)</span></pre><p></div></p>
+<span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -344,7 +344,7 @@ analyzing a pangenome.</p>
 group of orthologous (cluster), or to each gene. Elements with missing data should be filled
 by <code>NA</code> (dimensions of the provided data.frame must be coherent with object
 data).</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>add_metadata</span><span class='op'>(</span>map <span class='op'>=</span> <span class='st'>"org"</span>, <span class='va'>data</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>add_metadata</span><span class='op'>(</span>map <span class='op'>=</span> <span class='st'>"org"</span>, <span class='va'>data</span><span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -366,7 +366,7 @@ of the gene as provided in the <code>"data"</code> data.frame, separated by the
 group of orthologous (cluster), or to each gene. Elements with missing data should be filled
 by <code>NA</code> (dimensions of the provided data.frame must be coherent with object
 data).</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>add_metadata</span><span class='op'>(</span>map <span class='op'>=</span> <span class='st'>"org"</span>, <span class='va'>data</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>add_metadata</span><span class='op'>(</span>map <span class='op'>=</span> <span class='st'>"org"</span>, <span class='va'>data</span><span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -390,7 +390,7 @@ from the real dataset, ignoring it in downstream analyses. All the fields and
 methods will behave as it doesn't exist. For instance, if you decide to drop
 organism 1, the <code>$pan_matrix</code> field (see below) would not show it when
 called.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>drop</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>drop</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -409,7 +409,7 @@ from the real dataset, ignoring it in downstream analyses. All the fields and
 methods will behave as it doesn't exist. For instance, if you decide to drop
 organism 1, the <code>$pan_matrix</code> field (see below) would not show it when
 called.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>drop</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>drop</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -426,7 +426,7 @@ are mutable.</p>
 <a id="method-recover"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code><a href='https://rdrr.io/r/utils/recover.html'>recover()</a></code></h3>
 <p>Recover a previously <code>$drop()</code>ped organism (see above). All fields
 and methods will start to behave considering this organism again.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>recover</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>recover</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -442,7 +442,7 @@ are mutable.</p>
 <h3 class='hasAnchor' id='list-recover-'><a class='anchor' aria-hidden='true' href='#list-recover-'></a>Method <code><a href='https://rdrr.io/r/utils/recover.html'>recover()</a></code></h3>
 <p>Recover a previously <code>$drop()</code>ped organism (see above). All fields
 and methods will start to behave considering this organism again.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>recover</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>recover</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -464,7 +464,7 @@ column classes (factor, numeric, integer), and the state of the object itself
 <code>$save_pangenomeRDS</code> for a more precise way of saving a pagoo object.
 Still, it is useful if you want to work with the data outside R, just keep
 the above in mind.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>write_pangenome</span><span class='op'>(</span>dir <span class='op'>=</span> <span class='st'>"pangenome"</span>, force <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>write_pangenome</span><span class='op'>(</span>dir <span class='op'>=</span> <span class='st'>"pangenome"</span>, force <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -490,7 +490,7 @@ column classes (factor, numeric, integer), and the state of the object itself
 <code>$save_pangenomeRDS</code> for a more precise way of saving a pagoo object.
 Still, it is useful if you want to work with the data outside R, just keep
 the above in mind.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>write_pangenome</span><span class='op'>(</span>dir <span class='op'>=</span> <span class='st'>"pangenome"</span>, force <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>write_pangenome</span><span class='op'>(</span>dir <span class='op'>=</span> <span class='st'>"pangenome"</span>, force <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -517,7 +517,7 @@ pagoo versions, so you could update pagoo and still recover the same pangenome. 
 <code>sep</code> and <code>core_level</code> are restored unless the user provides those
 arguments in <code>load_pangenomeRDS</code>. <code>dropped</code> organisms also kept hidden, as
 you where working with the original object.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>save_pangenomeRDS</span><span class='op'>(</span>file <span class='op'>=</span> <span class='st'>"pangenome.rds"</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>save_pangenomeRDS</span><span class='op'>(</span>file <span class='op'>=</span> <span class='st'>"pangenome.rds"</span><span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -535,7 +535,7 @@ pagoo versions, so you could update pagoo and still recover the same pangenome. 
 <code>sep</code> and <code>core_level</code> are restored unless the user provides those
 arguments in <code>load_pangenomeRDS</code>. <code>dropped</code> organisms also kept hidden, as
 you where working with the original object.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>save_pangenomeRDS</span><span class='op'>(</span>file <span class='op'>=</span> <span class='st'>"pangenome.rds"</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>save_pangenomeRDS</span><span class='op'>(</span>file <span class='op'>=</span> <span class='st'>"pangenome.rds"</span><span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -548,7 +548,7 @@ using the load_pangenomeRDS function, into an RDS (binary) file.</p>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -557,7 +557,7 @@ using the load_pangenomeRDS function, into an RDS (binary) file.</p>
 </dl><p></div></p>
 <h3 class='hasAnchor' id='list-clone-'><a class='anchor' aria-hidden='true' href='#list-clone-'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>PgR6</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></code></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
