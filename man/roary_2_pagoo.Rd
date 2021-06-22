@@ -4,7 +4,7 @@
 \alias{roary_2_pagoo}
 \title{Read roary's output into a pagoo's R6 class object}
 \usage{
-roary_2_pagoo(gene_presence_absence_csv, gffs, sep = "__")
+roary_2_pagoo(gene_presence_absence_csv, gffs, sep = "__", paralog_sep = "\\t")
 }
 \arguments{
 \item{gene_presence_absence_csv}{\code{character}, path to the
@@ -18,6 +18,9 @@ sequences.}
 
 \item{sep}{\code{character}. Default: \code{"__"} (two underscores). See
 \link[pagoo]{PgR6MS} for a more detail argument description.}
+
+\item{paralog_sep}{\code{character}. A gene separator for cases where the
+clusters have in-paralogs. (Default: "\\t" - tab).}
 }
 \value{
 A pagoo's R6 class object. Either \link[pagoo]{PgR6M}, if \code{gffs}

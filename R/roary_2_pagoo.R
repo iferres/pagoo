@@ -16,6 +16,8 @@
 #' sequences.
 #' @param sep \code{character}. Default: \code{"__"} (two underscores). See
 #' \link[pagoo]{PgR6MS} for a more detail argument description.
+#' @param paralog_sep \code{character}. A gene separator for cases where the
+#' clusters have in-paralogs. (Default: "\\t" - tab).
 #' @return A pagoo's R6 class object. Either \link[pagoo]{PgR6M}, if \code{gffs}
 #' argument is left empty, or \link[pagoo]{PgR6MS} if path to gff files is
 #' provided.
@@ -40,7 +42,7 @@
 #' @importFrom S4Vectors mcols
 #' @importFrom stats setNames
 #' @export
-roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
+roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__', paralog_sep = "\t"){
 
   message('Reading csv file (roary).')
   df <- read.csv(gene_presence_absence_csv,
@@ -55,7 +57,7 @@ roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
 
   dims <- dim(df)
   df <- df[, 15:dims[2]]
-  lp <- lapply(df, strsplit, '\t')
+  lp <- lapply(df, strsplit, paralog_sep)
   lp <- lapply(lp, setNames, cluster_meta$cluster)
 
   lths <- lapply(lp, sapply, length)
