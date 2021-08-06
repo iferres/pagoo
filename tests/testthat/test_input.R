@@ -201,6 +201,23 @@ test_that("Adding organism metadata after object creation works.",{
   # expect_equal(p$organisms, p2$organisms)
 })
 
+test_that("Adding metadata with missing keys works.", {
+  sep <- "__"
+  p <- pagoo(data = data, sep = sep)
+
+  # Missing key (generic)
+  p$add_metadata("org", orgs_meta[-3, -2])
+
+  # Missing key at the end (bug #51)
+  p$add_metadata("org", orgs_meta[-nrow(orgs_meta), -3])
+
+  expect_is(p$organisms, "DFrame")
+  expect_length(p$organisms, dim(orgs_meta)[2])
+  expect_named(p$organisms, names(orgs_meta))
+  expect_true(is.na(p$organisms[3, "country"]))
+  expect_true(is.na(p$organisms[5, "sero"]))
+})
+
 ## Input from third party pangenome reconstruction software
 #   MISSING
 
