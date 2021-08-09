@@ -213,7 +213,7 @@ test_that("Adding metadata with missing keys works.", {
 
   expect_is(p$organisms, "DFrame")
   expect_length(p$organisms, dim(orgs_meta)[2])
-  expect_named(p$organisms, names(orgs_meta))
+  expect_named(p$organisms, names(orgs_meta), ignore.order = TRUE)
   expect_true(is.na(p$organisms[3, "country"]))
   expect_true(is.na(p$organisms[5, "sero"]))
 })
