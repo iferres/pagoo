@@ -5,7 +5,7 @@
 [![codecov](https://codecov.io/gh/iferres/pagoo/branch/master/graph/badge.svg)](https://codecov.io/gh/iferres/pagoo)
 <!-- badges: end -->
 
-# Pagoo: An encapsulated OO class system for analyzing bacterial pangenomes in R
+# Pagoo: An encapsulated Object-Oriented framework for analyzing bacterial pangenomes in R
 
 *"One object to store them all, one object to find them, one object to query from and with ggplot2 visualize them." (Lord Sauron)*
 
@@ -30,3 +30,12 @@ Alternatively you can install the latest dev version from GitHub using `devtools
 if (!require("devtools")) install.packages("devtools")
 devtools::install_github('iferres/pagoo')
 ```
+
+## Citation
+If you use `pagoo`, please cite:
+```
+Ignacio Ferrés, Gregorio Iraola.
+An object-oriented framework for evolutionary pangenome analysis.
+Cell Reports Methods, Volume 1, Issue 5, 2021, 100085, ISSN 2667-2375, https://doi.org/10.1016/j.crmeth.2021.100085.
+```
+[An object-oriented framework for evolutionary pangenome analysis.](https://www.cell.com/cell-reports-methods/fulltext/S2667-2375(21)00140-5)
