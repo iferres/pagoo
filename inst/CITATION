@@ -1,0 +1,19 @@
+citHeader("To cite pagoo, use:")
+
+citEntry(
+  entry = "Article",
+  author = personList(as.person("Ignacio Ferrés"), as.person("Gregorio Iraola")),
+  title = "An object-oriented framework for evolutionary pangenome analysis",
+  journal = "Cell Reports Methods",
+  year = 2021,
+  volume = 1,
+  issue = 5,
+  ISSN = "2667-2375",
+  doi = "10.1016/j.crmeth.2021.100085",
+  url = "https://www.cell.com/cell-reports-methods/fulltext/S2667-2375(21)00140-5",
+  textVersion = paste(
+    "Ignacio Ferrés & Gregorio Iraola. An object-oriented framework for evolutionary pangenome analysis.",
+    "Cell Reports Methods, Volume 1, Issue 5, 2021, 100085, ISSN 2667-2375.",
+    "doi: 10.1016/j.crmeth.2021.100085."
+  )
+)
