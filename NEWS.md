@@ -1,3 +1,7 @@
+# pagoo 0.3.10
+
+* Fixed #51: Adding metadata with missing key at the end of the data.frame failed. Now the method $add_metadata() has been corrected.
+
 # pagoo 0.3.9
 
 * Added panaroo_2_pagoo function to read the output of the panaroo pangenome reconstruction software.
