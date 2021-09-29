@@ -9,6 +9,8 @@
 
 *"One object to store them all, one object to find them, one object to query from and with ggplot2 visualize them." (Lord Sauron)*
 
+<img src="./man/figures/pagoo_graphical_abstract.jpg" width=100>
+
 ## Introduction
 
 `pagoo` is an encapsulated, object-oriented class system for analyzing bacterial pangenomes. It uses the [R6](https://r6.r-lib.org/) package as backend. It was designed in order to facilitate and speed-up the comparative analysis of multiple bacterial genomes, standardizing and optimizing routine tasks performed everyday. There are a handful of things done everyday when working with bacterial pangenomes: subset, summarize, extract, visualize and store data. So, `pagoo` is intended to facilitate these tasks as much as possible. 
