@@ -9,7 +9,7 @@
 
 *"One object to store them all, one object to find them, one object to query from and with ggplot2 visualize them." (Lord Sauron)*
 
-<img src="./man/figures/pagoo_graphical_abstract.jpg" width=100>
+<img src="./man/figures/pagoo_graphical_abstract.jpg" width=500>
 
 ## Introduction
 
