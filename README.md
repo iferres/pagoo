@@ -35,9 +35,23 @@ devtools::install_github('iferres/pagoo')
 
 ## Citation
 If you use `pagoo`, please cite:
+
+[An object-oriented framework for evolutionary pangenome analysis.](https://www.cell.com/cell-reports-methods/fulltext/S2667-2375(21)00140-5)
+
 ```
 Ignacio Ferrés, Gregorio Iraola.
 An object-oriented framework for evolutionary pangenome analysis.
 Cell Reports Methods, Volume 1, Issue 5, 2021, 100085, ISSN 2667-2375, https://doi.org/10.1016/j.crmeth.2021.100085.
 ```
-[An object-oriented framework for evolutionary pangenome analysis.](https://www.cell.com/cell-reports-methods/fulltext/S2667-2375(21)00140-5)
+
+The scripts that support the publication are available [here](https://github.com/iferres/pagoo_publication_scripts). If you want to reproduce the analyses, a [Singularity](https://sylabs.io/singularity/) definition file to build a container with all dependencies is also provided in the above repository. An already built singularity container is hosted at [singularity-hub](https://singularity-hub.org/collections/5123).
+
+A companion protocol paper is also available:
+
+[Protocol for post-processing of bacterial pangenome data using Pagoo pipeline](https://star-protocols.cell.com/protocols/1048)
+
+```
+Ignacio Ferrés, Gregorio Iraola.
+Protocol for post-processing of bacterial pangenome data using Pagoo pipeline.
+STAR Protocols, Volume 2, Issue 4, 2021, 100802, ISSN: 2666-1667, https://doi.org/10.1016/j.xpro.2021.100802
+```
