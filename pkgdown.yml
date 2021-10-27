@@ -1,6 +1,6 @@
 pandoc: 2.7.3
 pkgdown: 1.9000.9000.9000
-pkgdown_sha: d80b315628955b8a0cb0a5e36c6ad137416a100f
+pkgdown_sha: d1a64f28518dc83905c6dc36ce68eeaaa80d3505
 articles:
   Input: Input.html
   Methods_Plots: Methods_Plots.html
@@ -8,5 +8,5 @@ articles:
   Recipes: Recipes.html
   Subseting: Subseting.html
   pagoo: pagoo.html
-last_built: 2021-10-06T20:25Z
+last_built: 2021-10-27T14:39Z
 

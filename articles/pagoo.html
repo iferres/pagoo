@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.11</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@
       <h1 data-toc-skip>Quick Start</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/iferres/pagoo/blob/master/vignettes/pagoo.Rmd" class="external-link"><code>vignettes/pagoo.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/iferres/pagoo/blob/HEAD/vignettes/pagoo.Rmd" class="external-link"><code>vignettes/pagoo.Rmd</code></a></small>
       <div class="hidden name"><code>pagoo.Rmd</code></div>
 
     </div>
@@ -115,49 +115,49 @@
 <span class="va">rds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'extdata'</span>, <span class="st">'campylobacter.RDS'</span>, package <span class="op">=</span> <span class="st">'pagoo'</span><span class="op">)</span>
 <span class="va">campy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_pangenomeRDS.html">load_pangenomeRDS</a></span><span class="op">(</span><span class="va">rds</span><span class="op">)</span> <span class="co"># Load pangenome</span></code></pre></div>
 <p>Now that the object (<code>campy</code>) is loaded, we can start by querying it. <code>pagoo</code> was developed considering that in a pangenome each individual <em>gene</em> belongs to a given <em>organism</em>, and is assigned to a <em>cluster</em> of orthologous. So those variables are interconnected, but each of them can have metadata associated that is specific to each of them, i.e.: an individual gene can have coordinates inside a genome, but this doesn’t apply to a whole cluster, and a given organism has, for instance, a host where it was isolated from, but this information doesn’t apply to an individual gene.</p>
-<div id="basic-fields" class="section level2">
-<h2 class="hasAnchor">
-<a href="#basic-fields" class="anchor" aria-hidden="true"></a>Basic Fields</h2>
+<div class="section level2">
+<h2 id="basic-fields">Basic Fields<a class="anchor" aria-label="anchor" href="#basic-fields"></a>
+</h2>
 <p>So this 3 variables are 3 separate tables that can be queried:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">campy</span><span class="op">$</span><span class="va">organisms</span></code></pre></div>
-<pre><code>## DataFrame with 7 rows and 8 columns
-##          org          id      strain      year     country        host
-##     &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;
-## 1 16244_6_6         FR15   2008/170h      2008      France       Human
-## 2 16244_6_18        FR27   2012/185h      2012      France       Human
-## 3 17059_2_16         AR1      99/801      1999   Argentina      Bovine
-## 4 17059_2_23         AR8      04/875      2004   Argentina      Bovine
-## 5 17059_2_27        AR12      06/195      2006   Argentina      Bovine
-## 6 17150_1_73         CA1   001A-0374      2005      Canada       Human
-## 7 17059_2_42         TW6        1830      2008      Taiwan       Human
-##        source   accession
-##   &lt;character&gt; &lt;character&gt;
-## 1       Feces   ERS672247
-## 2       Blood   ERS672259
-## 3     Prepuce   ERS739235
-## 4       Fetus   ERS739242
-## 5          VM   ERS739246
-## 6       Blood   ERS686652
-## 7       Blood   ERS739261</code></pre>
+<pre><code><span class="co">## DataFrame with 7 rows and 8 columns</span>
+<span class="co">##          org          id      strain      year     country        host</span>
+<span class="co">##     &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;</span>
+<span class="co">## 1 16244_6_6         FR15   2008/170h      2008      France       Human</span>
+<span class="co">## 2 16244_6_18        FR27   2012/185h      2012      France       Human</span>
+<span class="co">## 3 17059_2_16         AR1      99/801      1999   Argentina      Bovine</span>
+<span class="co">## 4 17059_2_23         AR8      04/875      2004   Argentina      Bovine</span>
+<span class="co">## 5 17059_2_27        AR12      06/195      2006   Argentina      Bovine</span>
+<span class="co">## 6 17150_1_73         CA1   001A-0374      2005      Canada       Human</span>
+<span class="co">## 7 17059_2_42         TW6        1830      2008      Taiwan       Human</span>
+<span class="co">##        source   accession</span>
+<span class="co">##   &lt;character&gt; &lt;character&gt;</span>
+<span class="co">## 1       Feces   ERS672247</span>
+<span class="co">## 2       Blood   ERS672259</span>
+<span class="co">## 3     Prepuce   ERS739235</span>
+<span class="co">## 4       Fetus   ERS739242</span>
+<span class="co">## 5          VM   ERS739246</span>
+<span class="co">## 6       Blood   ERS686652</span>
+<span class="co">## 7       Blood   ERS739261</span></code></pre>
 <p><em>(Tip: To see all fields and methods, in any R console type <code>campy$</code> and press the [TAB] key two times.)</em></p>
 <p>This dataset consist in 7 <em>Campylobacter spp</em> genomes. For each organism, you have a row with associated metadata. The first column, <code>org</code>, indicates the organism.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">campy</span><span class="op">$</span><span class="va">clusters</span></code></pre></div>
-<pre><code>## DataFrame with 2588 rows and 2 columns
-##        cluster              Pfam_Arch
-##       &lt;factor&gt;            &lt;character&gt;
-## 1    group0001           2-Hacid_dh_C
-## 2    group0002 2-Hacid_dh_C;2-Hacid..
-## 3    group0003 2-Hacid_dh_C;ACT;2-H..
-## 4    group0004        2Fe-2S_thioredx
-## 5    group0005    4HB_MCP_1;MCPsignal
-## ...        ...                    ...
-## 2584 group2584              zf-RING_7
-## 2585 group2585               zf-TFIIB
-## 2586 group2586                   ZinT
-## 2587 group2587                   ZnuA
-## 2588 group2588               ZT_dimer</code></pre>
+<pre><code><span class="co">## DataFrame with 2588 rows and 2 columns</span>
+<span class="co">##        cluster              Pfam_Arch</span>
+<span class="co">##       &lt;factor&gt;            &lt;character&gt;</span>
+<span class="co">## 1    group0001           2-Hacid_dh_C</span>
+<span class="co">## 2    group0002 2-Hacid_dh_C;2-Hacid..</span>
+<span class="co">## 3    group0003 2-Hacid_dh_C;ACT;2-H..</span>
+<span class="co">## 4    group0004        2Fe-2S_thioredx</span>
+<span class="co">## 5    group0005    4HB_MCP_1;MCPsignal</span>
+<span class="co">## ...        ...                    ...</span>
+<span class="co">## 2584 group2584              zf-RING_7</span>
+<span class="co">## 2585 group2585               zf-TFIIB</span>
+<span class="co">## 2586 group2586                   ZinT</span>
+<span class="co">## 2587 group2587                   ZnuA</span>
+<span class="co">## 2588 group2588               ZT_dimer</span></code></pre>
 <p>The <code>$clusters</code> field returns a table with metadata associated to each group of orthologous, in this case is the Pfam architecture domain (second column).</p>
 <p>The last, and most important field is <code>$genes</code>, which returns a list of <code>DataFrame</code> with information given for each individual gene, grouped by cluster. We let the user to inspect this field by him/herself.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -165,44 +165,44 @@
 <p>The first 3 columns (<code>cluster</code>, <code>org</code>, and <code>gene</code>) are the glue that interconnects each of 3 “variables”.</p>
 <p>Another useful field is <code>$pan_matrix</code>, which returns a <code>matrix</code> with gene abundance for each cluster (columns), and each organism (rows).</p>
 </div>
-<div id="basic-methods" class="section level2">
-<h2 class="hasAnchor">
-<a href="#basic-methods" class="anchor" aria-hidden="true"></a>Basic Methods</h2>
+<div class="section level2">
+<h2 id="basic-methods">Basic Methods<a class="anchor" aria-label="anchor" href="#basic-methods"></a>
+</h2>
 <p><code>pagoo</code> objects contain basic methods to analyze the pangenome, from general statistics to some basic plotting capabilities. Some of these methods can also take arguments.</p>
 <p>For example:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">campy</span><span class="op">$</span><span class="fu">dist</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"bray"</span><span class="op">)</span></code></pre></div>
-<pre><code>##             16244_6_6 16244_6_18 17059_2_16 17059_2_23 17059_2_27 17150_1_73
-## 16244_6_18 0.06594656                                                       
-## 17059_2_16 0.12122816 0.12500000                                            
-## 17059_2_23 0.09622745 0.09632517 0.07632399                                 
-## 17059_2_27 0.09245937 0.11310008 0.10311629 0.08230990                      
-## 17150_1_73 0.08203991 0.09034444 0.13624408 0.12275937 0.12999735           
-## 17059_2_42 0.08920705 0.09927089 0.14532148 0.12682137 0.13706919 0.09518600</code></pre>
+<pre><code><span class="co">##             16244_6_6 16244_6_18 17059_2_16 17059_2_23 17059_2_27 17150_1_73</span>
+<span class="co">## 16244_6_18 0.06594656                                                       </span>
+<span class="co">## 17059_2_16 0.12122816 0.12500000                                            </span>
+<span class="co">## 17059_2_23 0.09622745 0.09632517 0.07632399                                 </span>
+<span class="co">## 17059_2_27 0.09245937 0.11310008 0.10311629 0.08230990                      </span>
+<span class="co">## 17150_1_73 0.08203991 0.09034444 0.13624408 0.12275937 0.12999735           </span>
+<span class="co">## 17059_2_42 0.08920705 0.09927089 0.14532148 0.12682137 0.13706919 0.09518600</span></code></pre>
 <p>Or:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">campy</span><span class="op">$</span><span class="fu">gg_barplot</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="pagoo_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
-<div id="sequence-manipulation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#sequence-manipulation" class="anchor" aria-hidden="true"></a>Sequence Manipulation</h2>
+<div class="section level2">
+<h2 id="sequence-manipulation">Sequence Manipulation<a class="anchor" aria-label="anchor" href="#sequence-manipulation"></a>
+</h2>
 <p>One of the main advantages of using <code>pagoo</code> is the ability to very easily manipulate sequences. Sequences are stored as a <code>List</code> of <code>DNAStringSet</code> from <code>Biostrings</code> package.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">campy</span><span class="op">$</span><span class="va">sequences</span></code></pre></div>
-<pre><code>## DNAStringSetList of length 2588
-## [["group0001"]] 16244_6_6__16244_6_6_00150=ATGGCGATAACAGTTTATTACGACAAAGATTGCG...
-## [["group0002"]] 16244_6_6__16244_6_6_01290=ATGAAAATAGTATGCTTAGATGCCGACACGCTTG...
-## [["group0003"]] 16244_6_6__16244_6_6_01710=ATGAAAACAGTTATAGTTTGCGATGCAATACATC...
-## [["group0004"]] 16244_6_6__16244_6_6_01754=ATGAAATTCGAATTTACTCATGAGCAATTATCGG...
-## [["group0005"]] 16244_6_6__16244_6_6_00049=ATGTCAAATTTAACTACTAACTTAACTACCAAAA...
-## [["group0006"]] 16244_6_6__16244_6_6_01069=ATGAATTATTTTGAGAATTTAAAAGTTTCAACAA...
-## [["group0007"]] 16244_6_6__16244_6_6_01612=ATGCGAATTAGAATTTATTATGAAGATACCGATG...
-## [["group0008"]] 16244_6_6__16244_6_6_01679=ATGATGAAAGATATGGGCGAGCCACGTATAAAAA...
-## [["group0009"]] 16244_6_18__16244_6_18_01216=ATGGGGCTTACTACGAGTACGACAAAGTATAT...
-## [["group0010"]] 16244_6_6__16244_6_6_00758=ATGAAAAGAGTGGTTATAAAAGTAGGCTCTCACG...
-## ...
-## &lt;2578 more elements&gt;</code></pre>
+<pre><code><span class="co">## DNAStringSetList of length 2588</span>
+<span class="co">## [["group0001"]] 16244_6_6__16244_6_6_00150=ATGGCGATAACAGTTTATTACGACAAAGATTGCG...</span>
+<span class="co">## [["group0002"]] 16244_6_6__16244_6_6_01290=ATGAAAATAGTATGCTTAGATGCCGACACGCTTG...</span>
+<span class="co">## [["group0003"]] 16244_6_6__16244_6_6_01710=ATGAAAACAGTTATAGTTTGCGATGCAATACATC...</span>
+<span class="co">## [["group0004"]] 16244_6_6__16244_6_6_01754=ATGAAATTCGAATTTACTCATGAGCAATTATCGG...</span>
+<span class="co">## [["group0005"]] 16244_6_6__16244_6_6_00049=ATGTCAAATTTAACTACTAACTTAACTACCAAAA...</span>
+<span class="co">## [["group0006"]] 16244_6_6__16244_6_6_01069=ATGAATTATTTTGAGAATTTAAAAGTTTCAACAA...</span>
+<span class="co">## [["group0007"]] 16244_6_6__16244_6_6_01612=ATGCGAATTAGAATTTATTATGAAGATACCGATG...</span>
+<span class="co">## [["group0008"]] 16244_6_6__16244_6_6_01679=ATGATGAAAGATATGGGCGAGCCACGTATAAAAA...</span>
+<span class="co">## [["group0009"]] 16244_6_18__16244_6_18_01216=ATGGGGCTTACTACGAGTACGACAAAGTATAT...</span>
+<span class="co">## [["group0010"]] 16244_6_6__16244_6_6_00758=ATGAAAAGAGTGGTTATAAAAGTAGGCTCTCACG...</span>
+<span class="co">## ...</span>
+<span class="co">## &lt;2578 more elements&gt;</span></code></pre>
 </div>
   </div>
 
@@ -223,7 +223,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
