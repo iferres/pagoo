@@ -1,3 +1,9 @@
+# pagoo 0.3.11
+
+* Fixed #53: panaroo seems to be writing empty clusters (i.e. no genes on them), so this push fixes error associated with the above. 
+* Added information about the publication in the readme.
+* Updated R-CMD-check.yml to latest version.
+
 # pagoo 0.3.10
 
 * Fixed #51: Adding metadata with missing key at the end of the data.frame failed. Now the method $add_metadata() has been corrected.
