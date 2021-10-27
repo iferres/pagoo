@@ -107,8 +107,11 @@ panaroo_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
     }
   }
 
-
-
+  # remove clusters without genes (seems to be a panaroo's bug)
+  emptyclus <- which(rowSums(do.call(cbind, lapply(df[,- c(1:3)], lengths))) == 0)
+  if (length(emptyclus)){
+    df <- df[-emptyclus, ,drop=FALSE]
+  }
 
   # message("Cleaning merged clusters.")
   # df$Gene <- sapply(strsplit(df$Gene, "~~~"), function(x){
