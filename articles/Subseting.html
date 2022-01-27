@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.12</span>
       </span>
     </div>
 
@@ -115,9 +115,9 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://iferres.github.io/pagoo/" class="external-link">pagoo</a></span><span class="op">)</span> <span class="co"># Load package</span>
 <span class="va">toy_rds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'extdata'</span>, <span class="st">'campylobacter.RDS'</span>, package <span class="op">=</span> <span class="st">'pagoo'</span><span class="op">)</span>
 <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_pangenomeRDS.html">load_pangenomeRDS</a></span><span class="op">(</span><span class="va">toy_rds</span><span class="op">)</span></code></pre></div>
-<div class="section level1">
-<h1 id="predefined-subsets">Predefined Subsets<a class="anchor" aria-label="anchor" href="#predefined-subsets"></a>
-</h1>
+<div class="section level2">
+<h2 id="predefined-subsets">Predefined Subsets<a class="anchor" aria-label="anchor" href="#predefined-subsets"></a>
+</h2>
 <p>Predefined subsets were already superficially seen in <strong>3 - Querying Data</strong> tutorial. Here we will review them and understand its notation.</p>
 <table class="table">
 <thead><tr class="header">
@@ -213,18 +213,18 @@
 <span class="co">## 547 group2578  Zeta_toxin</span>
 <span class="co">## 548 group2579  Zeta_toxin</span></code></pre>
 </div>
-<div class="section level1">
-<h1 id="the-operator">The <code>[</code> operator<a class="anchor" aria-label="anchor" href="#the-operator"></a>
-</h1>
+<div class="section level2">
+<h2 id="the-operator">The <code>[</code> operator<a class="anchor" aria-label="anchor" href="#the-operator"></a>
+</h2>
 <p>Using <code>[</code> for subset vectors, lists, or matrices in R is one of the most common operations we, as R users, do every day. Methods using <code>[</code> for subsetting can be divided into 2 types:</p>
 <ol style="list-style-type: decimal">
 <li>Subsetting vector or list like objects.</li>
 <li>Subsetting matrix-like objects.</li>
 </ol>
 <p>In the following subsections we will see how to use them to subset <code>$pan_matrix</code>, <code>$genes</code>, <code>$clusters</code>, <code>$sequences</code>, or<code>$organisms</code> fields.</p>
-<div class="section level2">
-<h2 id="vectorlist-notation">Vector/List notation<a class="anchor" aria-label="anchor" href="#vectorlist-notation"></a>
-</h2>
+<div class="section level3">
+<h3 id="vectorlist-notation">Vector/List notation<a class="anchor" aria-label="anchor" href="#vectorlist-notation"></a>
+</h3>
 <p>When we subset a vector or list in R we use a single number or a vector of numbers, lets say from <code>i</code> to <code>j</code>, to pick those elements by indexes: <code>x[i:j]</code>. In <code>pagoo</code> we implement a method for this generic function to subset data fields, where indexes represent <strong>clusters</strong>. So instead of subsetting directly the final object (which you can of course) you apply this method directly to the object, and then select any of the data fields.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># From clusters 1 to 3</span>
@@ -342,9 +342,9 @@
 <span class="co">## 6       Blood   ERS686652</span></code></pre>
 <p>Only (6) organisms which contain that shell cluster will be listed.</p>
 </div>
-<div class="section level2">
-<h2 id="matrix-notation">Matrix notation<a class="anchor" aria-label="anchor" href="#matrix-notation"></a>
-</h2>
+<div class="section level3">
+<h3 id="matrix-notation">Matrix notation<a class="anchor" aria-label="anchor" href="#matrix-notation"></a>
+</h3>
 <p>The other use of <code>[</code> notation is when we subset a matrix-like object. In this case we provide 2 sets of indexes: the first for rows, and the second for columns, separated by a coma. <code>pagoo</code> interprets these indexes as organisms (rows) and clusters (columns), so you are referencing a set of genes (cell value). Basically you are referencing cells in the pan_matrix.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">pan_matrix</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">18</span><span class="op">)</span><span class="op">]</span></code></pre></div>
@@ -416,13 +416,13 @@
 <p>We found this implementation quite useful for both data exploration and fine grained analysis.</p>
 </div>
 </div>
-<div class="section level1">
-<h1 id="dropping-and-recovering-organisms">Dropping and Recovering Organisms<a class="anchor" aria-label="anchor" href="#dropping-and-recovering-organisms"></a>
-</h1>
-<p>One useful feature implemented in <code>pagoo</code> is the possibility of easily removing (hiding) organisms from the dataset. This is useful if during the analysis we identify some genome with weird characteristics (i.e. potentially contaminated), or if we want to focus just in a subset of genomes of interest given any metadata value, or if we included an outgroup for phylogenetic purposes but we want to remove it from downstream analyses. Let’s see how it works..</p>
 <div class="section level2">
-<h2 id="dropping-organisms">Dropping organisms<a class="anchor" aria-label="anchor" href="#dropping-organisms"></a>
+<h2 id="dropping-and-recovering-organisms">Dropping and Recovering Organisms<a class="anchor" aria-label="anchor" href="#dropping-and-recovering-organisms"></a>
 </h2>
+<p>One useful feature implemented in <code>pagoo</code> is the possibility of easily removing (hiding) organisms from the dataset. This is useful if during the analysis we identify some genome with weird characteristics (i.e. potentially contaminated), or if we want to focus just in a subset of genomes of interest given any metadata value, or if we included an outgroup for phylogenetic purposes but we want to remove it from downstream analyses. Let’s see how it works..</p>
+<div class="section level3">
+<h3 id="dropping-organisms">Dropping organisms<a class="anchor" aria-label="anchor" href="#dropping-organisms"></a>
+</h3>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">organisms</span></code></pre></div>
 <pre><code><span class="co">## DataFrame with 7 rows and 8 columns</span>
@@ -484,9 +484,9 @@
 <p>As you see, not only the french organisms have been removed from the dataset, but also summary statistics have been updated! This is also true for any other data field: <code>$pan_matrix</code>, <code>$genes</code>, <code>$clusters</code>, <code>$sequences</code>, and<code>$organisms</code> fields are automatically updated. Also any embedded statistical or visualization methods will now only consider available organisms/clusters/genes. When we drop an organisms, we are hiding all features associated to that genomes including genes, sequences, gene clusters and metadata.</p>
 <p><strong>It’s important to note that you don’t have to reassign the object to a new one, it is self modified (in place modification). That’s R6 reference semantics (see R6 documentation for details), use with caution.</strong></p>
 </div>
-<div class="section level2">
-<h2 id="recovering-dropped-organisms">Recovering dropped organisms<a class="anchor" aria-label="anchor" href="#recovering-dropped-organisms"></a>
-</h2>
+<div class="section level3">
+<h3 id="recovering-dropped-organisms">Recovering dropped organisms<a class="anchor" aria-label="anchor" href="#recovering-dropped-organisms"></a>
+</h3>
 <p>You can recover dropped organisms. To see if we have any hidden organism, we use the <code>$dropped</code> field, and then recover it using its index or its name.</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">dropped</span></code></pre></div>
@@ -536,7 +536,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.9000.</p>
 </div>
 
       </footer>
