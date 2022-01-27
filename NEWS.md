@@ -1,66 +1,42 @@
-Package: pagoo
-Version: 0.3.12
-Title: Analyze Bacterial Pangenomes in R with 'Pagoo'
-Description: Provides an encapsulated, object-oriented class system for
-  analyzing bacterial pangenomes. For a definition of this concept, see
-  Tettelin, et al. (2005) <doi:10.1073/pnas.0506758102>. It uses the R6
-  package as backend. It was designed in order to facilitate and speed-up
-  the comparative analysis of multiple bacterial genomes, standardizing and
-  optimizing routine tasks performed everyday. There are a handful of things
-  done everyday when working with bacterial pangenomes: subset, summarize,
-  extract, visualize and store data. So, 'pagoo' is intended to facilitate these
-  tasks as much as possible. For a description of the implemented data structure
-  and methods, see Ferres & Iraola (2020), <doi:10.1101/2020.07.29.226951>.
-Authors@R: c(
-    person("Ignacio", "Ferres", , "iferres@pasteur.edu.uy", role =  c("aut", "cre"), 
-      comment = c(ORCID = "0000-0003-0910-6568")
-    ),
-    person("Gregorio", "Iraola", , "iferres@pasteur.edu.uy", role = c("aut"), 
-      comment = c(ORCID = "0000-0002-6516-3404")
-    ),
-    person("Institut Pasteur de Montevideo", role = c("fnd")
-    )
-  )
-Maintainer: Ignacio Ferres <iferres@pasteur.edu.uy>
-URL: https://iferres.github.io/pagoo/, https://github.com/iferres/pagoo
-BugReports: https://github.com/iferres/pagoo/issues
-Depends:
-  R (>= 3.5.0),
-  S4Vectors,
-  Biostrings,
-  ggplot2
-biocViews:
-Imports:
-  R6,
-  reshape2,
-  vegan,
-  GenomicRanges,
-  BiocGenerics,
-  shinyWidgets,
-  shinydashboard,
-  DT,
-  plotly, 
-  magrittr,
-  heatmaply,
-  dendextend,
-  ggfortify,
-  shiny
-Suggests:
-    micropan,
-    patchwork,
-    ape,
-    phangorn,
-    pegas,
-    DECIPHER,
-    rhierbaps,
-    IRanges,
-    knitr,
-    rmarkdown,
-    testthat,
-    covr
-License: GPL-3
-Encoding: UTF-8
-ByteCompile: true
-RoxygenNote: 7.1.1
-Roxygen: list(r6 = TRUE)
-VignetteBuilder: knitr
+# pagoo 0.3.12
+
+* Fixed #55: "Cluster annotations do not match cluster names". Error when building the pangenome object.
+
+# pagoo 0.3.11
+
+* Fixed #53: panaroo seems to be writing empty clusters (i.e. no genes on them), so this push fixes error associated with the above. 
+* Added information about the publication in the readme.
+* Updated R-CMD-check.yml to latest version.
+
+# pagoo 0.3.10
+
+* Fixed #51: Adding metadata with missing key at the end of the data.frame failed. Now the method $add_metadata() has been corrected.
+
+# pagoo 0.3.9
+
+* Added panaroo_2_pagoo function to read the output of the panaroo pangenome reconstruction software.
+
+* Improved $add_metadata() method. Now columns with the same name as the one already present are overwritten instead of duplicated (closes #44). Also, users can now provide metadata covering the pangenome partially, i.e, not providing all the gene/clusters/organisms in the mapping column. Those entities without metadata provided are filled with NAs.
+
+# pagoo 0.3.8
+
+* Improve backward compatibility. Older pagoo objects created by third party packages which depend on pagoo do not have an attribute required to successfully load them into session. Now the approach is to downgrade the object to a base pagoo class, or to provide the namespace using the pkg argument.
+
+# pagoo 0.3.7
+
+* Fixed missing link in documentation.
+* Smaller toy dataset to comply with CRAN policies.
+
+# pagoo 0.3.6
+
+* Bugfix, adds compatibility between previous save/load_pangenomeRDS methods
+
+# pagoo 0.3.5
+
+* Faster roary_2_pagoo()
+* Improved save_pangenomeRDS() and load_pangenomeRDS() methods
+* Several bugfixes.
+
+# pagoo 0.3.3.9000
+
+* Added a `NEWS.md` file to track changes to the package.
