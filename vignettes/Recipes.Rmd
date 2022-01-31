@@ -116,7 +116,7 @@ p$sequences %>%                                     # Get the sequences
   writeXStringSet(filepath = "representatives.fasta") # Write a fasta file.
 ```
 
-Now the user has to provide the `representatives.fasta` as input file to the eggnog-mapper. This can be done through the [web server](http://eggnog-mapper.embl.de), or through the command line if it is installed. The command (on your terminal) would look somewhat like this:
+Now the user has to provide the `representatives.fasta` as input file to the eggnog-mapper. This can be done through the [web server](http://eggnog5.embl.de/#/app/home), or through the command line if it is installed. The command (on your terminal) would look somewhat like this:
 
 ```{bash, eval=FALSE}
 emapper.py -i representative.fasta -o representative_emapper

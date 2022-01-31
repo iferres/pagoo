@@ -2,7 +2,7 @@
 [![](https://www.r-pkg.org/badges/version/pagoo?color=green)](https://cran.r-project.org/package=pagoo)
 [![R build status](https://github.com/iferres/pagoo/workflows/R-CMD-check/badge.svg)](https://github.com/iferres/pagoo/actions)
 ![pkgdown](https://github.com/iferres/pagoo/workflows/pkgdown/badge.svg)
-[![codecov](https://codecov.io/gh/iferres/pagoo/branch/master/graph/badge.svg)](https://codecov.io/gh/iferres/pagoo)
+[![codecov](https://codecov.io/gh/iferres/pagoo/branch/master/graph/badge.svg)](https://app.codecov.io/gh/iferres/pagoo)
 <!-- badges: end -->
 
 # Pagoo: An encapsulated Object-Oriented framework for analyzing bacterial pangenomes in R
