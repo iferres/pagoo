@@ -29,7 +29,9 @@ This function handle conversion of \href{https://gtonkinhill.github.io/panaroo/#
 a pagoo R6 class object. It takes the "gene_presence_absence.csv" file and
 (optionally but recommended) gff input file paths, and returns an object of
 class \code{\link[pagoo]{PgR6MS}} (or \code{\link[pagoo]{PgR6M}} if left
-empty the \code{gffs} argument).
+empty the \code{gffs} argument). Panaroo identifies some genes with unusual
+lengths tagging them with 'stop', 'length', or 'refound' labels. In the
+current version, this function discards those genes.
 }
 \examples{
 \dontrun{
