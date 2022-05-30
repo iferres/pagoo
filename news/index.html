@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.13</span>
       </span>
     </div>
 
@@ -35,7 +35,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Tutorials
      
     <span class="caret"></span>
@@ -80,8 +80,7 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.12" id="pagoo-0312">pagoo 0.3.12<small>2022-02-01</small><a class="anchor" aria-label="anchor" href="#pagoo-0312"></a></h2>
-<ul><li>Fixed <a href="https://github.com/iferres/pagoo/issues/55" class="external-link">#55</a>: “Cluster annotations do not match cluster names”. Error when building the pangenome object.</li>
-</ul></div>
+<ul><li>Fixed <a href="https://github.com/iferres/pagoo/issues/55" class="external-link">#55</a>: “Cluster annotations do not match cluster names”. Error when building the pangenome object.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.11" id="pagoo-0311">pagoo 0.3.11<a class="anchor" aria-label="anchor" href="#pagoo-0311"></a></h2>
 <ul><li>Fixed <a href="https://github.com/iferres/pagoo/issues/53" class="external-link">#53</a>: panaroo seems to be writing empty clusters (i.e. no genes on them), so this push fixes error associated with the above.</li>
@@ -90,8 +89,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.10" id="pagoo-0310">pagoo 0.3.10<a class="anchor" aria-label="anchor" href="#pagoo-0310"></a></h2>
-<ul><li>Fixed <a href="https://github.com/iferres/pagoo/issues/51" class="external-link">#51</a>: Adding metadata with missing key at the end of the data.frame failed. Now the method $add_metadata() has been corrected.</li>
-</ul></div>
+<ul><li>Fixed <a href="https://github.com/iferres/pagoo/issues/51" class="external-link">#51</a>: Adding metadata with missing key at the end of the data.frame failed. Now the method $add_metadata() has been corrected.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.9" id="pagoo-039">pagoo 0.3.9<small>2021-05-13</small><a class="anchor" aria-label="anchor" href="#pagoo-039"></a></h2>
 <ul><li><p>Added panaroo_2_pagoo function to read the output of the panaroo pangenome reconstruction software.</p></li>
@@ -99,8 +97,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.8" id="pagoo-038">pagoo 0.3.8<small>2021-02-12</small><a class="anchor" aria-label="anchor" href="#pagoo-038"></a></h2>
-<ul><li>Improve backward compatibility. Older pagoo objects created by third party packages which depend on pagoo do not have an attribute required to successfully load them into session. Now the approach is to downgrade the object to a base pagoo class, or to provide the namespace using the pkg argument.</li>
-</ul></div>
+<ul><li>Improve backward compatibility. Older pagoo objects created by third party packages which depend on pagoo do not have an attribute required to successfully load them into session. Now the approach is to downgrade the object to a base pagoo class, or to provide the namespace using the pkg argument.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.7" id="pagoo-037">pagoo 0.3.7<a class="anchor" aria-label="anchor" href="#pagoo-037"></a></h2>
 <ul><li>Fixed missing link in documentation.</li>
@@ -108,8 +105,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.6" id="pagoo-036">pagoo 0.3.6<a class="anchor" aria-label="anchor" href="#pagoo-036"></a></h2>
-<ul><li>Bugfix, adds compatibility between previous save/load_pangenomeRDS methods</li>
-</ul></div>
+<ul><li>Bugfix, adds compatibility between previous save/load_pangenomeRDS methods</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.5" id="pagoo-035">pagoo 0.3.5<a class="anchor" aria-label="anchor" href="#pagoo-035"></a></h2>
 <ul><li>Faster roary_2_pagoo()</li>
@@ -118,8 +114,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.3.9000" id="pagoo-0339000">pagoo 0.3.3.9000<a class="anchor" aria-label="anchor" href="#pagoo-0339000"></a></h2>
-<ul><li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
-</ul></div>
+<ul><li>Added a <code>NEWS.md</code> file to track changes to the package.</li></ul></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -134,7 +129,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
 </div>
 
       </footer></div>
