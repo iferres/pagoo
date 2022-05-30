@@ -6,7 +6,10 @@
 #' a pagoo R6 class object. It takes the "gene_presence_absence.csv" file and
 #' (optionally but recommended) gff input file paths, and returns an object of
 #' class \code{\link[pagoo]{PgR6MS}} (or \code{\link[pagoo]{PgR6M}} if left
-#' empty the \code{gffs} argument).
+#' empty the \code{gffs} argument). Panaroo identifies some genes with unusual
+#' lengths tagging them with 'stop', 'length', or 'refound' labels. In the
+#' current version, this function discards those genes.
+#'
 #' @param gene_presence_absence_csv \code{character}, path to the
 #' "gene_presence_absence.csv" file. (Do not confuse with the file with the
 #' same name but with \code{.Rtab} extension).
@@ -38,6 +41,7 @@
 #' @importFrom Biostrings DNAStringSetList
 #' @importFrom S4Vectors mcols
 #' @importFrom stats setNames
+#' @importFrom magrittr `%>%`
 #' @export
 panaroo_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
 
@@ -52,59 +56,39 @@ panaroo_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
 
   df[, -c(1:3)] <- lapply(df[, -c(1:3)], strsplit, ";")
 
-  grstp <- lapply(df, function(x) grep("_stop$", x))
-  if (length(unlist(grstp))) {
-    warning("Removing refound genes with stop codon (tagged with '_stop')", immediate. = TRUE)
-    idx <- mapply(function(X, Y, Z) {
-      data.frame(COL = Z, ROW=Y, INDEX=sapply(Y, function(x) grep("_stop$", X[x])))
-    },
-    X=df,
-    Y=grstp,
-    Z=mapply(rep, names(grstp), lengths(grstp)))
-    idx <- do.call(rbind, idx)
-    for (r in seq_len(dim(idx)[1])){
-      COL <- idx[r, 1]
-      ROW <- idx[r, 2]
-      INDEX <- idx[r, 3]
-      df[[COL]][[ROW]] <- df[[COL]][[ROW]][-INDEX]
-    }
-  }
 
-  grlen <- lapply(df, function(x) grep("_len$", x))
-  if (length(unlist(grlen))){
-    warning("Removing genes with unusual length (tagged with '_len')", immediate. = TRUE)
-    idx <- mapply(function(X, Y, Z) {
-      data.frame(COL = Z, ROW=Y, INDEX=sapply(Y, function(x) grep("_len$", X[x])))
-    },
-    X=df,
-    Y=grlen,
-    Z=mapply(rep, names(grlen), lengths(grlen)))
-    idx <- do.call(rbind, idx)
-    for (r in seq_len(dim(idx)[1])){
-      COL <- idx[r, 1]
-      ROW <- idx[r, 2]
-      INDEX <- idx[r, 3]
-      df[[COL]][[ROW]] <- df[[COL]][[ROW]][-INDEX]
+  # Identify weird genes:
+  dfrm <- apply(df[, -c(1:3)], 2,
+                # Look for weird genes:
+                function(x){
+                  grep("(_refound|_stop|_len)(_|$)", x)
+                }
+  ) %>% {
+    # Create a data.frame with the coordinates of the match in the original
+    # data.frame:
+    data.frame(
+      columns = mapply(rep, names(.), lengths(.)) %>% unlist(use.names = FALSE),
+      rows = unlist(., use.names = FALSE)
+    )
+  } %>%
+    # Add the index of the match (It could be a paralogue):
+    {
+      idx <- mapply(function(row, column, x){
+        `[[`(x, row, column) %>% grep("(_refound|_stop|_len)(_|$)", .)
+      }, row = .$rows, column = .$columns,
+      MoreArgs = list(x=df[, -c(1:3)]))
+      .$index <- idx
+      .
     }
-  }
 
-
-  grref <- lapply(df, function(x) grep("_refound_", x))
-  if (length(unlist(grref))){
-    warning("Removing refound genes (tagged with '_refound_')", immediate. = TRUE)
-    idx <- mapply(function(X, Y, Z) {
-      data.frame(COL = Z, ROW=Y, INDEX=sapply(Y, function(x) grep("_refound_", X[x])))
-    },
-    X=df,
-    Y=grref,
-    Z=mapply(rep, names(grref), lengths(grref)))
-    idx <- do.call(rbind, idx)
-    for (r in seq_len(dim(idx)[1])){
-      COL <- idx[r, 1]
-      ROW <- idx[r, 2]
-      INDEX <- idx[r, 3]
-      df[[COL]][[ROW]] <- df[[COL]][[ROW]][-INDEX]
-    }
+  # Remove those weird genes from the data.frame:
+  if (nrow(dfrm)) paste0("Removing ", nrow(dfrm), " genes tagged as 'refound', 'stop', and/or 'length' by panaroo.") %>%
+    message()
+  for (r in seq_len(nrow(dfrm))){
+    COL <- dfrm$columns[[r]]
+    ROW <- dfrm$rows[[r]]
+    INDEX <- dfrm$index[[r]]
+    df[[COL]][[ROW]] <- df[[COL]][[ROW]][-INDEX]
   }
 
   # remove clusters without genes (seems to be a panaroo's bug)
@@ -112,12 +96,6 @@ panaroo_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
   if (length(emptyclus)){
     df <- df[-emptyclus, ,drop=FALSE]
   }
-
-  # message("Cleaning merged clusters.")
-  # df$Gene <- sapply(strsplit(df$Gene, "~~~"), function(x){
-  #   nch <- nchar(x)
-  #   x[which.min(nch)]
-  # })
 
   cluster_meta <- df[, c('Gene', 'Annotation')]
   colnames(cluster_meta) <- c('cluster', 'Annotation')
@@ -155,6 +133,7 @@ panaroo_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
       #There are some tRNAs genes that are not listed in
       # the gene_presence_absence.csv file
       sq <- sq[which(names(sq) %in% mm$gene)]
+      sq
     })
 
     # Get gene information from gffs
@@ -163,10 +142,6 @@ panaroo_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
       mcls[[x]]$org <- x
       mcls[[x]]
     })
-    # names(mcls) <- names(seqs)
-
-    # Just common columns
-    # cols <- Reduce(intersect, lapply(mcls, colnames))
 
     # Selected columns
     cols <- c('seqid', 'type', 'start', 'end', 'strand', 'product', 'org', 'locus_tag')
@@ -188,4 +163,8 @@ panaroo_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
 
   message('Done.')
   return(pg)
+
+
 }
+
+
