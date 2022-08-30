@@ -1,3 +1,8 @@
+# pagoo 0.3.13
+
+* Fixed issue when reading panaroo's output.
+* New roxygen2 version
+
 # pagoo 0.3.12
 
 * Fixed #55: "Cluster annotations do not match cluster names". Error when building the pangenome object.
