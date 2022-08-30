@@ -94,15 +94,15 @@ the latter. See below for more details.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">pagoo</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">org_meta</span>,
-  <span class="va">cluster_meta</span>,
-  <span class="va">sequences</span>,
-  core_level <span class="op">=</span> <span class="fl">95</span>,
-  sep <span class="op">=</span> <span class="st">"__"</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pagoo</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">org_meta</span>,</span>
+<span>  <span class="va">cluster_meta</span>,</span>
+<span>  <span class="va">sequences</span>,</span>
+<span>  core_level <span class="op">=</span> <span class="fl">95</span>,</span>
+<span>  sep <span class="op">=</span> <span class="st">"__"</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -114,6 +114,8 @@ following columns: <code>gene</code> (gene name), <code>org</code> (organism nam
 which the gene belongs to), and <code>cluster</code> (group of orthologous to
 which the gene belongs to). More columns can be added as metadata for each
 gene.</p></dd>
+
+
 <dt>org_meta</dt>
 <dd><p>(optional) A <code>data.frame</code> or
 <code><a href="https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html" class="external-link">DataFrame</a></code> containing additional
@@ -121,6 +123,8 @@ metadata for organisms. This <code>data.frame</code> must have a column named
 "org" with valid organisms names (that is, they should match with those
 provided in <code>data</code>, column <code>org</code>), and additional columns will be
 used as metadata. Each row should correspond to each organism.</p></dd>
+
+
 <dt>cluster_meta</dt>
 <dd><p>(optional) A <code>data.frame</code> or
 <code><a href="https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html" class="external-link">DataFrame</a></code> containing additional
@@ -128,6 +132,8 @@ metadata for clusters. This <code>data.frame</code> must have a column named
 "cluster" with valid organisms names (that is, they should match with those
 provided in <code>data</code>, column <code>cluster</code>), and additional columns
 will be used as metadata. Each row should correspond to each cluster.</p></dd>
+
+
 <dt>sequences</dt>
 <dd><p>(optional) Can accept: 1) a named <code>list</code> of named
 <code>character</code> vector. Name of list are names of organisms, names of
@@ -138,18 +144,25 @@ requirements as (1), but with BStringSet names as gene names); or 3) a
 requirements as (2) but <code>DNAStringSetList</code> names are organisms names).
 If this parameter is used, then a <code><a href="PgR6MS.html">PgR6MS</a></code> class object is
 returned.</p></dd>
+
+
 <dt>core_level</dt>
 <dd><p>The initial core_level (that's the percentage of organisms a
 core cluster must be in to be considered as part of the core genome). Must
 be a number between 100 and 85, (default: 95). You can change it later by
 using the <code>$core_level</code> field once the object was created.</p></dd>
+
+
 <dt>sep</dt>
 <dd><p>A separator. By default is '__'(two underscores). It will be used
 to create a unique <code>gid</code> (gene identifier) for each gene. <code>gid</code>s
 are created by pasting <code>org</code> to <code>gene</code>, separated by <code>sep</code>.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p><code>logical</code>. Whether to display progress messages when
 loading class.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -747,7 +760,7 @@ packages available created for comparative genomics and genetics.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
       </footer></div>

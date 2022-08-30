@@ -113,9 +113,9 @@
 <p>All this methods are embebbed to the <code>pagoo</code> object, so is very easy to start working with pangenome data.</p>
 <p>Start by loading the example dataset.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://iferres.github.io/pagoo/" class="external-link">pagoo</a></span><span class="op">)</span> <span class="co"># Load package</span>
-<span class="va">toy_rds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'extdata'</span>, <span class="st">'campylobacter.RDS'</span>, package <span class="op">=</span> <span class="st">'pagoo'</span><span class="op">)</span>
-<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_pangenomeRDS.html">load_pangenomeRDS</a></span><span class="op">(</span><span class="va">toy_rds</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://iferres.github.io/pagoo/" class="external-link">pagoo</a></span><span class="op">)</span> <span class="co"># Load package</span></span>
+<span><span class="va">toy_rds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'extdata'</span>, <span class="st">'campylobacter.RDS'</span>, package <span class="op">=</span> <span class="st">'pagoo'</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_pangenomeRDS.html">load_pangenomeRDS</a></span><span class="op">(</span><span class="va">toy_rds</span><span class="op">)</span></span></code></pre></div>
 <p>As you may have already noted, methods and visualization are different than data fields (see previous tutorials) in the way of calling them. As any R function, you must use parentheses to run them.</p>
 <div class="section level2">
 <h2 id="statistical-methods">Statistical methods<a class="anchor" aria-label="anchor" href="#statistical-methods"></a>
@@ -126,17 +126,17 @@
 </h3>
 <p>Pairwise distances between gene abundance can be retrieved by using <code>$dist()</code> method. By default, Bray-Curtis distance is computed. This is just a wrapper of <code>vegdist()</code> from <code>vegan</code> package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="fu">dist</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##             16244_6_6 16244_6_18 17059_2_16 17059_2_23 17059_2_27 17150_1_73</span>
-<span class="co">## 16244_6_18 0.06594656                                                       </span>
-<span class="co">## 17059_2_16 0.12122816 0.12500000                                            </span>
-<span class="co">## 17059_2_23 0.09622745 0.09632517 0.07632399                                 </span>
-<span class="co">## 17059_2_27 0.09245937 0.11310008 0.10311629 0.08230990                      </span>
-<span class="co">## 17150_1_73 0.08203991 0.09034444 0.13624408 0.12275937 0.12999735           </span>
-<span class="co">## 17059_2_42 0.08920705 0.09927089 0.14532148 0.12682137 0.13706919 0.09518600</span></code></pre>
+<code class="sourceCode R"><span><span class="va">p</span><span class="op">$</span><span class="fu">dist</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##             16244_6_6 16244_6_18 17059_2_16 17059_2_23 17059_2_27 17150_1_73</span></span>
+<span><span class="co">## 16244_6_18 0.06594656                                                       </span></span>
+<span><span class="co">## 17059_2_16 0.12122816 0.12500000                                            </span></span>
+<span><span class="co">## 17059_2_23 0.09622745 0.09632517 0.07632399                                 </span></span>
+<span><span class="co">## 17059_2_27 0.09245937 0.11310008 0.10311629 0.08230990                      </span></span>
+<span><span class="co">## 17150_1_73 0.08203991 0.09034444 0.13624408 0.12275937 0.12999735           </span></span>
+<span><span class="co">## 17059_2_42 0.08920705 0.09927089 0.14532148 0.12682137 0.13706919 0.09518600</span></span></code></pre>
 <p>Other distances available include, for instance, Jaccard distance (see documentation). As this method require presence/absence data, and not abundance, you should use it with <code>binary = TRUE</code> argument set.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="fu">dist</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"jaccard"</span>, binary <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">p</span><span class="op">$</span><span class="fu">dist</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"jaccard"</span>, binary <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <!-- ## Rarefaction -->
 <!-- A rarefaction or permutation sampling method is available. By default, it performs 10 permutations sampling from 1 to nth genomes, and getting the resulting number of clusters for each pangenome.  -->
 <!-- ```{r} -->
@@ -160,13 +160,13 @@
 </h3>
 <p>A method to compute <code>prcomp</code> (<code>stats</code> package) over the panmatrix is provided. You can use generic functions to further analyze the results.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pca</span> <span class="op">&lt;-</span> <span class="va">p</span><span class="op">$</span><span class="fu">pan_pca</span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Importance of components:</span>
-<span class="co">##                           PC1    PC2    PC3    PC4    PC5     PC6       PC7</span>
-<span class="co">## Standard deviation     8.1626 6.1103 5.5458 5.2924 4.6981 4.29398 2.779e-14</span>
-<span class="co">## Proportion of Variance 0.3278 0.1837 0.1513 0.1378 0.1086 0.09072 0.000e+00</span>
-<span class="co">## Cumulative Proportion  0.3278 0.5115 0.6629 0.8007 0.9093 1.00000 1.000e+00</span></code></pre>
+<code class="sourceCode R"><span><span class="va">pca</span> <span class="op">&lt;-</span> <span class="va">p</span><span class="op">$</span><span class="fu">pan_pca</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Importance of components:</span></span>
+<span><span class="co">##                           PC1    PC2    PC3    PC4    PC5     PC6       PC7</span></span>
+<span><span class="co">## Standard deviation     8.1626 6.1103 5.5458 5.2924 4.6981 4.29398 2.779e-14</span></span>
+<span><span class="co">## Proportion of Variance 0.3278 0.1837 0.1513 0.1378 0.1086 0.09072 0.000e+00</span></span>
+<span><span class="co">## Cumulative Proportion  0.3278 0.5115 0.6629 0.8007 0.9093 1.00000 1.000e+00</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -174,24 +174,24 @@
 </h2>
 <p><code>pagoo</code> uses <code>ggplot2</code> package to produce customizable visualizations. While is not necessary to load <code>ggplot2</code> to plot pangenome data, is better since you can fully customize them. Also we will be using <code>patchwork</code> to arrange plots in some cases to show, side by side, the default plot and a customized one.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span> <span class="co"># To arrange plots</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span> <span class="co"># To arrange plots</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="summary-pie-chart">Summary Pie Chart<a class="anchor" aria-label="anchor" href="#summary-pie-chart"></a>
 </h3>
 <p>The most basic plot is a pie chart to show core, shell, and cloud genome proportions.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Basic</span>
-<span class="va">pie1</span> <span class="op">&lt;-</span> <span class="va">p</span><span class="op">$</span><span class="fu">gg_pie</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Default"</span><span class="op">)</span>
-
-<span class="co"># Customize with ggplot2</span>
-<span class="va">pie2</span> <span class="op">&lt;-</span> <span class="va">pie1</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Customized"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span><span class="op">)</span>
-
-<span class="co"># Arrange (patchwork) and plot</span>
-<span class="va">pie1</span> <span class="op">+</span> <span class="va">pie2</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Basic</span></span>
+<span><span class="va">pie1</span> <span class="op">&lt;-</span> <span class="va">p</span><span class="op">$</span><span class="fu">gg_pie</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Default"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Customize with ggplot2</span></span>
+<span><span class="va">pie2</span> <span class="op">&lt;-</span> <span class="va">pie1</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Customized"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Arrange (patchwork) and plot</span></span>
+<span><span class="va">pie1</span> <span class="op">+</span> <span class="va">pie2</span></span></code></pre></div>
 <p><img src="Methods_Plots_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -199,7 +199,7 @@
 </h3>
 <p>Frequency barplots are one of the basic plots in pangenomics. They show how many clusters are in only 1 genome, how many in 2 genomes, ..and so on, until showing how many clusters are in all genomes (i.e. they are part of the coregenome).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="fu">gg_barplot</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">p</span><span class="op">$</span><span class="fu">gg_barplot</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Methods_Plots_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <!-- ## Distance HeatMap -->
 <!-- ```{r} -->
@@ -211,7 +211,7 @@
 </h3>
 <p>A binary map show gene presence/absence patterns per genome. Each column is a cluster of orthologous genes, and each row an organism. The columns (clusters) are sorted by column sums, so core genes appear to the left, cloud genes to the right, and shell genes in the middle. This plot is useful, for example, to identify strains with abnormal accessory gene patterns which can represent true biological signatures like the presence of extrachromosomal elements or artifacts product of contamination during sequencing.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="fu">gg_binmap</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">p</span><span class="op">$</span><span class="fu">gg_binmap</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Methods_Plots_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -220,16 +220,16 @@
 <p>Pangenome curves typically illustrate the number of gene clusters that are subsequently discovered as more genomes are added to the dataset. If the pangenome is open, more and more accessory genes will be discovered as new genomes are added to the analysis and the size of the core genome will tend to decrease. <code>pagoo</code> applies the the Power-law distribution to fit the pangenome size and the Exponential decay function to fit the core genome size.</p>
 <p>Rarefaction curves are computed by first performing permutations with <code>$rarefact()</code>, and then fitting a Power Law to pangenome counts, and an Exponential Decay Law to coregenome counts. The latter two operations are done by using <code>$pg_power_law_fit()</code> and <code>$cg_exp_decay_fit()</code> methods, respectively (see documentation for more details). <code>$gg_curves()</code> combines this methods to facilitate plotting.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="fu">gg_curves</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">p</span><span class="op">$</span><span class="fu">gg_curves</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Methods_Plots_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p>You can add points and facet data by category, and add any other customization:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="fu">gg_curves</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Pangenome and Coregenome curves"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Category</span>, scales <span class="op">=</span> <span class="st">'free_y'</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Accent"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">p</span><span class="op">$</span><span class="fu">gg_curves</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Pangenome and Coregenome curves"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Category</span>, scales <span class="op">=</span> <span class="st">'free_y'</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Accent"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Methods_Plots_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -237,31 +237,31 @@
 </h3>
 <p>A biplot for visualizing the first 2 principal components in a PCA is always useful at early stages of analysis to explore possible association of genomes based on gene content. This method uses <code>$pan_pca()</code> method to perform the PCA, and allows you to use organism metadata to color the points.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="va">organisms</span></code></pre></div>
-<pre><code><span class="co">## DataFrame with 7 rows and 8 columns</span>
-<span class="co">##          org          id      strain      year     country        host</span>
-<span class="co">##     &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;</span>
-<span class="co">## 1 16244_6_6         FR15   2008/170h      2008      France       Human</span>
-<span class="co">## 2 16244_6_18        FR27   2012/185h      2012      France       Human</span>
-<span class="co">## 3 17059_2_16         AR1      99/801      1999   Argentina      Bovine</span>
-<span class="co">## 4 17059_2_23         AR8      04/875      2004   Argentina      Bovine</span>
-<span class="co">## 5 17059_2_27        AR12      06/195      2006   Argentina      Bovine</span>
-<span class="co">## 6 17150_1_73         CA1   001A-0374      2005      Canada       Human</span>
-<span class="co">## 7 17059_2_42         TW6        1830      2008      Taiwan       Human</span>
-<span class="co">##        source   accession</span>
-<span class="co">##   &lt;character&gt; &lt;character&gt;</span>
-<span class="co">## 1       Feces   ERS672247</span>
-<span class="co">## 2       Blood   ERS672259</span>
-<span class="co">## 3     Prepuce   ERS739235</span>
-<span class="co">## 4       Fetus   ERS739242</span>
-<span class="co">## 5          VM   ERS739246</span>
-<span class="co">## 6       Blood   ERS686652</span>
-<span class="co">## 7       Blood   ERS739261</span></code></pre>
+<code class="sourceCode R"><span><span class="va">p</span><span class="op">$</span><span class="va">organisms</span></span></code></pre></div>
+<pre><code><span><span class="co">## DataFrame with 7 rows and 8 columns</span></span>
+<span><span class="co">##          org          id      strain      year     country        host</span></span>
+<span><span class="co">##     &lt;factor&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;character&gt; &lt;character&gt;</span></span>
+<span><span class="co">## 1 16244_6_6         FR15   2008/170h      2008      France       Human</span></span>
+<span><span class="co">## 2 16244_6_18        FR27   2012/185h      2012      France       Human</span></span>
+<span><span class="co">## 3 17059_2_16         AR1      99/801      1999   Argentina      Bovine</span></span>
+<span><span class="co">## 4 17059_2_23         AR8      04/875      2004   Argentina      Bovine</span></span>
+<span><span class="co">## 5 17059_2_27        AR12      06/195      2006   Argentina      Bovine</span></span>
+<span><span class="co">## 6 17150_1_73         CA1   001A-0374      2005      Canada       Human</span></span>
+<span><span class="co">## 7 17059_2_42         TW6        1830      2008      Taiwan       Human</span></span>
+<span><span class="co">##        source   accession</span></span>
+<span><span class="co">##   &lt;character&gt; &lt;character&gt;</span></span>
+<span><span class="co">## 1       Feces   ERS672247</span></span>
+<span><span class="co">## 2       Blood   ERS672259</span></span>
+<span><span class="co">## 3     Prepuce   ERS739235</span></span>
+<span><span class="co">## 4       Fetus   ERS739242</span></span>
+<span><span class="co">## 5          VM   ERS739246</span></span>
+<span><span class="co">## 6       Blood   ERS686652</span></span>
+<span><span class="co">## 7       Blood   ERS739261</span></span></code></pre>
 <p>Since we have metadata associated to each organism, we will use it to color the organisms according to the <code>country</code> variable.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="fu">gg_pca</span><span class="op">(</span>colour <span class="op">=</span> <span class="st">'host'</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">p</span><span class="op">$</span><span class="fu">gg_pca</span><span class="op">(</span>colour <span class="op">=</span> <span class="st">'host'</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Methods_Plots_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 </div>
 </div>
@@ -270,7 +270,7 @@
 </h2>
 <p>Last but not least, you can deploy a local <code>shiny</code> app by just one line of code.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">p</span><span class="op">$</span><span class="fu">runShinyApp</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">p</span><span class="op">$</span><span class="fu">runShinyApp</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>You can explore an online example of pagoo <code>shiny</code> app for a complete set of 69 <em>Campylobacter fetus</em> genomes at the following url: <a href="https://microgenlab.shinyapps.io/pagoo_campylobacter/" class="external-link uri">https://microgenlab.shinyapps.io/pagoo_campylobacter/</a> . This method is currently not intended for very large and complex datasets, as it may render slow. To work with big pangenomes we recommend the use of the R command line, but for tens or few hundred of genomes it works fairly good if you have patience.</p>
 </div>
   </div>
@@ -292,7 +292,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
       </footer>
