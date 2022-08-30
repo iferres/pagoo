@@ -71,18 +71,18 @@ names, and organism number identifier as \code{names()}}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{PgR6$new()}}
-\item \href{#method-add_metadata}{\code{PgR6$add_metadata()}}
-\item \href{#method-drop}{\code{PgR6$drop()}}
-\item \href{#method-recover}{\code{PgR6$recover()}}
-\item \href{#method-write_pangenome}{\code{PgR6$write_pangenome()}}
-\item \href{#method-save_pangenomeRDS}{\code{PgR6$save_pangenomeRDS()}}
-\item \href{#method-clone}{\code{PgR6$clone()}}
+\item \href{#method-PgR6-new}{\code{PgR6$new()}}
+\item \href{#method-PgR6-add_metadata}{\code{PgR6$add_metadata()}}
+\item \href{#method-PgR6-drop}{\code{PgR6$drop()}}
+\item \href{#method-PgR6-recover}{\code{PgR6$recover()}}
+\item \href{#method-PgR6-write_pangenome}{\code{PgR6$write_pangenome()}}
+\item \href{#method-PgR6-save_pangenomeRDS}{\code{PgR6$save_pangenomeRDS()}}
+\item \href{#method-PgR6-clone}{\code{PgR6$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-PgR6-new"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6-new}{}}}
 \subsection{Method \code{new()}}{
 A basic \code{PgR6} class constructor. It contains basic fields
 and subset functions to handle a pangenome.
@@ -139,8 +139,8 @@ analyzing a pangenome.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-add_metadata"></a>}}
-\if{latex}{\out{\hypertarget{method-add_metadata}{}}}
+\if{html}{\out{<a id="method-PgR6-add_metadata"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6-add_metadata}{}}}
 \subsection{Method \code{add_metadata()}}{
 Add metadata to the object. You can add metadata to each organism, to each
 group of orthologous (cluster), or to each gene. Elements with missing data should be filled
@@ -170,8 +170,8 @@ of the gene as provided in the \code{"data"} data.frame, separated by the
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-drop"></a>}}
-\if{latex}{\out{\hypertarget{method-drop}{}}}
+\if{html}{\out{<a id="method-PgR6-drop"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6-drop}{}}}
 \subsection{Method \code{drop()}}{
 Drop an organism from the dataset. This method allows to hide an organism
 from the real dataset, ignoring it in downstream analyses. All the fields and
@@ -198,8 +198,8 @@ are mutable.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-recover"></a>}}
-\if{latex}{\out{\hypertarget{method-recover}{}}}
+\if{html}{\out{<a id="method-PgR6-recover"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6-recover}{}}}
 \subsection{Method \code{recover()}}{
 Recover a previously \code{$drop()}ped organism (see above). All fields
 and methods will start to behave considering this organism again.
@@ -223,8 +223,8 @@ are mutable.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-write_pangenome"></a>}}
-\if{latex}{\out{\hypertarget{method-write_pangenome}{}}}
+\if{html}{\out{<a id="method-PgR6-write_pangenome"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6-write_pangenome}{}}}
 \subsection{Method \code{write_pangenome()}}{
 Write the pangenome data as flat tables (text). Is not the most recommended way
 to save a pangenome, since you can loose information as numeric precision,
@@ -258,8 +258,8 @@ was provided.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-save_pangenomeRDS"></a>}}
-\if{latex}{\out{\hypertarget{method-save_pangenomeRDS}{}}}
+\if{html}{\out{<a id="method-PgR6-save_pangenomeRDS"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6-save_pangenomeRDS}{}}}
 \subsection{Method \code{save_pangenomeRDS()}}{
 Save a pagoo pangenome object. This function provides a method for saving a pagoo
 object and its state into a "RDS" file. To load the pangenome, use the
@@ -285,8 +285,8 @@ using the load_pangenomeRDS function, into an RDS (binary) file.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-PgR6-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

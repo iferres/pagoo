@@ -14,36 +14,36 @@ Inherits: \code{\link[pagoo]{PgR6}}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{PgR6M$new()}}
-\item \href{#method-rarefact}{\code{PgR6M$rarefact()}}
-\item \href{#method-dist}{\code{PgR6M$dist()}}
-\item \href{#method-pan_pca}{\code{PgR6M$pan_pca()}}
-\item \href{#method-pg_power_law_fit}{\code{PgR6M$pg_power_law_fit()}}
-\item \href{#method-cg_exp_decay_fit}{\code{PgR6M$cg_exp_decay_fit()}}
-\item \href{#method-gg_barplot}{\code{PgR6M$gg_barplot()}}
-\item \href{#method-gg_binmap}{\code{PgR6M$gg_binmap()}}
-\item \href{#method-gg_dist}{\code{PgR6M$gg_dist()}}
-\item \href{#method-gg_pca}{\code{PgR6M$gg_pca()}}
-\item \href{#method-gg_pie}{\code{PgR6M$gg_pie()}}
-\item \href{#method-gg_curves}{\code{PgR6M$gg_curves()}}
-\item \href{#method-runShinyApp}{\code{PgR6M$runShinyApp()}}
-\item \href{#method-clone}{\code{PgR6M$clone()}}
+\item \href{#method-PgR6M-new}{\code{PgR6M$new()}}
+\item \href{#method-PgR6M-rarefact}{\code{PgR6M$rarefact()}}
+\item \href{#method-PgR6M-dist}{\code{PgR6M$dist()}}
+\item \href{#method-PgR6M-pan_pca}{\code{PgR6M$pan_pca()}}
+\item \href{#method-PgR6M-pg_power_law_fit}{\code{PgR6M$pg_power_law_fit()}}
+\item \href{#method-PgR6M-cg_exp_decay_fit}{\code{PgR6M$cg_exp_decay_fit()}}
+\item \href{#method-PgR6M-gg_barplot}{\code{PgR6M$gg_barplot()}}
+\item \href{#method-PgR6M-gg_binmap}{\code{PgR6M$gg_binmap()}}
+\item \href{#method-PgR6M-gg_dist}{\code{PgR6M$gg_dist()}}
+\item \href{#method-PgR6M-gg_pca}{\code{PgR6M$gg_pca()}}
+\item \href{#method-PgR6M-gg_pie}{\code{PgR6M$gg_pie()}}
+\item \href{#method-PgR6M-gg_curves}{\code{PgR6M$gg_curves()}}
+\item \href{#method-PgR6M-runShinyApp}{\code{PgR6M$runShinyApp()}}
+\item \href{#method-PgR6M-clone}{\code{PgR6M$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="add_metadata">}\href{../../pagoo/html/PgR6.html#method-add_metadata}{\code{pagoo::PgR6$add_metadata()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="drop">}\href{../../pagoo/html/PgR6.html#method-drop}{\code{pagoo::PgR6$drop()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="recover">}\href{../../pagoo/html/PgR6.html#method-recover}{\code{pagoo::PgR6$recover()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="save_pangenomeRDS">}\href{../../pagoo/html/PgR6.html#method-save_pangenomeRDS}{\code{pagoo::PgR6$save_pangenomeRDS()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="write_pangenome">}\href{../../pagoo/html/PgR6.html#method-write_pangenome}{\code{pagoo::PgR6$write_pangenome()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="add_metadata"><a href='../../pagoo/html/PgR6.html#method-PgR6-add_metadata'><code>pagoo::PgR6$add_metadata()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="drop"><a href='../../pagoo/html/PgR6.html#method-PgR6-drop'><code>pagoo::PgR6$drop()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="recover"><a href='../../pagoo/html/PgR6.html#method-PgR6-recover'><code>pagoo::PgR6$recover()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="save_pangenomeRDS"><a href='../../pagoo/html/PgR6.html#method-PgR6-save_pangenomeRDS'><code>pagoo::PgR6$save_pangenomeRDS()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="write_pangenome"><a href='../../pagoo/html/PgR6.html#method-PgR6-write_pangenome'><code>pagoo::PgR6$write_pangenome()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-PgR6M-new"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6M-new}{}}}
 \subsection{Method \code{new()}}{
 Create a \code{PgR6M} object.
 \subsection{Usage}{
@@ -100,8 +100,8 @@ exploratory plots.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-rarefact"></a>}}
-\if{latex}{\out{\hypertarget{method-rarefact}{}}}
+\if{html}{\out{<a id="method-PgR6M-rarefact"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6M-rarefact}{}}}
 \subsection{Method \code{rarefact()}}{
 Rarefact pangenome or corgenome. Compute the number of genes which belong to
 the pangenome or to the coregenome, for a number of random permutations of
@@ -125,8 +125,8 @@ permutations, and the cell number is the number of genes in each category.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-dist"></a>}}
-\if{latex}{\out{\hypertarget{method-dist}{}}}
+\if{html}{\out{<a id="method-PgR6M-dist"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6M-dist}{}}}
 \subsection{Method \code{dist()}}{
 Compute distance between all pairs of genomes. The default dist method is
 \code{"bray"} (Bray-Curtis distance). Another used distance method is \code{"jaccard"},
@@ -168,8 +168,8 @@ A \code{dist} object containing all pairwise dissimilarities between genomes.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-pan_pca"></a>}}
-\if{latex}{\out{\hypertarget{method-pan_pca}{}}}
+\if{html}{\out{<a id="method-PgR6M-pan_pca"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6M-pan_pca}{}}}
 \subsection{Method \code{pan_pca()}}{
 Performs a principal components analysis on the panmatrix
 \subsection{Usage}{
@@ -195,8 +195,8 @@ Returns a list with class "prcomp". See \link[stats]{prcomp} for more informatio
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-pg_power_law_fit"></a>}}
-\if{latex}{\out{\hypertarget{method-pg_power_law_fit}{}}}
+\if{html}{\out{<a id="method-PgR6M-pg_power_law_fit"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6M-pg_power_law_fit}{}}}
 \subsection{Method \code{pg_power_law_fit()}}{
 Fits a power law curve for the pangenome rarefaction simulation.
 \subsection{Usage}{
@@ -220,8 +220,8 @@ with fitted parameters. An attribute \code{"alpha"} is also returned (If
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cg_exp_decay_fit"></a>}}
-\if{latex}{\out{\hypertarget{method-cg_exp_decay_fit}{}}}
+\if{html}{\out{<a id="method-PgR6M-cg_exp_decay_fit"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6M-cg_exp_decay_fit}{}}}
 \subsection{Method \code{cg_exp_decay_fit()}}{
 Fits an exponential decay curve for the coregenome rarefaction simulation.
 \subsection{Usage}{
@@ -249,8 +249,8 @@ with fitted intercept and decay parameters.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-gg_barplot"></a>}}
-\if{latex}{\out{\hypertarget{method-gg_barplot}{}}}
+\if{html}{\out{<a id="method-PgR6M-gg_barplot"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6M-gg_barplot}{}}}
 \subsection{Method \code{gg_barplot()}}{
 Plot a barplot with the frequency of genes within the total number of
 genomes.
@@ -263,8 +263,8 @@ A barplot, and a \code{gg} object (\code{ggplot2} package) invisibly.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-gg_binmap"></a>}}
-\if{latex}{\out{\hypertarget{method-gg_binmap}{}}}
+\if{html}{\out{<a id="method-PgR6M-gg_binmap"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6M-gg_binmap}{}}}
 \subsection{Method \code{gg_binmap()}}{
 Plot a pangenome binary map representing the presence/absence of each
 gene within each organism.
@@ -278,8 +278,8 @@ package) invisibly.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-gg_dist"></a>}}
-\if{latex}{\out{\hypertarget{method-gg_dist}{}}}
+\if{html}{\out{<a id="method-PgR6M-gg_dist"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6M-gg_dist}{}}}
 \subsection{Method \code{gg_dist()}}{
 Plot a heatmap showing the computed distance between all pairs of organisms.
 \subsection{Usage}{
@@ -302,8 +302,8 @@ package) invisibly.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-gg_pca"></a>}}
-\if{latex}{\out{\hypertarget{method-gg_pca}{}}}
+\if{html}{\out{<a id="method-PgR6M-gg_pca"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6M-gg_pca}{}}}
 \subsection{Method \code{gg_pca()}}{
 Plot a scatter plot of a Principal Components Analysis.
 \subsection{Usage}{
@@ -326,8 +326,8 @@ package) invisibly.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-gg_pie"></a>}}
-\if{latex}{\out{\hypertarget{method-gg_pie}{}}}
+\if{html}{\out{<a id="method-PgR6M-gg_pie"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6M-gg_pie}{}}}
 \subsection{Method \code{gg_pie()}}{
 Plot a pie chart showing the number of clusters of each pangenome category: core,
 shell, or cloud.
@@ -341,8 +341,8 @@ A pie chart (\code{ggplot2::geom_bar() + coord_polar()}), and a \code{gg} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-gg_curves"></a>}}
-\if{latex}{\out{\hypertarget{method-gg_curves}{}}}
+\if{html}{\out{<a id="method-PgR6M-gg_curves"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6M-gg_curves}{}}}
 \subsection{Method \code{gg_curves()}}{
 Plot pangenome and/or coregenome curves with the fitted functions returned by \code{pg_power_law_fit()}
  and \code{cg_exp_decay_fit()}. You can add points by adding \code{+ geom_points()}, of ggplot2 package
@@ -364,8 +364,8 @@ A scatter plot, and a \code{gg} object (\code{ggplot2} package) invisibly.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-runShinyApp"></a>}}
-\if{latex}{\out{\hypertarget{method-runShinyApp}{}}}
+\if{html}{\out{<a id="method-PgR6M-runShinyApp"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6M-runShinyApp}{}}}
 \subsection{Method \code{runShinyApp()}}{
 Launch an interactive shiny app. It contains a sidebar
 with controls and switches to interact with the pagoo
@@ -398,8 +398,8 @@ leads to a delay in the update of the plots/tables.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-PgR6M-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6M-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

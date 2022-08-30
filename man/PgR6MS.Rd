@@ -32,37 +32,37 @@ sequences, as defined above.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{PgR6MS$new()}}
-\item \href{#method-core_seqs_4_phylo}{\code{PgR6MS$core_seqs_4_phylo()}}
-\item \href{#method-clone}{\code{PgR6MS$clone()}}
+\item \href{#method-PgR6MS-new}{\code{PgR6MS$new()}}
+\item \href{#method-PgR6MS-core_seqs_4_phylo}{\code{PgR6MS$core_seqs_4_phylo()}}
+\item \href{#method-PgR6MS-clone}{\code{PgR6MS$clone()}}
 }
 }
-\if{html}{
-\out{<details ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="add_metadata">}\href{../../pagoo/html/PgR6.html#method-add_metadata}{\code{pagoo::PgR6$add_metadata()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="drop">}\href{../../pagoo/html/PgR6.html#method-drop}{\code{pagoo::PgR6$drop()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="recover">}\href{../../pagoo/html/PgR6.html#method-recover}{\code{pagoo::PgR6$recover()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="save_pangenomeRDS">}\href{../../pagoo/html/PgR6.html#method-save_pangenomeRDS}{\code{pagoo::PgR6$save_pangenomeRDS()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="write_pangenome">}\href{../../pagoo/html/PgR6.html#method-write_pangenome}{\code{pagoo::PgR6$write_pangenome()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="cg_exp_decay_fit">}\href{../../pagoo/html/PgR6M.html#method-cg_exp_decay_fit}{\code{pagoo::PgR6M$cg_exp_decay_fit()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="dist">}\href{../../pagoo/html/PgR6M.html#method-dist}{\code{pagoo::PgR6M$dist()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="gg_barplot">}\href{../../pagoo/html/PgR6M.html#method-gg_barplot}{\code{pagoo::PgR6M$gg_barplot()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="gg_binmap">}\href{../../pagoo/html/PgR6M.html#method-gg_binmap}{\code{pagoo::PgR6M$gg_binmap()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="gg_curves">}\href{../../pagoo/html/PgR6M.html#method-gg_curves}{\code{pagoo::PgR6M$gg_curves()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="gg_dist">}\href{../../pagoo/html/PgR6M.html#method-gg_dist}{\code{pagoo::PgR6M$gg_dist()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="gg_pca">}\href{../../pagoo/html/PgR6M.html#method-gg_pca}{\code{pagoo::PgR6M$gg_pca()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="gg_pie">}\href{../../pagoo/html/PgR6M.html#method-gg_pie}{\code{pagoo::PgR6M$gg_pie()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="pan_pca">}\href{../../pagoo/html/PgR6M.html#method-pan_pca}{\code{pagoo::PgR6M$pan_pca()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="pg_power_law_fit">}\href{../../pagoo/html/PgR6M.html#method-pg_power_law_fit}{\code{pagoo::PgR6M$pg_power_law_fit()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="rarefact">}\href{../../pagoo/html/PgR6M.html#method-rarefact}{\code{pagoo::PgR6M$rarefact()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="runShinyApp">}\href{../../pagoo/html/PgR6M.html#method-runShinyApp}{\code{pagoo::PgR6M$runShinyApp()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="add_metadata"><a href='../../pagoo/html/PgR6.html#method-PgR6-add_metadata'><code>pagoo::PgR6$add_metadata()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="drop"><a href='../../pagoo/html/PgR6.html#method-PgR6-drop'><code>pagoo::PgR6$drop()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="recover"><a href='../../pagoo/html/PgR6.html#method-PgR6-recover'><code>pagoo::PgR6$recover()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="save_pangenomeRDS"><a href='../../pagoo/html/PgR6.html#method-PgR6-save_pangenomeRDS'><code>pagoo::PgR6$save_pangenomeRDS()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6" data-id="write_pangenome"><a href='../../pagoo/html/PgR6.html#method-PgR6-write_pangenome'><code>pagoo::PgR6$write_pangenome()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="cg_exp_decay_fit"><a href='../../pagoo/html/PgR6M.html#method-PgR6M-cg_exp_decay_fit'><code>pagoo::PgR6M$cg_exp_decay_fit()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="dist"><a href='../../pagoo/html/PgR6M.html#method-PgR6M-dist'><code>pagoo::PgR6M$dist()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="gg_barplot"><a href='../../pagoo/html/PgR6M.html#method-PgR6M-gg_barplot'><code>pagoo::PgR6M$gg_barplot()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="gg_binmap"><a href='../../pagoo/html/PgR6M.html#method-PgR6M-gg_binmap'><code>pagoo::PgR6M$gg_binmap()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="gg_curves"><a href='../../pagoo/html/PgR6M.html#method-PgR6M-gg_curves'><code>pagoo::PgR6M$gg_curves()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="gg_dist"><a href='../../pagoo/html/PgR6M.html#method-PgR6M-gg_dist'><code>pagoo::PgR6M$gg_dist()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="gg_pca"><a href='../../pagoo/html/PgR6M.html#method-PgR6M-gg_pca'><code>pagoo::PgR6M$gg_pca()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="gg_pie"><a href='../../pagoo/html/PgR6M.html#method-PgR6M-gg_pie'><code>pagoo::PgR6M$gg_pie()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="pan_pca"><a href='../../pagoo/html/PgR6M.html#method-PgR6M-pan_pca'><code>pagoo::PgR6M$pan_pca()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="pg_power_law_fit"><a href='../../pagoo/html/PgR6M.html#method-PgR6M-pg_power_law_fit'><code>pagoo::PgR6M$pg_power_law_fit()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="rarefact"><a href='../../pagoo/html/PgR6M.html#method-PgR6M-rarefact'><code>pagoo::PgR6M$rarefact()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="pagoo" data-topic="PgR6M" data-id="runShinyApp"><a href='../../pagoo/html/PgR6M.html#method-PgR6M-runShinyApp'><code>pagoo::PgR6M$runShinyApp()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-PgR6MS-new"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6MS-new}{}}}
 \subsection{Method \code{new()}}{
 Create a \code{PgR6MS} object.
 \subsection{Usage}{
@@ -125,8 +125,8 @@ for sequence manipulation.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-core_seqs_4_phylo"></a>}}
-\if{latex}{\out{\hypertarget{method-core_seqs_4_phylo}{}}}
+\if{html}{\out{<a id="method-PgR6MS-core_seqs_4_phylo"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6MS-core_seqs_4_phylo}{}}}
 \subsection{Method \code{core_seqs_4_phylo()}}{
 A field for obtaining core gene sequences is available (see below), but for creating a phylogeny with this
 sets is useful to: 1) have the possibility of extracting just one sequence of each organism on each cluster, in
@@ -153,8 +153,8 @@ to concatenate them into a super-gene suitable for phylogenetic inference.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-PgR6MS-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-PgR6MS-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
