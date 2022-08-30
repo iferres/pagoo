@@ -50,7 +50,8 @@ panaroo_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
                  header = TRUE,
                  sep = ',',
                  stringsAsFactors = FALSE,
-                 check.names = FALSE)
+                 check.names = FALSE,
+                 colClasses = "character")
 
   message('Processing csv file.')
 
