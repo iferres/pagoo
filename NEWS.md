@@ -1,3 +1,7 @@
+# pagoo 0.3.14
+
+* Improved the read_gff function for reading gff3 files from bakta.
+
 # pagoo 0.3.13
 
 * Fixed issue when reading panaroo's output.
