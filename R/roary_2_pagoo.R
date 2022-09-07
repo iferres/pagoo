@@ -133,9 +133,12 @@ roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__', paralog_s
 read_gff <- function(in_gff){
 
   rl <- readLines(in_gff)
-  gp_cm <- grep('^##', rl)
-  rl_fa <- rl[(rev(gp_cm)[1]+1L):length(rl)]
-  rl_tb <- rl[(rev(gp_cm)[2]+1L):(rev(gp_cm)[1]-1L)]
+  gp_cm <- grep('^#', rl)
+  gp_fa <- grep("^##FASTA", rl)
+
+  co_fa <- (gp_fa + 1L):length(rl)
+  rl_fa <- rl[co_fa]
+  rl_tb <- rl[-c(co_fa, gp_cm)]
 
   # table
   m <- strsplit(rl_tb, '\t')
