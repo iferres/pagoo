@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pagoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.14</span>
       </span>
     </div>
 
@@ -120,14 +120,14 @@
 <span><span class="fu"><a href="https://rdrr.io/r/utils/untar.html" class="external-link">untar</a></span><span class="op">(</span>tarfile <span class="op">=</span> <span class="va">tgz</span>, exdir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># Decompress example dataset</span></span>
 <span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span>, pattern <span class="op">=</span> <span class="st">'tsv$|fasta$'</span><span class="op">)</span> <span class="co"># List files</span></span>
 <span><span class="va">files</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpui1n7g/case_clusters_meta.tsv"</span></span>
-<span><span class="co">## [2] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpui1n7g/case_df.tsv"           </span></span>
-<span><span class="co">## [3] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpui1n7g/case_orgs_meta.tsv"    </span></span>
-<span><span class="co">## [4] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpui1n7g/organismA.fasta"       </span></span>
-<span><span class="co">## [5] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpui1n7g/organismB.fasta"       </span></span>
-<span><span class="co">## [6] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpui1n7g/organismC.fasta"       </span></span>
-<span><span class="co">## [7] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpui1n7g/organismD.fasta"       </span></span>
-<span><span class="co">## [8] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpui1n7g/organismE.fasta"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8wBGV0/case_clusters_meta.tsv"</span></span>
+<span><span class="co">## [2] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8wBGV0/case_df.tsv"           </span></span>
+<span><span class="co">## [3] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8wBGV0/case_orgs_meta.tsv"    </span></span>
+<span><span class="co">## [4] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8wBGV0/organismA.fasta"       </span></span>
+<span><span class="co">## [5] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8wBGV0/organismB.fasta"       </span></span>
+<span><span class="co">## [6] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8wBGV0/organismC.fasta"       </span></span>
+<span><span class="co">## [7] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8wBGV0/organismD.fasta"       </span></span>
+<span><span class="co">## [8] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8wBGV0/organismE.fasta"</span></span></code></pre>
 <p>The file we need now is <code>case_df.tsv</code>. Lets load it and see what’s its structure:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"case_df.tsv"</span>, <span class="va">files</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -276,9 +276,9 @@
 <code class="sourceCode R"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"pangenome"</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span></span>
 <span><span class="va">p</span><span class="op">$</span><span class="fu">write_pangenome</span><span class="op">(</span>dir <span class="op">=</span> <span class="va">tmp</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="va">tmp</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpui1n7g/pangenome/clusters.tsv" </span></span>
-<span><span class="co">## [2] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpui1n7g/pangenome/data.tsv"     </span></span>
-<span><span class="co">## [3] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpui1n7g/pangenome/organisms.tsv"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8wBGV0/pangenome/clusters.tsv" </span></span>
+<span><span class="co">## [2] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8wBGV0/pangenome/data.tsv"     </span></span>
+<span><span class="co">## [3] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8wBGV0/pangenome/organisms.tsv"</span></span></code></pre>
 <p>This creates a directory with 3 text files. The advantage of this approach is that you can analyze it outside R, the disadvantage is that from a reproducibility point of view reading text could be less stable since class or number precision can be lost, and also you can’t save the state of the object in any given time. Only available organisms/genes/clusters are saved, and if you reload the class using the tsv files, any previously dropped organisms/gene/cluster won’t be available any more. (For information about dropping/recovering organisms, see “Subset” tutorial).</p>
 <p>If you want to save the object and continue working with it in other R session, we recommend to save them as R objects with the RDS methods provided:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
