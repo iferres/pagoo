@@ -62,7 +62,7 @@ panaroo_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
   dfrm <- apply(df[, -c(1:2)], 2,
                 # Look for weird genes:
                 function(x){
-                  grep("(_refound|_stop|_len)(_|$)", x)
+                  grep("(_refound|_stop|_len)_*", x)
                 }
   ) %>% {
     # Create a data.frame with the coordinates of the match in the original
