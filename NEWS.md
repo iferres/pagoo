@@ -1,3 +1,7 @@
+# pagoo 0.3.16
+
+* Fixed #57: panaroo_2_pagoo issue. Was a pattern matching bug.
+
 # pagoo 0.3.15
 
 * Fixed #57: panaroo_2_pagoo issue.
