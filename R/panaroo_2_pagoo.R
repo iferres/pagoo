@@ -75,7 +75,7 @@ panaroo_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
     # Add the index of the match (It could be a paralogue):
     {
       idx <- mapply(function(row, column, x){
-        `[[`(x, row, column) %>% grep("(_refound|_stop|_len)(_|$)", .)
+        `[[`(x, row, column) %>% grep("(_refound|_stop|_len)_*", .)
       }, row = .$rows, column = .$columns,
       MoreArgs = list(x=df[, -c(1:2)]))
       .$index <- idx
