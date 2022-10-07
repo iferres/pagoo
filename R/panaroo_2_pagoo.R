@@ -55,11 +55,13 @@ panaroo_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
 
   message('Processing csv file.')
 
-  df[, -c(1:2)] <- lapply(df[, -c(1:2)], strsplit, ";")
+  infocols <- match(c("Gene", "Non.unique.Gene.name", "Annotation"), colnames(df), nomatch = 0)
+
+  df[, -infocols] <- lapply(df[, -infocols], strsplit, ";")
 
 
   # Identify weird genes:
-  dfrm <- apply(df[, -c(1:2)], 2,
+  dfrm <- apply(df[, -infocols], 2,
                 # Look for weird genes:
                 function(x){
                   grep("(_refound|_stop|_len)_*", x)
@@ -77,7 +79,7 @@ panaroo_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
       idx <- mapply(function(row, column, x){
         `[[`(x, row, column) %>% grep("(_refound|_stop|_len)_*", .)
       }, row = .$rows, column = .$columns,
-      MoreArgs = list(x=df[, -c(1:2)]))
+      MoreArgs = list(x=df[, -infocols]))
       .$index <- idx
       .
     }
@@ -93,7 +95,7 @@ panaroo_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
   }
 
   # remove clusters without genes (seems to be a panaroo's bug)
-  emptyclus <- which(rowSums(do.call(cbind, lapply(df[,- c(1:2)], lengths))) == 0)
+  emptyclus <- which(rowSums(do.call(cbind, lapply(df[,- infocols], lengths))) == 0)
   if (length(emptyclus)){
     df <- df[-emptyclus, ,drop=FALSE]
   }
@@ -102,7 +104,7 @@ panaroo_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
   colnames(cluster_meta) <- c('cluster', 'Annotation')
 
   dims <- dim(df)
-  df <- df[, 3:dims[2]]
+  df <- df[,-infocols]
   lp <- lapply(df, setNames, cluster_meta$cluster)
 
   lths <- lapply(lp, lengths)
