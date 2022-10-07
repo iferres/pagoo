@@ -1,3 +1,7 @@
+# pagoo 0.3.17
+
+* Fixed #57 (3): better handling of the csv column names.
+
 # pagoo 0.3.16
 
 * Fixed #57: panaroo_2_pagoo issue. Was a pattern matching bug.
