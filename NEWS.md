@@ -1,3 +1,7 @@
+# pagoo 0.3.18
+
+* Fixed #59: panaroo csv file was looking for incorrect column names.
+
 # pagoo 0.3.17
 
 * Fixed #57 (3): better handling of the csv column names.
