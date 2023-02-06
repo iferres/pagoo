@@ -55,7 +55,7 @@ panaroo_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
 
   message('Processing csv file.')
 
-  infocols <- match(c("Gene", "Non.unique.Gene.name", "Annotation"), colnames(df), nomatch = 0)
+  infocols <- match(c("Gene", "Non-unique Gene name", "Annotation"), colnames(df), nomatch = 0)
 
   df[, -infocols] <- lapply(df[, -infocols], strsplit, ";")
 
