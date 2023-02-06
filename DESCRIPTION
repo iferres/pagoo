@@ -22,7 +22,8 @@ Authors@R: c(
     )
   )
 Maintainer: Ignacio Ferres <iferres@pasteur.edu.uy>
-URL: https://iferres.github.io/pagoo/, https://github.com/iferres/pagoo
+URL: https://iferres.github.io/pagoo/,
+    https://github.com/iferres/pagoo
 BugReports: https://github.com/iferres/pagoo/issues
 Depends:
   R (>= 3.5.0),

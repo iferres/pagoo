@@ -1,27 +1,4 @@
-destination: docs
+url: https://iferres.github.io/pagoo/
 template:
-  params:
-    bootswatch: flatly
-    ganalytics: UA-164668935-1
-
-home:
-  links:
-  - text: Who we are
-    href: https://iraola-lab.com/
-
-navbar:
-  components:
-    articles:
-      text: "Tutorials"
-      menu:
-      - text: "1 - Input"
-        href: articles/Input.html
-      - text: "2 - Querying Data"
-        href: articles/Querying_Data.html
-      - text: "3 - Subseting"
-        href: articles/Subseting.html
-      - text: "4 - Methods and Plots"
-        href: articles/Methods_Plots.html
-      - text: "5 - Recipes"
-        href: articles/Recipes.html
+  bootstrap: 5
 
