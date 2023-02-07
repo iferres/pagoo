@@ -1,6 +1,6 @@
-pandoc: 2.7.3
-pkgdown: 2.0.6.9000
-pkgdown_sha: 7fe9e802df2964d483d0267f1d5a59aa7b3c685d
+pandoc: 2.19.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
 articles:
   Input: Input.html
   Methods_Plots: Methods_Plots.html
@@ -8,5 +8,8 @@ articles:
   Recipes: Recipes.html
   Subseting: Subseting.html
   pagoo: pagoo.html
-last_built: 2022-10-07T16:41Z
+last_built: 2023-02-07T13:46Z
+urls:
+  reference: https://iferres.github.io/pagoo/reference
+  article: https://iferres.github.io/pagoo/articles
 
