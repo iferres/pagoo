@@ -143,6 +143,7 @@ read_gff <- function(in_gff){
   # table
   m <- strsplit(rl_tb, '\t')
   df <- as.data.frame(do.call(rbind, m), stringsAsFactors = FALSE)
+  df <- df[df$V2 != "prokka",]
   m2 <- strsplit(df$V9, ';')
   lp <- lapply(m2, function(x){
     spl <- strsplit(x, '=')
@@ -153,7 +154,7 @@ read_gff <- function(in_gff){
   retain <- vapply(lp, function(x) "locus_tag" %in% names(x), FUN.VALUE = NA)
   lp <- lp[retain]
   una <- unique(names(unlist(lp, use.names = T)))
-  df2 <- as.data.frame(do.call(rbind, lapply(lp, '[', una)), stringsAsFactors = FALSE)
+  df2 <- as.data.frame(do.call(rbind, lapply(lp, function(x) {setNames(x[una], una)})), stringsAsFactors = FALSE)
   mcls <- cbind(df[retain, -9], df2)
   colnames(mcls)[1:8] <- c('seqid', 'source', 'type', 'start',
                            'end', 'score', 'strand', 'phase')

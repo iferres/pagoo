@@ -2,6 +2,7 @@
 
 * Fixed #59: panaroo csv file was looking for incorrect column names.
 * New github actions.
+* Fixed read_gff() #59.
 
 # pagoo 0.3.17
 
