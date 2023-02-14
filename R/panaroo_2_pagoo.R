@@ -129,7 +129,7 @@ panaroo_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__'){
 
   }else{
 
-    names(gffs) <- sub('[.]gff$', '', basename(gffs))
+    names(gffs) <- sub('[.]gff3*$', '', basename(gffs))
     seqs <- lapply(gffs, function(x){
       message(paste('Reading gff file', x))
       sq <- read_gff(x)

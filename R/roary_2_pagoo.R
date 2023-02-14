@@ -82,7 +82,7 @@ roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__', paralog_s
 
   }else{
 
-    names(gffs) <- sub('[.]gff$', '', basename(gffs))
+    names(gffs) <- sub('[.]gff3*$', '', basename(gffs))
     seqs <- lapply(gffs, function(x){
       message(paste('Reading gff file', x))
       sq <- read_gff(x)
@@ -128,8 +128,8 @@ roary_2_pagoo <- function(gene_presence_absence_csv, gffs, sep = '__', paralog_s
 # gffs <- list.files('../../pewit2_dataset/', pattern = 'gff$', full.names = T)
 
 
-#' @importFrom Biostrings DNAStringSet subseq reverseComplement
-#' @importFrom S4Vectors mcols<-
+#' @importFrom Biostrings DNAStringSet subseq reverseComplement width xscat
+#' @importFrom S4Vectors mcols<- do.call
 read_gff <- function(in_gff){
 
   rl <- readLines(in_gff)
@@ -151,7 +151,7 @@ read_gff <- function(in_gff){
     nam <- vapply(spl, '[', 1, FUN.VALUE = NA_character_)
     setNames(val, nam)
   })
-  retain <- vapply(lp, function(x) "locus_tag" %in% names(x), FUN.VALUE = NA)
+  retain <- vapply(lp, function(x) "ID" %in% names(x), FUN.VALUE = NA)
   lp <- lp[retain]
   una <- unique(names(unlist(lp, use.names = T)))
   df2 <- as.data.frame(do.call(rbind, lapply(lp, function(x) {setNames(x[una], una)})), stringsAsFactors = FALSE)
@@ -174,9 +174,36 @@ read_gff <- function(in_gff){
   }))
   names(dna) <- sub('>', '', rl_fa[he])
 
-  sequences <- subseq(dna[mcls$seqid], start = mcls$start, end = mcls$end)
+  # The following is to handle some special cases with bakta annotations:
+  # Sometimes bakta annotates cds which starts at the end of the contigs, but
+  # finish at the beginning (contigs can be circular). In these cases, bakta
+  # reports "end" coordinates as a number larger than the length of the contig,
+  # so if not correctly handled, the parser throws an error.
+  brks <- mcls$end > width(dna[mcls$seqid])
+  if (any(brks)) {
+    st <- mcls$start
+    en <- mcls$end
+    st[brks] <- 1L
+    en[brks] <- 0L
+    sequences <- subseq(dna[mcls$seqid], start = st, end = en)
+    sequences[brks] <- mapply(function(st, en, seqid){
+      st1 <- st
+      en1 <- width(dna[seqid])
+      st2 <- 1L
+      en2 <- en - en1
+      sseq <- subseq(rep(dna[seqid], 2), c(st1, st2), c(en1, en2))
+      do.call(xscat, sseq)
+    },
+    st = mcls$start[brks],
+    en = mcls$end[brks],
+    seqid = mcls$seqid[brks],
+    SIMPLIFY = FALSE)
+  }else{
+    sequences <- subseq(dna[mcls$seqid], start = mcls$start, end = mcls$end)
+  }
+
   sequences[mcls$strand=='-'] <- reverseComplement(sequences[mcls$strand=='-'])
-  names(sequences) <- mcls$locus_tag
+  names(sequences) <- mcls$ID
   mcols(sequences) <- mcls
 
   sequences
