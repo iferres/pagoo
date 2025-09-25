@@ -40,6 +40,11 @@ Can't be set above 100, and below 85 raises a warning.}
 \item{\code{core_clusters}}{Like \code{$clusters}, but only showing core
 clusters.}
 
+\item{\code{cloud_level}}{The percentage of organisms a gene must be in
+to be considered as part of the cloudgenome. \code{cloud_level = NULL} by default.
+Defaults to NULL to keep definition of cloud as single genes (singletons).
+Can't be set below 0, and above core level.}
+
 \item{\code{cloud_genes}}{Like \code{genes}, but only showing cloud genes.
 These are defined as those clusters which contain a single gene (singletons), plus
 those which have more than one but its organisms are probably clonal due to identical
@@ -92,6 +97,7 @@ and subset functions to handle a pangenome.
   org_meta,
   cluster_meta,
   core_level = 95,
+  cloud_level = "singleton",
   sep = "__",
   verbose = TRUE,
   DF,

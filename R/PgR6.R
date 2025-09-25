@@ -20,6 +20,7 @@ PgR6 <- R6Class('PgR6',
                   .clusters = NULL,
                   .dropped = NULL,
                   .level = NULL,
+                  .cloud_level = NULL,
                   .sep = NULL
                 ),
 
@@ -54,6 +55,7 @@ PgR6 <- R6Class('PgR6',
                                         org_meta,
                                         cluster_meta,
                                         core_level = 95,
+                                        cloud_level = "singleton",
                                         sep = '__',
                                         verbose = TRUE,
                                         DF,
@@ -169,6 +171,7 @@ PgR6 <- R6Class('PgR6',
                     private$.clusters <- cluster_data
                     private$.panmatrix <- panmatrix
                     private$.level <- core_level
+                    private$.cloud_level <- cloud_level
                     private$.sep <- sep
                   },
 
@@ -574,6 +577,30 @@ PgR6 <- R6Class('PgR6',
                     wh <- which(colSums(pm) >= co)
                     self$clusters[wh, ,drop = FALSE]
                     # dimnames(self$pan_matrix)[[2]][wh]
+                  },
+
+                  #' @field cloud_level The percentage of organisms a gene must be in
+                  #' to be considered as part of the cloudgenome. \code{cloud_level = NULL} by default.
+                  #' Defaults to NULL to keep definition of cloud as single genes (singletons).
+                  #' Can't be set below 0, and above core level.
+                  cloud_level = function(value) {
+                    if (missing(value))
+                      return(private$.cloud_level)
+                    else if (is.character(value)) {
+                      value <- tolower(value)
+                      if (value %in% c("singleton", "single", "s")) {
+                        value <- "singleton"
+                      } else {
+                        stop("Error: Set cloud_level to (singleton/single/s) or numeric")
+                      }
+                    } else if (is.numeric(value)) {
+                      if (value > private$.level)
+                        stop("can't set 'cloud_level' > core_level.")
+                      if (value < 0)
+                        stop("setting 'cloud_level' under 0%.")
+                    }
+                    private$.cloud_level <- value
+                    private$.cloud_level
                   },
 
                   #' @field cloud_genes Like \code{genes}, but only showing cloud genes.
