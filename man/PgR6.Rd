@@ -41,14 +41,14 @@ Can't be set above 100, and below 85 raises a warning.}
 clusters.}
 
 \item{\code{cloud_level}}{The percentage of organisms a gene must be in
-to be considered as part of the cloudgenome. \code{cloud_level = NULL} by default.
-Defaults to NULL to keep definition of cloud as single genes (singletons).
-Can't be set below 0, and above core level.}
+to be considered as part of the cloud genome. \code{cloud_level = "singleton"} by default.
+Can't be set above \code{core_genome} or below 0.}
 
 \item{\code{cloud_genes}}{Like \code{genes}, but only showing cloud genes.
 These are defined as those clusters which contain a single gene (singletons), plus
 those which have more than one but its organisms are probably clonal due to identical
-general gene content. Colloquially defined as strain-specific genes.}
+general gene content. Colloquially defined as strain-specific genes.
+Can be changed to use a percentage of the genomes instead of singletons using \code{cloud_level}}
 
 \item{\code{cloud_clusters}}{Like \code{$clusters}, but only showing cloud
 clusters as defined above.}
@@ -126,6 +126,10 @@ additional columns will be used as metadata. Each row should correspond to each 
 \item{\code{core_level}}{The initial core_level (that's the percentage of organisms a core cluster must be in to be
 considered as part of the core genome). Must be a number between 100 and 85, (default: 95). You can change it
 later by using the \code{$core_level} field once the object was created.}
+
+\item{\code{cloud_level}}{The initial cloud_level (that's the percentage of organisms a cloud cluster must be in to be
+considered as part of the cloud genome). Must be a number between 0 and core_level, (default: "singleton"). You can change it
+later by using the \code{$cloud_level} field once the object was created.}
 
 \item{\code{sep}}{A separator. By default is '__'(two underscores). It will be used to
 create a unique \code{gid} (gene identifier) for each gene. \code{gid}s are created by pasting
