@@ -617,7 +617,15 @@ PgR6 <- R6Class('PgR6',
                       pm <- pm[-wdups, ]
                     }
                     ogs <- dimnames(pm)[[2]]
-                    ogs <- ogs[which(colSums(pm) == 1L)]
+                    if (is.character(private$.cloud_level)) {
+                      ogs <- ogs[which(colSums(pm) == 1L)]}
+                    else if (is.numeric(private$.cloud_level)) {
+                      ln <- length(self$organisms[['org']])
+                      co <- floor(private$.cloud_level * ln / 100)
+                      ogs <- ogs[which(colSums(pm) <= co)]
+                    } else {
+                      stop("cloud_level not character or numeric")
+                    }
                     data <- private$.data
                     act <- which(data$cluster%in%ogs & data$org%in%orgs)
                     data <- data[act, ]
@@ -634,7 +642,15 @@ PgR6 <- R6Class('PgR6',
                     if (length(wdups)){
                       pm <- pm[-wdups, ]
                     }
-                    wh <- which(colSums(pm) == 1L)
+                    if (is.character(private$.cloud_level)) {
+                      wh <- which(colSums(pm) == 1L)}
+                    else if (is.numeric(private$.cloud_level)) {
+                      ln <- length(self$organisms[['org']])
+                      co <- floor(private$.cloud_level * ln / 100)
+                      wh <- which(colSums(pm) <= co)
+                    } else {
+                      stop("cloud_level not character or numeric")
+                    }
                     self$clusters[wh, , drop = FALSE]
                   },
 
