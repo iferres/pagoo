@@ -20,6 +20,7 @@ PgR6 <- R6Class('PgR6',
                   .clusters = NULL,
                   .dropped = NULL,
                   .level = NULL,
+                  .cloud_level = NULL,
                   .sep = NULL
                 ),
 
@@ -42,6 +43,9 @@ PgR6 <- R6Class('PgR6',
                   #' @param core_level The initial core_level (that's the percentage of organisms a core cluster must be in to be
                   #' considered as part of the core genome). Must be a number between 100 and 85, (default: 95). You can change it
                   #' later by using the \code{$core_level} field once the object was created.
+                  #' @param cloud_level The initial cloud_level (that's the percentage of organisms a cloud cluster must be in to be
+                  #' considered as part of the cloud genome). Must be a number between 0 and core_level, (default: "singleton"). You can change it
+                  #' later by using the \code{$cloud_level} field once the object was created.
                   #' @param sep A separator. By default is '__'(two underscores). It will be used to
                   #' create a unique \code{gid} (gene identifier) for each gene. \code{gid}s are created by pasting
                   #' \code{org} to \code{gene}, separated by \code{sep}.
@@ -54,6 +58,7 @@ PgR6 <- R6Class('PgR6',
                                         org_meta,
                                         cluster_meta,
                                         core_level = 95,
+                                        cloud_level = "singleton",
                                         sep = '__',
                                         verbose = TRUE,
                                         DF,
@@ -169,6 +174,7 @@ PgR6 <- R6Class('PgR6',
                     private$.clusters <- cluster_data
                     private$.panmatrix <- panmatrix
                     private$.level <- core_level
+                    private$.cloud_level <- cloud_level
                     private$.sep <- sep
                   },
 
@@ -576,10 +582,34 @@ PgR6 <- R6Class('PgR6',
                     # dimnames(self$pan_matrix)[[2]][wh]
                   },
 
+                  #' @field cloud_level The percentage of organisms a gene must be in
+                  #' to be considered as part of the cloud genome. \code{cloud_level = "singleton"} by default.
+                  #' Can't be set above \code{core_genome} or below 0.
+                  cloud_level = function(value) {
+                    if (missing(value))
+                      return(private$.cloud_level)
+                    else if (is.character(value)) {
+                      value <- tolower(value)
+                      if (value %in% c("singleton", "single", "s")) {
+                        value <- "singleton"
+                      } else {
+                        stop("Error: Set cloud_level to (singleton/single/s) or numeric")
+                      }
+                    } else if (is.numeric(value)) {
+                      if (value > private$.level)
+                        stop("can't set 'cloud_level' > core_level.")
+                      if (value < 0)
+                        stop("setting 'cloud_level' under 0%.")
+                    }
+                    private$.cloud_level <- value
+                    private$.cloud_level
+                  },
+
                   #' @field cloud_genes Like \code{genes}, but only showing cloud genes.
                   #' These are defined as those clusters which contain a single gene (singletons), plus
                   #' those which have more than one but its organisms are probably clonal due to identical
                   #' general gene content. Colloquially defined as strain-specific genes.
+                  #' Can be changed to use a percentage of the genomes instead of singletons using \code{cloud_level}
                   cloud_genes = function(){
                     pm <- self$pan_matrix
                     orgs <- dimnames(pm)[[1]]
@@ -590,7 +620,15 @@ PgR6 <- R6Class('PgR6',
                       pm <- pm[-wdups, ]
                     }
                     ogs <- dimnames(pm)[[2]]
-                    ogs <- ogs[which(colSums(pm) == 1L)]
+                    if (is.character(private$.cloud_level)) {
+                      ogs <- ogs[which(colSums(pm) == 1L)]}
+                    else if (is.numeric(private$.cloud_level)) {
+                      ln <- length(self$organisms[['org']])
+                      co <- floor(private$.cloud_level * ln / 100)
+                      ogs <- ogs[which(colSums(pm) <= co)]
+                    } else {
+                      stop("cloud_level not character or numeric")
+                    }
                     data <- private$.data
                     act <- which(data$cluster%in%ogs & data$org%in%orgs)
                     data <- data[act, ]
@@ -607,7 +645,15 @@ PgR6 <- R6Class('PgR6',
                     if (length(wdups)){
                       pm <- pm[-wdups, ]
                     }
-                    wh <- which(colSums(pm) == 1L)
+                    if (is.character(private$.cloud_level)) {
+                      wh <- which(colSums(pm) == 1L)}
+                    else if (is.numeric(private$.cloud_level)) {
+                      ln <- length(self$organisms[['org']])
+                      co <- floor(private$.cloud_level * ln / 100)
+                      wh <- which(colSums(pm) <= co)
+                    } else {
+                      stop("cloud_level not character or numeric")
+                    }
                     self$clusters[wh, , drop = FALSE]
                   },
 

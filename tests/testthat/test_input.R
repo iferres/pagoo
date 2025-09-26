@@ -218,6 +218,22 @@ test_that("Adding metadata with missing keys works.", {
   expect_true(is.na(p$organisms[5, "sero"]))
 })
 
+test_that("cloud_level gets set correctly", {
+  sep <- "__"
+  p <- pagoo(data = data, sep = sep)
+
+  # default
+  expect_equal(p$cloud_level, "singleton")
+
+  p$cloud_level <- 15
+  expect_equal(p$cloud_level, 15)
+  # > core_level
+  expect_error(p$cloud_level <- 99)
+  # character, non "singleton"
+  expect_error(p$cloud_level <- "15")
+})
+
+
 ## Input from third party pangenome reconstruction software
 #   MISSING
 
